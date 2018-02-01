@@ -1,11 +1,11 @@
 {
-  "name": "@wonderboymusic/draft",
+  "name": "@wonderboymusic/reformation",
   "version": "0.0.2-10",
-  "description": "Editor",
+  "description": "CMS tentatively title Reformation",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/staylor/graphql-wordpress/packages/draft"
+    "url": "https://github.com/staylor/reformation"
   },
   "author": "Scott Taylor <scott.c.taylor@mac.com>",
   "license": "MIT",

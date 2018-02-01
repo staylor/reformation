@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import { uploadUrl } from 'utils/media';
-import { LatestWrap, LatestItem, Title, Paragraph, FeaturedImage } from './styled';
+import { wrapClass, articleClass, titleClass, paragraphClass, imageClass } from './styled';
 
 /* eslint-disable react/prop-types */
 
@@ -13,33 +13,34 @@ function Latest({ data: { loading, posts } }) {
   }
 
   return (
-    <LatestWrap>
+    <div className={wrapClass}>
       {posts.edges.map(({ node }) => (
-        <LatestItem key={node.id}>
-          <Title>
+        <article className={articleClass} key={node.id}>
+          <h1 className={titleClass}>
             <Link to={`/post/${node.slug}`}>{node.title}</Link>
-          </Title>
+          </h1>
           {node.featuredMedia &&
             node.featuredMedia.map(media => {
               const crop = media.crops.find(c => c.width === 300);
               return (
-                <FeaturedImage
+                <img
+                  className={imageClass}
                   key={crop.fileName}
                   alt=""
                   src={uploadUrl(media.destination, crop.fileName)}
                 />
               );
             })}
-          <Paragraph>{node.summary}</Paragraph>
-        </LatestItem>
+          <p className={paragraphClass}>{node.summary}</p>
+        </article>
       ))}
-    </LatestWrap>
+    </div>
   );
 }
 
 const composed = graphql(gql`
   query LatestPostsQuery {
-    posts(first: 2, status: PUBLISH) @connection(key: "status") {
+    posts(first: 4, status: PUBLISH) @connection(key: "status") {
       edges {
         node {
           id

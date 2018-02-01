@@ -1,9 +1,8 @@
-import styled from 'react-emotion';
-import { Link } from 'react-router-dom';
+import { css } from 'emotion';
 import themeUtils from 'styles/theme';
 import responsive from 'styles/responsive';
 
-export const Nav = styled.nav`
+export const navClass = css`
   height: 28px;
   margin: ${themeUtils.padding}px 0;
   ${responsive.tablet} {
@@ -18,7 +17,7 @@ export const Nav = styled.nav`
   }
 `;
 
-export const NavItem = styled(Link)`
+export const navItemClass = css`
   color: ${themeUtils.colors.dark};
   display: inline-block;
   font-family: ${themeUtils.fonts.futura};

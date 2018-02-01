@@ -1,17 +1,17 @@
 import React from 'react';
 import Videos from 'components/Videos';
 import Latest from './Latest';
-import { ContentWrap, VideosWrap } from './styled';
+import { wrapClass, videosClass } from './styled';
 
 /* eslint-disable react/prop-types */
 
 export default function HomeRoute(props) {
   return (
-    <ContentWrap>
+    <div className={wrapClass}>
       <Latest />
-      <VideosWrap>
+      <div className={videosClass}>
         <Videos {...props} />
-      </VideosWrap>
-    </ContentWrap>
+      </div>
+    </div>
   );
 }
