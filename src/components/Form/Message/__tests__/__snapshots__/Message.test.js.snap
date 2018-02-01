@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Message empty 1`] = `
+<div
+  className="css-uocmxw"
+>
+  <p
+    className="css-1tz4lct"
+  />
+  <button
+    className="css-1i5kgx3"
+    onClick={[Function]}
+  />
+</div>
+`;
+
+exports[`Message text 1`] = `
+<div
+  className="css-uocmxw"
+>
+  <p
+    className="css-1tz4lct"
+  >
+    This is an admin message.
+  </p>
+  <button
+    className="css-1i5kgx3"
+    onClick={[Function]}
+  />
+</div>
+`;

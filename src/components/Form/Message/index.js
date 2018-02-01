@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { MessageWrap, MessageText, DismissButton } from './styled';
+import { messageWrapClass, messageTextClass, dismissButtonClass } from './styled';
 
 type Props = {
   text: string,
@@ -25,10 +25,10 @@ export default class Message extends Component<Props, State> {
 
   render() {
     return this.state.hidden ? null : (
-      <MessageWrap>
-        <MessageText>{this.props.text}</MessageText>
-        <DismissButton onClick={this.onClick} />
-      </MessageWrap>
+      <div className={messageWrapClass}>
+        <p className={messageTextClass}>{this.props.text}</p>
+        <button className={dismissButtonClass} onClick={this.onClick} />
+      </div>
     );
   }
 }

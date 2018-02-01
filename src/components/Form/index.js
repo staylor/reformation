@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { convertToRaw } from 'draft-js';
 import type { ContentState } from 'draft-js';
 import { cx } from 'emotion';
@@ -7,15 +7,15 @@ import invariant from 'invariant';
 import Editor from 'components/Editor';
 import { PrimaryButton } from 'styles/utils';
 import {
-  Field,
-  FieldWrap,
+  fieldClass,
+  wrapClass,
   FieldName,
   FieldValue,
-  Fields,
-  InfoColumn,
-  InfoBox,
-  InfoBoxHeader,
-  InfoBoxContent,
+  fieldsClass,
+  infoColumnClass,
+  infoBoxClass,
+  infoBoxHeaderClass,
+  infoBoxContentClass,
 } from './styled';
 import Input from './Input';
 import Textarea from './Textarea';
@@ -216,28 +216,28 @@ export default class Form extends Component<Props> {
           field.prop
         );
         formField = (
-          <FieldWrap key={key}>
+          <div key={key} className={wrapClass}>
             {field.label && <FieldName>{field.label}</FieldName>}
             {field.render(data)}
-          </FieldWrap>
+          </div>
         );
       } else if (field.type === 'date' || field.type === 'editor') {
         formField = (
-          <FieldWrap key={key}>
+          <div key={key} className={wrapClass}>
             {field.label && <FieldName>{field.label}</FieldName>}
             {this.editableField(field, data)}
-          </FieldWrap>
+          </div>
         );
       } else {
         formField = (
-          <Field key={key}>
+          <p key={key} className={fieldClass}>
             {field.label && <FieldName>{field.label}</FieldName>}
             {field.editable ? (
               this.editableField(field, data)
             ) : (
               <FieldValue>{(field.render && field.render(data)) || data[field.prop]}</FieldValue>
             )}
-          </Field>
+          </p>
         );
       }
 
@@ -253,28 +253,28 @@ export default class Form extends Component<Props> {
     const button = <PrimaryButton onClick={this.onSubmit}>{buttonLabel}</PrimaryButton>;
 
     return (
-      <Fragment>
-        <Fields>
+      <form>
+        <fieldset className={fieldsClass}>
           {primaryFields}
           {infoFields.length === 0 ? button : null}
-        </Fields>
-        <InfoColumn>
+        </fieldset>
+        <section className={infoColumnClass}>
           {infoFields.length > 0 ? (
-            <InfoBox>
-              <InfoBoxHeader>{boxLabel}</InfoBoxHeader>
-              <InfoBoxContent>
+            <aside className={infoBoxClass}>
+              <h3 className={infoBoxHeaderClass}>{boxLabel}</h3>
+              <div className={infoBoxContentClass}>
                 {infoFields}
                 {button}
-              </InfoBoxContent>
-            </InfoBox>
+              </div>
+            </aside>
           ) : null}
           {metaFields.length > 0 ? (
-            <InfoBox>
-              <InfoBoxContent>{metaFields}</InfoBoxContent>
-            </InfoBox>
+            <aside className={infoBoxClass}>
+              <div className={infoBoxContentClass}>{metaFields}</div>
+            </aside>
           ) : null}
-        </InfoColumn>
-      </Fragment>
+        </section>
+      </form>
     );
   }
 }

@@ -2,7 +2,7 @@ import styled from 'react-emotion';
 import { css } from 'emotion';
 import themeUtils from 'styles/theme';
 
-export const Fields = styled.fieldset`
+export const fieldsClass = css`
   display: block;
   float: left;
   max-width: 640px;
@@ -13,12 +13,12 @@ export const Fields = styled.fieldset`
   }
 `;
 
-export const Field = styled.p`
+export const fieldClass = css`
   display: block;
   margin: 10px 0 20px;
 `;
 
-export const FieldWrap = styled.div`
+export const wrapClass = css`
   display: block;
   margin: ${themeUtils.padding}px 0;
 `;
@@ -43,7 +43,7 @@ const inputStyles = css`
   transition: 0.05s border-color ease-in-out;
 `;
 
-export const FieldSelect = styled.select`
+export const selectClass = css`
   ${inputStyles};
   height: 28px;
   line-height: 28px;
@@ -100,7 +100,7 @@ export const FieldValue = styled.span`
   line-height: 1.4;
 `;
 
-export const FieldCheckbox = styled.input`
+export const checkboxClass = css`
   appearance: none;
   background-color: ${themeUtils.colors.white};
   border: 1px solid ${themeUtils.colors.form.checkbox.border};
@@ -177,7 +177,7 @@ export const DismissButton = styled.button`
   }
 `;
 
-export const InfoColumn = styled.section`
+export const infoColumnClass = css`
   float: right;
   line-height: 1.4;
   margin: 10px -300px 0 0;
@@ -189,7 +189,7 @@ export const InfoColumn = styled.section`
   }
 `;
 
-export const InfoBox = styled.aside`
+export const infoBoxClass = css`
   border: 1px solid ${themeUtils.colors.detail};
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   box-sizing: border-box;
@@ -197,7 +197,7 @@ export const InfoBox = styled.aside`
   margin: 0 0 20px;
 `;
 
-export const InfoBoxHeader = styled.h3`
+export const infoBoxHeaderClass = css`
   border-bottom: 1px solid ${themeUtils.colors.detail};
   color: ${themeUtils.colors.dark};
   font-size: 14px;
@@ -206,7 +206,7 @@ export const InfoBoxHeader = styled.h3`
   user-select: none;
 `;
 
-export const InfoBoxContent = styled.div`
+export const infoBoxContentClass = css`
   font-size: 13px;
   padding: 6px 10px 20px;
 `;

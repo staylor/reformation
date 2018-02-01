@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { FieldCheckbox } from 'components/Form/styled';
+import { checkboxClass } from 'components/Form/styled';
 
 type Props = {
   id: string,
@@ -42,8 +42,9 @@ export default class Checkbox extends Component<Props, State> {
     const { id, ...rest } = this.props;
 
     return (
-      <FieldCheckbox
+      <input
         {...rest}
+        className={checkboxClass}
         type="checkbox"
         onChange={this.onChange}
         checked={this.state.checked}

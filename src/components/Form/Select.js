@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { FieldSelect } from 'components/Form/styled';
+import { selectClass } from 'components/Form/styled';
 
 export type Choice = { label: string, value: string | number };
 export type Choices = Array<any>;
@@ -57,7 +57,7 @@ export default class Select extends Component<Props, State> {
     const { placeholder, choices, groups, children, value, ...rest } = this.props;
 
     return (
-      <FieldSelect {...rest} value={this.state.value} onChange={this.onChange}>
+      <select {...rest} className={selectClass} value={this.state.value} onChange={this.onChange}>
         {placeholder && (
           <option key={placeholder} value="">
             {placeholder}
@@ -98,7 +98,7 @@ export default class Select extends Component<Props, State> {
             );
           })}
         {children}
-      </FieldSelect>
+      </select>
     );
   }
 }
