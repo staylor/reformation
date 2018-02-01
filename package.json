@@ -76,10 +76,10 @@
   "scripts": {
     "clean": "rimraf graphql-build",
     "dev": "GQL_HOST=http://localhost:8080 BABEL_ENV=app kyt dev -C kyt.dev.js",
-    "graphql-dev": "BABEL_ENV=graphql nodemon --config nodemon.json --exec babel-node src/server/graphql/index.js",
     "build": "BABEL_ENV=app kyt build -C kyt.prod.js",
     "start": "forever start build/server/main.js",
     "prod": "npm run build && npm run start",
+    "graphql-dev": "BABEL_ENV=graphql nodemon --config nodemon.json --exec babel-node src/server/graphql/index.js",
     "graphql-schema": "mkdirp graphql-build/schema && cp -R src/server/graphql/schema graphql-build",
     "graphql-babel": "babel src/server/graphql -d graphql-build",
     "graphql-build": "npm run clean && npm run graphql-schema && npm run graphql-babel",
