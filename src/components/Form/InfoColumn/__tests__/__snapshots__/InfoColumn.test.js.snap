@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfoColumn No props 1`] = `
+<section
+  className="css-cz8x9o"
+/>
+`;
+
+exports[`InfoColumn no button 1`] = `
+<section
+  className="css-cz8x9o"
+>
+  <aside
+    className="css-wma54w"
+  >
+    <h3
+      className="css-1gc3v2k"
+    >
+      Info!
+    </h3>
+    <div
+      className="css-1f75q92"
+    >
+      <p
+        key="0"
+      >
+        <input
+          name="foo"
+        />
+      </p>
+    </div>
+  </aside>
+  <aside
+    className="css-wma54w"
+  >
+    <div
+      className="css-1f75q92"
+    >
+      <p
+        key="0"
+      >
+        <input
+          name="bar"
+        />
+      </p>
+    </div>
+  </aside>
+</section>
+`;
+
+exports[`InfoColumn with button 1`] = `
+<section
+  className="css-cz8x9o"
+>
+  <aside
+    className="css-wma54w"
+  >
+    <h3
+      className="css-1gc3v2k"
+    >
+      Info!
+    </h3>
+    <div
+      className="css-1f75q92"
+    >
+      <p
+        key="0"
+      >
+        <input
+          name="foo"
+        />
+      </p>
+      <button>
+        Submit
+      </button>
+    </div>
+  </aside>
+  <aside
+    className="css-wma54w"
+  >
+    <div
+      className="css-1f75q92"
+    >
+      <p
+        key="0"
+      >
+        <input
+          name="bar"
+        />
+      </p>
+    </div>
+  </aside>
+</section>
+`;
+
+exports[`InfoColumn with info and meta fields 1`] = `
+<section
+  className="css-cz8x9o"
+>
+  <aside
+    className="css-wma54w"
+  >
+    <h3
+      className="css-1gc3v2k"
+    />
+    <div
+      className="css-1f75q92"
+    >
+      <p
+        key="0"
+      >
+        <input
+          name="foo"
+        />
+      </p>
+    </div>
+  </aside>
+  <aside
+    className="css-wma54w"
+  >
+    <div
+      className="css-1f75q92"
+    >
+      <p
+        key="0"
+      >
+        <input
+          name="bar"
+        />
+      </p>
+    </div>
+  </aside>
+</section>
+`;
+
+exports[`InfoColumn with infoFields 1`] = `
+<section
+  className="css-cz8x9o"
+>
+  <aside
+    className="css-wma54w"
+  >
+    <h3
+      className="css-1gc3v2k"
+    />
+    <div
+      className="css-1f75q92"
+    >
+      <p
+        key="0"
+      >
+        <input
+          name="foo"
+        />
+      </p>
+    </div>
+  </aside>
+</section>
+`;
+
+exports[`InfoColumn with metaFields 1`] = `
+<section
+  className="css-cz8x9o"
+>
+  <aside
+    className="css-wma54w"
+  >
+    <div
+      className="css-1f75q92"
+    >
+      <p
+        key="0"
+      >
+        <input
+          name="bar"
+        />
+      </p>
+    </div>
+  </aside>
+</section>
+`;

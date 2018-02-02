@@ -6,17 +6,8 @@ import { cx } from 'emotion';
 import invariant from 'invariant';
 import Editor from 'components/Editor';
 import { PrimaryButton } from 'styles/utils';
-import {
-  fieldClass,
-  wrapClass,
-  FieldName,
-  FieldValue,
-  fieldsClass,
-  infoColumnClass,
-  infoBoxClass,
-  infoBoxHeaderClass,
-  infoBoxContentClass,
-} from './styled';
+import { fieldClass, wrapClass, FieldName, FieldValue, fieldsClass } from './styled';
+import InfoColumn from './InfoColumn';
 import Input from './Input';
 import Textarea from './Textarea';
 import Select from './Select';
@@ -257,23 +248,8 @@ export default class Form extends Component<Props> {
         <fieldset className={fieldsClass}>
           {primaryFields}
           {infoFields.length === 0 ? button : null}
+          <InfoColumn {...{ infoFields, metaFields, label: boxLabel, button }} />
         </fieldset>
-        <section className={infoColumnClass}>
-          {infoFields.length > 0 ? (
-            <aside className={infoBoxClass}>
-              <h3 className={infoBoxHeaderClass}>{boxLabel}</h3>
-              <div className={infoBoxContentClass}>
-                {infoFields}
-                {button}
-              </div>
-            </aside>
-          ) : null}
-          {metaFields.length > 0 ? (
-            <aside className={infoBoxClass}>
-              <div className={infoBoxContentClass}>{metaFields}</div>
-            </aside>
-          ) : null}
-        </section>
       </form>
     );
   }
