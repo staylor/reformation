@@ -15,6 +15,11 @@ describe('Checkbox', () => {
     expect(wrapper.state().checked).toBe(true);
   });
 
+  test('add className', () => {
+    const wrapper = shallow(<Checkbox className="foo" />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
   describe('onChange', () => {
     test('toggle', () => {
       const func = jest.fn();

@@ -19,7 +19,7 @@ const replaceClassNames = (
   key: string,
   replacer: ClassNameReplacer = defaultClassNameReplacer
 ) => {
-  let index = 0;
+  let index = -1;
   const classRegex = new RegExp(`^\\.${key}-([a-zA-Z0-9-]+)`);
 
   return selectors.reduce((acc, className) => {

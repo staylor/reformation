@@ -1,26 +1,26 @@
 // @flow
 import React, { Component } from 'react';
-import { FieldInput } from 'components/Form/styled';
+import { cx } from 'emotion';
+import type { ClassNameArg } from 'types/emotion';
+import { inputClass } from 'components/Form/styled';
 
 type Props = {
-  value: any,
-  onChange?: string => void,
+  value: string,
+  className?: ClassNameArg,
+  onChange: (value: string) => void,
 };
 
 type State = {
-  value: any,
+  value: string,
 };
 
 export default class Input extends Component<Props, State> {
   didMount = false;
 
   onChange = (e: { target: HTMLInputElement }) => {
-    const { value } = e.target;
-
+    const value = e.target.value || '';
     this.setState({ value }, () => {
-      if (this.props.onChange) {
-        this.props.onChange(value);
-      }
+      this.props.onChange(value);
     });
   };
 
@@ -44,8 +44,15 @@ export default class Input extends Component<Props, State> {
   }
 
   render() {
+    const { className, onChange, value, ...props } = this.props;
     return (
-      <FieldInput type="text" {...this.props} onChange={this.onChange} value={this.state.value} />
+      <input
+        type="text"
+        {...props}
+        className={cx(inputClass, className)}
+        onChange={this.onChange}
+        value={this.state.value}
+      />
     );
   }
 }

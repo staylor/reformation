@@ -1,10 +1,13 @@
 // @flow
 import React, { Component } from 'react';
+import { cx } from 'emotion';
+import type { ClassNameArg } from 'types/emotion';
 import { checkboxClass } from './styled';
 
 type Props = {
   id: string,
-  checked: boolean,
+  className?: ClassNameArg,
+  checked?: boolean,
   onChange: (checked: boolean, id?: string | null) => void,
 };
 
@@ -14,11 +17,10 @@ type State = {
 
 export default class Checkbox extends Component<Props, State> {
   onChange = (e: { target: HTMLInputElement }) => {
-    const { checked } = e.target;
-    if (this.props.onChange) {
-      this.props.onChange(checked, this.props.id || null);
-    }
-    this.setState({ checked: Boolean(checked) });
+    const value = Boolean(e.target.checked);
+    this.setState({ checked: value }, () => {
+      this.props.onChange(value, this.props.id || null);
+    });
   };
 
   constructor(props: Props) {
@@ -37,12 +39,12 @@ export default class Checkbox extends Component<Props, State> {
   }
 
   render() {
-    const { id, ...rest } = this.props;
+    const { id, className, checked, onChange, ...props } = this.props;
 
     return (
       <input
-        {...rest}
-        className={checkboxClass}
+        {...props}
+        className={cx(checkboxClass, className)}
         type="checkbox"
         onChange={this.onChange}
         checked={this.state.checked}

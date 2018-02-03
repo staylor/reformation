@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { convertToRaw } from 'draft-js';
 import type { ContentState } from 'draft-js';
 import { cx } from 'emotion';
+import type { ClassNameArg } from 'types/emotion';
 import invariant from 'invariant';
 import Editor from 'components/Editor';
 import { PrimaryButton } from 'styles/utils';
@@ -10,8 +11,7 @@ import { fieldClass, wrapClass, FieldName, FieldValue, fieldsClass } from './sty
 import InfoColumn from './InfoColumn';
 import Input from './Input';
 import Textarea from './Textarea';
-import Select from './Select';
-import type { Choices } from './Select';
+import Select, { type Choices } from './Select';
 import Date from './Date';
 
 type Data = {};
@@ -20,7 +20,7 @@ type F = {
   prop: string,
   value?: () => any,
   render?: (?Data) => any,
-  className?: string,
+  className?: ClassNameArg,
   label?: string,
   type?: string,
   placeholder?: string,
@@ -151,8 +151,8 @@ export default class Form extends Component<Props> {
     if (field.type === 'select') {
       return (
         <Select
-          className={cx(field.className)}
-          innerRef={this.bindRef(field.prop)}
+          className={field.className}
+          ref={this.bindRef(field.prop)}
           choices={field.choices}
           value={data[field.prop] || (field.multiple ? [] : '')}
           multiple={field.multiple || false}
@@ -165,8 +165,8 @@ export default class Form extends Component<Props> {
     if (field.type === 'textarea') {
       return (
         <Textarea
-          className={cx(field.className)}
-          innerRef={this.bindRef(field.prop)}
+          className={field.className}
+          ref={this.bindRef(field.prop)}
           value={data && field.render ? field.render(data) : data[field.prop]}
         />
       );
@@ -176,8 +176,8 @@ export default class Form extends Component<Props> {
       <Input
         placeholder={field.placeholder || ''}
         type={field.inputType || 'text'}
-        className={cx(field.className)}
-        innerRef={this.bindRef(field.prop)}
+        className={field.className}
+        ref={this.bindRef(field.prop)}
         value={data && field.render ? field.render(data) : data[field.prop]}
       />
     );

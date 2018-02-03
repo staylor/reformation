@@ -2,13 +2,13 @@
 
 exports[`Message empty 1`] = `
 <div
-  className="emotion-3"
+  className="emotion-2"
 >
   <p
-    className="emotion-1"
+    className="emotion-0"
   />
   <button
-    className="emotion-2"
+    className="emotion-1"
     onClick={[Function]}
   />
 </div>
@@ -16,15 +16,15 @@ exports[`Message empty 1`] = `
 
 exports[`Message text 1`] = `
 <div
-  className="emotion-3"
+  className="emotion-2"
 >
   <p
-    className="emotion-1"
+    className="emotion-0"
   >
     This is an admin message.
   </p>
   <button
-    className="emotion-2"
+    className="emotion-1"
     onClick={[Function]}
   />
 </div>

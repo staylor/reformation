@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input add className 1`] = `
+<input
+  className="foo"
+  onChange={[Function]}
+  type="text"
+  value=""
+/>
+`;
+
+exports[`Input empty 1`] = `
+<input
+  className=""
+  onChange={[Function]}
+  type="text"
+  value=""
+/>
+`;

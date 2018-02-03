@@ -1,10 +1,13 @@
 // @flow
 import React, { Component } from 'react';
+import { cx } from 'emotion';
+import type { ClassNameArg } from 'types/emotion';
 import { textareaClass } from './styled';
 
 type Props = {
   value: string,
-  onChange?: string => void,
+  className?: ClassNameArg,
+  onChange: (value: string) => void,
 };
 
 type State = {
@@ -16,10 +19,9 @@ export default class Textarea extends Component<Props, State> {
 
   onChange = (e: { target: HTMLTextAreaElement }) => {
     const value = e.target.value || '';
-    if (this.props.onChange) {
+    this.setState({ value }, () => {
       this.props.onChange(value);
-    }
-    this.setState({ value });
+    });
   };
 
   constructor(props: Props) {
@@ -42,10 +44,11 @@ export default class Textarea extends Component<Props, State> {
   }
 
   render() {
+    const { className, onChange, value, ...props } = this.props;
     return (
       <textarea
-        {...this.props}
-        className={textareaClass}
+        {...props}
+        className={cx(textareaClass, className)}
         onChange={this.onChange}
         value={this.state.value}
       />
