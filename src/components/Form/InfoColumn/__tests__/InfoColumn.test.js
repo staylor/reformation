@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import InfoColumn from 'components/Form/InfoColumn';
+import 'emotion/serializer';
 
 const label = 'Info!';
 

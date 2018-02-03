@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Textarea empty 1`] = `
+<textarea
+  className="emotion-1"
+  onChange={[Function]}
+  value=""
+/>
+`;

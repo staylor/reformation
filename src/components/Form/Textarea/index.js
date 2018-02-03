@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { FieldTextarea } from 'components/Form/styled';
+import { textareaClass } from './styled';
 
 type Props = {
   value: string,
@@ -15,10 +15,11 @@ export default class Textarea extends Component<Props, State> {
   didMount = false;
 
   onChange = (e: { target: HTMLTextAreaElement }) => {
+    const value = e.target.value || '';
     if (this.props.onChange) {
-      this.props.onChange(e.target.value);
+      this.props.onChange(value);
     }
-    this.setState({ value: e.target.value });
+    this.setState({ value });
   };
 
   constructor(props: Props) {
@@ -41,6 +42,13 @@ export default class Textarea extends Component<Props, State> {
   }
 
   render() {
-    return <FieldTextarea {...this.props} onChange={this.onChange} value={this.state.value} />;
+    return (
+      <textarea
+        {...this.props}
+        className={textareaClass}
+        onChange={this.onChange}
+        value={this.state.value}
+      />
+    );
   }
 }

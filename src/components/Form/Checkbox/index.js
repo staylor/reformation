@@ -1,10 +1,9 @@
 // @flow
 import React, { Component } from 'react';
-import { checkboxClass } from 'components/Form/styled';
+import { checkboxClass } from './styled';
 
 type Props = {
   id: string,
-  text: string,
   checked: boolean,
   onChange: (checked: boolean, id?: string | null) => void,
 };
@@ -18,16 +17,15 @@ export default class Checkbox extends Component<Props, State> {
     const { checked } = e.target;
     if (this.props.onChange) {
       this.props.onChange(checked, this.props.id || null);
-    } else {
-      this.setState({ checked });
     }
+    this.setState({ checked: Boolean(checked) });
   };
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      checked: props.checked || false,
+      checked: Boolean(props.checked),
     };
   }
 
@@ -35,7 +33,7 @@ export default class Checkbox extends Component<Props, State> {
     if (!Object.keys(nextProps).includes('checked')) {
       return;
     }
-    this.setState({ checked: nextProps.checked });
+    this.setState({ checked: Boolean(nextProps.checked) });
   }
 
   render() {

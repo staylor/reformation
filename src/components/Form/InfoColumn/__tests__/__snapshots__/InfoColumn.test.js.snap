@@ -2,24 +2,24 @@
 
 exports[`InfoColumn No props 1`] = `
 <section
-  className="css-cz8x9o"
+  className="emotion-1"
 />
 `;
 
 exports[`InfoColumn no button 1`] = `
 <section
-  className="css-cz8x9o"
+  className="emotion-6"
 >
   <aside
-    className="css-wma54w"
+    className="emotion-3"
   >
     <h3
-      className="css-1gc3v2k"
+      className="emotion-1"
     >
       Info!
     </h3>
     <div
-      className="css-1f75q92"
+      className="emotion-2"
     >
       <p
         key="0"
@@ -31,10 +31,10 @@ exports[`InfoColumn no button 1`] = `
     </div>
   </aside>
   <aside
-    className="css-wma54w"
+    className="emotion-3"
   >
     <div
-      className="css-1f75q92"
+      className="emotion-2"
     >
       <p
         key="0"
@@ -50,18 +50,18 @@ exports[`InfoColumn no button 1`] = `
 
 exports[`InfoColumn with button 1`] = `
 <section
-  className="css-cz8x9o"
+  className="emotion-6"
 >
   <aside
-    className="css-wma54w"
+    className="emotion-3"
   >
     <h3
-      className="css-1gc3v2k"
+      className="emotion-1"
     >
       Info!
     </h3>
     <div
-      className="css-1f75q92"
+      className="emotion-2"
     >
       <p
         key="0"
@@ -76,10 +76,10 @@ exports[`InfoColumn with button 1`] = `
     </div>
   </aside>
   <aside
-    className="css-wma54w"
+    className="emotion-3"
   >
     <div
-      className="css-1f75q92"
+      className="emotion-2"
     >
       <p
         key="0"
@@ -95,16 +95,16 @@ exports[`InfoColumn with button 1`] = `
 
 exports[`InfoColumn with info and meta fields 1`] = `
 <section
-  className="css-cz8x9o"
+  className="emotion-6"
 >
   <aside
-    className="css-wma54w"
+    className="emotion-3"
   >
     <h3
-      className="css-1gc3v2k"
+      className="emotion-1"
     />
     <div
-      className="css-1f75q92"
+      className="emotion-2"
     >
       <p
         key="0"
@@ -116,10 +116,10 @@ exports[`InfoColumn with info and meta fields 1`] = `
     </div>
   </aside>
   <aside
-    className="css-wma54w"
+    className="emotion-3"
   >
     <div
-      className="css-1f75q92"
+      className="emotion-2"
     >
       <p
         key="0"
@@ -135,16 +135,16 @@ exports[`InfoColumn with info and meta fields 1`] = `
 
 exports[`InfoColumn with infoFields 1`] = `
 <section
-  className="css-cz8x9o"
+  className="emotion-4"
 >
   <aside
-    className="css-wma54w"
+    className="emotion-3"
   >
     <h3
-      className="css-1gc3v2k"
+      className="emotion-1"
     />
     <div
-      className="css-1f75q92"
+      className="emotion-2"
     >
       <p
         key="0"
@@ -160,13 +160,13 @@ exports[`InfoColumn with infoFields 1`] = `
 
 exports[`InfoColumn with metaFields 1`] = `
 <section
-  className="css-cz8x9o"
+  className="emotion-3"
 >
   <aside
-    className="css-wma54w"
+    className="emotion-2"
   >
     <div
-      className="css-1f75q92"
+      className="emotion-1"
     >
       <p
         key="0"

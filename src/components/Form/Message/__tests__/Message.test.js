@@ -1,6 +1,7 @@
 import React from 'react';
 import Message from 'components/Form/Message';
 import { shallow } from 'enzyme';
+import 'emotion/serializer';
 
 describe('Message', () => {
   test('empty', () => {
