@@ -2,8 +2,20 @@ import styled from 'react-emotion';
 import { css } from 'emotion';
 import themeUtils from 'styles/theme';
 
+export const formClass = css`
+  &::after {
+    clear: both;
+    content: ' ';
+    display: block;
+  }
+`;
+
 export const fieldsClass = css`
   display: block;
+  margin-right: 300px;
+`;
+
+export const mainColumnClass = css`
   float: left;
   max-width: 640px;
   width: 100%;

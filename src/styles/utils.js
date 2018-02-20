@@ -45,6 +45,7 @@ export const h4Styles = css`
 
 export const Heading = styled.h2`
   ${headingStyles};
+  color: ${themeUtils.colors.black};
   font-family: ${themeUtils.fonts.futura};
   font-size: 25px;
 `;

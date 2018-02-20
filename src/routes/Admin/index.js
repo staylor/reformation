@@ -13,39 +13,7 @@ import routeConfig from './routeConfig';
 
 /* eslint-disable react/prop-types */
 
-@graphql(
-  gql`
-    query AdminQuery {
-      settings(id: "site") {
-        ... on SiteSettings {
-          siteTitle
-          siteUrl
-          language
-        }
-      }
-      mediaSettings: settings(id: "media") {
-        ... on MediaSettings {
-          crops {
-            name
-            width
-            height
-          }
-        }
-      }
-      taxonomies @connection(key: "taxonomies") {
-        edges {
-          node {
-            id
-            name
-            plural
-            slug
-          }
-        }
-      }
-    }
-  `
-)
-export default class Admin extends Component {
+class Admin extends Component {
   static childContextTypes = {
     settings: settingsShape,
     mediaSettings: mediaSettingsShape,
@@ -111,3 +79,36 @@ export default class Admin extends Component {
     );
   }
 }
+
+export default graphql(
+  gql`
+    query AdminQuery {
+      settings(id: "site") {
+        ... on SiteSettings {
+          siteTitle
+          siteUrl
+          language
+        }
+      }
+      mediaSettings: settings(id: "media") {
+        ... on MediaSettings {
+          crops {
+            name
+            width
+            height
+          }
+        }
+      }
+      taxonomies @connection(key: "taxonomies") {
+        edges {
+          node {
+            id
+            name
+            plural
+            slug
+          }
+        }
+      }
+    }
+  `
+)(Admin);

@@ -7,7 +7,15 @@ import type { ClassNameArg } from 'types/emotion';
 import invariant from 'invariant';
 import Editor from 'components/Editor';
 import { PrimaryButton } from 'styles/utils';
-import { fieldClass, wrapClass, FieldName, FieldValue, fieldsClass } from './styled';
+import {
+  formClass,
+  fieldClass,
+  wrapClass,
+  mainColumnClass,
+  FieldName,
+  FieldValue,
+  fieldsClass,
+} from './styled';
 import InfoColumn from './InfoColumn';
 import Input from './Input';
 import Textarea from './Textarea';
@@ -244,10 +252,12 @@ export default class Form extends Component<Props> {
     const button = <PrimaryButton onClick={this.onSubmit}>{buttonLabel}</PrimaryButton>;
 
     return (
-      <form>
+      <form className={formClass}>
         <fieldset className={fieldsClass}>
-          {primaryFields}
-          {infoFields.length === 0 ? button : null}
+          <div className={mainColumnClass}>
+            {primaryFields}
+            {infoFields.length === 0 ? button : null}
+          </div>
           <InfoColumn {...{ infoFields, metaFields, label: boxLabel, button }} />
         </fieldset>
       </form>
