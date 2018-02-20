@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { cx } from 'emotion';
 import type { ClassNameArg } from 'types/emotion';
-import { inputClass } from 'components/Form/styled';
+import { inputClass } from './styled';
 
 type Props = {
   value: string,
