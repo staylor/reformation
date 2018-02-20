@@ -8,6 +8,7 @@ type Props = {
   value: string,
   className?: ClassNameArg,
   onChange?: (value: string) => void,
+  bindRef?: (element: any) => void,
 };
 
 type State = {
@@ -46,11 +47,12 @@ export default class Input extends Component<Props, State> {
   }
 
   render() {
-    const { className, onChange, value, ...props } = this.props;
+    const { className, onChange, bindRef, value, ...props } = this.props;
     return (
       <input
         type="text"
         {...props}
+        ref={bindRef}
         className={cx(inputClass, className)}
         onChange={this.onChange}
         value={this.state.value}

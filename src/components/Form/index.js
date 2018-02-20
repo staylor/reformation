@@ -152,7 +152,7 @@ export default class Form extends Component<Props> {
       return (
         <Select
           className={field.className}
-          ref={this.bindRef(field.prop)}
+          bindRef={this.bindRef(field.prop)}
           choices={field.choices}
           value={data[field.prop] || (field.multiple ? [] : '')}
           multiple={field.multiple || false}
@@ -166,7 +166,7 @@ export default class Form extends Component<Props> {
       return (
         <Textarea
           className={field.className}
-          ref={this.bindRef(field.prop)}
+          bindRef={this.bindRef(field.prop)}
           value={data && field.render ? field.render(data) : data[field.prop]}
         />
       );
@@ -177,7 +177,7 @@ export default class Form extends Component<Props> {
         placeholder={field.placeholder || ''}
         type={field.inputType || 'text'}
         className={field.className}
-        ref={this.bindRef(field.prop)}
+        bindRef={this.bindRef(field.prop)}
         value={data && field.render ? field.render(data) : data[field.prop]}
       />
     );

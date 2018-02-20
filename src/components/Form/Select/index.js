@@ -12,6 +12,7 @@ type Props = {
   className?: ClassNameArg,
   multiple?: boolean,
   onChange?: (value: any) => any,
+  bindRef?: (element: any) => void,
   value?: string | number | Array<string | number>,
   placeholder?: string,
   choices?: Choices,
@@ -86,12 +87,14 @@ export default class Select extends Component<Props, State> {
       children,
       value,
       onChange,
+      bindRef,
       ...rest
     } = this.props;
 
     return (
       <select
         {...rest}
+        ref={bindRef}
         multiple={multiple ? Boolean(multiple) : false}
         className={cx(selectClass, className)}
         value={this.state.value}

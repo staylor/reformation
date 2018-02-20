@@ -8,6 +8,7 @@ type Props = {
   value: string,
   className?: ClassNameArg,
   onChange?: (value: string) => void,
+  bindRef?: (element: any) => void,
 };
 
 type State = {
@@ -46,10 +47,11 @@ export default class Textarea extends Component<Props, State> {
   }
 
   render() {
-    const { className, onChange, value, ...props } = this.props;
+    const { className, onChange, value, bindRef, ...props } = this.props;
     return (
       <textarea
         {...props}
+        ref={bindRef}
         className={cx(textareaClass, className)}
         onChange={this.onChange}
         value={this.state.value}

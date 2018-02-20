@@ -9,6 +9,7 @@ type Props = {
   className?: ClassNameArg,
   checked?: boolean,
   onChange?: (checked: boolean, id?: string | null) => void,
+  bindRef?: (element: any) => void,
 };
 
 type State = {
@@ -41,11 +42,12 @@ export default class Checkbox extends Component<Props, State> {
   }
 
   render() {
-    const { id, className, checked, onChange, ...props } = this.props;
+    const { id, className, checked, onChange, bindRef, ...props } = this.props;
 
     return (
       <input
         {...props}
+        ref={bindRef}
         className={cx(checkboxClass, className)}
         type="checkbox"
         onChange={this.onChange}
