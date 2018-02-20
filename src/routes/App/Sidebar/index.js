@@ -7,7 +7,7 @@ import { headingClass, showClass, timeClass } from './styled';
 
 @graphql(gql`
   query SidebarQuery {
-    shows(latest: true) @connection(key: "shows", filter: ["latest"]) {
+    shows(latest: true, first: 20) @connection(key: "shows", filter: ["latest"]) {
       edges {
         node {
           id
