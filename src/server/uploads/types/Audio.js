@@ -65,7 +65,7 @@ export default class Audio extends Upload {
         images: this.images,
       });
     };
-    super.save(file, callback);
+    Upload.prototype.save.call(this, file, callback);
   }
 
   toArray() {

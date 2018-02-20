@@ -19,6 +19,6 @@ export default class Video extends Upload {
         type: 'video',
       });
     };
-    super.save(file, callback);
+    Upload.prototype.save.call(this, file, callback);
   }
 }
