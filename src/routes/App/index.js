@@ -31,35 +31,7 @@ import {
 
 /* eslint-disable react/prop-types */
 
-@graphql(
-  gql`
-    query AppQuery {
-      settings(id: "site") {
-        ... on SiteSettings {
-          siteTitle
-          tagline
-          siteUrl
-          language
-          copyrightText
-        }
-      }
-      dashboardSettings: settings(id: "dashboard") {
-        ... on DashboardSettings {
-          googleTrackingId
-        }
-      }
-      socialSettings: settings(id: "social") {
-        ... on SocialSettings {
-          facebookUrl
-          facebookAppId
-          twitterUsername
-          instagramUsername
-        }
-      }
-    }
-  `
-)
-export default class App extends Component {
+class App extends Component {
   static childContextTypes = {
     settings: settingsShape,
     socialSettings: socialSettingsShape,
@@ -167,3 +139,32 @@ export default class App extends Component {
     );
   }
 }
+
+export default graphql(
+  gql`
+    query AppQuery {
+      settings(id: "site") {
+        ... on SiteSettings {
+          siteTitle
+          tagline
+          siteUrl
+          language
+          copyrightText
+        }
+      }
+      dashboardSettings: settings(id: "dashboard") {
+        ... on DashboardSettings {
+          googleTrackingId
+        }
+      }
+      socialSettings: settings(id: "social") {
+        ... on SocialSettings {
+          facebookUrl
+          facebookAppId
+          twitterUsername
+          instagramUsername
+        }
+      }
+    }
+  `
+)(App);

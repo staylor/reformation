@@ -10,37 +10,7 @@ import { Wrapper, Title } from './styled';
 
 /* eslint-disable react/prop-types */
 
-@graphql(
-  gql`
-    query PostQuery($slug: String) {
-      post(slug: $slug) {
-        id
-        title
-        slug
-        contentState {
-          ...Content_contentState
-        }
-        summary
-        featuredMedia {
-          destination
-          ... on ImageUpload {
-            crops {
-              fileName
-              width
-            }
-          }
-        }
-      }
-    }
-    ${Content.fragments.contentState}
-  `,
-  {
-    options: ({ match: { params } }) => ({
-      variables: { slug: params.slug },
-    }),
-  }
-)
-export default class PostRoute extends Component {
+class PostRoute extends Component {
   static contextTypes = {
     settings: settingsShape,
     socialSettings: socialSettingsShape,
@@ -92,3 +62,34 @@ export default class PostRoute extends Component {
     );
   }
 }
+
+export default graphql(
+  gql`
+    query PostQuery($slug: String) {
+      post(slug: $slug) {
+        id
+        title
+        slug
+        contentState {
+          ...Content_contentState
+        }
+        summary
+        featuredMedia {
+          destination
+          ... on ImageUpload {
+            crops {
+              fileName
+              width
+            }
+          }
+        }
+      }
+    }
+    ${Content.fragments.contentState}
+  `,
+  {
+    options: ({ match: { params } }) => ({
+      variables: { slug: params.slug },
+    }),
+  }
+)(PostRoute);
