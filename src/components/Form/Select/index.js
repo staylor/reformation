@@ -13,7 +13,7 @@ type Props = {
   multiple?: boolean,
   onChange?: (value: any) => any,
   bindRef?: (element: any) => void,
-  value?: string | number | Array<string | number>,
+  value?: string | number | Array<string | number> | null,
   placeholder?: string,
   choices?: Choices,
   groups?: Groups,
