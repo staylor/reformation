@@ -58,7 +58,7 @@ const columns = [
 @compose(
   graphql(ShowQuery, {
     options: {
-      variables: { first: 20 },
+      variables: { first: 20, order: 'DESC' },
       // This ensures that the table is up to date when shows are mutated.
       // The alternative is to specify refetchQueries on all Show mutations.
       fetchPolicy: 'cache-and-network',

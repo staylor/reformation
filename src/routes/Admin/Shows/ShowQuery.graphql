@@ -5,6 +5,7 @@ query ShowQuery(
   $artist: ObjID
   $venue: ObjID
   $search: String
+  $order: ShowOrder
 ) {
   shows(
     first: $first
@@ -13,6 +14,7 @@ query ShowQuery(
     artist: $artist
     venue: $venue
     search: $search
+    order: $order
   ) @connection(key: "shows", filter: ["date", "artist", "venue", "search"]) {
     count
     edges {

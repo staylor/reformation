@@ -37,6 +37,11 @@ input UpdateShowInput {
   venue: ObjID
 }
 
+enum ShowOrder {
+  ASC
+  DESC
+}
+
 extend type Query {
   shows(
     first: Int
@@ -48,6 +53,7 @@ extend type Query {
     artist: ObjID
     venue: ObjID
     search: String
+    order: ShowOrder
   ): ShowConnection
   show(id: ObjID, slug: String): Show
 }

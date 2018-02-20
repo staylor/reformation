@@ -28,6 +28,7 @@ export default class Show extends Model {
     limit = 10,
     offset = 0,
     latest = false,
+    order = 'ASC',
     artist = null,
     venue = null,
     search = null,
@@ -48,7 +49,7 @@ export default class Show extends Model {
 
     return this.collection
       .find(criteria)
-      .sort({ date: 1 })
+      .sort({ date: order === 'ASC' ? 1 : -1 })
       .skip(offset)
       .limit(limit)
       .toArray();
