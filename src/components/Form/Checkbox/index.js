@@ -8,7 +8,7 @@ type Props = {
   id: string,
   className?: ClassNameArg,
   checked?: boolean,
-  onChange: (checked: boolean, id?: string | null) => void,
+  onChange?: (checked: boolean, id?: string | null) => void,
 };
 
 type State = {
@@ -19,7 +19,9 @@ export default class Checkbox extends Component<Props, State> {
   onChange = (e: { target: HTMLInputElement }) => {
     const value = Boolean(e.target.checked);
     this.setState({ checked: value }, () => {
-      this.props.onChange(value, this.props.id || null);
+      if (this.props.onChange) {
+        this.props.onChange(value, this.props.id || null);
+      }
     });
   };
 

@@ -11,7 +11,7 @@ export type Groups = Array<{ label: string, choices: Choices }>;
 type Props = {
   className?: ClassNameArg,
   multiple?: boolean,
-  onChange: (value: any) => any,
+  onChange?: (value: any) => any,
   value?: string | number | Array<string | number>,
   placeholder?: string,
   choices?: Choices,
@@ -46,7 +46,9 @@ export default class Select extends Component<Props, State> {
       value = [...e.target.selectedOptions].map(o => o.value);
     }
     this.setState({ value }, () => {
-      this.props.onChange(value);
+      if (this.props.onChange) {
+        this.props.onChange(value);
+      }
     });
   };
 

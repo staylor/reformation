@@ -7,7 +7,7 @@ import { inputClass } from './styled';
 type Props = {
   value: string,
   className?: ClassNameArg,
-  onChange: (value: string) => void,
+  onChange?: (value: string) => void,
 };
 
 type State = {
@@ -20,7 +20,9 @@ export default class Input extends Component<Props, State> {
   onChange = (e: { target: HTMLInputElement }) => {
     const value = e.target.value || '';
     this.setState({ value }, () => {
-      this.props.onChange(value);
+      if (this.props.onChange) {
+        this.props.onChange(value);
+      }
     });
   };
 

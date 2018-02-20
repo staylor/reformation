@@ -7,7 +7,7 @@ import { textareaClass } from './styled';
 type Props = {
   value: string,
   className?: ClassNameArg,
-  onChange: (value: string) => void,
+  onChange?: (value: string) => void,
 };
 
 type State = {
@@ -20,7 +20,9 @@ export default class Textarea extends Component<Props, State> {
   onChange = (e: { target: HTMLTextAreaElement }) => {
     const value = e.target.value || '';
     this.setState({ value }, () => {
-      this.props.onChange(value);
+      if (this.props.onChange) {
+        this.props.onChange(value);
+      }
     });
   };
 
