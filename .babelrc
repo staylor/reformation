@@ -5,8 +5,8 @@
   ],
   "plugins": [
     "emotion",
-    "transform-class-properties",
     "transform-decorators-legacy",
+    "transform-class-properties",
     "transform-es2015-modules-commonjs",
     "transform-object-rest-spread",
     ["module-resolver", {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Video from 'components/Videos/Video';
 import { TwitterRedraftDecorator } from 'components/Editor/decorators/TwitterDecorator';
 import { uploadUrl } from 'utils/media';
@@ -34,7 +34,12 @@ export default {
    */
   blocks: {
     unstyled: (children, { keys }) =>
-      children.map((child, i) => <Paragraph key={keys[i]}>{child}</Paragraph>),
+      children.map((child, i) => {
+        if (child[1] && child[1].props && child[1].props.video) {
+          return <Fragment key={keys[i]}>{child}</Fragment>;
+        }
+        return <Paragraph key={keys[i]}>{child}</Paragraph>;
+      }),
     blockquote: (children, { keys }) => (
       <blockquote key={keys.join('|')}>{addBreaklines(children)}</blockquote>
     ),
