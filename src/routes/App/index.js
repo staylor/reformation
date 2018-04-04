@@ -7,27 +7,16 @@ import { ThemeProvider } from 'emotion-theming';
 import { settingsShape, socialSettingsShape } from 'types/PropTypes';
 import Helmet from 'react-helmet-async';
 import NotFound from 'components/NotFound';
-import logo from 'public/logo.png';
+import Logo from 'components/Logo';
+import Input from 'components/Form/Input';
+import { Button } from 'styles/utils';
 import Home from './Home';
 import Videos from './Videos';
 import Video from './Video';
 import Post from './Post';
 import Sidebar from './Sidebar';
 import Navigation from './Nav';
-import {
-  wrapperClass,
-  headerClass,
-  titleClass,
-  contentClass,
-  primaryClass,
-  secondaryClass,
-  footerClass,
-  socialNavClass,
-  facebookIconClass,
-  twitterIconClass,
-  instagramIconClass,
-  footerNavClass,
-} from './styled';
+import * as styles from './styled';
 
 /* eslint-disable react/prop-types */
 
@@ -85,7 +74,7 @@ export default class App extends Component {
       <Fragment>
         {socialSettings.instagramUsername && (
           <a
-            className={cx('icon-font', instagramIconClass)}
+            className={cx('icon-font', styles.instagramIconClass)}
             href={`$https://instagram.com/${socialSettings.instagramUsername}`}
           >
             <span>Instagram</span>
@@ -93,14 +82,17 @@ export default class App extends Component {
         )}
         {socialSettings.twitterUsername && (
           <a
-            className={cx('icon-font', twitterIconClass)}
+            className={cx('icon-font', styles.twitterIconClass)}
             href={`https://twitter.com/${socialSettings.twitterUsername}`}
           >
             <span>Twitter</span>
           </a>
         )}
         {socialSettings.facebookUrl && (
-          <a className={cx('icon-font', facebookIconClass)} href={socialSettings.facebookUrl}>
+          <a
+            className={cx('icon-font', styles.facebookIconClass)}
+            href={socialSettings.facebookUrl}
+          >
             <span>Facebook</span>
           </a>
         )}
@@ -109,7 +101,7 @@ export default class App extends Component {
 
     return (
       <ThemeProvider theme={{}}>
-        <div className={wrapperClass}>
+        <div className={styles.wrapperClass}>
           <Helmet defaultTitle={settings.siteTitle} titleTemplate={`%s » ${settings.siteTitle}`}>
             <html lang={settings.language} />
             <title>{settings.tagline}</title>
@@ -133,17 +125,17 @@ export default class App extends Component {
             )}
             <meta property="og:site_name" content={settings.siteTitle} />
           </Helmet>
-          <header className={headerClass}>
-            <h1 className={titleClass}>
+          <header className={styles.headerClass}>
+            <h1 className={styles.titleClass}>
               <Link to="/">
-                <img src={logo} alt={settings.siteTitle} />
+                <Logo />
               </Link>
             </h1>
-            <nav className={socialNavClass}>{social}</nav>
+            <nav className={styles.socialNavClass}>{social}</nav>
             <Navigation />
           </header>
-          <div className={contentClass}>
-            <section className={primaryClass}>
+          <div className={styles.contentClass}>
+            <section className={styles.primaryClass}>
               <Switch>
                 <Route exact path="/videos/:year(\d{4})?" component={Videos} />
                 <Route path="/video/:slug" component={Video} />
@@ -152,16 +144,36 @@ export default class App extends Component {
                 <Route path="*" component={NotFound} />
               </Switch>
             </section>
-            <section className={secondaryClass}>
+            <section className={styles.secondaryClass}>
               <Sidebar />
             </section>
           </div>
-          <nav className={footerNavClass}>{social}</nav>
-          <footer
-            className={footerClass}
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: settings.copyrightText }}
-          />
+          <nav className={styles.footerNavClass}>{social}</nav>
+          <footer className={styles.footerClass}>
+            <form
+              className={styles.newsletterForm}
+              action="https://tinyletter.com/highforthis"
+              method="post"
+              target="popupwindow"
+              onSubmit="window.open('https://tinyletter.com/highforthis', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true"
+            >
+              <label htmlFor="tlemail">
+                <Input
+                  type="text"
+                  name="email"
+                  id="tlemail"
+                  placeholder="Enter your email address"
+                  className={styles.newsletterInput}
+                />
+              </label>
+              <input type="hidden" value="1" name="embed" />
+              <Button type="submit">Subscribe</Button>
+            </form>
+            <section
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{ __html: settings.copyrightText }}
+            />
+          </footer>
         </div>
       </ThemeProvider>
     );

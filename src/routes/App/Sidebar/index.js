@@ -24,8 +24,6 @@ import { headingClass, showClass, timeClass } from './styled';
   }
 `)
 export default class Sidebar extends Component {
-  state = {};
-
   render() {
     const { data: { loading, shows } } = this.props;
 

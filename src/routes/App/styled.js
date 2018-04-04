@@ -22,7 +22,7 @@ export const titleClass = css`
     text-decoration: none;
   }
 
-  img {
+  svg {
     display: block;
     height: auto;
     margin: 0 auto;
@@ -138,4 +138,16 @@ export const instagramIconClass = css`
 export const footerNavClass = css`
   margin: 10px 0;
   text-align: center;
+`;
+
+export const newsletterForm = css`
+  margin: 0 0 10px;
+`;
+
+export const newsletterInput = css`
+  display: inline-block;
+  margin: 0 5px;
+  max-width: 50%;
+  transform: translateY(-2px);
+  width: 300px;
 `;
