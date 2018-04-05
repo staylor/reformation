@@ -4,7 +4,6 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { cx } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
-import { settingsShape, socialSettingsShape } from 'types/PropTypes';
 import Helmet from 'react-helmet-async';
 import NotFound from 'components/NotFound';
 import Logo from 'components/Logo';
@@ -16,6 +15,7 @@ import Video from './Video';
 import Post from './Post';
 import Sidebar from './Sidebar';
 import Navigation from './Nav';
+import AppContext from './Context';
 import * as styles from './styled';
 
 /* eslint-disable react/prop-types */
@@ -49,16 +49,6 @@ import * as styles from './styled';
   `
 )
 export default class App extends Component {
-  static childContextTypes = {
-    settings: settingsShape,
-    socialSettings: socialSettingsShape,
-  };
-
-  getChildContext() {
-    const { settings, socialSettings } = this.props.data;
-    return { settings, socialSettings };
-  }
-
   componentDidUpdate() {
     document.documentElement.scrollTop = 0;
   }
@@ -75,7 +65,7 @@ export default class App extends Component {
         {socialSettings.instagramUsername && (
           <a
             className={cx('icon-font', styles.instagramIconClass)}
-            href={`$https://instagram.com/${socialSettings.instagramUsername}`}
+            href={`https://instagram.com/${socialSettings.instagramUsername}`}
           >
             <span>Instagram</span>
           </a>
@@ -100,82 +90,84 @@ export default class App extends Component {
     );
 
     return (
-      <ThemeProvider theme={{}}>
-        <div className={styles.wrapperClass}>
-          <Helmet defaultTitle={settings.siteTitle} titleTemplate={`%s » ${settings.siteTitle}`}>
-            <html lang={settings.language} />
-            <title>{settings.tagline}</title>
-            {dashboardSettings.googleTrackingId && (
-              <script
-                async
-                src={`https://www.googletagmanager.com/gtag/js?id=${
-                  dashboardSettings.googleTrackingId
-                }`}
-              />
-            )}
-            {dashboardSettings.googleTrackingId && (
-              <script
-              >{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${
-                dashboardSettings.googleTrackingId
-              }');`}</script>
-            )}
-            <link rel="canonical" href={settings.siteUrl} />
-            {socialSettings.facebookAppId && (
-              <meta property="fb:app_id" content={socialSettings.facebookAppId} />
-            )}
-            <meta property="og:site_name" content={settings.siteTitle} />
-          </Helmet>
-          <header className={styles.headerClass}>
-            <h1 className={styles.titleClass}>
-              <Link to="/">
-                <Logo />
-              </Link>
-            </h1>
-            <nav className={styles.socialNavClass}>{social}</nav>
-            <Navigation />
-          </header>
-          <div className={styles.contentClass}>
-            <section className={styles.primaryClass}>
-              <Switch>
-                <Route exact path="/videos/:year(\d{4})?" component={Videos} />
-                <Route path="/video/:slug" component={Video} />
-                <Route path="/post/:slug" component={Post} />
-                <Route exact path="/" component={Home} />
-                <Route path="*" component={NotFound} />
-              </Switch>
-            </section>
-            <section className={styles.secondaryClass}>
-              <Sidebar />
-            </section>
-          </div>
-          <nav className={styles.footerNavClass}>{social}</nav>
-          <footer className={styles.footerClass}>
-            <form
-              className={styles.newsletterForm}
-              action="https://tinyletter.com/highforthis"
-              method="post"
-              target="popupwindow"
-              onSubmit="window.open('https://tinyletter.com/highforthis', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true"
-            >
-              <label htmlFor="tlemail">
-                <Input
-                  type="text"
-                  name="email"
-                  id="tlemail"
-                  placeholder="Enter your email address"
-                  className={styles.newsletterInput}
+      <AppContext.Provider value={{ settings, socialSettings }}>
+        <ThemeProvider theme={{}}>
+          <div className={styles.wrapperClass}>
+            <Helmet defaultTitle={settings.siteTitle} titleTemplate={`%s » ${settings.siteTitle}`}>
+              <html lang={settings.language} />
+              <title>{settings.tagline}</title>
+              {dashboardSettings.googleTrackingId && (
+                <script
+                  async
+                  src={`https://www.googletagmanager.com/gtag/js?id=${
+                    dashboardSettings.googleTrackingId
+                  }`}
                 />
-              </label>
-              <input type="hidden" value="1" name="embed" />
-              <Button type="submit">Subscribe</Button>
-            </form>
-            <section
-              // eslint-disable-next-line react/no-danger
-              dangerouslySetInnerHTML={{ __html: settings.copyrightText }}
-            />
-          </footer>
-        </div>
-      </ThemeProvider>
+              )}
+              {dashboardSettings.googleTrackingId && (
+                <script
+                >{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${
+                  dashboardSettings.googleTrackingId
+                }');`}</script>
+              )}
+              <link rel="canonical" href={settings.siteUrl} />
+              {socialSettings.facebookAppId && (
+                <meta property="fb:app_id" content={socialSettings.facebookAppId} />
+              )}
+              <meta property="og:site_name" content={settings.siteTitle} />
+            </Helmet>
+            <header className={styles.headerClass}>
+              <h1 className={styles.titleClass}>
+                <Link to="/">
+                  <Logo />
+                </Link>
+              </h1>
+              <nav className={styles.socialNavClass}>{social}</nav>
+              <Navigation />
+            </header>
+            <div className={styles.contentClass}>
+              <section className={styles.primaryClass}>
+                <Switch>
+                  <Route exact path="/videos/:year(\d{4})?" component={Videos} />
+                  <Route path="/video/:slug" component={Video} />
+                  <Route path="/post/:slug" component={Post} />
+                  <Route exact path="/" component={Home} />
+                  <Route path="*" component={NotFound} />
+                </Switch>
+              </section>
+              <section className={styles.secondaryClass}>
+                <Sidebar />
+              </section>
+            </div>
+            <nav className={styles.footerNavClass}>{social}</nav>
+            <footer className={styles.footerClass}>
+              <form
+                className={styles.newsletterForm}
+                action="https://tinyletter.com/highforthis"
+                method="post"
+                target="popupwindow"
+                onSubmit="window.open('https://tinyletter.com/highforthis', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true"
+              >
+                <label htmlFor="tlemail">
+                  <Input
+                    type="text"
+                    name="email"
+                    id="tlemail"
+                    placeholder="Enter your email address"
+                    className={styles.newsletterInput}
+                  />
+                </label>
+                <input type="hidden" value="1" name="embed" />
+                <Button type="submit">Subscribe</Button>
+              </form>
+              <section
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{ __html: settings.copyrightText }}
+              />
+            </footer>
+          </div>
+        </ThemeProvider>
+      </AppContext.Provider>
     );
   }
 }

@@ -48,12 +48,13 @@ class Latest extends Component {
               node.featuredMedia.map(media => {
                 const crop = media.crops.find(c => c.width === 300);
                 return (
-                  <img
-                    className={imageClass}
-                    key={crop.fileName}
-                    alt=""
-                    src={uploadUrl(media.destination, crop.fileName)}
-                  />
+                  <Link to={`/post/${node.slug}`} key={crop.fileName}>
+                    <img
+                      className={imageClass}
+                      alt=""
+                      src={uploadUrl(media.destination, crop.fileName)}
+                    />
+                  </Link>
                 );
               })}
             <p className={paragraphClass}>{node.summary}</p>
