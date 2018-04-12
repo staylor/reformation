@@ -6,11 +6,15 @@ import Form from 'components/Form';
 /* eslint-disable react/prop-types */
 
 function showFields({ artists, venues }) {
+  const date = new Date();
+  date.setHours(19);
+
   return [
     { label: 'Title', prop: 'title', editable: true },
     {
       prop: 'date',
       type: 'date',
+      defaultValue: date.getTime(),
       editable: true,
     },
     {
@@ -18,6 +22,7 @@ function showFields({ artists, venues }) {
       prop: 'artist',
       editable: true,
       type: 'select',
+      placeholder: '---',
       choices: artists.edges.map(({ node }) => ({
         label: node.name,
         value: node.id,
@@ -31,6 +36,7 @@ function showFields({ artists, venues }) {
       prop: 'venue',
       editable: true,
       type: 'select',
+      placeholder: '---',
       choices: venues.edges.map(({ node }) => ({
         label: node.name,
         value: node.id,

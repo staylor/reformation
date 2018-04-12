@@ -27,6 +27,7 @@ type Updates = {};
 type F = {
   prop: string,
   value?: () => any,
+  defaultValue?: any,
   render?: (?Data) => any,
   className?: ClassNameArg,
   label?: string,
@@ -149,7 +150,7 @@ export default class Form extends Component<Props> {
     if (field.type === 'date') {
       return (
         <Date
-          date={data[field.prop]}
+          date={data[field.prop] || field.defaultValue}
           className={cx(field.className)}
           onChange={this.bindOnChange(field, data)}
         />
