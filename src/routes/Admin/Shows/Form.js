@@ -7,7 +7,8 @@ import Form from 'components/Form';
 
 function showFields({ artists, venues }) {
   const date = new Date();
-  date.setHours(19);
+  date.setHours(20);
+  date.setMinutes(0);
 
   return [
     { label: 'Title', prop: 'title', editable: true },
