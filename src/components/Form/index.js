@@ -165,6 +165,7 @@ export default class Form extends Component<Props> {
           choices={field.choices}
           value={data[field.prop] || (field.multiple ? [] : '')}
           multiple={field.multiple || false}
+          placeholder={field.placeholder || ''}
         >
           {data && field.render ? field.render(data) : null}
         </Select>
