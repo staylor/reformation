@@ -1,11 +1,9 @@
 import 'dotenv/config';
 import express from 'express';
 import { CronJob } from 'cron';
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 import bodyParser from 'body-parser';
-import { makeExecutableSchema } from 'graphql-tools';
 import { MongoClient } from 'mongodb';
-import cors from 'cors';
 import typeDefs from 'server/graphql/schema';
 import resolvers from 'server/graphql/resolvers';
 import addModelsToContext from './models';
@@ -15,12 +13,10 @@ import youtubeData from './data/youtube';
 
 /* eslint-disable no-console */
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
-
 const { GRAPHQL_PORT = 8080, MONGO_URL, MONGO_DB } = process.env;
 
 async function startServer() {
-  const client = await MongoClient.connect(MONGO_URL);
+  const client = await MongoClient.connect(MONGO_URL, { useNewUrlParser: true });
   const db = client.db(MONGO_DB);
   createIndexes(db);
 
@@ -33,36 +29,24 @@ async function startServer() {
     start: false,
   });
 
-  const app = express().use('*', cors());
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(bodyParser.json());
-
-  app.use((req, res, next) => {
-    req.context = addModelsToContext({ db });
-
-    next();
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: () => addModelsToContext({ db }),
   });
+
+  const app = express();
+  server.applyMiddleware({ app, cors: true, bodyParserConfig: true });
+
+  app.use(bodyParser.urlencoded({ extended: true }));
 
   authenticate(app);
 
-  app.use(
-    '/graphql',
-    graphqlExpress(req => ({
-      schema,
-      context: req.context,
-    }))
-  );
-
-  app.use(
-    '/graphiql',
-    graphiqlExpress({
-      endpointURL: '/graphql',
-    })
-  );
-
-  app.listen(GRAPHQL_PORT, () => {
+  app.listen({ port: GRAPHQL_PORT }, () => {
     ytJob.start();
-    console.log(`API Server is now running on http://localhost:${GRAPHQL_PORT}`);
+    console.log(
+      `API Server is now running on http://localhost:${GRAPHQL_PORT}${server.graphqlPath}`
+    );
   });
 }
 
