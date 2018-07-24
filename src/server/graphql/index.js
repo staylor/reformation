@@ -46,6 +46,12 @@ async function startServer() {
     `,
     resolvers,
     context: ({ req }) => req.context,
+    playground: {
+      settings: {
+        'editor.theme': 'light',
+        'editor.cursorShape': 'block',
+      },
+    },
   });
 
   server.applyMiddleware({ app, cors: true, bodyParserConfig: true });
