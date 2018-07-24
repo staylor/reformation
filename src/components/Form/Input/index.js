@@ -1,12 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { cx } from 'emotion';
-import type { ClassNameArg } from 'types/emotion';
 import { inputClass } from './styled';
 
 type Props = {
   value: string,
-  className?: ClassNameArg,
+  className?: string | null,
   onChange?: (value: string) => void,
   bindRef?: (element: any) => void,
 };

@@ -158,8 +158,10 @@ export default class DatePicker extends Component<Props, State> {
     this.changeDate();
   }
 
-  componentDidUpdate() {
-    this.changeDate();
+  componentDidUpdate(nextProps) {
+    if (nextProps.date !== this.props.date) {
+      this.changeDate();
+    }
   }
 
   render() {

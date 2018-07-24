@@ -1,7 +1,6 @@
 // @flow
 import React, { Component, type Node } from 'react';
 import { cx } from 'emotion';
-import type { ClassNameArg } from 'types/emotion';
 import { selectClass } from 'components/Form/styled';
 
 export type Choice = string | number | { label: string, value: string | number };
@@ -9,7 +8,7 @@ export type Choices = Array<Choice>;
 export type Groups = Array<{ label: string, choices: Choices }>;
 
 type Props = {
-  className?: ClassNameArg,
+  className?: string | null,
   multiple?: boolean,
   onChange?: (value: any) => any,
   bindRef?: (element: any) => void,

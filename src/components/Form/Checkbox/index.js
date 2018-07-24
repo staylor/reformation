@@ -1,12 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { cx } from 'emotion';
-import type { ClassNameArg } from 'types/emotion';
 import { checkboxClass } from './styled';
 
 type Props = {
   id: string,
-  className?: ClassNameArg,
+  className?: string | null,
   checked?: boolean,
   onChange?: (checked: boolean, id?: string | null) => void,
   bindRef?: (element: any) => void,

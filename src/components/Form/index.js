@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { convertToRaw } from 'draft-js';
 import type { ContentState } from 'draft-js';
 import { cx } from 'emotion';
-import type { ClassNameArg } from 'types/emotion';
 import invariant from 'invariant';
 import Editor from 'components/Editor';
 import { PrimaryButton } from 'styles/utils';
@@ -23,7 +22,7 @@ type F = {
   value?: () => any,
   defaultValue?: any,
   render?: (?Data) => any,
-  className?: ClassNameArg,
+  className?: string | null,
   label?: string,
   type?: string,
   placeholder?: string,
