@@ -187,7 +187,7 @@ export default class Form extends Component<Props> {
   }
 
   render() {
-    const { data = {}, fields, boxLabel = 'Details', buttonLabel = 'Submit' } = this.props;
+    const { data = {}, fields, boxLabel, buttonLabel } = this.props;
 
     const primaryFields = [];
     const infoFields = [];
@@ -261,6 +261,6 @@ export default class Form extends Component<Props> {
 }
 
 Form.defaultProps = {
-  boxLabel: '',
-  buttonLabel: '',
+  boxLabel: 'Details',
+  buttonLabel: 'Submit',
 };

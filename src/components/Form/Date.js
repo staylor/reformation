@@ -103,7 +103,7 @@ export default class DatePicker extends Component<Props, State> {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.yearChoices && nextProps.date !== prevState.date) {
+    if (nextProps.date !== prevState.date || !prevState.yearChoices) {
       const d = nextProps.date ? new Date(nextProps.date) : new Date();
       const day = d.getDate();
       const month = d.getMonth();
