@@ -9,12 +9,7 @@ type Props = {
   button?: any,
 };
 
-export default function InfoColumn({
-  infoFields = [],
-  metaFields = [],
-  label = '',
-  button = null,
-}: Props) {
+export default function InfoColumn({ infoFields, metaFields, label, button }: Props) {
   return (
     <section className={infoColumnClass}>
       {infoFields.length > 0 ? (

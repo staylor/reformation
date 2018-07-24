@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import gql from 'graphql-tag';
-import { settingsShape } from 'types/PropTypes';
 import Editor from 'components/Editor';
 import Form from 'components/Form';
 import FeaturedMedia from './FeaturedMedia';
@@ -9,7 +8,7 @@ import { postTitleClass, ViewPost } from './styled';
 
 /* eslint-disable react/prop-types */
 
-const postFields = settings => [
+const postFields = [
   {
     prop: 'slug',
     render: post => {
@@ -17,7 +16,7 @@ const postFields = settings => [
         return null;
       }
 
-      const url = `${settings.siteUrl}/post/${post.slug}`;
+      const url = `/post/${post.slug}`;
       return (
         <Fragment>
           <ViewPost href={url} target="_blank">
@@ -94,13 +93,9 @@ const postFields = settings => [
   },
 ];
 
-export default function PostForm({ post = {}, buttonLabel = 'Submit', onSubmit }, { settings }) {
-  return <Form fields={postFields(settings)} data={post} {...{ buttonLabel, onSubmit }} />;
+export default function PostForm({ post = {}, buttonLabel = 'Submit', onSubmit }) {
+  return <Form fields={postFields} data={post} {...{ buttonLabel, onSubmit }} />;
 }
-
-PostForm.contextTypes = {
-  settings: settingsShape,
-};
 
 PostForm.fragments = {
   post: gql`

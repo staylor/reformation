@@ -45,7 +45,7 @@ export default class Input extends Component<Props, State> {
         ref={bindRef}
         className={cx(inputClass, className)}
         onChange={this.onChange}
-        value={this.state.value}
+        defaultValue={this.state.value}
       />
     );
   }

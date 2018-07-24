@@ -28,6 +28,8 @@ import * as styles from './styled';
   }
 )
 export default class Login extends Component {
+  state = {};
+
   static getDerivedStateFromProps(nextProps) {
     const {
       match: { params },

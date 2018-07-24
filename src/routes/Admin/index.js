@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import Helmet from 'react-helmet-async';
 import Loading from 'components/Loading';
 import NotFound from 'components/NotFound';
-import { settingsShape, mediaSettingsShape } from 'types/PropTypes';
+import { mediaSettingsShape } from 'types/PropTypes';
 import { wrapperClass, Content, atomicToolbarClass } from './styled';
 import NavMenu from './NavMenu';
 import routeConfig from './routeConfig';
@@ -15,13 +15,11 @@ import routeConfig from './routeConfig';
 
 class Admin extends Component {
   static childContextTypes = {
-    settings: settingsShape,
     mediaSettings: mediaSettingsShape,
   };
 
   getChildContext() {
     return {
-      settings: this.props.data.settings,
       mediaSettings: this.props.data.mediaSettings,
     };
   }
