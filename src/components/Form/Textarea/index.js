@@ -59,3 +59,9 @@ export default class Textarea extends Component<Props, State> {
     );
   }
 }
+
+Textarea.defaultProps = {
+  className: null,
+  onChange: () => null,
+  bindRef: () => null,
+};

@@ -54,7 +54,9 @@ export default class App extends Component {
   }
 
   render() {
-    const { data: { loading, settings, socialSettings, dashboardSettings } } = this.props;
+    const {
+      data: { loading, settings, socialSettings, dashboardSettings },
+    } = this.props;
 
     if (loading && !settings) {
       return null;
@@ -148,7 +150,9 @@ export default class App extends Component {
                 target="popupwindow"
                 onSubmit="window.open('https://tinyletter.com/highforthis', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true"
               >
-                <label htmlFor="tlemail">
+                <label // eslint-disable-line
+                  htmlFor="tlemail"
+                >
                   <Input
                     type="text"
                     name="email"

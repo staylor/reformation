@@ -77,7 +77,15 @@ export default class ListTable extends Component {
   }
 
   render() {
-    const { location, match: { params }, data, path, columns, filters, variables } = this.props;
+    const {
+      location,
+      match: { params },
+      data,
+      path,
+      columns,
+      filters,
+      variables,
+    } = this.props;
 
     if (!data || !data.edges || !data.edges.length) {
       return <p>No items found.</p>;

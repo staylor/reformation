@@ -80,7 +80,12 @@ const columns = [
 )
 export default class Posts extends Component {
   render() {
-    const { location, match, mutate, data: { variables, loading, posts } } = this.props;
+    const {
+      location,
+      match,
+      mutate,
+      data: { variables, loading, posts },
+    } = this.props;
 
     if (loading && !posts) {
       return <Loading />;

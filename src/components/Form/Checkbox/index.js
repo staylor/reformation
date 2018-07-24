@@ -56,3 +56,10 @@ export default class Checkbox extends Component<Props, State> {
     );
   }
 }
+
+Checkbox.defaultProps = {
+  className: null,
+  checked: false,
+  onChange: () => null,
+  bindRef: () => null,
+};

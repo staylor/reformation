@@ -71,7 +71,12 @@ const columns = [
 )
 export default class Taxonomies extends Component {
   render() {
-    const { location, match, mutate, data: { loading, taxonomies, variables } } = this.props;
+    const {
+      location,
+      match,
+      mutate,
+      data: { loading, taxonomies, variables },
+    } = this.props;
 
     if (loading && !taxonomies) {
       return <Loading />;

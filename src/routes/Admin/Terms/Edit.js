@@ -59,7 +59,9 @@ export default class EditTerm extends Component {
   };
 
   render() {
-    const { data: { loading, term } } = this.props;
+    const {
+      data: { loading, term },
+    } = this.props;
 
     if (loading && !term) {
       return <Loading />;

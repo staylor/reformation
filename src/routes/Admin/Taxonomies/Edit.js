@@ -65,7 +65,9 @@ export default class EditTaxonomy extends Component {
   };
 
   render() {
-    const { data: { loading, taxonomy } } = this.props;
+    const {
+      data: { loading, taxonomy },
+    } = this.props;
 
     if (loading && !taxonomy) {
       return <Loading />;

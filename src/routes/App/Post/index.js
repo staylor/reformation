@@ -42,7 +42,9 @@ import { Wrapper, Title } from './styled';
 )
 export default class PostRoute extends Component {
   render() {
-    const { data: { loading, error, post } } = this.props;
+    const {
+      data: { loading, error, post },
+    } = this.props;
 
     if (error) {
       return <NotFound />;

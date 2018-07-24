@@ -23,7 +23,9 @@ import Video from 'components/Videos/Video';
 )
 export default class VideoRoute extends Component {
   render() {
-    const { data: { loading, video } } = this.props;
+    const {
+      data: { loading, video },
+    } = this.props;
 
     if (loading && !video) {
       return null;

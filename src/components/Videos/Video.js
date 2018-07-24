@@ -3,16 +3,9 @@ import React, { Component, Fragment } from 'react';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import { Heading } from 'styles/utils';
-import {
-  VideoLink,
-  embedVideoLink,
-  Placeholder,
-  Title,
-  EmbedTitle,
-  iframeClass,
-  thumb640Class,
-  thumb480Class,
-} from './styled';
+import * as styles from './styled';
+
+const { VideoLink, Placeholder, Title, EmbedTitle } = styles;
 
 type Thumbnail = {
   width: number,
@@ -39,12 +32,12 @@ const findThumb = (thumbs: Array<Thumbnail>, { single, embed }) => {
   let thumb = thumbs.find(t => t.width === sizes[0]);
   if (thumb) {
     thumb = Object.assign({}, thumb);
-    thumb.className = thumb480Class;
+    thumb.className = styles.thumb480Class;
   } else {
     thumb = thumbs.find(t => t.width === sizes[1]);
     if (thumb) {
       thumb = Object.assign({}, thumb);
-      thumb.className = thumb640Class;
+      thumb.className = styles.thumb640Class;
     } else {
       thumb = thumbs.find(t => t.width === sizes[2]);
     }
@@ -58,9 +51,9 @@ export default class Video extends Component<Props> {
 
     const iframe = document.createElement('iframe');
     // $FlowFixMe
-    iframe.height = `${Math.ceil(9 / 16 * e.currentTarget.offsetWidth)}`;
+    iframe.height = `${Math.ceil((9 / 16) * e.currentTarget.offsetWidth)}`;
     iframe.width = `${maxWidth}`;
-    iframe.className = this.props.embed ? '' : iframeClass;
+    iframe.className = this.props.embed ? '' : styles.iframeClass;
     iframe.frameBorder = '0';
     iframe.src = `https://www.youtube.com/embed/${this.props.video.dataId}?autoplay=1`;
 
@@ -86,7 +79,7 @@ export default class Video extends Component<Props> {
             to={`/video/${video.slug}`}
             onClick={this.onClick}
             width={thumb ? thumb.width : maxWidth}
-            className={embedVideoLink}
+            className={styles.embedVideoLink}
           >
             {placeholder}
           </VideoLink>

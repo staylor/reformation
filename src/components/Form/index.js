@@ -7,20 +7,14 @@ import type { ClassNameArg } from 'types/emotion';
 import invariant from 'invariant';
 import Editor from 'components/Editor';
 import { PrimaryButton } from 'styles/utils';
-import {
-  formClass,
-  fieldClass,
-  wrapClass,
-  mainColumnClass,
-  FieldName,
-  FieldValue,
-  fieldsClass,
-} from './styled';
 import InfoColumn from './InfoColumn';
 import Input from './Input';
 import Textarea from './Textarea';
 import Select, { type Choices } from './Select';
 import Date from './Date';
+import * as styles from './styled';
+
+const { FieldName, FieldValue } = styles;
 
 type Data = {};
 type Updates = {};
@@ -150,8 +144,7 @@ export default class Form extends Component<Props> {
     if (field.type === 'date') {
       return (
         <Date
-          date={data[field.prop] || field.defaultValue}
-          className={cx(field.className)}
+          date={parseInt(data[field.prop] || field.defaultValue, 10)}
           onChange={this.bindOnChange(field, data)}
         />
       );
@@ -217,21 +210,21 @@ export default class Form extends Component<Props> {
           field.prop
         );
         formField = (
-          <div key={key} className={wrapClass}>
+          <div key={key} className={styles.wrapClass}>
             {field.label && <FieldName>{field.label}</FieldName>}
             {field.render(data)}
           </div>
         );
       } else if (field.type === 'date' || field.type === 'editor') {
         formField = (
-          <div key={key} className={wrapClass}>
+          <div key={key} className={styles.wrapClass}>
             {field.label && <FieldName>{field.label}</FieldName>}
             {this.editableField(field, data)}
           </div>
         );
       } else {
         formField = (
-          <p key={key} className={fieldClass}>
+          <p key={key} className={styles.fieldClass}>
             {field.label && <FieldName>{field.label}</FieldName>}
             {field.editable ? (
               this.editableField(field, data)
@@ -254,9 +247,9 @@ export default class Form extends Component<Props> {
     const button = <PrimaryButton onClick={this.onSubmit}>{buttonLabel}</PrimaryButton>;
 
     return (
-      <form className={formClass}>
-        <fieldset className={fieldsClass}>
-          <div className={mainColumnClass}>
+      <form className={styles.formClass}>
+        <fieldset className={styles.fieldsClass}>
+          <div className={styles.mainColumnClass}>
             {primaryFields}
             {infoFields.length === 0 ? button : null}
           </div>
@@ -266,3 +259,8 @@ export default class Form extends Component<Props> {
     );
   }
 }
+
+Form.defaultProps = {
+  boxLabel: '',
+  buttonLabel: '',
+};

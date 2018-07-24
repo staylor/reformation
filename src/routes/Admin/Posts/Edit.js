@@ -60,7 +60,9 @@ export default class EditPost extends Component {
   };
 
   render() {
-    const { data: { loading, error, post } } = this.props;
+    const {
+      data: { loading, error, post },
+    } = this.props;
 
     if (error) {
       return <Message text={error.message} />;

@@ -44,7 +44,7 @@ export default function addPassport(app, db) {
 
       const userModel = new User({ db });
       const user = await userModel.collection.findOne({ email });
-      if (!user || !await bcrypt.compare(password, user.hash)) {
+      if (!user || !(await bcrypt.compare(password, user.hash))) {
         throw new Error('User not found matching email/password combination');
       }
 

@@ -65,7 +65,9 @@ export default class EditShow extends Component {
   };
 
   render() {
-    const { data: { loading, show, artists, venues } } = this.props;
+    const {
+      data: { loading, show, artists, venues },
+    } = this.props;
 
     if (loading && !show) {
       return <Loading />;

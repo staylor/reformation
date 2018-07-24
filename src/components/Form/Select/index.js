@@ -117,3 +117,15 @@ export default class Select extends Component<Props, State> {
     );
   }
 }
+
+Select.defaultProps = {
+  className: null,
+  multiple: false,
+  onChange: () => null,
+  bindRef: () => null,
+  value: null,
+  placeholder: null,
+  choices: null,
+  groups: null,
+  children: null,
+};

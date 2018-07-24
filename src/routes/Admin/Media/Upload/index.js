@@ -1,13 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Heading } from 'routes/Admin/styled';
-import {
-  dropzoneClass,
-  dropzoneInfoClass,
-  progressBarClass,
-  progressTextClass,
-  statusBarClass,
-} from './styled';
+import * as styles from './styled';
 
 export default class Media extends Component {
   state = {};
@@ -44,7 +38,7 @@ export default class Media extends Component {
     xhr.upload.onprogress = event => {
       if (event.lengthComputable) {
         // eslint-disable-next-line
-        const complete = (event.loaded / event.total * 100) | 0;
+        const complete = ((event.loaded / event.total) * 100) | 0;
         this.setState(prevState => ({
           [guid]: {
             ...prevState[guid],
@@ -81,23 +75,23 @@ export default class Media extends Component {
       <Fragment>
         <Heading>Upload Media</Heading>
         <div
-          className={dropzoneClass}
+          className={styles.dropzoneClass}
           onDrop={this.onDrop}
           onDragOver={e => e.preventDefault()}
           onDragEnd={() => false}
         >
-          <p className={dropzoneInfoClass}>Drop files Here</p>
+          <p className={styles.dropzoneInfoClass}>Drop files Here</p>
         </div>
         <Fragment>
           {Object.keys(this.state).map(key => {
             const upload = this.state[key];
             return (
-              <div className={progressBarClass} key={key}>
-                <div className={progressTextClass}>
+              <div className={styles.progressBarClass} key={key}>
+                <div className={styles.progressTextClass}>
                   {upload.name} {upload.id ? <Link to={`/media/${upload.id}`}>Edit</Link> : null}
                 </div>
                 <div
-                  className={statusBarClass}
+                  className={styles.statusBarClass}
                   style={{ width: upload.id ? '3px' : `${upload.progress}%` }}
                 />
               </div>

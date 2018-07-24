@@ -76,7 +76,9 @@ export default class ImageModal extends Component {
   };
 
   render() {
-    const { data: { loading, uploads } } = this.props;
+    const {
+      data: { loading, uploads },
+    } = this.props;
 
     const portal = document.getElementById('portal');
 

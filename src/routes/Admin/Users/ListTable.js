@@ -61,7 +61,12 @@ const columns = [
 )
 export default class Users extends Component {
   render() {
-    const { location, match, mutate, data: { variables, loading, users } } = this.props;
+    const {
+      location,
+      match,
+      mutate,
+      data: { variables, loading, users },
+    } = this.props;
 
     if (loading && !users) {
       return <Loading />;

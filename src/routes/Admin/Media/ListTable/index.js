@@ -155,7 +155,12 @@ export default class Media extends Component {
   }
 
   render() {
-    const { location, match, mutate, data: { variables, loading, uploads } } = this.props;
+    const {
+      location,
+      match,
+      mutate,
+      data: { variables, loading, uploads },
+    } = this.props;
 
     if (loading && !uploads) {
       return <Loading />;

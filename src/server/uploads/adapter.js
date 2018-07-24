@@ -1,5 +1,5 @@
 import Storage from '@google-cloud/storage';
-import credentials from './keyfile.json';
+import credentials from './keyfile';
 
 /* eslint-disable no-console */
 

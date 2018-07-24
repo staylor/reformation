@@ -60,3 +60,9 @@ export default class Input extends Component<Props, State> {
     );
   }
 }
+
+Input.defaultProps = {
+  className: null,
+  onChange: () => null,
+  bindRef: () => null,
+};

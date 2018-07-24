@@ -57,7 +57,9 @@ export default class EditUser extends Component {
   };
 
   render() {
-    const { data: { loading, user } } = this.props;
+    const {
+      data: { loading, user },
+    } = this.props;
 
     if (loading && !user) {
       return <Loading />;

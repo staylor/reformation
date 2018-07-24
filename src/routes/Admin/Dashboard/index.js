@@ -10,7 +10,9 @@ import { Heading } from '../styled';
 @graphql(DashboardSettingsQuery)
 export default class Home extends Component {
   render() {
-    const { data: { loading, settings } } = this.props;
+    const {
+      data: { loading, settings },
+    } = this.props;
 
     if (loading && !settings) {
       return (

@@ -6,15 +6,7 @@ import fetch from 'isomorphic-fetch';
 import Cookies from 'js-cookie';
 import Message from 'components/Form/Message';
 import { TOKEN_KEY } from 'utils/constants';
-import {
-  wrapperClass,
-  contentClass,
-  titleClass,
-  formClass,
-  labelClass,
-  inputClass,
-  buttonClass,
-} from './styled';
+import * as styles from './styled';
 
 /* eslint-disable react/prop-types */
 
@@ -39,7 +31,9 @@ export default class Login extends Component {
   constructor(props, context) {
     super(props, context);
 
-    const { match: { params } } = props;
+    const {
+      match: { params },
+    } = props;
 
     let error = '';
     if (params.action) {
@@ -88,7 +82,9 @@ export default class Login extends Component {
   };
 
   render() {
-    const { data: { loading, settings } } = this.props;
+    const {
+      data: { loading, settings },
+    } = this.props;
 
     if (loading && !settings) {
       return null;
@@ -96,27 +92,27 @@ export default class Login extends Component {
 
     return (
       <ThemeProvider theme={{}}>
-        <div className={wrapperClass}>
-          <div className={contentClass}>
-            <h1 className={titleClass}>{settings.siteTitle}</h1>
+        <div className={styles.wrapperClass}>
+          <div className={styles.contentClass}>
+            <h1 className={styles.titleClass}>{settings.siteTitle}</h1>
             {this.state.error && <Message text={this.state.error} />}
             <form
-              className={formClass}
+              className={styles.formClass}
               method="post"
               ref={form => {
                 this.form = form;
               }}
               onSubmit={this.submitForm}
             >
-              <label className={labelClass} htmlFor="email">
+              <label className={styles.labelClass} htmlFor="email">
                 Email
-                <input className={inputClass} type="text" name="email" />
+                <input className={styles.inputClass} type="text" name="email" />
               </label>
-              <label className={labelClass} htmlFor="password">
+              <label className={styles.labelClass} htmlFor="password">
                 Password
-                <input className={inputClass} type="password" name="password" />
+                <input className={styles.inputClass} type="password" name="password" />
               </label>
-              <button className={buttonClass} type="submit">
+              <button className={styles.buttonClass} type="submit">
                 Log In
               </button>
             </form>

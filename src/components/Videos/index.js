@@ -62,7 +62,9 @@ export default class Videos extends Component {
   };
 
   render() {
-    const { data: { loading, videos } } = this.props;
+    const {
+      data: { loading, videos },
+    } = this.props;
 
     if (loading && !videos) {
       return <Loading />;

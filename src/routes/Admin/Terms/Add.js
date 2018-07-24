@@ -63,7 +63,9 @@ export default class AddTerm extends Component {
   };
 
   render() {
-    const { data: { loading, taxonomy } } = this.props;
+    const {
+      data: { loading, taxonomy },
+    } = this.props;
 
     if (loading && !taxonomy) {
       return <Loading />;

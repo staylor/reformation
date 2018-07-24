@@ -71,7 +71,9 @@ export default class VideoModal extends Component {
   };
 
   render() {
-    const { data: { loading, videos } } = this.props;
+    const {
+      data: { loading, videos },
+    } = this.props;
 
     const portal = document.getElementById('portal');
 

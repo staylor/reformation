@@ -80,7 +80,12 @@ const columns = [
 )
 export default class Terms extends Component {
   render() {
-    const { location, match, mutate, data: { variables, loading, terms } } = this.props;
+    const {
+      location,
+      match,
+      mutate,
+      data: { variables, loading, terms },
+    } = this.props;
 
     if (loading && !terms) {
       return <Loading />;

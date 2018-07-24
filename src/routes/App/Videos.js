@@ -6,7 +6,9 @@ import { Heading } from 'styles/utils';
 /* eslint-disable react/prop-types */
 
 export default function VideosRoute(props) {
-  const { match: { params = {} } } = props;
+  const {
+    match: { params = {} },
+  } = props;
 
   return (
     <Fragment>

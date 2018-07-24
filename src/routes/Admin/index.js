@@ -35,7 +35,9 @@ class Admin extends Component {
   };
 
   render() {
-    const { data: { loading, settings, taxonomies } } = this.props;
+    const {
+      data: { loading, settings, taxonomies },
+    } = this.props;
 
     if (loading && !settings) {
       return <Loading />;

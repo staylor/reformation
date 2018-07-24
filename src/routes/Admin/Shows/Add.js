@@ -57,7 +57,9 @@ export default class AddShow extends Component {
   };
 
   render() {
-    const { data: { loading, artists, venues } } = this.props;
+    const {
+      data: { loading, artists, venues },
+    } = this.props;
 
     if (loading && !artists) {
       return <Loading />;

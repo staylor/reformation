@@ -123,7 +123,9 @@ class EditMedia extends Component {
   };
 
   render() {
-    const { data: { loading, media } } = this.props;
+    const {
+      data: { loading, media },
+    } = this.props;
 
     if (loading && !media) {
       return <Loading />;

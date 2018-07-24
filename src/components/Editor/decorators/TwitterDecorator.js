@@ -16,7 +16,12 @@ type RedraftProps = {
 };
 
 const RedraftHandle = ({ children, decoratedText }: RedraftProps) => (
-  <a key={decoratedText} target="_blank" href={`https://twitter.com/${decoratedText.substring(1)}`}>
+  <a
+    key={decoratedText}
+    target="_blank"
+    rel="noopener noreferrer"
+    href={`https://twitter.com/${decoratedText.substring(1)}`}
+  >
     {children}
   </a>
 );

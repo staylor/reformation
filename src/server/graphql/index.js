@@ -16,7 +16,10 @@ import youtubeData from './data/youtube';
 const { GRAPHQL_PORT = 8080, MONGO_URL, MONGO_DB } = process.env;
 
 async function startServer() {
-  const client = await MongoClient.connect(MONGO_URL, { useNewUrlParser: true });
+  const client = await MongoClient.connect(
+    MONGO_URL,
+    { useNewUrlParser: true }
+  );
   const db = client.db(MONGO_DB);
   createIndexes(db);
 

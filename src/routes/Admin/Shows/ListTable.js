@@ -89,7 +89,12 @@ const columns = [
 )
 export default class Shows extends Component {
   render() {
-    const { location, match, mutate, data: { variables, loading, shows } } = this.props;
+    const {
+      location,
+      match,
+      mutate,
+      data: { variables, loading, shows },
+    } = this.props;
 
     if (loading && !shows) {
       return <Loading />;

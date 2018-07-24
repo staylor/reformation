@@ -3,13 +3,13 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import { uploadUrl } from 'utils/media';
-import { wrapClass, articleClass, titleClass, paragraphClass, imageClass } from './styled';
+import * as styles from './styled';
 
 /* eslint-disable react/prop-types */
 
 @graphql(gql`
   query LatestPostsQuery {
-    posts(first: 4, status: PUBLISH) @connection(key: "status") {
+    posts(first: 4, status: PUBLISH) @connection(key: "latest", filter: ["status"]) {
       edges {
         node {
           id
@@ -32,16 +32,18 @@ import { wrapClass, articleClass, titleClass, paragraphClass, imageClass } from 
 `)
 class Latest extends Component {
   render() {
-    const { data: { loading, posts } } = this.props;
+    const {
+      data: { loading, posts },
+    } = this.props;
     if (loading && !posts) {
       return null;
     }
 
     return (
-      <div className={wrapClass}>
+      <div className={styles.wrapClass}>
         {posts.edges.map(({ node }) => (
-          <article className={articleClass} key={node.id}>
-            <h1 className={titleClass}>
+          <article className={styles.articleClass} key={node.id}>
+            <h1 className={styles.titleClass}>
               <Link to={`/post/${node.slug}`}>{node.title}</Link>
             </h1>
             {node.featuredMedia &&
@@ -50,14 +52,14 @@ class Latest extends Component {
                 return (
                   <Link to={`/post/${node.slug}`} key={crop.fileName}>
                     <img
-                      className={imageClass}
+                      className={styles.imageClass}
                       alt=""
                       src={uploadUrl(media.destination, crop.fileName)}
                     />
                   </Link>
                 );
               })}
-            <p className={paragraphClass}>{node.summary}</p>
+            <p className={styles.paragraphClass}>{node.summary}</p>
           </article>
         ))}
       </div>
