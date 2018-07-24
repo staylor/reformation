@@ -98,24 +98,29 @@ type State = {
 };
 
 export default class DatePicker extends Component<Props, State> {
-  yearChoices: Array<number>;
+  state = {
+    date: this.props.date,
+  };
 
-  constructor(props: Props) {
-    super(props);
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.yearChoices && nextProps.date !== prevState.date) {
+      const d = nextProps.date ? new Date(nextProps.date) : new Date();
+      const day = d.getDate();
+      const month = d.getMonth();
+      const hour = d.getHours();
+      const minute = d.getMinutes();
 
-    const d = props.date ? new Date(props.date) : new Date();
-    const day = d.getDate();
-    const month = d.getMonth();
-    const hour = d.getHours();
-    const minute = d.getMinutes();
-    this.state = {
-      month: `${month}`,
-      day: `${day < 10 ? `0${day}` : day}`,
-      year: `${d.getFullYear()}`,
-      hour: `${hour < 10 ? `0${hour}` : hour}`,
-      minutes: `${minute < 10 ? `0${minute}` : minute}`,
-    };
-    this.yearChoices = yearChoices(d.getFullYear());
+      return {
+        date: nextProps.date,
+        month: `${month}`,
+        day: `${day < 10 ? `0${day}` : day}`,
+        year: `${d.getFullYear()}`,
+        hour: `${hour < 10 ? `0${hour}` : hour}`,
+        minutes: `${minute < 10 ? `0${minute}` : minute}`,
+        yearChoices: yearChoices(d.getFullYear()),
+      };
+    }
+    return null;
   }
 
   changeDate() {
@@ -169,8 +174,8 @@ export default class DatePicker extends Component<Props, State> {
           })}
           value={this.state.day}
         />
-        <Select onChange={this.setYear} choices={this.yearChoices} value={this.state.year} /> at{' '}
-        <Select onChange={this.setHour} groups={hourChoices} value={this.state.hour} />
+        <Select onChange={this.setYear} choices={this.state.yearChoices} value={this.state.year} />{' '}
+        at <Select onChange={this.setHour} groups={hourChoices} value={this.state.hour} />
         <Select
           onChange={this.setMinutes}
           choices={minuteChoices}

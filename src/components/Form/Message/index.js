@@ -19,10 +19,6 @@ export default class Message extends Component<Props, State> {
     this.setState({ hidden: true });
   };
 
-  componentWillReceiveProps() {
-    this.setState({ hidden: false });
-  }
-
   render() {
     return this.state.hidden ? null : (
       <div className={messageWrapClass}>

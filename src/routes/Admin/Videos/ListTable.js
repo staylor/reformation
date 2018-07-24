@@ -110,12 +110,8 @@ export default class Videos extends Component {
     });
   };
 
-  constructor(props, context) {
-    super(props, context);
-
-    this.updateYear = this.updateProp('year');
-    this.updateSearch = debounce(this.updateProp('search'), 600);
-  }
+  updateYear = this.updateProp('year');
+  updateSearch = debounce(this.updateProp('search'), 600);
 
   render() {
     const {

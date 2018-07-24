@@ -18,7 +18,10 @@ const { MONGO_URL, MONGO_DB } = process.env;
 process.env.TZ = 'America/New_York';
 
 async function startServer() {
-  const client = await MongoClient.connect(MONGO_URL);
+  const client = await MongoClient.connect(
+    MONGO_URL,
+    { useNewUrlParser: true }
+  );
   const db = client.db(MONGO_DB);
 
   const app = express();

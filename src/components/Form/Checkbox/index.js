@@ -17,6 +17,17 @@ type State = {
 };
 
 export default class Checkbox extends Component<Props, State> {
+  state = {
+    checked: false,
+  };
+
+  static getDerivedStateFromProps(nextProps) {
+    if (Object.keys(nextProps).includes('checked')) {
+      return { checked: Boolean(nextProps.checked) };
+    }
+    return null;
+  }
+
   onChange = (e: { target: HTMLInputElement }) => {
     const value = Boolean(e.target.checked);
     this.setState({ checked: value }, () => {
@@ -25,21 +36,6 @@ export default class Checkbox extends Component<Props, State> {
       }
     });
   };
-
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      checked: Boolean(props.checked),
-    };
-  }
-
-  componentWillReceiveProps(nextProps: Props) {
-    if (!Object.keys(nextProps).includes('checked')) {
-      return;
-    }
-    this.setState({ checked: Boolean(nextProps.checked) });
-  }
 
   render() {
     const { id, className, checked, onChange, bindRef, ...props } = this.props;

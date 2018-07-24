@@ -5,13 +5,9 @@ import { TagWrap, Tag, DeleteTag } from './styled';
 /* eslint-disable react/prop-types */
 
 export default class Tags extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      pending: props.tags || [],
-    };
-  }
+  state = {
+    pending: this.props.tags || [],
+  };
 
   onKeyDown = e => {
     if (e.which === 13) {

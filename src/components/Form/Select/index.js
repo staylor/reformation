@@ -40,6 +40,18 @@ const renderOption = (choice: Choice): Node => {
 };
 
 export default class Select extends Component<Props, State> {
+  state = {
+    value: this.props.value || (this.props.multiple ? [] : ''),
+  };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.value === prevState.value) {
+      return null;
+    }
+    const multiple = Boolean(nextProps.multiple);
+    return { value: nextProps.value || (multiple ? [] : '') };
+  }
+
   onChange = (e: { target: HTMLSelectElement }) => {
     let { value } = e.target;
     const multiple = Boolean(this.props.multiple);
@@ -52,30 +64,6 @@ export default class Select extends Component<Props, State> {
       }
     });
   };
-
-  didMount = false;
-
-  constructor(props: Props) {
-    super(props);
-
-    const multiple = Boolean(props.multiple);
-
-    this.state = {
-      value: props.value || (multiple ? [] : ''),
-    };
-  }
-
-  componentWillReceiveProps(nextProps: Props) {
-    if (!this.didMount || nextProps.value === this.state.value) {
-      return;
-    }
-    const multiple = Boolean(nextProps.multiple);
-    this.setState({ value: nextProps.value || (multiple ? [] : '') });
-  }
-
-  componentDidMount() {
-    this.didMount = true;
-  }
 
   render() {
     const {

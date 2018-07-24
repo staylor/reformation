@@ -146,13 +146,9 @@ export default class Media extends Component {
     });
   };
 
-  constructor(props, context) {
-    super(props, context);
-
-    this.updateType = this.updateProp('type');
-    this.updateMimeType = this.updateProp('mimeType');
-    this.updateSearch = debounce(this.updateProp('search'), 600);
-  }
+  updateType = this.updateProp('type');
+  updateMimeType = this.updateProp('mimeType');
+  updateSearch = debounce(this.updateProp('search'), 600);
 
   render() {
     const {

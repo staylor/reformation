@@ -55,11 +55,20 @@ type State = {
 };
 
 export default class InlineStyleControls extends Component<Props, State> {
+  linkInput: HTMLInputElement;
+
   state = {
     mode: '',
     urlValue: '',
   };
-  linkInput: HTMLInputElement;
+
+  static getDerivedStateFromProps(nextProps) {
+    const selection = nextProps.editorState.getSelection();
+    if (selection.isCollapsed()) {
+      return { mode: '', urlValue: '' };
+    }
+    return null;
+  }
 
   // event propagation is already handled
   showLink = () => {
@@ -140,14 +149,6 @@ export default class InlineStyleControls extends Component<Props, State> {
     e.preventDefault();
     e.stopPropagation();
   };
-
-  componentWillReceiveProps() {
-    const { editorState } = this.props;
-    const selection = editorState.getSelection();
-    if (selection.isCollapsed()) {
-      setTimeout(() => this.setState({ mode: '', urlValue: '' }), 0);
-    }
-  }
 
   render() {
     const { editorState, onToggle } = this.props;

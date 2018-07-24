@@ -9,19 +9,12 @@ import { Table, Cell, CellHeading } from './styled';
 export default class Crops extends Component {
   state = {};
 
-  constructor(props) {
-    super(props);
-
-    this.state.crops =
-      props.settings.crops && props.settings.crops.length > 0 ? props.settings.crops : [{}];
-  }
-
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const crops =
       nextProps.settings.crops && nextProps.settings.crops.length > 0
         ? nextProps.settings.crops
         : [{}];
-    this.setState({ crops });
+    return { crops };
   }
 
   addCrop = e => {

@@ -16,7 +16,16 @@ type State = {
 };
 
 export default class Textarea extends Component<Props, State> {
-  didMount = false;
+  state = {
+    value: this.props.value || '',
+  };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.value === prevState.value) {
+      return null;
+    }
+    return { value: nextProps.value || '' };
+  }
 
   onChange = (e: { target: HTMLTextAreaElement }) => {
     const value = e.target.value || '';
@@ -26,25 +35,6 @@ export default class Textarea extends Component<Props, State> {
       }
     });
   };
-
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      value: props.value || '',
-    };
-  }
-
-  componentWillReceiveProps(nextProps: Props) {
-    if (!this.didMount || nextProps.value === this.state.value) {
-      return;
-    }
-    this.setState({ value: nextProps.value || '' });
-  }
-
-  componentDidMount() {
-    this.didMount = true;
-  }
 
   render() {
     const { className, onChange, value, bindRef, ...props } = this.props;

@@ -28,25 +28,20 @@ import * as styles from './styled';
   }
 )
 export default class Login extends Component {
-  constructor(props, context) {
-    super(props, context);
-
+  static getDerivedStateFromProps(nextProps) {
     const {
       match: { params },
-    } = props;
+    } = nextProps;
 
-    let error = '';
     if (params.action) {
       switch (params.action) {
         case 'unauthorized':
-          error = 'You must login to access this area.';
-          break;
+          return { error: 'You must login to access this area.' };
         default:
           break;
       }
     }
-
-    this.state = { error };
+    return null;
   }
 
   submitForm = e => {

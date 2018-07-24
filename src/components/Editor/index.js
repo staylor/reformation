@@ -44,23 +44,12 @@ export default class Editor extends Component {
     };
   }
 
-  state = {
-    readOnly: false,
-    blockToolbar: false,
-    imageModal: false,
-    videoModal: false,
-  };
-
-  editor = null;
-
-  constructor(props, context) {
-    super(props, context);
-
+  defaultEditorState = () => {
     const decorator = new CompositeDecorator([LinkDecorator, TwitterDecorator]);
 
     let contentState;
-    if (props.content) {
-      contentState = convertFromRaw(props.content);
+    if (this.props.content) {
+      contentState = convertFromRaw(this.props.content);
     } else {
       // EditorState.createEmpty() throws errors upon focus, seems to only
       // happen when decorators are added
@@ -76,9 +65,20 @@ export default class Editor extends Component {
         ],
       });
     }
-    this.state.editorState = EditorState.createWithContent(contentState, decorator);
-    this.focus = () => this.editor.focus();
-  }
+    return EditorState.createWithContent(contentState, decorator);
+  };
+
+  state = {
+    readOnly: false,
+    blockToolbar: false,
+    imageModal: false,
+    videoModal: false,
+    editorState: this.defaultEditorState(),
+  };
+
+  editor = null;
+
+  focus = () => this.editor.focus();
 
   handleKeyCommand = (command, editorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
