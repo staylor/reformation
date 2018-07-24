@@ -6,35 +6,21 @@ import httpProxy from 'http-proxy-middleware';
 import morgan from 'morgan';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import { MongoClient } from 'mongodb';
 import authenticate from './authenticate';
-import uploads from './uploads';
 import router from './router';
 
 /* eslint-disable no-console */
 
-const { MONGO_URL, MONGO_DB } = process.env;
-
 process.env.TZ = 'America/New_York';
 
 async function startServer() {
-  const client = await MongoClient.connect(
-    MONGO_URL,
-    { useNewUrlParser: true }
-  );
-  const db = client.db(MONGO_DB);
-
   const app = express();
-
   app.disable('x-powered-by');
   app.use(compression());
   app.use(morgan('combined'));
 
   const publicDir = path.join(process.cwd(), KYT.PUBLIC_DIR);
-  const uploadDir = path.join(process.cwd(), 'src/uploads');
-  // Setup the public directory so that we can server static assets.
   app.use(express.static(publicDir));
-  app.use('/uploads', express.static(uploadDir));
 
   app.use(cookieParser());
 
@@ -48,9 +34,11 @@ async function startServer() {
 
   // proxy to the graphql server
   app.use('/graphql', proxy);
+  app.use('/auth', proxy);
+  app.use('/upload', proxy);
+  app.use('/uploads', proxy);
 
-  authenticate(app, db);
-  uploads(app, db, passport, uploadDir);
+  authenticate(app);
   router(app, passport);
 
   app.listen(parseInt(KYT.SERVER_PORT, 10));
