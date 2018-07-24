@@ -1,4 +1,4 @@
-import { requireFiles } from 'server/graphql/utils';
+import { requireFiles } from '../utils';
 
 const typeDefs = [
   `

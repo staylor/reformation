@@ -1,5 +1,5 @@
 import fs from 'fs';
-import typeDefs from './schema/index';
+import typeDefs from './schema';
 
 const stream = fs.createWriteStream(`${__dirname}/generated/schema.graphql`);
 

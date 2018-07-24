@@ -1,14 +1,16 @@
 import { ObjectId } from 'mongodb';
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
-import { merge } from 'lodash';
-import { requireModules } from 'server/graphql/utils';
+import { requireModules } from '../utils';
 
 const modules = requireModules(__dirname);
-const resolvers = Object.keys(modules).reduce((memo, name) => {
-  merge(memo, modules[name]);
-  return memo;
-}, {});
+const resolvers = Object.keys(modules).reduce(
+  (memo, name) => ({
+    ...memo,
+    ...modules[name],
+  }),
+  {}
+);
 
 resolvers.ObjID = new GraphQLScalarType({
   name: 'ObjID',
@@ -28,6 +30,3 @@ resolvers.ObjID = new GraphQLScalarType({
 });
 
 export default resolvers;
-
-// resolvers.Viewer = Object.assign({}, resolvers.Query);
-// resolvers.Viewer.id = () => 'me';

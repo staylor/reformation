@@ -26,14 +26,8 @@ async function startServer() {
 
   const app = express();
 
-  // Remove annoying Express header addition.
   app.disable('x-powered-by');
-
-  // Compress (gzip) assets in production.
   app.use(compression());
-
-  // Standard Apache combined log output.
-  // https://github.com/expressjs/morgan#combined
   app.use(morgan('combined'));
 
   const publicDir = path.join(process.cwd(), KYT.PUBLIC_DIR);

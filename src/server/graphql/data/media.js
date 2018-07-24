@@ -10,7 +10,10 @@ const { MONGO_URL, MONGO_DB } = process.env;
 const uploadDir = path.join(process.cwd(), 'src/uploads');
 
 (async () => {
-  const client = await MongoClient.connect(MONGO_URL);
+  const client = await MongoClient.connect(
+    MONGO_URL,
+    { useNewUrlParser: true }
+  );
   const db = client.db(MONGO_DB);
   const media = new Media({ db });
   const adapter = mediaAdapter(uploadDir);

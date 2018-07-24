@@ -1,11 +1,11 @@
 import 'dotenv/config';
 import express from 'express';
 import { CronJob } from 'cron';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, gql } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
-import typeDefs from 'server/graphql/schema';
-import resolvers from 'server/graphql/resolvers';
+import typeDefs from './schema';
+import resolvers from './resolvers';
 import addModelsToContext from './models';
 import authenticate from './authenticate';
 import createIndexes from './database/indexes';
@@ -32,13 +32,22 @@ async function startServer() {
     start: false,
   });
 
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context: () => addModelsToContext({ db }),
+  const app = express();
+
+  app.use((req, res, next) => {
+    req.context = addModelsToContext({ db });
+
+    next();
   });
 
-  const app = express();
+  const server = new ApolloServer({
+    typeDefs: gql`
+      ${typeDefs.join('\n')}
+    `,
+    resolvers,
+    context: ({ req }) => req.context,
+  });
+
   server.applyMiddleware({ app, cors: true, bodyParserConfig: true });
 
   app.use(bodyParser.urlencoded({ extended: true }));
