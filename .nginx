@@ -1,0 +1,43 @@
+server {
+	listen       80;
+	server_name  highforthis.com www.highforthis.com;
+	root         /var/www/highforthis.com/public_html;
+	access_log   /var/www/highforthis.com/logs/access.log;
+	error_log    /var/www/highforthis.com/logs/error.log;
+  location /.well-known/acme-challenge/ {
+    try_files $uri /dev/null =404;
+  }
+
+	location / {
+		rewrite ^ https://highforthis.com$request_uri permanent;
+	}
+}
+
+server {
+	listen 443;
+	ssl on;
+ssl_certificate     /etc/letsencrypt/live/goodbyepicasso.com-0002/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/goodbyepicasso.com-0002/privkey.pem;	
+server_name  highforthis.com *.highforthis.com;
+	root         /var/www/highforthis.com/node;
+	access_log   /var/www/highforthis.com/logs/ssl.access.log;
+	error_log    /var/www/highforthis.com/logs/ssl.error.log;
+
+  location / {
+    try_files $uri @app;
+  }
+
+  location @app {
+    proxy_pass http://localhost:3006;
+    proxy_set_header Host $host;
+  }
+
+  location /graphql {
+    try_files $uri @graphql;
+  }
+
+  location @graphql {
+    proxy_pass http://localhost:8084;
+    proxy_set_header Host $host;
+  }
+}
