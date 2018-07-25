@@ -31,12 +31,12 @@ const findThumb = (thumbs: Array<Thumbnail>, { single, embed }) => {
   const sizes = embed || single ? [640, 480, 320] : [480, 640, 320];
   let thumb = thumbs.find(t => t.width === sizes[0]);
   if (thumb) {
-    thumb = Object.assign({}, thumb);
+    thumb = { ...thumb };
     thumb.className = styles.thumb480Class;
   } else {
     thumb = thumbs.find(t => t.width === sizes[1]);
     if (thumb) {
-      thumb = Object.assign({}, thumb);
+      thumb = { ...thumb };
       thumb.className = styles.thumb640Class;
     } else {
       thumb = thumbs.find(t => t.width === sizes[2]);

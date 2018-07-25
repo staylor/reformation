@@ -23,24 +23,19 @@ type ClientOps = {
 };
 
 export default function apolloClient(uri: string, headers: {}, opts: ClientOps) {
-  const params = Object.assign({}, opts);
+  const params = { ...opts };
   if (!params.cache) {
     params.cache = new InMemoryCache({ fragmentMatcher });
   }
-  return new ApolloClient(
-    Object.assign(
-      {},
-      {
-        link: ApolloLink.from([
-          errorLink,
-          new HttpLink({
-            uri,
-            fetch,
-            headers,
-          }),
-        ]),
-      },
-      params
-    )
-  );
+  return new ApolloClient({
+    link: ApolloLink.from([
+      errorLink,
+      new HttpLink({
+        uri,
+        fetch,
+        headers,
+      }),
+    ]),
+    ...params,
+  });
 }

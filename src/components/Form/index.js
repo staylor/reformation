@@ -97,7 +97,7 @@ export default class Form extends Component<Props> {
       entityMap: { ...converted.entityMap },
     };
     const entityMap = Object.keys(value.entityMap).map(i => {
-      const entity = Object.assign({}, value.entityMap[i]);
+      const entity = { ...value.entityMap[i] };
       const entityData = { type: entity.type };
       if (entityData.type === 'LINK') {
         ['href', 'target'].forEach(key => {

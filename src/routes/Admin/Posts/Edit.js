@@ -42,7 +42,7 @@ export default class EditPost extends Component {
   onSubmit = (e, updates) => {
     e.preventDefault();
 
-    const input = Object.assign({}, updates);
+    const input = { ...updates };
 
     const { post } = this.props.data;
     this.props
