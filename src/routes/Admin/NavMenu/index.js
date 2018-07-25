@@ -1,14 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import { withRouter } from 'react-router';
-import { ThemeProvider, withTheme } from 'emotion-theming';
+import { cx } from 'emotion';
 import NavLink from './NavLink';
 import SubNav from './SubNav';
 import CollapseButton from './CollapseButton';
-import { Nav, navWrapClass, separatorClass } from './styled';
+import * as styles from './styled';
 
 /* eslint-disable react/prop-types */
 
-@withRouter
 class NavMenu extends Component {
   state = {
     active: '',
@@ -17,50 +15,47 @@ class NavMenu extends Component {
   onClick = e => {
     e.preventDefault();
 
-    this.props.onCollapse(!this.props.theme.isCollapsed);
+    this.props.toggleCollapse();
   };
 
   render() {
-    const { location, routeConfig } = this.props;
+    const { routeConfig, isCollapsed } = this.props;
 
     return (
-      <Nav>
+      <nav
+        className={cx(styles.navClass, {
+          [styles.openClass]: !isCollapsed,
+          [styles.collapsedClass]: isCollapsed,
+        })}
+      >
         {routeConfig.map((items, i) => (
           <Fragment key={i.toString(16)}>
-            {i > 0 && <i className={separatorClass} />}
+            {i > 0 && <i className={styles.separatorClass} />}
             {items.map((item, j) => {
               const key = `${i}-${j}`;
               const active = this.state.active === key;
+              const hasSubNav = item.routes && item.routes.length > 0;
               return (
                 <div
                   key={key}
-                  className={navWrapClass}
+                  className={styles.navWrapClass}
                   onMouseEnter={() => this.setState({ active: key })}
                   onMouseLeave={() => this.setState({ active: '' })}
                 >
-                  <ThemeProvider
-                    theme={theme => ({
-                      ...theme,
-                      hovered: active ? 'hovered' : 'default',
-                      isHovered: active,
-                      hasSubNav: item.routes && item.routes.length > 0,
-                    })}
-                  >
-                    <Fragment>
-                      <NavLink item={item} />
-                      {item.routes && <SubNav item={item} location={location} />}
-                    </Fragment>
-                  </ThemeProvider>
+                  <Fragment>
+                    <NavLink {...{ item, isHovered: active, hasSubNav, isCollapsed }} />
+                    {item.routes && <SubNav {...{ item, isHovered: active, isCollapsed }} />}
+                  </Fragment>
                 </div>
               );
             })}
           </Fragment>
         ))}
-        <i className={separatorClass} />
-        <CollapseButton onClick={this.onClick} />
-      </Nav>
+        <i className={styles.separatorClass} />
+        <CollapseButton onClick={this.onClick} isCollapsed={isCollapsed} />
+      </nav>
     );
   }
 }
 
-export default withTheme(NavMenu);
+export default NavMenu;

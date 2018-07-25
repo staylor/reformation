@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { ThemeProvider } from 'emotion-theming';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Helmet from 'react-helmet-async';
+import { cx } from 'emotion';
 import Loading from 'components/Loading';
 import NotFound from 'components/NotFound';
 import { mediaSettingsShape } from 'types/PropTypes';
-import { wrapperClass, Content, atomicToolbarClass } from './styled';
+import * as styles from './styled';
 import NavMenu from './NavMenu';
 import routeConfig from './routeConfig';
 
@@ -28,8 +28,8 @@ class Admin extends Component {
     collapsed: false,
   };
 
-  onCollapse = collapsed => {
-    this.setState({ collapsed });
+  toggleCollapse = () => {
+    this.setState(({ collapsed }) => ({ collapsed: !collapsed }));
   };
 
   render() {
@@ -45,37 +45,44 @@ class Admin extends Component {
       taxonomies: taxonomies.edges.map(({ node }) => node),
     });
 
-    const collapsed = this.state.collapsed ? 'collapsed' : 'open';
+    const isCollapsed = this.state.collapsed;
 
     return (
-      <ThemeProvider theme={{ collapsed, isCollapsed: this.state.collapsed }}>
-        <div className={wrapperClass}>
-          <Helmet defaultTitle={settings.siteTitle} titleTemplate={`%s » ${settings.siteTitle}`}>
-            <html lang={settings.language} />
-            <title>Admin</title>
-          </Helmet>
-          <section>
-            <div id="portal" />
-            <div className={atomicToolbarClass} id="atomicToolbar" />
-            <NavMenu onCollapse={this.onCollapse} routeConfig={routes} />
-            <Content>
-              <Switch>
-                {routes.map(section =>
-                  section.map(route => (
-                    <Route
-                      key={route.label}
-                      exact={route.path === '/'}
-                      path={route.path}
-                      component={route.component}
-                    />
-                  ))
-                )}
-                <Route path="*" component={NotFound} />
-              </Switch>
-            </Content>
+      <div className={styles.wrapperClass}>
+        <Helmet defaultTitle={settings.siteTitle} titleTemplate={`%s » ${settings.siteTitle}`}>
+          <html lang={settings.language} />
+          <title>Admin</title>
+        </Helmet>
+        <section>
+          <div id="portal" />
+          <div className={styles.atomicToolbarClass} id="atomicToolbar" />
+          <NavMenu
+            toggleCollapse={this.toggleCollapse}
+            isCollapsed={isCollapsed}
+            routeConfig={routes}
+          />
+          <section
+            className={cx(styles.contentClass, {
+              [styles.openContentClass]: !isCollapsed,
+              [styles.collapsedContentClass]: isCollapsed,
+            })}
+          >
+            <Switch>
+              {routes.map(section =>
+                section.map(route => (
+                  <Route
+                    key={route.label}
+                    exact={route.path === '/'}
+                    path={route.path}
+                    component={route.component}
+                  />
+                ))
+              )}
+              <Route path="*" component={NotFound} />
+            </Switch>
           </section>
-        </div>
-      </ThemeProvider>
+        </section>
+      </div>
     );
   }
 }

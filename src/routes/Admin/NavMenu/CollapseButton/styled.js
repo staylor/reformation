@@ -1,12 +1,11 @@
 import { css } from 'emotion';
-import styled from 'react-emotion';
 import themeUtils from 'styles/theme';
 
-const collapsedStyle = css`
+export const collapsedButtonClass = css`
   transform: rotate(180deg);
 `;
 
-export const CollapseButton = styled.button`
+export const buttonClass = css`
   background: none;
   border: none;
   color: ${themeUtils.colors.text};
@@ -22,14 +21,13 @@ export const CollapseButton = styled.button`
   position: relative;
   transition: color 0.1s ease-in-out;
   width: 100%;
-  ${({ theme: { isCollapsed } }) => isCollapsed && collapsedStyle};
 
   &:hover {
     color: ${themeUtils.colors.black};
   }
 
   @media screen and (max-width: 782px) {
-    ${collapsedStyle};
+    ${collapsedButtonClass};
   }
 `;
 

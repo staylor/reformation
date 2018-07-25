@@ -61,10 +61,8 @@ export const Line = styled.br`
   display: block;
 `;
 
-export const Content = styled.section`
+export const contentClass = css`
   height: 100%;
-  margin-left: ${({ theme: { isCollapsed } }) =>
-    isCollapsed ? themeUtils.menuWidth.collapsed : themeUtils.menuWidth.open}px;
   padding: 0 20px 65px;
   position: relative;
   z-index: 3;
@@ -72,6 +70,14 @@ export const Content = styled.section`
   ${mediumQuery} {
     margin-left: ${themeUtils.menuWidth.collapsed}px;
   }
+`;
+
+export const openContentClass = css`
+  margin-left: ${themeUtils.menuWidth.open}px;
+`;
+
+export const collapsedContentClass = css`
+  margin-left: ${themeUtils.menuWidth.collapsed}px;
 `;
 
 export const FormWrap = styled.div`

@@ -20,7 +20,7 @@ export const subNavClass = css`
   left: ${themeUtils.menuWidth.open}px;
   padding: 7px 0 8px;
 
-  &.SubNav-active {
+  &.active {
     display: block;
 
     ${mediumQuery} {
@@ -28,7 +28,7 @@ export const subNavClass = css`
     }
   }
 
-  &.SubNav-collapsed {
+  &.collapsed {
     display: none;
     left: ${themeUtils.menuWidth.collapsed}px;
   }
@@ -38,11 +38,11 @@ export const subNavClass = css`
     left: ${themeUtils.menuWidth.collapsed}px;
   }
 
-  &.SubNav-flyout {
+  &.flyout {
     ${flyout};
   }
 
-  &.SubNav-hovered {
+  &.hovered {
     ${mediumQuery} {
       ${flyout};
     }
@@ -63,22 +63,34 @@ export const subNavLinkClass = css`
     color: ${themeUtils.colors.pink};
   }
 
-  .SubNav-flyout & {
-    color: ${themeUtils.colors.white};
-
-    &:hover,
-    &:active {
-      color: ${themeUtils.colors.pink};
-    }
-  }
-
-  &.SubNavLink-active {
+  &.active {
     color: ${themeUtils.colors.black};
     font-weight: ${themeUtils.fonts.weight.bold};
 
     &:hover,
     &:active {
       color: ${themeUtils.colors.black};
+    }
+  }
+
+  .flyout & {
+    color: ${themeUtils.colors.white};
+
+    &:visited,
+    &:link {
+      color: ${themeUtils.colors.white};
+    }
+
+    &:hover,
+    &:active {
+      color: ${themeUtils.colors.pink};
+    }
+
+    &.active {
+      &:hover,
+      &:active {
+        color: ${themeUtils.colors.pink};
+      }
     }
   }
 `;

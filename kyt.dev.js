@@ -1,8 +1,6 @@
 const { clientSrcPath } = require('kyt-utils/paths')();
 
 module.exports = {
-  reactHotLoader: false,
-  debug: false,
   modifyWebpackConfig: baseConfig => {
     const config = Object.assign({}, baseConfig);
     if (config.target === 'web') {

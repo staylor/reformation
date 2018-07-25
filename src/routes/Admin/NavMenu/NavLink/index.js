@@ -1,16 +1,30 @@
 import React from 'react';
 import { cx } from 'emotion';
-import { NavLink as StyledNavLink, dashiconClass } from './styled';
+import { withRouter } from 'react-router';
+import { NavLink as RRNavLink } from 'react-router-dom';
+import { linkClass, dashiconClass } from './styled';
 
 /* eslint-disable react/prop-types */
 
-export default function NavLink({ item }) {
+function NavLink({ item, isCollapsed, isHovered, hasSubNav, location }) {
   return (
-    <StyledNavLink to={item.path} exact={item.path === '/'} activeClassName="NavLink-active">
+    <RRNavLink
+      to={item.path}
+      activeClassName="active"
+      isActive={() => item.path === location.pathname}
+      className={cx(linkClass, {
+        open: !isCollapsed,
+        collapsed: isCollapsed,
+        hovered: isHovered,
+        flyout: isHovered && hasSubNav,
+      })}
+    >
       {item.dashicon && (
         <i className={cx(dashiconClass, 'dashicons-before', `dashicons-${item.dashicon}`)} />
       )}
       <span>{item.label}</span>
-    </StyledNavLink>
+    </RRNavLink>
   );
 }
+
+export default withRouter(NavLink);
