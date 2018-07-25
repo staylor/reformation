@@ -18,6 +18,14 @@ class NavMenu extends Component {
     this.props.toggleCollapse();
   };
 
+  mouseEnter = key => {
+    this.setState({ active: key });
+  };
+
+  mouseLeave = () => {
+    this.setState({ active: '' });
+  };
+
   render() {
     const { routeConfig, isCollapsed } = this.props;
 
@@ -39,8 +47,8 @@ class NavMenu extends Component {
                 <div
                   key={key}
                   className={styles.navWrapClass}
-                  onMouseEnter={() => this.setState({ active: key })}
-                  onMouseLeave={() => this.setState({ active: '' })}
+                  onMouseEnter={() => this.mouseEnter(key)}
+                  onMouseLeave={this.mouseLeave}
                 >
                   <Fragment>
                     <NavLink {...{ item, isHovered: active, hasSubNav, isCollapsed }} />
