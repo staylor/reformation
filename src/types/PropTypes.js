@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const settingsShape = PropTypes.shape({
-  siteTitle: PropTypes.string,
-  siteUrl: PropTypes.string,
-});
-
+// eslint-disable-next-line
 export const mediaSettingsShape = PropTypes.shape({
   crops: PropTypes.arrayOf(
     PropTypes.shape({
@@ -13,11 +9,4 @@ export const mediaSettingsShape = PropTypes.shape({
       height: PropTypes.number,
     })
   ),
-});
-
-export const socialSettingsShape = PropTypes.shape({
-  facebookUrl: PropTypes.string,
-  facebookAppId: PropTypes.string,
-  twitterUsername: PropTypes.string,
-  instagramUsername: PropTypes.string,
 });

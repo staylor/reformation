@@ -48,6 +48,9 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
               name: 'SiteSettings',
             },
             {
+              name: 'DashboardSettings',
+            },
+            {
               name: 'SocialSettings',
             },
             {

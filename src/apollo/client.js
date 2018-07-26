@@ -1,32 +1,29 @@
 // @flow
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
-import { onError } from 'apollo-link-error';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import fetch from 'isomorphic-fetch';
-import fragmentMatcher from 'tools/fragmentMatcher';
-
-/* eslint-disable no-console */
-
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
-    graphQLErrors.map(({ message, locations, path }) =>
-      console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
-    );
-  if (networkError) console.log(`[Network error]: ${networkError}`);
-});
+import fragmentMatcher from './fragmentMatcher';
+import errorLink from './error';
 
 type ClientOps = {
+  uri: string,
+  authToken?: string,
   ssrMode?: boolean,
-  cache?: any,
 };
 
-export default function apolloClient(uri: string, headers: {}, opts: ClientOps) {
-  const params = { ...opts };
-  if (!params.cache) {
-    params.cache = new InMemoryCache({ fragmentMatcher });
+export default function client({ uri, authToken = null, ssrMode = false }: ClientOps) {
+  const headers = {};
+  if (authToken) {
+    headers.Authorization = `Bearer ${authToken}`;
   }
+
+  let cache = new InMemoryCache({ fragmentMatcher });
+  if (!ssrMode) {
+    cache = cache.restore(window.__APOLLO_STATE__);
+  }
+
   return new ApolloClient({
     link: ApolloLink.from([
       errorLink,
@@ -36,6 +33,7 @@ export default function apolloClient(uri: string, headers: {}, opts: ClientOps) 
         headers,
       }),
     ]),
-    ...params,
+    cache,
+    ssrMode,
   });
 }
