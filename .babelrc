@@ -1,13 +1,22 @@
 {
   "presets": [
-    ["kyt-react", {"modules": true, "includeRuntime": true}],
+    ["kyt-react", {
+      "envOptions": {
+        "client": {
+          "modules": "commonjs"
+        },
+        "server": {
+          "modules": "commonjs"
+        }
+      },
+      "includeRuntime": true
+    }],
     "flow"
   ],
   "plugins": [
     "emotion",
     "transform-decorators-legacy",
     "transform-class-properties",
-    "transform-es2015-modules-commonjs",
     "transform-object-rest-spread",
     ["module-resolver", {
       "root": ["./src"]

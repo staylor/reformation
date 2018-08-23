@@ -14,6 +14,11 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'graphql-tag/loader',
     });
+
+    const ugly = config.plugins.findIndex(p => p.constructor.name === 'UglifyJsPlugin');
+    const plugins = [...config.plugins];
+    plugins.splice(ugly, 1);
+    config.plugins = plugins;
     return config;
   },
 };
