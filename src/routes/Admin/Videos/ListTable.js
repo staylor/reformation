@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
-import qs from 'query-string';
 import debounce from 'debounce';
+import { parse, stringify } from 'utils/query-string';
 import Loading from 'components/Loading';
 import Input from 'components/Form/Input';
 import Select from 'components/Form/Select';
@@ -77,7 +77,7 @@ const columns = [
   `,
   {
     options: ({ match, location }) => {
-      const queryParams = qs.parse(location.search);
+      const queryParams = parse(location.search);
       const { params } = match;
 
       const variables = { first: PER_PAGE };
@@ -106,7 +106,7 @@ export default class Videos extends Component {
     }
     this.props.history.push({
       pathname: '/video',
-      search: qs.stringify(params),
+      search: stringify(params),
     });
   };
 
@@ -124,7 +124,7 @@ export default class Videos extends Component {
       return <Loading />;
     }
 
-    const queryParams = qs.parse(location.search);
+    const queryParams = parse(location.search);
 
     const filters = (
       <Fragment>

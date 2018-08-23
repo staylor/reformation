@@ -8,11 +8,6 @@ module.exports = {
       config.entry.main = `${clientSrcPath}/index.js`;
       config.entry.admin = `${clientSrcPath}/admin.js`;
       config.entry.login = `${clientSrcPath}/login.js`;
-
-      const ugly = config.plugins.findIndex(p => p.constructor.name === 'UglifyJsPlugin');
-      const plugins = [...config.plugins];
-      plugins.splice(ugly, 1);
-      config.plugins = plugins;
     }
     config.module.rules.push({
       test: /\.(graphql|gql)$/,

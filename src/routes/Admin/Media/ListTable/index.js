@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
-import qs from 'query-string';
 import debounce from 'debounce';
+import { parse, stringify } from 'utils/query-string';
 import Loading from 'components/Loading';
 import Input from 'components/Form/Input';
 import Select from 'components/Form/Select';
@@ -80,9 +80,7 @@ const columns = [
   {
     label: 'Type',
     render: media => (
-      <Link to={{ pathname: '/media', search: qs.stringify({ type: media.type }) }}>
-        {media.type}
-      </Link>
+      <Link to={{ pathname: '/media', search: stringify({ type: media.type }) }}>{media.type}</Link>
     ),
   },
   {
@@ -91,7 +89,7 @@ const columns = [
       <Link
         to={{
           pathname: '/media',
-          search: qs.stringify({ mimeType: media.mimeType }),
+          search: stringify({ mimeType: media.mimeType }),
         }}
       >
         {media.mimeType}
@@ -103,7 +101,7 @@ const columns = [
 @compose(
   graphql(UploadsQuery, {
     options: ({ match, location }) => {
-      const queryParams = qs.parse(location.search);
+      const queryParams = parse(location.search);
       const { params } = match;
 
       const variables = { first: PER_PAGE };
@@ -142,7 +140,7 @@ export default class Media extends Component {
     }
     this.props.history.push({
       pathname: '/media',
-      search: qs.stringify(params),
+      search: stringify(params),
     });
   };
 
@@ -162,7 +160,7 @@ export default class Media extends Component {
       return <Loading />;
     }
 
-    const queryParams = qs.parse(location.search);
+    const queryParams = parse(location.search);
 
     const filters = (
       <Fragment>
