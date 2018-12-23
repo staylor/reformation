@@ -2,18 +2,18 @@
 
 exports[`Input add className 1`] = `
 <input
-  className="foo"
+  className="css-f0vu9v-inputStyles-inputClass foo"
+  defaultValue=""
   onChange={[Function]}
   type="text"
-  value=""
 />
 `;
 
 exports[`Input empty 1`] = `
 <input
-  className=""
+  className="css-f0vu9v-inputStyles-inputClass"
+  defaultValue=""
   onChange={[Function]}
   type="text"
-  value=""
 />
 `;

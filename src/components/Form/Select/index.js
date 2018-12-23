@@ -39,29 +39,15 @@ const renderOption = (choice: Choice): Node => {
 };
 
 export default class Select extends Component<Props, State> {
-  state = {
-    value: this.props.value || (this.props.multiple ? [] : ''),
-  };
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.value === prevState.value) {
-      return null;
-    }
-    const multiple = Boolean(nextProps.multiple);
-    return { value: nextProps.value || (multiple ? [] : '') };
-  }
-
   onChange = (e: { target: HTMLSelectElement }) => {
     let { value } = e.target;
     const multiple = Boolean(this.props.multiple);
     if (multiple) {
       value = [...e.target.selectedOptions].map(o => o.value);
     }
-    this.setState({ value }, () => {
-      if (this.props.onChange) {
-        this.props.onChange(value);
-      }
-    });
+    if (this.props.onChange) {
+      this.props.onChange(value);
+    }
   };
 
   render() {
@@ -84,7 +70,7 @@ export default class Select extends Component<Props, State> {
         ref={bindRef}
         multiple={multiple ? Boolean(multiple) : false}
         className={cx(selectClass, className)}
-        value={this.state.value}
+        defaultValue={value}
         onChange={this.onChange}
       >
         {placeholder && (

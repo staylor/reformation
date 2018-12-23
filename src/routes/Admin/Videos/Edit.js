@@ -65,7 +65,7 @@ const frag = gql`
     ${frag}
   `)
 )
-export default class VideoRoute extends Component {
+class VideoRoute extends Component {
   state = {
     message: null,
   };
@@ -116,3 +116,5 @@ export default class VideoRoute extends Component {
     );
   }
 }
+
+export default VideoRoute;

@@ -2,7 +2,7 @@
 
 exports[`Select add className 1`] = `
 <select
-  className="emotion-0 foo"
+  className="css-14b594e-inputStyles-selectClass foo"
   multiple={false}
   onChange={[Function]}
   value=""
@@ -11,7 +11,7 @@ exports[`Select add className 1`] = `
 
 exports[`Select choices choice 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={false}
   onChange={[Function]}
   value="medium"
@@ -39,7 +39,7 @@ exports[`Select choices choice 1`] = `
 
 exports[`Select choices choices 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={false}
   onChange={[Function]}
   value=""
@@ -67,7 +67,7 @@ exports[`Select choices choices 1`] = `
 
 exports[`Select choices choices as objects 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={false}
   onChange={[Function]}
   value=""
@@ -95,7 +95,7 @@ exports[`Select choices choices as objects 1`] = `
 
 exports[`Select empty 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={false}
   onChange={[Function]}
   value=""
@@ -104,7 +104,7 @@ exports[`Select empty 1`] = `
 
 exports[`Select groups children 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={false}
   onChange={[Function]}
   value=""
@@ -119,7 +119,7 @@ exports[`Select groups children 1`] = `
 
 exports[`Select groups children with choices 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={false}
   onChange={[Function]}
   value=""
@@ -152,7 +152,7 @@ exports[`Select groups children with choices 1`] = `
 
 exports[`Select groups no value 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={false}
   onChange={[Function]}
   value=""
@@ -202,7 +202,7 @@ exports[`Select groups no value 1`] = `
 
 exports[`Select groups value 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={false}
   onChange={[Function]}
   value="mild"
@@ -252,7 +252,7 @@ exports[`Select groups value 1`] = `
 
 exports[`Select groups values 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={true}
   onChange={[Function]}
   value={
@@ -307,7 +307,7 @@ exports[`Select groups values 1`] = `
 
 exports[`Select multiple false 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={false}
   onChange={[Function]}
   value=""
@@ -316,7 +316,7 @@ exports[`Select multiple false 1`] = `
 
 exports[`Select multiple falsey 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={true}
   onChange={[Function]}
   value={Array []}
@@ -325,7 +325,7 @@ exports[`Select multiple falsey 1`] = `
 
 exports[`Select multiple string 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={true}
   onChange={[Function]}
   value={Array []}
@@ -334,7 +334,7 @@ exports[`Select multiple string 1`] = `
 
 exports[`Select multiple true 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={true}
   onChange={[Function]}
   value={Array []}
@@ -343,7 +343,7 @@ exports[`Select multiple true 1`] = `
 
 exports[`Select multiple truthy 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={true}
   onChange={[Function]}
   value={Array []}
@@ -352,7 +352,7 @@ exports[`Select multiple truthy 1`] = `
 
 exports[`Select placeholder choices 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={false}
   onChange={[Function]}
   value=""
@@ -386,7 +386,7 @@ exports[`Select placeholder choices 1`] = `
 
 exports[`Select placeholder choices as objects 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={false}
   onChange={[Function]}
   value=""
@@ -420,7 +420,7 @@ exports[`Select placeholder choices as objects 1`] = `
 
 exports[`Select placeholder no choices 1`] = `
 <select
-  className="emotion-0"
+  className="css-14b594e-inputStyles-selectClass"
   multiple={false}
   onChange={[Function]}
   value=""

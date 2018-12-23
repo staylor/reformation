@@ -6,7 +6,7 @@ import { Table, Cell, CellHeading } from './styled';
 
 /* eslint-disable react/prop-types */
 
-export default class Crops extends Component {
+class Crops extends Component {
   state = {};
 
   static getDerivedStateFromProps(nextProps) {
@@ -20,20 +20,30 @@ export default class Crops extends Component {
   addCrop = e => {
     e.preventDefault();
 
-    const crops = [...this.state.crops];
-    crops.push({});
-    this.setState({ crops }, () => {
-      this.props.onUpdate(crops);
-    });
+    this.setState(
+      ({ crops: stateCrops }) => {
+        const crops = [...stateCrops];
+        crops.push({});
+        return { crops };
+      },
+      () => {
+        this.props.onUpdate(this.state.crops);
+      }
+    );
   };
 
   bindOnChange = (prop, i) => value => {
-    const crops = [...this.state.crops];
-    crops[i] = { ...crops[i] };
-    crops[i][prop] = value;
-    this.setState({ crops }, () => {
-      this.props.onUpdate(crops);
-    });
+    this.setState(
+      ({ crops: stateCrops }) => {
+        const crops = [...stateCrops];
+        crops[i] = { ...crops[i] };
+        crops[i][prop] = value;
+        return { crops };
+      },
+      () => {
+        this.props.onUpdate(this.state.crops);
+      }
+    );
   };
 
   render() {
@@ -87,3 +97,5 @@ export default class Crops extends Component {
     );
   }
 }
+
+export default Crops;

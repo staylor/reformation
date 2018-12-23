@@ -78,7 +78,7 @@ const columns = [
     }
   `)
 )
-export default class Terms extends Component {
+class Terms extends Component {
   render() {
     const {
       location,
@@ -104,3 +104,5 @@ export default class Terms extends Component {
     );
   }
 }
+
+export default Terms;

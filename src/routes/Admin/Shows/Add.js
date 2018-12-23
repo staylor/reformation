@@ -33,7 +33,7 @@ import ShowForm from './Form';
     }
   `)
 )
-export default class AddShow extends Component {
+class AddShow extends Component {
   state = {
     message: null,
   };
@@ -76,3 +76,5 @@ export default class AddShow extends Component {
     );
   }
 }
+
+export default AddShow;

@@ -2,30 +2,32 @@
 
 exports[`Message empty 1`] = `
 <div
-  className="emotion-2"
+  className="css-fomzvs-messageWrapClass"
 >
   <p
-    className="emotion-0"
+    className="css-7kpzh9-messageTextClass"
   />
   <button
-    className="emotion-1"
+    className="css-1m0zv91-dismissButtonClass"
     onClick={[Function]}
+    type="button"
   />
 </div>
 `;
 
 exports[`Message text 1`] = `
 <div
-  className="emotion-2"
+  className="css-fomzvs-messageWrapClass"
 >
   <p
-    className="emotion-0"
+    className="css-7kpzh9-messageTextClass"
   >
     This is an admin message.
   </p>
   <button
-    className="emotion-1"
+    className="css-1m0zv91-dismissButtonClass"
     onClick={[Function]}
+    type="button"
   />
 </div>
 `;

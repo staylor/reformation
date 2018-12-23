@@ -3,7 +3,7 @@ import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import debounce from 'debounce';
-import { parse, stringify } from 'utils/query-string';
+import { parse, stringify } from 'query-string';
 import Loading from 'components/Loading';
 import Input from 'components/Form/Input';
 import Select from 'components/Form/Select';
@@ -132,7 +132,7 @@ const columns = [
     }
   `)
 )
-export default class Media extends Component {
+class Media extends Component {
   updateProp = prop => value => {
     const params = {};
     if (value) {
@@ -145,7 +145,9 @@ export default class Media extends Component {
   };
 
   updateType = this.updateProp('type');
+
   updateMimeType = this.updateProp('mimeType');
+
   updateSearch = debounce(this.updateProp('search'), 600);
 
   render() {
@@ -212,3 +214,5 @@ export default class Media extends Component {
     );
   }
 }
+
+export default Media;

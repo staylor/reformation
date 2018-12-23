@@ -32,7 +32,7 @@ import { Modal, Frame, ItemTitle, ItemImage, VideoItem, CloseButton } from './st
     },
   }
 )
-export default class VideoModal extends Component {
+class VideoModal extends Component {
   loadMore = () => {
     const { fetchMore, variables, videos } = this.props.data;
     return fetchMore({
@@ -126,3 +126,5 @@ export default class VideoModal extends Component {
     );
   }
 }
+
+export default VideoModal;

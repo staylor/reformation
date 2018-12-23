@@ -35,7 +35,7 @@ import TermForm from './Form';
     `
   )
 )
-export default class EditTerm extends Component {
+class EditTerm extends Component {
   state = {
     message: null,
   };
@@ -82,3 +82,5 @@ export default class EditTerm extends Component {
     );
   }
 }
+
+export default EditTerm;

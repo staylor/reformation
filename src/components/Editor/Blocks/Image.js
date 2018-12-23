@@ -30,6 +30,7 @@ export default class Image extends Component<Props, State> {
     showTools: false,
     bounds: {},
   };
+
   image: HTMLImageElement;
 
   static contextTypes = {

@@ -54,15 +54,18 @@ export default class ListTable extends Component {
     if (!id) {
       return;
     }
-    const ids = [...this.state.checked];
-    let { all } = this.state;
-    if (checked) {
-      ids.push(id);
-    } else {
-      all = false;
-      ids.splice(ids.indexOf(id), 1);
-    }
-    this.setState({ checked: ids, all });
+
+    this.setState(({ checked: stateChecked, all: stateAll }) => {
+      const ids = [...stateChecked];
+      let all = stateAll;
+      if (checked) {
+        ids.push(id);
+      } else {
+        all = false;
+        ids.splice(ids.indexOf(id), 1);
+      }
+      return { checked: ids, all };
+    });
   };
 
   formatDate(date) {

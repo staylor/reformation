@@ -87,7 +87,7 @@ const columns = [
     `
   )
 )
-export default class Shows extends Component {
+class Shows extends Component {
   render() {
     const {
       location,
@@ -109,3 +109,5 @@ export default class Shows extends Component {
     );
   }
 }
+
+export default Shows;

@@ -7,8 +7,6 @@ import { ThemeProvider } from 'emotion-theming';
 import Helmet from 'react-helmet-async';
 import NotFound from 'components/NotFound';
 import Logo from 'components/Logo';
-import Input from 'components/Form/Input';
-import { Button } from 'styles/utils';
 import Home from './Home';
 import Videos from './Videos';
 import Video from './Video';
@@ -16,6 +14,7 @@ import Post from './Post';
 import Sidebar from './Sidebar';
 import Navigation from './Nav';
 import AppContext from './Context';
+import Mailchimp from './Mailchimp';
 import * as styles from './styled';
 
 /* eslint-disable react/prop-types */
@@ -48,7 +47,7 @@ import * as styles from './styled';
     }
   `
 )
-export default class App extends Component {
+class App extends Component {
   componentDidUpdate() {
     document.documentElement.scrollTop = 0;
   }
@@ -107,8 +106,7 @@ export default class App extends Component {
                 />
               )}
               {dashboardSettings.googleTrackingId && (
-                <script
-                >{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${
+                <script>{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${
                   dashboardSettings.googleTrackingId
                 }');`}</script>
               )}
@@ -143,27 +141,7 @@ export default class App extends Component {
             </div>
             <nav className={styles.footerNavClass}>{social}</nav>
             <footer className={styles.footerClass}>
-              <form
-                className={styles.newsletterForm}
-                action="https://tinyletter.com/highforthis"
-                method="post"
-                target="popupwindow"
-                onSubmit="window.open('https://tinyletter.com/highforthis', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true"
-              >
-                <label // eslint-disable-line
-                  htmlFor="tlemail"
-                >
-                  <Input
-                    type="text"
-                    name="email"
-                    id="tlemail"
-                    placeholder="Enter your email address"
-                    className={styles.newsletterInput}
-                  />
-                </label>
-                <input type="hidden" value="1" name="embed" />
-                <Button type="submit">Subscribe</Button>
-              </form>
+              <Mailchimp />
               <section
                 // eslint-disable-next-line react/no-danger
                 dangerouslySetInnerHTML={{ __html: settings.copyrightText }}
@@ -175,3 +153,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default App;

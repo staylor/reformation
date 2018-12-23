@@ -9,7 +9,7 @@ const year = new Date().getFullYear() + 1;
 const yearChoices = (start, end) => [...Array(end - start).keys()].map(i => start + i);
 
 @withRouter
-export default class Navigation extends Component {
+class Navigation extends Component {
   onChange = value => {
     this.props.history.push({
       pathname: `/videos/${value}`,
@@ -34,3 +34,5 @@ export default class Navigation extends Component {
     );
   }
 }
+
+export default Navigation;

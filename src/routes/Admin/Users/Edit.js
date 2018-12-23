@@ -33,7 +33,7 @@ import UserForm from './Form';
     ${UserForm.fragments.user}
   `)
 )
-export default class EditUser extends Component {
+class EditUser extends Component {
   state = {
     message: null,
   };
@@ -76,3 +76,5 @@ export default class EditUser extends Component {
     );
   }
 }
+
+export default EditUser;

@@ -3,7 +3,7 @@
 exports[`Checkbox add className 1`] = `
 <input
   checked={false}
-  className="emotion-0 foo"
+  className="css-1fiwpa4-checkboxClass foo"
   onChange={[Function]}
   type="checkbox"
 />
@@ -12,7 +12,7 @@ exports[`Checkbox add className 1`] = `
 exports[`Checkbox checked 1`] = `
 <input
   checked={true}
-  className="emotion-0"
+  className="css-1fiwpa4-checkboxClass"
   onChange={[Function]}
   type="checkbox"
 />
@@ -21,7 +21,7 @@ exports[`Checkbox checked 1`] = `
 exports[`Checkbox empty 1`] = `
 <input
   checked={false}
-  className="emotion-0"
+  className="css-1fiwpa4-checkboxClass"
   onChange={[Function]}
   type="checkbox"
 />

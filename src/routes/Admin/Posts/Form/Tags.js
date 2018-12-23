@@ -21,10 +21,13 @@ export default class Tags extends Component {
 
   bindClick = tag => e => {
     e.preventDefault();
-    const pending = [...this.state.pending];
-    pending.splice(pending.indexOf(tag), 1);
-    this.props.onChange(pending);
-    this.setState({ pending });
+
+    this.setState(({ pending: statePending }) => {
+      const pending = [...statePending];
+      pending.splice(pending.indexOf(tag), 1);
+      this.props.onChange(pending);
+      return { pending };
+    });
   };
 
   render() {

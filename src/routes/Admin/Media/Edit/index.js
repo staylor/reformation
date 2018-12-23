@@ -86,9 +86,11 @@ const mediaFields = [
     render: media => {
       if (media.type === 'audio') {
         return <AudioInfo media={media} />;
-      } else if (media.type === 'video') {
+      }
+      if (media.type === 'video') {
         return <VideoInfo media={media} />;
-      } else if (media.type === 'image') {
+      }
+      if (media.type === 'image') {
         return <ImageInfo media={media} />;
       }
       return null;

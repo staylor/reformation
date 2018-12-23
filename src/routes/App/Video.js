@@ -21,7 +21,7 @@ import Video from 'components/Videos/Video';
     }),
   }
 )
-export default class VideoRoute extends Component {
+class VideoRoute extends Component {
   render() {
     const {
       data: { loading, video },
@@ -41,3 +41,5 @@ export default class VideoRoute extends Component {
     );
   }
 }
+
+export default VideoRoute;

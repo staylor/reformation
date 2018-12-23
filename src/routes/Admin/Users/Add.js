@@ -16,7 +16,7 @@ import UserForm from './Form';
     }
   `)
 )
-export default class AddUser extends Component {
+class AddUser extends Component {
   state = {
     message: null,
   };
@@ -50,3 +50,5 @@ export default class AddUser extends Component {
     );
   }
 }
+
+export default AddUser;

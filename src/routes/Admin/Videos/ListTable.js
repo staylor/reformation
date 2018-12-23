@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import debounce from 'debounce';
-import { parse, stringify } from 'utils/query-string';
+import { parse, stringify } from 'query-string';
 import Loading from 'components/Loading';
 import Input from 'components/Form/Input';
 import Select from 'components/Form/Select';
@@ -45,7 +45,8 @@ const columns = [
       const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
       return (
         <Fragment>
-          Published<br />
+          Published
+          <br />
           {formattedDate}
         </Fragment>
       );
@@ -98,7 +99,7 @@ const columns = [
     },
   }
 )
-export default class Videos extends Component {
+class Videos extends Component {
   updateProp = prop => value => {
     const params = {};
     if (value) {
@@ -111,6 +112,7 @@ export default class Videos extends Component {
   };
 
   updateYear = this.updateProp('year');
+
   updateSearch = debounce(this.updateProp('search'), 600);
 
   render() {
@@ -157,3 +159,5 @@ export default class Videos extends Component {
     );
   }
 }
+
+export default Videos;

@@ -40,6 +40,7 @@ export default function Sizer(
     >
       {mediaSettings.crops.map(crop => (
         <button
+          type="button"
           key={crop.name}
           onMouseDown={e => {
             e.stopPropagation();

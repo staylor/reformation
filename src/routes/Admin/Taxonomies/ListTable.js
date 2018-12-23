@@ -69,7 +69,7 @@ const columns = [
     { options: { refetchQueries: [{ query: TaxonomyQuery }] } }
   )
 )
-export default class Taxonomies extends Component {
+class Taxonomies extends Component {
   render() {
     const {
       location,
@@ -95,3 +95,5 @@ export default class Taxonomies extends Component {
     );
   }
 }
+
+export default Taxonomies;

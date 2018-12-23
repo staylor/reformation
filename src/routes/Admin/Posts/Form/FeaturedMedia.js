@@ -14,6 +14,7 @@ export default class FeaturedMedia extends Component {
   };
 
   onClose = () => this.setState({ modal: false });
+
   onClick = e => {
     e.preventDefault();
     this.setState({ modal: true });

@@ -34,7 +34,7 @@ import PostForm from './Form';
     ${PostForm.fragments.post}
   `)
 )
-export default class EditPost extends Component {
+class EditPost extends Component {
   state = {
     message: null,
   };
@@ -82,3 +82,5 @@ export default class EditPost extends Component {
     );
   }
 }
+
+export default EditPost;

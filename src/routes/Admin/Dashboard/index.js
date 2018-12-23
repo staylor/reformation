@@ -8,7 +8,7 @@ import { Heading } from '../styled';
 /* eslint-disable react/prop-types */
 
 @graphql(DashboardSettingsQuery)
-export default class Home extends Component {
+class Home extends Component {
   render() {
     const {
       data: { loading, settings },
@@ -36,3 +36,5 @@ export default class Home extends Component {
     );
   }
 }
+
+export default Home;

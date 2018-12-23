@@ -41,7 +41,7 @@ import TaxonomyForm from './Form';
     }
   )
 )
-export default class EditTaxonomy extends Component {
+class EditTaxonomy extends Component {
   state = {
     message: null,
   };
@@ -88,3 +88,5 @@ export default class EditTaxonomy extends Component {
     );
   }
 }
+
+export default EditTaxonomy;

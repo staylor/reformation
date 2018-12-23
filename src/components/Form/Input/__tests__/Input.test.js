@@ -1,7 +1,6 @@
 import React from 'react';
 import Input from 'components/Form/Input';
 import { shallow } from 'enzyme';
-import 'emotion/serializer';
 
 const TEXT_VALUE = 'Run for the border.';
 

@@ -78,7 +78,7 @@ const columns = [
     }
   `)
 )
-export default class Posts extends Component {
+class Posts extends Component {
   render() {
     const {
       location,
@@ -100,3 +100,5 @@ export default class Posts extends Component {
     );
   }
 }
+
+export default Posts;

@@ -40,7 +40,7 @@ import { Wrapper, Title } from './styled';
     }),
   }
 )
-export default class PostRoute extends Component {
+class PostRoute extends Component {
   render() {
     const {
       data: { loading, error, post },
@@ -95,3 +95,5 @@ export default class PostRoute extends Component {
     );
   }
 }
+
+export default PostRoute;

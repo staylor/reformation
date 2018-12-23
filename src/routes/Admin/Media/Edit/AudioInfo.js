@@ -14,7 +14,8 @@ export default function AudioInfo({ media }) {
     <Fragment>
       <img className={croppedClass} src={src} alt="" />
       <strong>
-        Showing:<br />
+        Showing:
+        <br />
       </strong>{' '}
       {first.width} x {first.height}
     </Fragment>

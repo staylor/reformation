@@ -56,12 +56,16 @@ export default {
     // or depth for nested lists
     'unordered-list-item': (children, { depth, keys }) => (
       <List key={keys[keys.length - 1]} className={`ul-level-${depth}`}>
-        {children.map(child => <li>{child}</li>)}
+        {children.map(child => (
+          <li>{child}</li>
+        ))}
       </List>
     ),
     'ordered-list-item': (children, { depth, keys }) => (
       <OrderedList key={keys.join('|')} className={`ol-level-${depth}`}>
-        {children.map((child, index) => <li key={keys[index]}>{child}</li>)}
+        {children.map((child, index) => (
+          <li key={keys[index]}>{child}</li>
+        ))}
       </OrderedList>
     ),
 

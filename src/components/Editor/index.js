@@ -36,10 +36,11 @@ export default class Editor extends Component {
     return {
       setReadOnly: (readOnly, callback = null) => this.setState({ readOnly }, callback),
       setEditorState: contentState => {
-        const editorState = EditorState.set(this.state.editorState, {
-          currentContent: contentState,
-        });
-        this.setState({ editorState });
+        this.setState(({ editorState }) => ({
+          editorState: EditorState.set(editorState, {
+            currentContent: contentState,
+          }),
+        }));
       },
     };
   }
@@ -292,9 +293,9 @@ export default class Editor extends Component {
             e.preventDefault();
             e.stopPropagation();
 
-            this.setState({
-              blockToolbar: !this.state.blockToolbar,
-            });
+            this.setState(({ blockToolbar }) => ({
+              blockToolbar: !blockToolbar,
+            }));
           }}
         >
           {' '}

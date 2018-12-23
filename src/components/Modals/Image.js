@@ -37,7 +37,7 @@ import { Modal, Frame, Item, ItemImage, CloseButton } from './styled';
     },
   }
 )
-export default class ImageModal extends Component {
+class ImageModal extends Component {
   loadMore = () => {
     const { fetchMore, variables, uploads } = this.props.data;
     return fetchMore({
@@ -129,3 +129,5 @@ export default class ImageModal extends Component {
     );
   }
 }
+
+export default ImageModal;

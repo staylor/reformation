@@ -1,7 +1,6 @@
 import React from 'react';
 import Select from 'components/Form/Select';
 import { shallow } from 'enzyme';
-import 'emotion/serializer';
 
 const placeholder = '-- Select Flavor --';
 const flavors = ['Mild', 'Hot', 'Fire'];

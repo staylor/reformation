@@ -27,7 +27,7 @@ import * as styles from './styled';
     },
   }
 )
-export default class Login extends Component {
+class Login extends Component {
   state = {};
 
   static getDerivedStateFromProps(nextProps) {
@@ -119,3 +119,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default Login;

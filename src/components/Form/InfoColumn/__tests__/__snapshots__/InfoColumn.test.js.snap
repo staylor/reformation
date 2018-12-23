@@ -2,24 +2,24 @@
 
 exports[`InfoColumn No props 1`] = `
 <section
-  className="emotion-0"
+  className="css-d5m9xt-infoColumnClass"
 />
 `;
 
 exports[`InfoColumn no button 1`] = `
 <section
-  className="emotion-5"
+  className="css-d5m9xt-infoColumnClass"
 >
   <aside
-    className="emotion-2"
+    className="css-13d5f7-infoBoxClass"
   >
     <h3
-      className="emotion-0"
+      className="css-139kw5e-infoBoxHeaderClass"
     >
       Info!
     </h3>
     <div
-      className="emotion-1"
+      className="css-xky2ol-infoBoxContentClass"
     >
       <p
         key="0"
@@ -31,10 +31,10 @@ exports[`InfoColumn no button 1`] = `
     </div>
   </aside>
   <aside
-    className="emotion-2"
+    className="css-13d5f7-infoBoxClass"
   >
     <div
-      className="emotion-1"
+      className="css-xky2ol-infoBoxContentClass"
     >
       <p
         key="0"
@@ -50,18 +50,18 @@ exports[`InfoColumn no button 1`] = `
 
 exports[`InfoColumn with button 1`] = `
 <section
-  className="emotion-5"
+  className="css-d5m9xt-infoColumnClass"
 >
   <aside
-    className="emotion-2"
+    className="css-13d5f7-infoBoxClass"
   >
     <h3
-      className="emotion-0"
+      className="css-139kw5e-infoBoxHeaderClass"
     >
       Info!
     </h3>
     <div
-      className="emotion-1"
+      className="css-xky2ol-infoBoxContentClass"
     >
       <p
         key="0"
@@ -70,16 +70,18 @@ exports[`InfoColumn with button 1`] = `
           name="foo"
         />
       </p>
-      <button>
+      <button
+        type="button"
+      >
         Submit
       </button>
     </div>
   </aside>
   <aside
-    className="emotion-2"
+    className="css-13d5f7-infoBoxClass"
   >
     <div
-      className="emotion-1"
+      className="css-xky2ol-infoBoxContentClass"
     >
       <p
         key="0"
@@ -95,16 +97,16 @@ exports[`InfoColumn with button 1`] = `
 
 exports[`InfoColumn with info and meta fields 1`] = `
 <section
-  className="emotion-5"
+  className="css-d5m9xt-infoColumnClass"
 >
   <aside
-    className="emotion-2"
+    className="css-13d5f7-infoBoxClass"
   >
     <h3
-      className="emotion-0"
+      className="css-139kw5e-infoBoxHeaderClass"
     />
     <div
-      className="emotion-1"
+      className="css-xky2ol-infoBoxContentClass"
     >
       <p
         key="0"
@@ -116,10 +118,10 @@ exports[`InfoColumn with info and meta fields 1`] = `
     </div>
   </aside>
   <aside
-    className="emotion-2"
+    className="css-13d5f7-infoBoxClass"
   >
     <div
-      className="emotion-1"
+      className="css-xky2ol-infoBoxContentClass"
     >
       <p
         key="0"
@@ -135,16 +137,16 @@ exports[`InfoColumn with info and meta fields 1`] = `
 
 exports[`InfoColumn with infoFields 1`] = `
 <section
-  className="emotion-3"
+  className="css-d5m9xt-infoColumnClass"
 >
   <aside
-    className="emotion-2"
+    className="css-13d5f7-infoBoxClass"
   >
     <h3
-      className="emotion-0"
+      className="css-139kw5e-infoBoxHeaderClass"
     />
     <div
-      className="emotion-1"
+      className="css-xky2ol-infoBoxContentClass"
     >
       <p
         key="0"
@@ -160,13 +162,13 @@ exports[`InfoColumn with infoFields 1`] = `
 
 exports[`InfoColumn with metaFields 1`] = `
 <section
-  className="emotion-2"
+  className="css-d5m9xt-infoColumnClass"
 >
   <aside
-    className="emotion-1"
+    className="css-13d5f7-infoBoxClass"
   >
     <div
-      className="emotion-0"
+      className="css-xky2ol-infoBoxContentClass"
     >
       <p
         key="0"

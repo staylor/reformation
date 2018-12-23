@@ -2,7 +2,7 @@
 
 exports[`Textarea add className 1`] = `
 <textarea
-  className="emotion-0 foo"
+  className="css-16crr32-inputStyles-textareaClass foo"
   onChange={[Function]}
   value=""
 />
@@ -10,7 +10,7 @@ exports[`Textarea add className 1`] = `
 
 exports[`Textarea empty 1`] = `
 <textarea
-  className="emotion-0"
+  className="css-16crr32-inputStyles-textareaClass"
   onChange={[Function]}
   value=""
 />

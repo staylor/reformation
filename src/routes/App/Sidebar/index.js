@@ -23,7 +23,7 @@ import { headingClass, showClass, timeClass } from './styled';
     }
   }
 `)
-export default class Sidebar extends Component {
+class Sidebar extends Component {
   render() {
     const {
       data: { loading, shows },
@@ -55,3 +55,5 @@ export default class Sidebar extends Component {
     );
   }
 }
+
+export default Sidebar;

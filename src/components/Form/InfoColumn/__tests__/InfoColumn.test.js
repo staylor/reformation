@@ -1,11 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import InfoColumn from 'components/Form/InfoColumn';
-import 'emotion/serializer';
 
 const label = 'Info!';
 
-const button = <button>Submit</button>;
+const button = <button type="button">Submit</button>;
 
 const infoFields = [
   <p key="0">

@@ -41,7 +41,7 @@ import ShowForm from './Form';
     ${ShowForm.fragments.show}
   `)
 )
-export default class EditShow extends Component {
+class EditShow extends Component {
   state = {
     message: null,
   };
@@ -87,3 +87,5 @@ export default class EditShow extends Component {
     );
   }
 }
+
+export default EditShow;

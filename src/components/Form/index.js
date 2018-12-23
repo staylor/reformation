@@ -48,6 +48,7 @@ type RawContent = {
 
 export default class Form extends Component<Props> {
   boundRefs = {};
+
   fields = {};
 
   bindRef = (prop: string) => (ref: HTMLElement) => {
@@ -67,10 +68,13 @@ export default class Form extends Component<Props> {
         const prop = this.boundRefs[field.prop];
         if (!prop) {
           invariant(field.value, 'Custom editable fields must provide a value() method.');
+          // eslint-disable-next-line no-param-reassign
           memo[field.prop] = field.value();
         } else if (field.type === 'select' && field.multiple) {
+          // eslint-disable-next-line no-param-reassign
           memo[field.prop] = [...prop.selectedOptions].map(o => o.value);
         } else {
+          // eslint-disable-next-line no-param-reassign
           memo[field.prop] = prop.value;
         }
       }
@@ -83,6 +87,7 @@ export default class Form extends Component<Props> {
   bindOnChange = (field: F, data: Data) => {
     let initialValue = data[field.prop];
 
+    // eslint-disable-next-line no-param-reassign
     field.value = () => initialValue;
 
     return (value: string) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { cx } from 'emotion';
 import { buttonClass, collapsedButtonClass, buttonIconClass, buttonLabelClass } from './styled';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/button-has-type */
 
 function CollapseButton({ isCollapsed, ...rest }) {
   return (

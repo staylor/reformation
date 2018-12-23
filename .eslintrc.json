@@ -1,18 +1,40 @@
 {
-  "extends": [
-    "eslint-config-kyt"
-  ],
+  "extends": ["airbnb", "plugin:prettier/recommended", "prettier", "prettier/react"],
+
+  "globals": {
+    "KYT": false
+  },
 
   "rules": {
+    "import/no-extraneous-dependencies": [0],
     "import/no-restricted-paths": "off",
     "jsx-a11y/href-no-hash": "off",
     "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }],
-    "no-underscore-dangle": ["error", { "allow": ["_id", "__typename", "__APOLLO_STATE__"] }]
+    "no-underscore-dangle": ["error", { "allow": ["_id", "__typename", "__APOLLO_STATE__"] }],
+    "prettier/prettier": "error",
+    "react/destructuring-assignment": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/sort-comp": 0
   },
 
   "settings": {
     "import/resolver": {
       "babel-module": {}
     }
-  }
+  },
+
+  "parser": "babel-eslint",
+
+  "env": {
+    "browser": true
+  },
+
+  "overrides": [
+    {
+      "files": ["jest.setup.js", "**/__tests__/**"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 }

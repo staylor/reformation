@@ -141,15 +141,19 @@ export default class DatePicker extends Component<Props, State> {
   setDay = (day: string) => {
     this.setProp('day', day);
   };
+
   setYear = (year: string) => {
     this.setProp('year', year);
   };
+
   setMonth = (month: string) => {
     this.setProp('month', month);
   };
+
   setHour = (hour: string) => {
     this.setProp('hour', hour);
   };
+
   setMinutes = (minutes: string) => {
     this.setProp('minutes', minutes);
   };

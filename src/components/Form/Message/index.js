@@ -23,7 +23,7 @@ export default class Message extends Component<Props, State> {
     return this.state.hidden ? null : (
       <div className={messageWrapClass}>
         <p className={messageTextClass}>{this.props.text}</p>
-        <button className={dismissButtonClass} onClick={this.onClick} />
+        <button type="button" className={dismissButtonClass} onClick={this.onClick} />
       </div>
     );
   }
