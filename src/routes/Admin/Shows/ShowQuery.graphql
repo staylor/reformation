@@ -2,8 +2,8 @@ query ShowQuery(
   $first: Int
   $after: String
   $date: Float
-  $artist: ObjID
-  $venue: ObjID
+  $taxonomy: String
+  $term: String
   $search: String
   $order: ShowOrder
 ) {
@@ -11,11 +11,11 @@ query ShowQuery(
     first: $first
     after: $after
     date: $date
-    artist: $artist
-    venue: $venue
+    taxonomy: $taxonomy
+    term: $term
     search: $search
     order: $order
-  ) @connection(key: "shows", filter: ["date", "artist", "venue", "search"]) {
+  ) @connection(key: "shows", filter: ["date", "taxonomy", "term", "search"]) {
     count
     edges {
       node {
