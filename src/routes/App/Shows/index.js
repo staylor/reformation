@@ -116,7 +116,7 @@ class Shows extends Component {
             if (!months[`${d.year}${d.month}`]) {
               months[`${d.year}${d.month}`] = 1;
               return (
-                <Fragment key={d.year}>
+                <Fragment key={`${d.year}${d.month}`}>
                   <tr>
                     <td colSpan={3} className={styles.monthCellClass}>
                       {d.monthName}
