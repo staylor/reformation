@@ -1,20 +1,70 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Select add className 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass foo"
+  className="emotion-0 foo"
+  defaultValue={null}
   multiple={false}
   onChange={[Function]}
-  value=""
 />
 `;
 
 exports[`Select choices choice 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue="medium"
   multiple={false}
   onChange={[Function]}
-  value="medium"
 >
   <option
     key="mild"
@@ -38,11 +88,36 @@ exports[`Select choices choice 1`] = `
 `;
 
 exports[`Select choices choices 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={false}
   onChange={[Function]}
-  value=""
 >
   <option
     key="Mild"
@@ -66,11 +141,36 @@ exports[`Select choices choices 1`] = `
 `;
 
 exports[`Select choices choices as objects 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={false}
   onChange={[Function]}
-  value=""
 >
   <option
     key="mild"
@@ -94,20 +194,70 @@ exports[`Select choices choices as objects 1`] = `
 `;
 
 exports[`Select empty 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={false}
   onChange={[Function]}
-  value=""
 />
 `;
 
 exports[`Select groups children 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={false}
   onChange={[Function]}
-  value=""
 >
   <option
     value="meximelt"
@@ -118,11 +268,36 @@ exports[`Select groups children 1`] = `
 `;
 
 exports[`Select groups children with choices 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={false}
   onChange={[Function]}
-  value=""
 >
   <option
     key="mild"
@@ -151,11 +326,36 @@ exports[`Select groups children with choices 1`] = `
 `;
 
 exports[`Select groups no value 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={false}
   onChange={[Function]}
-  value=""
 >
   <optgroup
     key="Tacos"
@@ -201,11 +401,36 @@ exports[`Select groups no value 1`] = `
 `;
 
 exports[`Select groups value 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue="mild"
   multiple={false}
   onChange={[Function]}
-  value="mild"
 >
   <optgroup
     key="Tacos"
@@ -251,16 +476,41 @@ exports[`Select groups value 1`] = `
 `;
 
 exports[`Select groups values 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
-  multiple={true}
-  onChange={[Function]}
-  value={
+  className="emotion-0"
+  defaultValue={
     Array [
       "soft",
       "mild",
     ]
   }
+  multiple={true}
+  onChange={[Function]}
 >
   <optgroup
     key="Tacos"
@@ -306,56 +556,206 @@ exports[`Select groups values 1`] = `
 `;
 
 exports[`Select multiple false 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={false}
   onChange={[Function]}
-  value=""
 />
 `;
 
 exports[`Select multiple falsey 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={true}
   onChange={[Function]}
-  value={Array []}
 />
 `;
 
 exports[`Select multiple string 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={true}
   onChange={[Function]}
-  value={Array []}
 />
 `;
 
 exports[`Select multiple true 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={true}
   onChange={[Function]}
-  value={Array []}
 />
 `;
 
 exports[`Select multiple truthy 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={true}
   onChange={[Function]}
-  value={Array []}
 />
 `;
 
 exports[`Select placeholder choices 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={false}
   onChange={[Function]}
-  value=""
 >
   <option
     key="-- Select Flavor --"
@@ -385,11 +785,36 @@ exports[`Select placeholder choices 1`] = `
 `;
 
 exports[`Select placeholder choices as objects 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={false}
   onChange={[Function]}
-  value=""
 >
   <option
     key="-- Select Flavor --"
@@ -419,11 +844,36 @@ exports[`Select placeholder choices as objects 1`] = `
 `;
 
 exports[`Select placeholder no choices 1`] = `
+.emotion-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.emotion-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 <select
-  className="css-14b594e-inputStyles-selectClass"
+  className="emotion-0"
+  defaultValue={null}
   multiple={false}
   onChange={[Function]}
-  value=""
 >
   <option
     key="-- Select Flavor --"

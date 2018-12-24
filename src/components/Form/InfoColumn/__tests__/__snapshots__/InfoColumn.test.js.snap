@@ -1,25 +1,80 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InfoColumn No props 1`] = `
+.emotion-0 {
+  float: right;
+  line-height: 1.4;
+  margin: 10px -300px 0 0;
+  width: 280px;
+}
+
+@media screen and (max-width:782px) {
+  .emotion-0 {
+    float: none;
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
 <section
-  className="css-d5m9xt-infoColumnClass"
+  className="emotion-0"
 />
 `;
 
 exports[`InfoColumn no button 1`] = `
+.emotion-5 {
+  float: right;
+  line-height: 1.4;
+  margin: 10px -300px 0 0;
+  width: 280px;
+}
+
+@media screen and (max-width:782px) {
+  .emotion-5 {
+    float: none;
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+.emotion-2 {
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+  box-sizing: border-box;
+  display: block;
+  margin: 0 0 20px;
+}
+
+.emotion-0 {
+  border-bottom: 1px solid #e6e6e6;
+  color: #262626;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-1 {
+  font-size: 13px;
+  padding: 6px 10px 20px;
+}
+
 <section
-  className="css-d5m9xt-infoColumnClass"
+  className="emotion-5"
 >
   <aside
-    className="css-13d5f7-infoBoxClass"
+    className="emotion-2"
   >
     <h3
-      className="css-139kw5e-infoBoxHeaderClass"
+      className="emotion-0"
     >
       Info!
     </h3>
     <div
-      className="css-xky2ol-infoBoxContentClass"
+      className="emotion-1"
     >
       <p
         key="0"
@@ -31,10 +86,10 @@ exports[`InfoColumn no button 1`] = `
     </div>
   </aside>
   <aside
-    className="css-13d5f7-infoBoxClass"
+    className="emotion-2"
   >
     <div
-      className="css-xky2ol-infoBoxContentClass"
+      className="emotion-1"
     >
       <p
         key="0"
@@ -49,19 +104,59 @@ exports[`InfoColumn no button 1`] = `
 `;
 
 exports[`InfoColumn with button 1`] = `
+.emotion-5 {
+  float: right;
+  line-height: 1.4;
+  margin: 10px -300px 0 0;
+  width: 280px;
+}
+
+@media screen and (max-width:782px) {
+  .emotion-5 {
+    float: none;
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+.emotion-2 {
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+  box-sizing: border-box;
+  display: block;
+  margin: 0 0 20px;
+}
+
+.emotion-0 {
+  border-bottom: 1px solid #e6e6e6;
+  color: #262626;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-1 {
+  font-size: 13px;
+  padding: 6px 10px 20px;
+}
+
 <section
-  className="css-d5m9xt-infoColumnClass"
+  className="emotion-5"
 >
   <aside
-    className="css-13d5f7-infoBoxClass"
+    className="emotion-2"
   >
     <h3
-      className="css-139kw5e-infoBoxHeaderClass"
+      className="emotion-0"
     >
       Info!
     </h3>
     <div
-      className="css-xky2ol-infoBoxContentClass"
+      className="emotion-1"
     >
       <p
         key="0"
@@ -78,10 +173,10 @@ exports[`InfoColumn with button 1`] = `
     </div>
   </aside>
   <aside
-    className="css-13d5f7-infoBoxClass"
+    className="emotion-2"
   >
     <div
-      className="css-xky2ol-infoBoxContentClass"
+      className="emotion-1"
     >
       <p
         key="0"
@@ -96,17 +191,57 @@ exports[`InfoColumn with button 1`] = `
 `;
 
 exports[`InfoColumn with info and meta fields 1`] = `
+.emotion-5 {
+  float: right;
+  line-height: 1.4;
+  margin: 10px -300px 0 0;
+  width: 280px;
+}
+
+@media screen and (max-width:782px) {
+  .emotion-5 {
+    float: none;
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+.emotion-2 {
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+  box-sizing: border-box;
+  display: block;
+  margin: 0 0 20px;
+}
+
+.emotion-0 {
+  border-bottom: 1px solid #e6e6e6;
+  color: #262626;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-1 {
+  font-size: 13px;
+  padding: 6px 10px 20px;
+}
+
 <section
-  className="css-d5m9xt-infoColumnClass"
+  className="emotion-5"
 >
   <aside
-    className="css-13d5f7-infoBoxClass"
+    className="emotion-2"
   >
     <h3
-      className="css-139kw5e-infoBoxHeaderClass"
+      className="emotion-0"
     />
     <div
-      className="css-xky2ol-infoBoxContentClass"
+      className="emotion-1"
     >
       <p
         key="0"
@@ -118,10 +253,10 @@ exports[`InfoColumn with info and meta fields 1`] = `
     </div>
   </aside>
   <aside
-    className="css-13d5f7-infoBoxClass"
+    className="emotion-2"
   >
     <div
-      className="css-xky2ol-infoBoxContentClass"
+      className="emotion-1"
     >
       <p
         key="0"
@@ -136,17 +271,57 @@ exports[`InfoColumn with info and meta fields 1`] = `
 `;
 
 exports[`InfoColumn with infoFields 1`] = `
+.emotion-3 {
+  float: right;
+  line-height: 1.4;
+  margin: 10px -300px 0 0;
+  width: 280px;
+}
+
+@media screen and (max-width:782px) {
+  .emotion-3 {
+    float: none;
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+.emotion-2 {
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+  box-sizing: border-box;
+  display: block;
+  margin: 0 0 20px;
+}
+
+.emotion-0 {
+  border-bottom: 1px solid #e6e6e6;
+  color: #262626;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-1 {
+  font-size: 13px;
+  padding: 6px 10px 20px;
+}
+
 <section
-  className="css-d5m9xt-infoColumnClass"
+  className="emotion-3"
 >
   <aside
-    className="css-13d5f7-infoBoxClass"
+    className="emotion-2"
   >
     <h3
-      className="css-139kw5e-infoBoxHeaderClass"
+      className="emotion-0"
     />
     <div
-      className="css-xky2ol-infoBoxContentClass"
+      className="emotion-1"
     >
       <p
         key="0"
@@ -161,14 +336,42 @@ exports[`InfoColumn with infoFields 1`] = `
 `;
 
 exports[`InfoColumn with metaFields 1`] = `
+.emotion-2 {
+  float: right;
+  line-height: 1.4;
+  margin: 10px -300px 0 0;
+  width: 280px;
+}
+
+@media screen and (max-width:782px) {
+  .emotion-2 {
+    float: none;
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+.emotion-1 {
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+  box-sizing: border-box;
+  display: block;
+  margin: 0 0 20px;
+}
+
+.emotion-0 {
+  font-size: 13px;
+  padding: 6px 10px 20px;
+}
+
 <section
-  className="css-d5m9xt-infoColumnClass"
+  className="emotion-2"
 >
   <aside
-    className="css-13d5f7-infoBoxClass"
+    className="emotion-1"
   >
     <div
-      className="css-xky2ol-infoBoxContentClass"
+      className="emotion-0"
     >
       <p
         key="0"

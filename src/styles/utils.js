@@ -117,7 +117,7 @@ export const Button = styled.button`
   ${buttonColors};
 `;
 
-const largeButtonStyles = css`
+export const largeButtonStyles = css`
   ${buttonStyles};
   height: 30px;
   line-height: 28px;
@@ -132,7 +132,7 @@ export const PrimaryButton = styled.button`
   text-shadow: ${themeUtils.buttons.primary.textShadow};
 `;
 
-const smallButtonStyles = css`
+export const smallButtonStyles = css`
   ${buttonStyles};
   font-size: 11px;
   height: 24px;

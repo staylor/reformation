@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Style utils Heading 1`] = `
+.emotion-0 {
+  display: block;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.3px;
+  -moz-letter-spacing: 0.3px;
+  -ms-letter-spacing: 0.3px;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  color: #000;
+  font-family: 'futura-pt','Helvetica Neue',sans-serif;
+  font-size: 25px;
+}
+
+@media only screen and (min-width:1024px) {
+  .emotion-0 {
+    margin-bottom: 15px;
+  }
+}
+
+<Heading>
+  <h2
+    className="emotion-0 emotion-1"
+  >
+    Hello
+  </h2>
+</Heading>
+`;
+
+exports[`Style utils cx 1`] = `
+.emotion-0 {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 3px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 13px;
+  height: 28px;
+  line-height: 26px;
+  margin: 0;
+  outline: 0;
+  padding: 0 10px 1px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-transition-duration: 0.05s;
+  transition-duration: 0.05s;
+  -webkit-transition-property: border,background,color;
+  transition-property: border,background,color;
+  -webkit-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
+  vertical-align: top;
+  white-space: nowrap;
+  height: 30px;
+  line-height: 28px;
+  padding: 0 12px 2px;
+}
+
+.emotion-0:active {
+  -webkit-transform: translateY(1px);
+  -ms-transform: translateY(1px);
+  transform: translateY(1px);
+}
+
+<a
+  className="emotion-0"
+  href="http://foo.com"
+>
+  Hello
+</a>
+`;
+
+exports[`Style utils headingStyles 1`] = `
+.emotion-0 {
+  display: block;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.3px;
+  -moz-letter-spacing: 0.3px;
+  -ms-letter-spacing: 0.3px;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+
+@media only screen and (min-width:1024px) {
+  .emotion-0 {
+    margin-bottom: 15px;
+  }
+}
+
+<h1
+  className="emotion-0"
+>
+  Hello
+</h1>
+`;

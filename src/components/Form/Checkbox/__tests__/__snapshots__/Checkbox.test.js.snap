@@ -1,27 +1,132 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Checkbox add className 1`] = `
+.emotion-0 {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid #b4b9be;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  color: #999;
+  cursor: pointer;
+  display: inline-block;
+  height: 16px;
+  line-height: 0;
+  min-width: 16px;
+  outline: 0;
+  padding: 0;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  vertical-align: text-top;
+  width: 16px;
+}
+
+.emotion-0:checked::before {
+  color: #e50082;
+  content: '\\f147';
+  float: left;
+  display: inline-block;
+  font: normal 21px/1 dashicons;
+  margin: -3px 0 0 -4px;
+  speak: none;
+  vertical-align: middle;
+  width: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 <input
   checked={false}
-  className="css-1fiwpa4-checkboxClass foo"
+  className="emotion-0 foo"
   onChange={[Function]}
   type="checkbox"
 />
 `;
 
 exports[`Checkbox checked 1`] = `
+.emotion-0 {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid #b4b9be;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  color: #999;
+  cursor: pointer;
+  display: inline-block;
+  height: 16px;
+  line-height: 0;
+  min-width: 16px;
+  outline: 0;
+  padding: 0;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  vertical-align: text-top;
+  width: 16px;
+}
+
+.emotion-0:checked::before {
+  color: #e50082;
+  content: '\\f147';
+  float: left;
+  display: inline-block;
+  font: normal 21px/1 dashicons;
+  margin: -3px 0 0 -4px;
+  speak: none;
+  vertical-align: middle;
+  width: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 <input
   checked={true}
-  className="css-1fiwpa4-checkboxClass"
+  className="emotion-0"
   onChange={[Function]}
   type="checkbox"
 />
 `;
 
 exports[`Checkbox empty 1`] = `
+.emotion-0 {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid #b4b9be;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  color: #999;
+  cursor: pointer;
+  display: inline-block;
+  height: 16px;
+  line-height: 0;
+  min-width: 16px;
+  outline: 0;
+  padding: 0;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  vertical-align: text-top;
+  width: 16px;
+}
+
+.emotion-0:checked::before {
+  color: #e50082;
+  content: '\\f147';
+  float: left;
+  display: inline-block;
+  font: normal 21px/1 dashicons;
+  margin: -3px 0 0 -4px;
+  speak: none;
+  vertical-align: middle;
+  width: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 <input
   checked={false}
-  className="css-1fiwpa4-checkboxClass"
+  className="emotion-0"
   onChange={[Function]}
   type="checkbox"
 />

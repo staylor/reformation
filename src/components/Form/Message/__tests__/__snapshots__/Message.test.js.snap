@@ -1,14 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Message empty 1`] = `
+.emotion-2 {
+  background: #fafafa;
+  border-left: 4px solid #e50082;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);
+  display: block;
+  margin: 5px 0 15px;
+  padding: 1px 38px 1px 12px;
+  position: relative;
+}
+
+.emotion-0 {
+  color: #262626;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0.5em 0;
+  padding: 2px;
+}
+
+.emotion-1 {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 9px;
+  position: absolute;
+  right: 1px;
+  top: 0;
+}
+
+.emotion-1::before {
+  background: none;
+  color: #999;
+  content: '\\f153';
+  display: block;
+  font: normal 16px/20px dashicons;
+  height: 20px;
+  speak: none;
+  text-align: center;
+  width: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 <div
-  className="css-fomzvs-messageWrapClass"
+  className="emotion-2"
 >
   <p
-    className="css-7kpzh9-messageTextClass"
+    className="emotion-0"
   />
   <button
-    className="css-1m0zv91-dismissButtonClass"
+    className="emotion-1"
     onClick={[Function]}
     type="button"
   />
@@ -16,16 +59,59 @@ exports[`Message empty 1`] = `
 `;
 
 exports[`Message text 1`] = `
+.emotion-2 {
+  background: #fafafa;
+  border-left: 4px solid #e50082;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);
+  display: block;
+  margin: 5px 0 15px;
+  padding: 1px 38px 1px 12px;
+  position: relative;
+}
+
+.emotion-0 {
+  color: #262626;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0.5em 0;
+  padding: 2px;
+}
+
+.emotion-1 {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 9px;
+  position: absolute;
+  right: 1px;
+  top: 0;
+}
+
+.emotion-1::before {
+  background: none;
+  color: #999;
+  content: '\\f153';
+  display: block;
+  font: normal 16px/20px dashicons;
+  height: 20px;
+  speak: none;
+  text-align: center;
+  width: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 <div
-  className="css-fomzvs-messageWrapClass"
+  className="emotion-2"
 >
   <p
-    className="css-7kpzh9-messageTextClass"
+    className="emotion-0"
   >
     This is an admin message.
   </p>
   <button
-    className="css-1m0zv91-dismissButtonClass"
+    className="emotion-1"
     onClick={[Function]}
     type="button"
   />
