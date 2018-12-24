@@ -8,6 +8,7 @@ import Helmet from 'react-helmet-async';
 import NotFound from 'components/NotFound';
 import Logo from 'components/Logo';
 import Home from './Home';
+import Shows from './Shows';
 import Videos from './Videos';
 import Video from './Video';
 import Post from './Post';
@@ -129,6 +130,8 @@ class App extends Component {
               <section className={styles.primaryClass}>
                 <Switch>
                   <Route exact path="/videos/:year(\d{4})?" component={Videos} />
+                  <Route path="/shows/:taxonomy/:term" component={Shows} />
+                  <Route exact path="/shows" component={Shows} />
                   <Route path="/video/:slug" component={Video} />
                   <Route path="/post/:slug" component={Post} />
                   <Route exact path="/" component={Home} />

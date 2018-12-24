@@ -5,31 +5,43 @@ import { headingClass, showClass, timeClass } from './styled';
 
 /* eslint-disable react/prop-types */
 
-@graphql(gql`
-  query SidebarQuery {
-    shows(latest: true, first: 20) @connection(key: "shows", filter: ["latest"]) {
-      edges {
-        node {
-          id
-          artist {
-            name
+@graphql(
+  gql`
+    query SidebarQuery($first: Int!) {
+      shows(latest: true, first: $first) @connection(key: "shows", filter: ["latest"]) {
+        edges {
+          node {
+            id
+            title
+            artist {
+              id
+              name
+            }
+            venue {
+              id
+              name
+            }
+            date
           }
-          venue {
-            name
-          }
-          date
         }
       }
     }
+  `,
+  {
+    options: {
+      variables: {
+        first: 15,
+      },
+    },
   }
-`)
+)
 class Sidebar extends Component {
   render() {
     const {
       data: { loading, shows },
     } = this.props;
 
-    if (loading && !shows) {
+    if (loading || !shows) {
       return null;
     }
 
@@ -45,7 +57,7 @@ class Sidebar extends Component {
               <time className={timeClass}>{`${m < 10 ? `0${m}` : m}/${
                 day < 10 ? `0${day}` : day
               }/${d.getFullYear()}`}</time>
-              {node.artist.name}
+              {node.title || node.artist.name}
               <br />
               {node.venue.name}
             </div>

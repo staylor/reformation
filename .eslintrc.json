@@ -19,7 +19,10 @@
 
   "settings": {
     "import/resolver": {
-      "babel-module": {}
+      "babel-module": {},
+      "webpack": {
+        "config": "webpack.aliases.config.js"
+      }
     }
   },
 

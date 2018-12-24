@@ -22,6 +22,9 @@ class Navigation extends Component {
         <Link className={navItemClass} to="/">
           Home
         </Link>
+        <Link className={navItemClass} to="/shows">
+          Shows
+        </Link>
         <Link className={navItemClass} to="/videos">
           Videos
         </Link>

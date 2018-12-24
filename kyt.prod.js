@@ -1,4 +1,5 @@
 const { clientSrcPath } = require('kyt-utils/paths')();
+const aliasesConfig = require('./webpack.aliases.config.js');
 
 module.exports = {
   serverURL: 'http://localhost:3006',
@@ -14,6 +15,14 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'graphql-tag/loader',
     });
+
+    // Aliases
+    config.resolve.alias = Object.assign(
+      {},
+      config.resolve.alias || {},
+      aliasesConfig.resolve.alias
+    );
+
     return config;
   },
 };

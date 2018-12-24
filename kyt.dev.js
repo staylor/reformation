@@ -1,18 +1,30 @@
 const { clientSrcPath } = require('kyt-utils/paths')();
+const aliasesConfig = require('./webpack.aliases.config.js');
 
 module.exports = {
+  reactHotLoader: true,
   modifyWebpackConfig: baseConfig => {
     const config = Object.assign({}, baseConfig);
     if (config.target === 'web') {
-      config.entry.main = `${clientSrcPath}/index.js`;
-      config.entry.admin = `${clientSrcPath}/admin.js`;
-      config.entry.login = `${clientSrcPath}/login.js`;
+      const entries = [...config.entry.main];
+      entries.pop();
+      config.entry.admin = entries.concat(`${clientSrcPath}/admin.js`);
+      config.entry.login = entries.concat(`${clientSrcPath}/login.js`);
     }
+
     config.module.rules.push({
       test: /\.(graphql|gql)$/,
       exclude: /node_modules/,
       loader: 'graphql-tag/loader',
     });
+
+    // Aliases
+    config.resolve.alias = Object.assign(
+      {},
+      config.resolve.alias || {},
+      aliasesConfig.resolve.alias
+    );
+
     return config;
   },
 };
