@@ -82,7 +82,6 @@ export const collapsedContentClass = css`
 
 export const FormWrap = styled.div`
   display: block;
-  margin-right: 300px;
 
   &::after {
     clear: both;
