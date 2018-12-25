@@ -12,6 +12,10 @@ type Props = {
 
 const BlockStyleControls = ({ editorState, onToggle, openVideoModal, openImageModal }: Props) => {
   const selection = editorState.getSelection();
+  if (!selection) {
+    return null;
+  }
+
   const blockType = editorState
     .getCurrentContent()
     .getBlockForKey(selection.getStartKey())
