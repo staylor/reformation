@@ -88,7 +88,10 @@ export default {
     ),
     IMAGE: (children, data, { key }) => {
       const { image } = data;
-      const crop = image.crops.find(c => c.width === 640);
+      let crop = image.crops.find(c => c.width === 640);
+      if (!crop) {
+        [crop] = image.crops;
+      }
       return <Image key={key} src={uploadUrl(image.destination, crop.fileName)} />;
     },
     VIDEO: (children, data, { key }) => {

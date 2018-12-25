@@ -27,6 +27,10 @@ type Props = {
 
 function Image(props: Props) {
   const { image, size } = props;
+  if (!image) {
+    return null;
+  }
+
   // this logic is insufficient, it assumes all images are at least 640px,
   // else it goes down to the next size, which is probably too small
   // probably want to use the original size, but that might be too big
