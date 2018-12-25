@@ -24,7 +24,8 @@ export default function Media(props: Props) {
   }
 
   if (type === 'IMAGE') {
-    return <Image {...{ contentState, entityKey, entity }} />;
+    const { image, size } = entity.getData();
+    return <Image {...{ image, size }} />;
   }
 
   if (type === 'VIDEO') {

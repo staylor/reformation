@@ -5,7 +5,10 @@ export const infoColumnClass = css`
   float: right;
   line-height: 1.4;
   margin: 10px -300px 0 0;
+  position: sticky;
+  top: 10px;
   width: 280px;
+
   @media screen and (max-width: 782px) {
     float: none;
     margin-right: 0;

@@ -1,12 +1,7 @@
 // @flow
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { cx } from 'emotion';
-import type { ContentState } from 'draft-js';
-import type DraftEntityInstance from 'draft-js/lib/DraftEntityInstance';
+import React from 'react';
 import { uploadUrl } from 'utils/media';
-import Sizer from './Sizer';
-import { ImageWrap, Image as StyledImage } from './styled';
+import { imageClass } from './styled';
 
 const cropMap = {
   FEATURE: 640,
@@ -14,70 +9,33 @@ const cropMap = {
   THUMB: 150,
 };
 
+type Crop = {
+  width: number,
+  height: number,
+  fileName: string,
+};
+
+type ImageUpload = {
+  destination: string,
+  crops: Crop[],
+};
+
 type Props = {
-  contentState: ContentState,
-  entityKey: string,
-  entity: DraftEntityInstance,
+  image: ImageUpload,
+  size: string,
 };
 
-type State = {
-  showTools: boolean,
-  bounds: {},
-};
-
-export default class Image extends Component<Props, State> {
-  state = {
-    showTools: false,
-    bounds: {},
-  };
-
-  image: HTMLImageElement;
-
-  static contextTypes = {
-    setReadOnly: PropTypes.func,
-  };
-
-  showTools(e: Event) {
-    e.stopPropagation();
-    this.context.setReadOnly(true, () => {
-      const bounds = this.image.getBoundingClientRect();
-      this.setState({ showTools: true, bounds });
-    });
+function Image(props: Props) {
+  const { image, size } = props;
+  // this logic is insufficient, it assumes all images are at least 640px,
+  // else it goes down to the next size, which is probably too small
+  // probably want to use the original size, but that might be too big
+  let crop = image.crops.find(c => c.width === cropMap[size]);
+  if (!crop) {
+    [crop] = image.crops;
   }
 
-  hideTools(e: Event) {
-    e.stopPropagation();
-    this.context.setReadOnly(false, () => {
-      this.setState({ showTools: false, bounds: {} });
-    });
-  }
-
-  render() {
-    const { contentState, entityKey, entity } = this.props;
-    const { image, size } = entity.getData();
-    let crop = image.crops.find(c => c.width === cropMap[size]);
-    if (!crop) {
-      [crop] = image.crops;
-    }
-
-    return (
-      <ImageWrap
-        className={cx({
-          'Image-FEATURE': size === 'FEATURE',
-          'Image-MEDIUM': size === 'MEDIUM',
-          'Image-SMALL': size === 'THUMB',
-        })}
-        innerRef={ref => {
-          this.image = ref;
-        }}
-        onMouseEnter={e => this.showTools(e)}
-        onMouseLeave={e => this.hideTools(e)}
-      >
-        {this.state.showTools && (
-          <Sizer bounds={this.state.bounds} {...{ contentState, entityKey }} />
-        )}
-        <StyledImage alt="" src={uploadUrl(image.destination, crop.fileName)} />
-      </ImageWrap>
-    );
-  }
+  return <img className={imageClass} alt="" src={uploadUrl(image.destination, crop.fileName)} />;
 }
+
+export default Image;

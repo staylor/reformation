@@ -1,4 +1,3 @@
-import styled from 'react-emotion';
 import { css } from 'emotion';
 
 export const blockquoteClass = css`
@@ -14,26 +13,9 @@ export const paragraphClass = css`
   margin: 0 0 24px;
 `;
 
-export const Image = styled.img`
+export const imageClass = css`
   display: block;
   height: auto;
-  max-width: 100%;
-`;
-
-export const ImageWrap = styled.div`
   margin: 10px 0;
-  pointer-events: all;
-  position: relative;
-
-  &.Image-MEDIUM,
-  &.Image-SMALL {
-    float: left;
-    margin: 0 20px 10px 0;
-  }
-`;
-
-export const Sizer = styled.div`
-  display: block;
-  position: absolute;
-  z-index: 100001;
+  max-width: 100%;
 `;
