@@ -152,13 +152,17 @@ export default class InlineStyleControls extends Component<Props, State> {
 
   render() {
     const { editorState, onToggle } = this.props;
-    const currentStyle = editorState.getCurrentInlineStyle();
+    const contentState = editorState.getCurrentContent();
     const selection = editorState.getSelection();
+    const block = contentState.getBlockForKey(selection.getStartKey());
+    if (!block) {
+      return null;
+    }
+    const currentStyle = editorState.getCurrentInlineStyle();
+
     let linkKey = '';
     if (!selection.isCollapsed()) {
-      const contentState = editorState.getCurrentContent();
-      const blockWithLink = contentState.getBlockForKey(selection.getStartKey());
-      linkKey = blockWithLink.getEntityAt(selection.getStartOffset());
+      linkKey = block.getEntityAt(selection.getStartOffset());
     }
 
     return (

@@ -16,10 +16,12 @@ const BlockStyleControls = ({ editorState, onToggle, openVideoModal, openImageMo
     return null;
   }
 
-  const blockType = editorState
-    .getCurrentContent()
-    .getBlockForKey(selection.getStartKey())
-    .getType();
+  const block = editorState.getCurrentContent().getBlockForKey(selection.getStartKey());
+  if (!block) {
+    return null;
+  }
+
+  const blockType = block.getType();
 
   const BLOCK_TYPES = [
     { label: 'H2', style: 'header-two' },
