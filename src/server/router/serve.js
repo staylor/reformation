@@ -1,6 +1,5 @@
-import through from 'through';
-import { renderToNodeStream } from 'react-dom/server';
-import { renderStylesToNodeStream } from 'emotion-server';
+import { renderToString } from 'react-dom/server';
+import { extractCritical } from 'emotion-server';
 import { getDataFromTree } from 'react-apollo';
 // eslint-disable-next-line
 import template from 'server/template';
@@ -20,27 +19,21 @@ export default async (req, res) => {
 
   const state = client.cache.extract();
 
-  const [header, footer] = template({
+  res.status(200);
+
+  const { html, ids, css } = extractCritical(renderToString(app));
+
+  const response = template({
+    html,
+    ids,
+    css,
     helmet: res.locals.helmetContext.helmet,
     stylesheets,
     state,
     assets,
   });
 
-  res.status(200);
-  res.write(header);
-  renderToNodeStream(app)
-    .pipe(renderStylesToNodeStream())
-    .pipe(
-      through(
-        function write(data) {
-          this.queue(data);
-        },
-        function end() {
-          this.queue(footer);
-          this.queue(null);
-        }
-      )
-    )
-    .pipe(res);
+  console.log(response);
+
+  res.send(response);
 };
