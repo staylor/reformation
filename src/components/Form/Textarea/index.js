@@ -10,11 +10,7 @@ type Props = {
   bindRef?: (element: any) => void,
 };
 
-type State = {
-  value: string,
-};
-
-export default class Textarea extends Component<Props, State> {
+export default class Textarea extends Component<Props> {
   onChange = (e: { target: HTMLTextAreaElement }) => {
     const value = e.target.value || '';
     if (this.props.onChange) {
