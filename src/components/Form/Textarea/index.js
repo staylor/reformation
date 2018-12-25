@@ -15,24 +15,11 @@ type State = {
 };
 
 export default class Textarea extends Component<Props, State> {
-  state = {
-    value: this.props.value || '',
-  };
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.value === prevState.value) {
-      return null;
-    }
-    return { value: nextProps.value || '' };
-  }
-
   onChange = (e: { target: HTMLTextAreaElement }) => {
     const value = e.target.value || '';
-    this.setState({ value }, () => {
-      if (this.props.onChange) {
-        this.props.onChange(value);
-      }
-    });
+    if (this.props.onChange) {
+      this.props.onChange(value);
+    }
   };
 
   render() {
@@ -43,7 +30,7 @@ export default class Textarea extends Component<Props, State> {
         ref={bindRef}
         className={cx(textareaClass, className)}
         onChange={this.onChange}
-        value={this.state.value}
+        defaultValue={value}
       />
     );
   }
