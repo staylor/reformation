@@ -55,7 +55,10 @@ export default class Image extends Component<Props, State> {
   render() {
     const { contentState, entityKey, entity } = this.props;
     const { image, size } = entity.getData();
-    const crop = image.crops.find(c => c.width === cropMap[size]);
+    let crop = image.crops.find(c => c.width === cropMap[size]);
+    if (!crop) {
+      [crop] = image.crops;
+    }
 
     return (
       <ImageWrap
