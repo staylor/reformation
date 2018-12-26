@@ -1,0 +1,5 @@
+{
+  "uid": "highforthis",
+  "script": "build/server/main.js",
+  "sourceDir": "/var/www/highforthis.com/reformation"
+}

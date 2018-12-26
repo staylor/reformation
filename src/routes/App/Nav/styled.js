@@ -3,13 +3,17 @@ import themeUtils from 'styles/theme';
 import responsive from 'styles/responsive';
 
 export const navClass = css`
-  height: 28px;
+  display: flex;
+  justify-content: space-between;
   margin: ${themeUtils.padding}px 0;
+
   ${responsive.tablet} {
+    justify-content: flex-start;
     margin: ${themeUtils.padding}px auto;
     text-align: center;
     width: 640px;
   }
+
   ${responsive.desktop} {
     margin: ${themeUtils.padding}px 0;
     text-align: left;
@@ -19,12 +23,10 @@ export const navClass = css`
 
 export const navItemClass = css`
   color: ${themeUtils.colors.dark};
-  display: inline-block;
   font-family: ${themeUtils.fonts.futura};
-  font-size: 20px;
+  font-size: 18px;
   font-weight: ${themeUtils.fonts.weight.bold};
   line-height: 28px;
-  margin: 0 10px 0 0;
   text-decoration: none;
   text-transform: uppercase;
   vertical-align: middle;
