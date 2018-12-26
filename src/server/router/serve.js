@@ -33,7 +33,5 @@ export default async (req, res) => {
     assets,
   });
 
-  console.log(response);
-
   res.send(response);
 };

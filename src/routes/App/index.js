@@ -131,6 +131,7 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/videos/:year(\d{4})?" component={Videos} />
                   <Route path="/shows/:taxonomy/:term" component={Shows} />
+                  <Route exact path="/shows/list" component={Shows} />
                   <Route exact path="/shows" component={Shows} />
                   <Route path="/video/:slug" component={Video} />
                   <Route path="/post/:slug" component={Post} />
