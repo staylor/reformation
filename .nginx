@@ -1,12 +1,16 @@
+proxy_cache_path /data/nginx/cache levels=1:2 keys_zone=highforthis:10m max_size=500m
+                 inactive=360m use_temp_path=off;
+
 server {
 	listen       80;
 	server_name  highforthis.com www.highforthis.com;
 	root         /var/www/highforthis.com/public_html;
 	access_log   /var/www/highforthis.com/logs/access.log;
 	error_log    /var/www/highforthis.com/logs/error.log;
-  location /.well-known/acme-challenge/ {
-    try_files $uri /dev/null =404;
-  }
+
+	location /.well-known/acme-challenge/ {
+		try_files $uri /dev/null =404;
+	}
 
 	location / {
 		rewrite ^ https://highforthis.com$request_uri permanent;
@@ -16,28 +20,48 @@ server {
 server {
 	listen 443;
 	ssl on;
-ssl_certificate     /etc/letsencrypt/live/goodbyepicasso.com-0002/fullchain.pem;
-ssl_certificate_key /etc/letsencrypt/live/goodbyepicasso.com-0002/privkey.pem;	
-server_name  highforthis.com *.highforthis.com;
-	root         /var/www/highforthis.com/node;
+	ssl_certificate     /etc/letsencrypt/live/goodbyepicasso.com-0003/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/goodbyepicasso.com-0003/privkey.pem;
+	server_name  highforthis.com *.highforthis.com;
+	root         /var/www/highforthis.com/reformation;
 	access_log   /var/www/highforthis.com/logs/ssl.access.log;
 	error_log    /var/www/highforthis.com/logs/ssl.error.log;
 
-  location / {
-    try_files $uri @app;
-  }
+	client_body_buffer_size 1M;
+	client_max_body_size 100M;
 
-  location @app {
-    proxy_pass http://localhost:3006;
-    proxy_set_header Host $host;
-  }
+	location /admin {
+		proxy_pass http://localhost:3006;
+		proxy_set_header Host $host;
+	}
 
-  location /graphql {
-    try_files $uri @graphql;
-  }
+	location /login {
+		proxy_pass http://localhost:3006;
+		proxy_set_header Host $host;
+	}
 
-  location @graphql {
-    proxy_pass http://localhost:8084;
-    proxy_set_header Host $host;
-  }
+	location /graphql {
+		try_files $uri @graphql;
+	}
+
+	location @graphql {
+		proxy_pass http://localhost:8084;
+		proxy_set_header Host $host;
+	}
+
+	location / {
+		try_files $uri @app;
+	}
+
+	location @app {
+		proxy_pass http://localhost:3006;
+		proxy_set_header Host $host;
+		proxy_cache highforthis;
+		proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+		proxy_cache_revalidate on;
+		proxy_cache_background_update on;
+		proxy_cache_lock on;
+		proxy_cache_bypass $cookie_nocache $arg_nocache;
+		add_header X-Cache-Status $upstream_cache_status;
+	}
 }
