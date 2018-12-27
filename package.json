@@ -61,8 +61,9 @@
     "test-update": "npm run test -- -u",
     "dev": "env-cmd dev kyt dev -C kyt.dev.js",
     "prod:build": "env-cmd prod kyt build -C kyt.prod.js",
-    "prod:start": "env-cmd prod forever restart forever.prod.json",
-    "prod": "npm run prod:build && npm run prod:start",
+    "prod:stop": "forever stop highforthis",
+    "prod:start": "env-cmd prod forever start forever.prod.json",
+    "prod": "npm run prod:build && npm run prod:stop && npm run prod:start",
     "lint-fix": "eslint . --fix",
     "precommit": "eslint ."
   },
