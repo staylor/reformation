@@ -4,11 +4,15 @@ import themeUtils from 'styles/theme';
 export const tableClass = css`
   border-collapse: collapse;
   color: ${themeUtils.colors.black};
-  width: 75%;
+  width: 100%;
 
   td {
     border: 1px solid ${themeUtils.colors.detail};
     padding: 5px;
+  }
+
+  ${themeUtils.breakpoint.desktop} {
+    width: 75%;
   }
 `;
 
