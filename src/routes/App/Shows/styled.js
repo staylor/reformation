@@ -11,7 +11,7 @@ export const tableClass = css`
     padding: 5px;
   }
 
-  ${themeUtils.breakpoint.desktop} {
+  ${themeUtils.breakpoint.medium} {
     width: 75%;
   }
 `;
