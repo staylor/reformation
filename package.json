@@ -62,7 +62,7 @@
     "dev": "env-cmd dev kyt dev -C kyt.dev.js",
     "prod:build": "NODE_ENV=production env-cmd prod kyt build -C kyt.prod.js",
     "prod:stop": "forever stop highforthis",
-    "prod:start": "NODE_ENV=production env-cmd prod forever start forever.prod.json",
+    "prod:start": "NODE_ENV=production env-cmd prod forever start -a forever.prod.json",
     "prod": "npm run prod:build && npm run prod:stop && npm run prod:start",
     "prod:local": "yarn install && npm run prod:build && env-cmd prod node build/server/main.js",
     "lint-fix": "eslint . --fix",
