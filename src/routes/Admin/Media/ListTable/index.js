@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
@@ -61,7 +61,7 @@ const columns = [
       };
 
       return (
-        <Fragment>
+        <>
           <RowTitle>
             <Link to={`/media/${media.id}`}>{media.title || '(no title)'}</Link>
             <br />
@@ -73,7 +73,7 @@ const columns = [
               Delete
             </a>
           </RowActions>
-        </Fragment>
+        </>
       );
     },
   },
@@ -165,7 +165,7 @@ class Media extends Component {
     const queryParams = parse(location.search);
 
     const filters = (
-      <Fragment>
+      <>
         <Select
           key="type"
           placeholder="Select Media Type"
@@ -183,11 +183,11 @@ class Media extends Component {
           choices={uploads.mimeTypes}
           onChange={this.updateMimeType}
         />
-      </Fragment>
+      </>
     );
 
     return (
-      <Fragment>
+      <>
         <Heading>Media</Heading>
         <HeaderAdd to="/media/upload">Add Media</HeaderAdd>
         <SearchBox>
@@ -210,7 +210,7 @@ class Media extends Component {
           data={uploads}
           path="/media"
         />
-      </Fragment>
+      </>
     );
   }
 }

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from 'components/Loading';
@@ -68,7 +68,7 @@ class EditTerm extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         <Heading>{`Edit ${term.taxonomy.name}`}</Heading>
         {this.state.message === 'updated' && <Message text={`${term.taxonomy.name} updated.`} />}
         <FormWrap>
@@ -78,7 +78,7 @@ class EditTerm extends Component {
             onSubmit={this.onSubmit}
           />
         </FormWrap>
-      </Fragment>
+      </>
     );
   }
 }

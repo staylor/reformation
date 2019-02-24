@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Input from 'components/Form/Input';
 import { TagWrap, Tag, DeleteTag } from './styled';
 
@@ -32,7 +32,7 @@ export default class Tags extends Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         <Input
           placeholder="Type tag then press ENTER"
           onChange={this.onChange}
@@ -45,7 +45,7 @@ export default class Tags extends Component {
             </Tag>
           ))}
         </TagWrap>
-      </Fragment>
+      </>
     );
   }
 }

@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import Loading from 'components/Loading';
 import DashboardSettingsQuery from '../Settings/Dashboard/DashboardSettingsQuery.graphql';
@@ -16,15 +16,15 @@ class Home extends Component {
 
     if (loading && !settings) {
       return (
-        <Fragment>
+        <>
           <Heading>Dashboard</Heading>
           <Loading />
-        </Fragment>
+        </>
       );
     }
 
     return (
-      <Fragment>
+      <>
         <Heading>Dashboard</Heading>
 
         {settings.googleClientId ? (
@@ -32,7 +32,7 @@ class Home extends Component {
         ) : (
           'You need a Google Client ID to view analytics.'
         )}
-      </Fragment>
+      </>
     );
   }
 }

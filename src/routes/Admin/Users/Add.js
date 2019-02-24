@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Message from 'components/Form/Message';
@@ -40,13 +40,13 @@ class AddUser extends Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         <Heading>Add User</Heading>
         {this.state.message === 'error' && <Message text="Error adding user." />}
         <FormWrap>
           <UserForm buttonLabel="Add User" onSubmit={this.onSubmit} />
         </FormWrap>
-      </Fragment>
+      </>
     );
   }
 }

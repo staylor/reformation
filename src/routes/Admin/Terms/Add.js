@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from 'components/Loading';
@@ -72,13 +72,13 @@ class AddTerm extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         <Heading>{`Add ${taxonomy.name}`}</Heading>
         {this.state.message === 'error' && <Message text={`Error adding ${taxonomy.name}.`} />}
         <FormWrap>
           <TermForm buttonLabel={`Add ${taxonomy.name}`} onSubmit={this.onSubmit} />
         </FormWrap>
-      </Fragment>
+      </>
     );
   }
 }

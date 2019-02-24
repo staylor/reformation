@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Heading } from 'routes/Admin/styled';
 import * as styles from './styled';
@@ -72,7 +72,7 @@ export default class Media extends Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         <Heading>Upload Media</Heading>
         <div
           className={styles.dropzoneClass}
@@ -82,7 +82,7 @@ export default class Media extends Component {
         >
           <p className={styles.dropzoneInfoClass}>Drop files Here</p>
         </div>
-        <Fragment>
+        <>
           {Object.keys(this.state).map(key => {
             const upload = this.state[key];
             return (
@@ -97,8 +97,8 @@ export default class Media extends Component {
               </div>
             );
           })}
-        </Fragment>
-      </Fragment>
+        </>
+      </>
     );
   }
 }

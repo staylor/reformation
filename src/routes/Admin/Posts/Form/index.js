@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import gql from 'graphql-tag';
 import Editor from 'components/Editor';
 import Form from 'components/Form';
@@ -18,11 +18,9 @@ const postFields = [
 
       const url = `/post/${post.slug}`;
       return (
-        <Fragment>
-          <ViewPost href={url} target="_blank">
-            View Post
-          </ViewPost>
-        </Fragment>
+        <ViewPost href={url} target="_blank">
+          View Post
+        </ViewPost>
       );
     },
     position: 'info',

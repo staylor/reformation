@@ -11,27 +11,27 @@ export default function AudioInfo({ media }) {
   const first = crops.shift();
   const src = uploadUrl(media.destination, first.fileName);
   const cropInfo = (
-    <Fragment>
+    <>
       <img className={croppedClass} src={src} alt="" />
       <strong>
         Showing:
         <br />
       </strong>{' '}
       {first.width} x {first.height}
-    </Fragment>
+    </>
   );
 
   const mediaInfo = (
-    <Fragment>
+    <>
       <strong>File Size:</strong> {filesize(media.fileSize)}
       <br />
       <strong>File Type:</strong> {media.mimeType}
       {cropInfo}
-    </Fragment>
+    </>
   );
 
   return crops.length > 0 ? (
-    <Fragment>
+    <>
       {mediaInfo}
       <br />
       <strong>Other available images:</strong>
@@ -43,7 +43,7 @@ export default function AudioInfo({ media }) {
           </a>{' '}
         </Fragment>
       ))}
-    </Fragment>
+    </>
   ) : (
     mediaInfo
   );

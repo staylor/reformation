@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 
 /* eslint-disable react/prop-types */
 
@@ -64,11 +64,11 @@ export default class Analytics extends Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         <section id="auth-button" />
         <section id="view-selector" />
         <section id="timeline" />
-      </Fragment>
+      </>
     );
   }
 }

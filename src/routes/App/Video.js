@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Helmet from 'react-helmet-async';
@@ -32,12 +32,12 @@ class VideoRoute extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         <Helmet>
           <title>{video.title}</title>
         </Helmet>
         <Video single video={video} />
-      </Fragment>
+      </>
     );
   }
 }

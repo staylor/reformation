@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Input from 'components/Form/Input';
 import { fieldNumberClass } from 'components/Form/styled';
 import { SecondaryButton } from 'styles/utils';
@@ -49,7 +49,7 @@ class Crops extends Component {
   render() {
     const { crops } = this.state;
     return (
-      <Fragment>
+      <>
         <SecondaryButton onClick={this.addCrop}>Add Crop</SecondaryButton>
         <Table>
           <thead>
@@ -93,7 +93,7 @@ class Crops extends Component {
             ))}
           </tbody>
         </Table>
-      </Fragment>
+      </>
     );
   }
 }

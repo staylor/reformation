@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Message from 'components/Form/Message';
@@ -41,12 +41,12 @@ class AddPost extends Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         {this.state.message && <Message text={this.state.message} />}
         <FormWrap>
           <PostForm post={{}} buttonLabel="Add Post" onSubmit={this.onSubmit} />
         </FormWrap>
-      </Fragment>
+      </>
     );
   }
 }

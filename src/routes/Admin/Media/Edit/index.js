@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
@@ -54,10 +54,10 @@ const mediaFields = [
         );
       }
       return (
-        <Fragment>
+        <>
           <strong>Original name:</strong> {media.originalName}
           {mediaInfo}
-        </Fragment>
+        </>
       );
     },
   },
@@ -134,7 +134,7 @@ class EditMedia extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         <Heading>Edit Media</Heading>
         {this.state.message === 'updated' && <Message text="Media updated." />}
         <FormWrap>
@@ -145,7 +145,7 @@ class EditMedia extends Component {
             onSubmit={this.onSubmit}
           />
         </FormWrap>
-      </Fragment>
+      </>
     );
   }
 }

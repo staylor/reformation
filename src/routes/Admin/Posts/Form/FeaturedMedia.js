@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import ImageModal from 'components/Modals/Image';
 import { Button } from 'styles/utils';
@@ -36,7 +36,7 @@ export default class FeaturedMedia extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         {this.state.modal && <ImageModal selectImage={this.selectImage} onClose={this.onClose} />}
         {media.map(item => {
           const crop = item.crops.find(c => c.width === 150);
@@ -49,7 +49,7 @@ export default class FeaturedMedia extends Component {
           );
         })}
         <Button onClick={this.onClick}>Set Featured Media</Button>
-      </Fragment>
+      </>
     );
   }
 }

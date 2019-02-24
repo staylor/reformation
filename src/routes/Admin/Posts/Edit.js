@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from 'components/Loading';
@@ -73,12 +73,12 @@ class EditPost extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         {this.state.message === 'updated' && <Message text="Post updated." />}
         <FormWrap>
           <PostForm post={post} buttonLabel="Update Post" onSubmit={this.onSubmit} />
         </FormWrap>
-      </Fragment>
+      </>
     );
   }
 }

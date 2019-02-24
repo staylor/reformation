@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
@@ -20,14 +20,14 @@ const columns = [
   {
     label: 'Title',
     render: video => (
-      <Fragment>
+      <>
         <RowTitle>
           <Link to={`/video/${video.id}`}>{video.title}</Link>
         </RowTitle>
         <RowActions>
           <Link to={`/video/${video.id}`}>Edit</Link> | <a href={`/video/${video.slug}`}>View</a>
         </RowActions>
-      </Fragment>
+      </>
     ),
   },
   {
@@ -44,11 +44,11 @@ const columns = [
       const date = new Date(video.publishedAt);
       const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
       return (
-        <Fragment>
+        <>
           Published
           <br />
           {formattedDate}
-        </Fragment>
+        </>
       );
     },
   },
@@ -129,19 +129,17 @@ class Videos extends Component {
     const queryParams = parse(location.search);
 
     const filters = (
-      <Fragment>
-        <Select
-          key="year"
-          placeholder="Select Year"
-          value={queryParams.year}
-          choices={videos.years}
-          onChange={this.updateYear}
-        />
-      </Fragment>
+      <Select
+        key="year"
+        placeholder="Select Year"
+        value={queryParams.year}
+        choices={videos.years}
+        onChange={this.updateYear}
+      />
     );
 
     return (
-      <Fragment>
+      <>
         <Heading>Videos</Heading>
         <SearchBox>
           <Input
@@ -155,7 +153,7 @@ class Videos extends Component {
           data={videos}
           path="/video"
         />
-      </Fragment>
+      </>
     );
   }
 }

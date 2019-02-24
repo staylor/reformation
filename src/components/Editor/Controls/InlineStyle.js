@@ -1,5 +1,4 @@
-// @flow
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { RichUtils, EditorState } from 'draft-js';
 import StyleButton from './StyleButton';
 import { LinkInput, LinkAction, Controls } from './styled';
@@ -23,18 +22,18 @@ const INLINE_STYLES = [
   },
   {
     label: (
-      <Fragment>
+      <>
         X<sup>2</sup>
-      </Fragment>
+      </>
     ),
     style: 'SUPERSCRIPT',
     className: '',
   },
   {
     label: (
-      <Fragment>
+      <>
         X<sub>2</sub>
-      </Fragment>
+      </>
     ),
     style: 'SUBSCRIPT',
     className: '',
@@ -168,7 +167,7 @@ export default class InlineStyleControls extends Component<Props, State> {
     return (
       <Controls>
         {!selection.isCollapsed() && ['ADD_LINK', 'EDIT_LINK'].includes(this.state.mode) ? (
-          <Fragment>
+          <>
             <LinkInput
               innerRef={linkInput => {
                 this.linkInput = linkInput;
@@ -187,7 +186,7 @@ export default class InlineStyleControls extends Component<Props, State> {
             {this.state.mode === 'ADD_LINK' && (
               <LinkAction className="dashicons dashicons-no-alt" onClick={this.cancelLink} />
             )}
-          </Fragment>
+          </>
         ) : (
           INLINE_STYLES.map(type => (
             <StyleButton

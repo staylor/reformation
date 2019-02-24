@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from 'components/Loading';
@@ -74,7 +74,7 @@ class EditTaxonomy extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         <Heading>Edit Taxonomy</Heading>
         {this.state.message === 'updated' && <Message text="Taxonomy updated." />}
         <FormWrap>
@@ -84,7 +84,7 @@ class EditTaxonomy extends Component {
             onSubmit={this.onSubmit}
           />
         </FormWrap>
-      </Fragment>
+      </>
     );
   }
 }

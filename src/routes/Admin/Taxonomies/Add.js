@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Message from 'components/Form/Message';
@@ -48,13 +48,13 @@ class AddTaxonomy extends Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         <Heading>Add Taxonomy</Heading>
         {this.state.message === 'error' && <Message text="Error adding taxonomy." />}
         <FormWrap>
           <TaxonomyForm buttonLabel="Add Taxonomy" onSubmit={this.onSubmit} />
         </FormWrap>
-      </Fragment>
+      </>
     );
   }
 }

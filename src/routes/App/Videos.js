@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Videos from 'components/Videos';
 import Helmet from 'react-helmet-async';
 import { Heading } from 'styles/utils';
@@ -11,12 +11,12 @@ export default function VideosRoute(props) {
   } = props;
 
   return (
-    <Fragment>
+    <>
       <Helmet>
         <title>{params.year ? `${params.year} » ` : ''}Videos</title>
       </Helmet>
       <Heading>{params.year || 'Videos'}</Heading>
       <Videos {...props} />
-    </Fragment>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from 'components/Loading';
@@ -73,7 +73,7 @@ class EditShow extends Component {
       return <Loading />;
     }
     return (
-      <Fragment>
+      <>
         <Heading>Edit Show</Heading>
         {this.state.message === 'updated' && <Message text="Show updated." />}
         <FormWrap>
@@ -83,7 +83,7 @@ class EditShow extends Component {
             onSubmit={this.onSubmit}
           />
         </FormWrap>
-      </Fragment>
+      </>
     );
   }
 }

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
@@ -26,7 +26,7 @@ const columns = [
       };
 
       return (
-        <Fragment>
+        <>
           <RowTitle>
             <Link to={`/user/${user.id}`}>{user.name}</Link>
           </RowTitle>
@@ -36,7 +36,7 @@ const columns = [
               Delete
             </a>
           </RowActions>
-        </Fragment>
+        </>
       );
     },
   },
@@ -73,11 +73,11 @@ class Users extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         <Heading>User</Heading>
         <HeaderAdd to="/user/add">Add User</HeaderAdd>
         <ListTable {...{ location, match, columns, mutate, variables }} data={users} path="/user" />
-      </Fragment>
+      </>
     );
   }
 }

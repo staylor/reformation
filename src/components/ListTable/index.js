@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { cx } from 'emotion';
 import Select from 'components/Form/Select';
@@ -142,7 +142,7 @@ export default class ListTable extends Component {
     );
 
     return (
-      <Fragment>
+      <>
         <Filters>
           {this.props.mutate && (
             <Select
@@ -186,7 +186,7 @@ export default class ListTable extends Component {
           <tfoot>{headers}</tfoot>
         </Table>
         <Filters>{paginationMatrix}</Filters>
-      </Fragment>
+      </>
     );
   }
 }

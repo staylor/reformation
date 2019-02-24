@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import Form from 'components/Form';
@@ -37,7 +37,7 @@ export default class SettingsForm extends Component {
     } = this.props;
 
     return (
-      <Fragment>
+      <>
         <Heading>{title}</Heading>
         <Line />
         {this.state.message === 'updated' && <Message text="Settings Updated." />}
@@ -51,7 +51,7 @@ export default class SettingsForm extends Component {
             onSubmit={this.onSubmit}
           />
         )}
-      </Fragment>
+      </>
     );
   }
 }

@@ -6,7 +6,7 @@ import { uploadUrl } from 'utils/media';
 
 export default function ImageInfo({ media }) {
   return (
-    <Fragment>
+    <>
       <p>
         <strong>File Type:</strong> {media.mimeType}
       </p>
@@ -25,6 +25,6 @@ export default function ImageInfo({ media }) {
           - {filesize(crop.fileSize)}
         </Fragment>
       ))}
-    </Fragment>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from 'components/Loading';
@@ -66,13 +66,13 @@ class AddShow extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         <Heading>Add Show</Heading>
         {this.state.message === 'error' && <Message text="Error adding show." />}
         <FormWrap>
           <ShowForm {...{ artists, venues }} buttonLabel="Add Show" onSubmit={this.onSubmit} />
         </FormWrap>
-      </Fragment>
+      </>
     );
   }
 }

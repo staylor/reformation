@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from 'components/Loading';
@@ -98,7 +98,7 @@ class VideoRoute extends Component {
     const thumb = video.thumbnails.find(t => t.width === 480);
 
     return (
-      <Fragment>
+      <>
         <Heading>Edit Video</Heading>
         {this.state.message === 'updated' && <Message text="Video updated." />}
         <ThumbWrapper>
@@ -112,7 +112,7 @@ class VideoRoute extends Component {
             onSubmit={this.onSubmit}
           />
         </FormWrap>
-      </Fragment>
+      </>
     );
   }
 }

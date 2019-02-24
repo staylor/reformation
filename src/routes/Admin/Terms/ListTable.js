@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
@@ -31,7 +31,7 @@ const columns = [
       const urlPath = `/terms/${term.taxonomy.id}/${term.id}`;
 
       return (
-        <Fragment>
+        <>
           <RowTitle>
             <Link to={urlPath}>{term.name}</Link>
           </RowTitle>
@@ -41,7 +41,7 @@ const columns = [
               Delete
             </a>
           </RowActions>
-        </Fragment>
+        </>
       );
     },
   },
@@ -92,7 +92,7 @@ class Terms extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         <Heading>{terms.taxonomy.plural}</Heading>
         <HeaderAdd to={`/terms/${terms.taxonomy.id}/add`}>Add {terms.taxonomy.name}</HeaderAdd>
         <ListTable
@@ -100,7 +100,7 @@ class Terms extends Component {
           data={terms}
           path={`/terms/${terms.taxonomy.id}`}
         />
-      </Fragment>
+      </>
     );
   }
 }
