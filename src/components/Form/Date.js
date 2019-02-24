@@ -1,7 +1,5 @@
-// @flow
-import React, { Component, Fragment } from 'react';
-import Select from 'components/Form/Select';
-import type { Groups } from 'components/Form/Select';
+import React, { Component } from 'react';
+import Select, { type Groups } from 'components/Form/Select';
 
 const FEBRUARY = 1;
 const APRIL = 3;
@@ -95,32 +93,27 @@ type State = {
   year: string,
   hour: string,
   minutes: string,
+  yearChoices: number[],
 };
 
 export default class DatePicker extends Component<Props, State> {
-  state = {
-    date: this.props.date,
-  };
+  constructor(props) {
+    super(props);
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.date !== prevState.date || !prevState.yearChoices) {
-      const d = nextProps.date ? new Date(nextProps.date) : new Date();
-      const day = d.getDate();
-      const month = d.getMonth();
-      const hour = d.getHours();
-      const minute = d.getMinutes();
+    const d = props.date ? new Date(props.date) : new Date();
+    const day = d.getDate();
+    const month = d.getMonth();
+    const hour = d.getHours();
+    const minute = d.getMinutes();
 
-      return {
-        date: nextProps.date,
-        month: `${month}`,
-        day: `${day < 10 ? `0${day}` : day}`,
-        year: `${d.getFullYear()}`,
-        hour: `${hour < 10 ? `0${hour}` : hour}`,
-        minutes: `${minute < 10 ? `0${minute}` : minute}`,
-        yearChoices: yearChoices(d.getFullYear()),
-      };
-    }
-    return null;
+    this.state = {
+      month: `${month}`,
+      day: `${day < 10 ? `0${day}` : day}`,
+      year: `${d.getFullYear()}`,
+      hour: `${hour < 10 ? `0${hour}` : hour}`,
+      minutes: `${minute < 10 ? `0${minute}` : minute}`,
+      yearChoices: yearChoices(d.getFullYear()),
+    };
   }
 
   changeDate() {
@@ -135,7 +128,7 @@ export default class DatePicker extends Component<Props, State> {
   }
 
   setProp = (prop: string, value: any) => {
-    this.setState({ [prop]: value }, () => this.changeDate());
+    this.setState({ [prop]: value }, this.changeDate);
   };
 
   setDay = (day: string) => {
@@ -162,15 +155,9 @@ export default class DatePicker extends Component<Props, State> {
     this.changeDate();
   }
 
-  componentDidUpdate(nextProps) {
-    if (nextProps.date !== this.props.date) {
-      this.changeDate();
-    }
-  }
-
   render() {
     return (
-      <Fragment>
+      <>
         <Select onChange={this.setMonth} choices={monthChoices} value={this.state.month} />
         <Select
           onChange={this.setDay}
@@ -188,7 +175,7 @@ export default class DatePicker extends Component<Props, State> {
           value={this.state.minutes}
         />{' '}
         {parseInt(this.state.hour, 10) < 12 ? 'AM' : 'PM'}
-      </Fragment>
+      </>
     );
   }
 }
