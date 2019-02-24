@@ -5,6 +5,7 @@ import httpProxy from 'http-proxy-middleware';
 import morgan from 'morgan';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
+import { preloadDynamicImports } from 'kyt-runtime/server';
 import authenticate from './authenticate';
 import router from './router';
 
@@ -12,7 +13,7 @@ import router from './router';
 
 process.env.TZ = 'America/New_York';
 
-async function startServer() {
+function startServer() {
   const app = express();
   app.disable('x-powered-by');
   app.use(compression());
@@ -43,8 +44,10 @@ async function startServer() {
   app.listen(parseInt(KYT.SERVER_PORT, 10));
 }
 
-startServer().catch(e => {
-  console.error('Uncaught error in startup');
-  console.error(e);
-  console.trace(e);
-});
+preloadDynamicImports()
+  .then(startServer)
+  .catch(e => {
+    console.error('Uncaught error in startup');
+    console.error(e);
+    console.trace(e);
+  });

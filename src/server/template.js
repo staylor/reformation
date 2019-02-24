@@ -6,10 +6,14 @@ type Template = {
   helmet: any,
   stylesheets: string[],
   state: {},
-  assets: {
-    manifestJSBundle?: string,
-    vendorJSBundle?: string,
-    mainJSBundle?: string,
+  runtimeJSBundle?: string,
+  mainJSBundle?: string,
+  bundles: {
+    scripts: string[],
+    styles: string[],
+  },
+  clientAssets: {
+    [string]: string,
   },
 };
 
@@ -20,7 +24,10 @@ export default function template({
   helmet,
   stylesheets = [],
   state = {},
-  assets = {},
+  mainJSBundle,
+  runtimeJSBundle,
+  bundles,
+  clientAssets,
 }: Template): string {
   return `<!DOCTYPE html>
 <html ${helmet.htmlAttributes.toString()}>
@@ -32,14 +39,16 @@ ${helmet.title.toString()}${helmet.script.toString()}${helmet.meta.toString()}${
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
 ${stylesheets.map(sheet => `<link rel="stylesheet" href="${sheet}" />`).join('')}
 ${css && `<style>${css}</style>`}
+${(bundles.styles || []).map(e => `<link rel="stylesheet" href="${e}">`).join('\n')}
 <script>window.__emotion = ${JSON.stringify(ids)};</script>
 </head>
 <body ${helmet.bodyAttributes.toString()}>
   <main id="main">${html}</main>
   <script>window.__APOLLO_STATE__ = ${JSON.stringify(state).replace(/</g, '\\u003c')};</script>
-${assets.manifestJSBundle ? `<script defer src="${assets.manifestJSBundle}"></script>` : ''}
-${assets.vendorJSBundle ? `<script defer src="${assets.vendorJSBundle}"></script>` : ''}
-${assets.mainJSBundle ? `<script defer src="${assets.mainJSBundle}"></script>` : ''}
+${runtimeJSBundle ? `<script defer src="${runtimeJSBundle}"></script>` : ''}
+${clientAssets['vendor.js'] ? `<script defer src="${clientAssets['vendor.js']}"></script>` : ''}
+${bundles.scripts.map(e => `<script defer src="${e}"></script>`).join('\n')}
+${mainJSBundle ? `<script defer src="${mainJSBundle}"></script>` : ''}
 </body>
 </html>`;
 }

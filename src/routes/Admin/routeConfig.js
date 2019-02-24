@@ -1,12 +1,32 @@
-import PostRouter from './Posts';
-import MediaRouter from './Media';
-import VideoRouter from './Videos';
-import ShowRouter from './Shows';
-import TaxonomyRouter from './Taxonomies';
-import TermRouter from './Terms';
-import Dashboard from './Dashboard';
-import UserRouter from './Users';
-import SettingsRouter from './Settings';
+import dynamic from 'kyt-runtime/dynamic';
+
+const PostRouter = dynamic(() =>
+  import(/* webpackChunkName: "post-router" */ 'routes/Admin/Posts')
+);
+const MediaRouter = dynamic(() =>
+  import(/* webpackChunkName: "media-router" */ 'routes/Admin/Media')
+);
+const VideoRouter = dynamic(() =>
+  import(/* webpackChunkName: "video-router" */ 'routes/Admin/Videos')
+);
+const ShowRouter = dynamic(() =>
+  import(/* webpackChunkName: "show-router" */ 'routes/Admin/Shows')
+);
+const TaxonomyRouter = dynamic(() =>
+  import(/* webpackChunkName: "tax-router" */ 'routes/Admin/Taxonomies')
+);
+const TermRouter = dynamic(() =>
+  import(/* webpackChunkName: "term-router" */ 'routes/Admin/Terms')
+);
+const Dashboard = dynamic(() =>
+  import(/* webpackChunkName: "dashboard-router" */ 'routes/Admin/Dashboard')
+);
+const UserRouter = dynamic(() =>
+  import(/* webpackChunkName: "user-router" */ 'routes/Admin/Users')
+);
+const SettingsRouter = dynamic(() =>
+  import(/* webpackChunkName: "settings-router" */ 'routes/Admin/Settings')
+);
 
 export default ({ taxonomies = [] }) => {
   const taxRoutes = taxonomies.map(taxonomy => ({

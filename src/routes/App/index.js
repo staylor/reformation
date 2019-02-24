@@ -1,17 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { cx } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
 import Helmet from 'react-helmet-async';
+import dynamic from 'kyt-runtime/dynamic';
 import NotFound from 'components/NotFound';
 import Logo from 'components/Logo';
-import Home from './Home';
-import Shows from './Shows';
-import Videos from './Videos';
-import Video from './Video';
-import Post from './Post';
 import Sidebar from './Sidebar';
 import Navigation from './Nav';
 import AppContext from './Context';
@@ -19,6 +15,12 @@ import Mailchimp from './Mailchimp';
 import * as styles from './styled';
 
 /* eslint-disable react/prop-types */
+
+const Home = dynamic(() => import(/* webpackChunkName: "home" */ 'routes/App/Home'));
+const Shows = dynamic(() => import(/* webpackChunkName: "shows" */ 'routes/App/Shows'));
+const Videos = dynamic(() => import(/* webpackChunkName: "videos" */ 'routes/App/Videos'));
+const Video = dynamic(() => import(/* webpackChunkName: "video" */ 'routes/App/Video'));
+const Post = dynamic(() => import(/* webpackChunkName: "post" */ 'routes/App/Post'));
 
 @graphql(
   gql`
@@ -63,7 +65,7 @@ class App extends Component {
     }
 
     const social = (
-      <Fragment>
+      <>
         {socialSettings.instagramUsername && (
           <a
             className={cx('icon-font', styles.instagramIconClass)}
@@ -88,7 +90,7 @@ class App extends Component {
             <span>Facebook</span>
           </a>
         )}
-      </Fragment>
+      </>
     );
 
     return (

@@ -1,12 +1,21 @@
 import { renderToString } from 'react-dom/server';
 import { extractCritical } from 'emotion-server';
 import { getDataFromTree } from 'react-apollo';
+import { getLoadableBundles } from 'kyt-runtime/server';
 // eslint-disable-next-line
 import template from 'server/template';
 import injectStyles from 'styles/inject';
 
 export default async (req, res) => {
-  const { app, client, stylesheets = [], assets = {} } = res.locals;
+  const {
+    app,
+    client,
+    stylesheets = [],
+    mainJSBundle,
+    runtimeJSBundle,
+    modules = [],
+    clientAssets,
+  } = res.locals;
 
   try {
     injectStyles();
@@ -23,6 +32,11 @@ export default async (req, res) => {
 
   const { html, ids, css } = extractCritical(renderToString(app));
 
+  const bundles = getLoadableBundles(modules);
+  bundles.scripts = bundles.scripts.filter(
+    b => ![clientAssets['main.js'], clientAssets['admin.js'], clientAssets['login.js']].includes(b)
+  );
+
   const response = template({
     html,
     ids,
@@ -30,7 +44,10 @@ export default async (req, res) => {
     helmet: res.locals.helmetContext.helmet,
     stylesheets,
     state,
-    assets,
+    mainJSBundle,
+    runtimeJSBundle,
+    clientAssets,
+    bundles,
   });
 
   res.send(response);
