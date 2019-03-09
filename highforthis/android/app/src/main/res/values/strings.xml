@@ -1,0 +1,4 @@
+<resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">JLk2p4ug5AbZU3JvdjSvwi9EAMtZSyu9G1WPN</string>
+    <string name="app_name">highforthis</string>
+</resources>
