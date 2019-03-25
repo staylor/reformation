@@ -20,8 +20,6 @@ server {
 server {
 	listen 443;
 	ssl on;
-	ssl_certificate     /etc/letsencrypt/live/goodbyepicasso.com-0003/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/goodbyepicasso.com-0003/privkey.pem;
 	server_name  highforthis.com *.highforthis.com;
 	root         /var/www/highforthis.com/reformation;
 	access_log   /var/www/highforthis.com/logs/ssl.access.log;
