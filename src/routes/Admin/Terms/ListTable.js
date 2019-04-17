@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
-import { RowActions, RowTitle } from 'components/ListTable/styled';
+import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
 import { offsetToCursor } from 'utils/connection';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 import TermQuery from './TermQuery.graphql';
@@ -32,15 +32,15 @@ const columns = [
 
       return (
         <>
-          <RowTitle>
+          <strong className={rowTitleClass}>
             <Link to={urlPath}>{term.name}</Link>
-          </RowTitle>
-          <RowActions>
+          </strong>
+          <nav className={rowActionsClass}>
             <Link to={urlPath}>Edit</Link> |{' '}
             <a className="delete" onClick={onClick} href={urlPath}>
               Delete
             </a>
-          </RowActions>
+          </nav>
         </>
       );
     },

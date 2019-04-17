@@ -29,6 +29,8 @@ class NavMenu extends Component {
   render() {
     const { routeConfig, isCollapsed } = this.props;
 
+    let k = 0;
+
     return (
       <nav
         className={cx(styles.navClass, {
@@ -38,8 +40,13 @@ class NavMenu extends Component {
       >
         {routeConfig.map((items, i) => (
           <Fragment key={i.toString(16)}>
-            {i > 0 && <i className={styles.separatorClass} />}
+            {k > 0 && <i className={styles.separatorClass} />}
             {items.map((item, j) => {
+              if (!item.label) {
+                return null;
+              }
+
+              k += 1;
               const key = `${i}-${j}`;
               const active = this.state.active === key;
               const hasSubNav = item.routes && item.routes.length > 0;
@@ -50,10 +57,17 @@ class NavMenu extends Component {
                   onMouseEnter={() => this.mouseEnter(key)}
                   onMouseLeave={this.mouseLeave}
                 >
-                  <Fragment>
-                    <NavLink {...{ item, isHovered: active, hasSubNav, isCollapsed }} />
-                    {item.routes && <SubNav {...{ item, isHovered: active, isCollapsed }} />}
-                  </Fragment>
+                  <>
+                    <NavLink
+                      item={item}
+                      isHovered={active}
+                      hasSubNav={hasSubNav}
+                      isCollapsed={isCollapsed}
+                    />
+                    {item.routes && (
+                      <SubNav item={item} isHovered={active} isCollapsed={isCollapsed} />
+                    )}
+                  </>
                 </div>
               );
             })}

@@ -23,7 +23,6 @@ function SubNav({ isHovered, isCollapsed, location, item }) {
           key={route.path}
           to={route.path}
           exact
-          location={location}
           isActive={() => route.path === location.pathname}
           activeClassName="active"
         >

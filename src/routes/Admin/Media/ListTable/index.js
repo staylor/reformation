@@ -8,7 +8,7 @@ import Loading from 'components/Loading';
 import Input from 'components/Form/Input';
 import Select from 'components/Form/Select';
 import ListTable from 'components/ListTable';
-import { RowActions, RowTitle, SearchBox } from 'components/ListTable/styled';
+import { rowActionsClass, rowTitleClass, searchBoxClass } from 'components/ListTable/styled';
 import { offsetToCursor } from 'utils/connection';
 import { uploadUrl } from 'utils/media';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
@@ -62,17 +62,17 @@ const columns = [
 
       return (
         <>
-          <RowTitle>
+          <strong className={rowTitleClass}>
             <Link to={`/media/${media.id}`}>{media.title || '(no title)'}</Link>
             <br />
             <span>{media.originalName}</span>
-          </RowTitle>
-          <RowActions>
+          </strong>
+          <nav className={rowActionsClass}>
             <Link to={`/media/${media.id}`}>Edit</Link> |{' '}
             <a className="delete" onClick={onClick} href={`/media/${media.id}`}>
               Delete
             </a>
-          </RowActions>
+          </nav>
         </>
       );
     },
@@ -190,13 +190,13 @@ class Media extends Component {
       <>
         <Heading>Media</Heading>
         <HeaderAdd to="/media/upload">Add Media</HeaderAdd>
-        <SearchBox>
+        <div className={searchBoxClass}>
           <Input
             value={queryParams.search}
             placeholder="Search Media"
             onChange={this.updateSearch}
           />
-        </SearchBox>
+        </div>
         <ListTable
           {...{
             location,

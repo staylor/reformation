@@ -11,7 +11,10 @@ function NavLink({ item, isCollapsed, isHovered, hasSubNav, location }) {
     <RRNavLink
       to={item.path}
       activeClassName="active"
-      isActive={() => item.path === location.pathname}
+      isActive={() =>
+        item.path === location.pathname ||
+        (item.path !== '/' && location.pathname.indexOf(item.path) === 0)
+      }
       className={cx(linkClass, {
         open: !isCollapsed,
         collapsed: isCollapsed,

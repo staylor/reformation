@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
-import { RowActions, RowTitle } from 'components/ListTable/styled';
+import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
 import { offsetToCursor } from 'utils/connection';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 import PostsQuery from './PostsQuery.graphql';
@@ -30,16 +30,16 @@ const columns = [
 
       return (
         <>
-          <RowTitle>
+          <strong className={rowTitleClass}>
             <Link to={`/post/${post.id}`}>{post.title}</Link>
             {post.status === 'DRAFT' ? ' - Draft' : ''}
-          </RowTitle>
-          <RowActions>
+          </strong>
+          <nav className={rowActionsClass}>
             <Link to={`/post/${post.id}`}>Edit</Link> | <a href={`/post/${post.slug}`}>View</a> |{' '}
             <a className="delete" onClick={onClick} href={`/post/${post.id}`}>
               Delete
             </a>
-          </RowActions>
+          </nav>
         </>
       );
     },

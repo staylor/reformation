@@ -1,13 +1,63 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Link, withRouter } from 'react-router-dom';
 import { cx } from 'emotion';
 import Select from 'components/Form/Select';
 import Checkbox from 'components/Form/Checkbox';
-import { Filters, Pagination, Table, Cell, StripedRow, CellHeading, CheckboxCell } from './styled';
+import {
+  filtersClass,
+  paginationClass,
+  tableClass,
+  cellClass,
+  stripedRowClass,
+  cellHeadingClass,
+  checkboxCellClass,
+  noItemsClass,
+} from './styled';
 
-/* eslint-disable react/prop-types, class-methods-use-this */
+/* eslint-disable class-methods-use-this */
 
-export default class ListTable extends Component {
+@withRouter
+class ListTable extends Component {
+  static propTypes = {
+    // provided by withRouter
+    location: PropTypes.shape().isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape(),
+    }).isRequired,
+    // provided by Apollo
+    variables: PropTypes.shape(),
+    mutate: PropTypes.func,
+    refetch: PropTypes.func,
+    data: PropTypes.shape({
+      count: PropTypes.number,
+      edges: PropTypes.arrayOf(
+        PropTypes.shape({
+          node: PropTypes.shape(),
+        })
+      ),
+    }),
+    // component props
+    path: PropTypes.string.isRequired,
+    columns: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string,
+        prop: PropTypes.string,
+        render: PropTypes.func,
+        className: PropTypes.string,
+      })
+    ).isRequired,
+    filters: PropTypes.node,
+  };
+
+  static defaultProps = {
+    variables: {},
+    refetch: () => null,
+    mutate: () => null,
+    filters: null,
+    data: {},
+  };
+
   state = {
     checked: [],
     all: false,
@@ -27,16 +77,11 @@ export default class ListTable extends Component {
         },
       };
 
-      if (this.props.query && this.props.variables) {
-        options.refetchQueries = [
-          {
-            query: this.props.query,
-            variables: this.props.variables,
-          },
-        ];
-      }
-
-      this.props.mutate(options);
+      this.props.mutate(options).then(() => {
+        if (this.props.refetch) {
+          this.props.refetch();
+        }
+      });
     }
   };
 
@@ -91,7 +136,7 @@ export default class ListTable extends Component {
     } = this.props;
 
     if (!data || !data.edges || !data.edges.length) {
-      return <p>No items found.</p>;
+      return <p className={noItemsClass}>No items found.</p>;
     }
 
     const LinkTo = ({ to = '', children }) => (
@@ -100,13 +145,13 @@ export default class ListTable extends Component {
 
     const headers = (
       <tr>
-        <CheckboxCell>
+        <th className={cx(cellHeadingClass, checkboxCellClass)}>
           <Checkbox checked={this.state.all} onChange={this.toggleAll} />
-        </CheckboxCell>
+        </th>
         {columns.map((column, i) => (
-          <CellHeading className={cx(column.className)} key={i.toString(16)}>
+          <th className={cx(cellHeadingClass, column.className)} key={i.toString(16)}>
             {column.label}
-          </CellHeading>
+          </th>
         ))}
       </tr>
     );
@@ -129,7 +174,7 @@ export default class ListTable extends Component {
     }
 
     const paginationMatrix = (
-      <Pagination>
+      <nav className={paginationClass}>
         <strong>{data.count} items</strong>
         {paginated ? <LinkTo>«</LinkTo> : <span>«</span>}
         {previousUrl === null ? <span>‹</span> : <LinkTo to={previousUrl}>‹</LinkTo>}
@@ -138,12 +183,12 @@ export default class ListTable extends Component {
         </strong>
         {nextUrl === null ? <span>›</span> : <LinkTo to={nextUrl}>›</LinkTo>}
         {currentPage !== pages ? <LinkTo to={`/page/${pages}`}>»</LinkTo> : <span>»</span>}
-      </Pagination>
+      </nav>
     );
 
     return (
       <>
-        <Filters>
+        <section className={filtersClass}>
           {this.props.mutate && (
             <Select
               key="bulk"
@@ -154,19 +199,19 @@ export default class ListTable extends Component {
           )}
           {filters}
           {paginationMatrix}
-        </Filters>
-        <Table>
+        </section>
+        <table className={tableClass}>
           <thead>{headers}</thead>
           <tbody>
             {data.edges.map(({ node }) => (
-              <StripedRow key={node.id}>
-                <CheckboxCell>
+              <tr className={stripedRowClass} key={node.id}>
+                <th className={cx(cellHeadingClass, checkboxCellClass)}>
                   <Checkbox
                     checked={this.state.checked.includes(node.id)}
                     id={node.id}
                     onChange={this.toggleCheck}
                   />
-                </CheckboxCell>
+                </th>
                 {columns.map((column, i) => {
                   let content = null;
                   if (column.type && column.type === 'date') {
@@ -175,18 +220,20 @@ export default class ListTable extends Component {
                     content = column.render ? column.render(node, this.props) : node[column.prop];
                   }
                   return (
-                    <Cell key={i.toString(16)} className={cx(column.className)}>
+                    <td key={i.toString(16)} className={cx(cellClass, column.className)}>
                       {content}
-                    </Cell>
+                    </td>
                   );
                 })}
-              </StripedRow>
+              </tr>
             ))}
           </tbody>
           <tfoot>{headers}</tfoot>
-        </Table>
-        <Filters>{paginationMatrix}</Filters>
+        </table>
+        <section className={filtersClass}>{paginationMatrix}</section>
       </>
     );
   }
 }
+
+export default ListTable;

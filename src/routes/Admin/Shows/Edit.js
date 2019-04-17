@@ -3,7 +3,7 @@ import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
-import { Heading, FormWrap } from 'routes/Admin/styled';
+import { Heading, HeaderAdd, FormWrap } from 'routes/Admin/styled';
 import ShowForm from './Form';
 
 /* eslint-disable react/prop-types */
@@ -15,10 +15,12 @@ import ShowForm from './Form';
         show(id: $id) {
           ...ShowForm_show
         }
-        artists: terms(taxonomy: "artist", first: 100) {
+        artists: terms(taxonomy: "artist", first: 250)
+          @connection(key: "terms", filter: ["taxonomy"]) {
           ...ShowForm_terms
         }
-        venues: terms(taxonomy: "venue", first: 100) {
+        venues: terms(taxonomy: "venue", first: 250)
+          @connection(key: "terms", filter: ["taxonomy"]) {
           ...ShowForm_terms
         }
       }
@@ -75,6 +77,7 @@ class EditShow extends Component {
     return (
       <>
         <Heading>Edit Show</Heading>
+        <HeaderAdd to="/show/add">Add Show</HeaderAdd>
         {this.state.message === 'updated' && <Message text="Show updated." />}
         <FormWrap>
           <ShowForm

@@ -1,7 +1,11 @@
-import styled from 'react-emotion';
+import { css } from 'emotion';
 import themeUtils from 'styles/theme';
 
-export const RowActions = styled.nav`
+export const noItemsClass = css`
+  margin: 40px 0;
+`;
+
+export const rowActionsClass = css`
   font-size: 13px;
 
   a {
@@ -14,7 +18,7 @@ export const RowActions = styled.nav`
   }
 `;
 
-export const RowTitle = styled.strong`
+export const rowTitleClass = css`
   display: block;
   font-size: 14px;
   font-weight: ${themeUtils.fonts.weight.bold};
@@ -31,16 +35,16 @@ export const RowTitle = styled.strong`
   }
 `;
 
-export const SearchBox = styled.div`
+export const searchBoxClass = css`
   float: right;
 `;
 
-export const Filters = styled.section`
+export const filtersClass = css`
   margin: 6px 0;
   overflow: hidden;
 `;
 
-export const Pagination = styled.nav`
+export const paginationClass = css`
   float: right;
   font-size: 13px;
   user-select: none;
@@ -85,7 +89,7 @@ export const Pagination = styled.nav`
   }
 `;
 
-export const Table = styled.table`
+export const tableClass = css`
   border: 1px solid ${themeUtils.colors.detail};
   border-spacing: 0;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
@@ -93,7 +97,7 @@ export const Table = styled.table`
   width: 100%;
 `;
 
-export const Cell = styled.td`
+export const cellClass = css`
   font-size: 13px;
   line-height: 1.5;
   padding: 8px 10px;
@@ -101,7 +105,7 @@ export const Cell = styled.td`
   word-wrap: break-word;
 `;
 
-export const CellHeading = styled.th`
+export const cellHeadingClass = css`
   font-size: 14px;
   line-height: 1.4;
   padding: 8px 10px;
@@ -116,11 +120,11 @@ export const CellHeading = styled.th`
   }
 `;
 
-export const CheckboxCell = styled.th`
+export const checkboxCellClass = css`
   width: 2.2em;
 
   tbody & {
-    padding: 6px 0 0;
+    padding: 6px 10px;
     vertical-align: top;
 
     input {
@@ -137,8 +141,8 @@ export const CheckboxCell = styled.th`
   }
 `;
 
-export const StripedRow = styled.tr`
-  tbody &:nth-of-type(odd) {
+export const stripedRowClass = css`
+  tbody &:nth-of-type(even) {
     background: ${themeUtils.colors.background};
   }
 `;

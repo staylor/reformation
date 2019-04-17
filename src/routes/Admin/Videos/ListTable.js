@@ -8,7 +8,7 @@ import Loading from 'components/Loading';
 import Input from 'components/Form/Input';
 import Select from 'components/Form/Select';
 import ListTable from 'components/ListTable';
-import { RowActions, RowTitle, SearchBox } from 'components/ListTable/styled';
+import { rowActionsClass, rowTitleClass, searchBoxClass } from 'components/ListTable/styled';
 import { offsetToCursor } from 'utils/connection';
 import { Heading } from '../styled';
 
@@ -21,12 +21,12 @@ const columns = [
     label: 'Title',
     render: video => (
       <>
-        <RowTitle>
+        <strong className={rowTitleClass}>
           <Link to={`/video/${video.id}`}>{video.title}</Link>
-        </RowTitle>
-        <RowActions>
+        </strong>
+        <nav className={rowActionsClass}>
           <Link to={`/video/${video.id}`}>Edit</Link> | <a href={`/video/${video.slug}`}>View</a>
-        </RowActions>
+        </nav>
       </>
     ),
   },
@@ -141,13 +141,13 @@ class Videos extends Component {
     return (
       <>
         <Heading>Videos</Heading>
-        <SearchBox>
+        <div className={searchBoxClass}>
           <Input
             value={queryParams.search}
             placeholder="Search Videos"
             onChange={this.updateSearch}
           />
-        </SearchBox>
+        </div>
         <ListTable
           {...{ location, match, columns, filters, variables }}
           data={videos}
