@@ -6,6 +6,18 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
       types: [
         {
           kind: 'INTERFACE',
+          name: 'Term',
+          possibleTypes: [
+            {
+              name: 'Artist',
+            },
+            {
+              name: 'Venue',
+            },
+          ],
+        },
+        {
+          kind: 'INTERFACE',
           name: 'MediaUpload',
           possibleTypes: [
             {

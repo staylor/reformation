@@ -37,6 +37,10 @@ export const artistCellClass = css`
   letter-spacing: 0.3px;
   width: 200px;
 
+  @media (min-width: ${themeUtils.breakpoint.medium}px) {
+    width: 280px;
+  }
+
   a {
     color: ${themeUtils.colors.pink};
     text-decoration: underline;

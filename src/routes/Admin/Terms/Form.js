@@ -13,10 +13,24 @@ const termFields = [
     type: 'textarea',
     editable: true,
   },
+  {
+    label: 'Capacity',
+    prop: 'capacity',
+    type: 'text',
+    editable: true,
+    condition: term => term.taxonomy.slug === 'venue',
+  },
+  {
+    label: 'Address',
+    prop: 'address',
+    type: 'textarea',
+    editable: true,
+    condition: term => term.taxonomy.slug === 'venue',
+  },
 ];
 
 export default function TermForm({ term = {}, buttonLabel, onSubmit }) {
-  return <Form fields={termFields} data={term} {...{ buttonLabel, onSubmit }} />;
+  return <Form fields={termFields} data={term} buttonLabel={buttonLabel} onSubmit={onSubmit} />;
 }
 
 TermForm.fragments = {
@@ -29,7 +43,12 @@ TermForm.fragments = {
       taxonomy {
         id
         name
+        slug
         plural
+      }
+      ... on Venue {
+        capacity
+        address
       }
     }
   `,
@@ -37,6 +56,7 @@ TermForm.fragments = {
     fragment TermForm_taxonomy on Taxonomy {
       id
       name
+      slug
       plural
     }
   `,
