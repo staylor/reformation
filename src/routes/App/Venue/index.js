@@ -46,7 +46,7 @@ class VenueRoute extends Component {
       return <Loading />;
     }
 
-    if (error) {
+    if (error || !venue) {
       return <NotFound />;
     }
 

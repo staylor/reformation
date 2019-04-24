@@ -43,7 +43,7 @@ class ArtistRoute extends Component {
       return <Loading />;
     }
 
-    if (error) {
+    if (error || !artist) {
       return <NotFound />;
     }
 
