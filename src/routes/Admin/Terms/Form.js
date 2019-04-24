@@ -7,7 +7,7 @@ import FeaturedMedia from 'components/Form/FeaturedMedia';
 
 const termFields = [
   { label: 'Name', prop: 'name', editable: true },
-  { label: 'Slug', prop: 'slug', condition: term => term && term.slug },
+  { label: 'Slug', prop: 'slug', condition: term => term.slug },
   {
     label: 'Description',
     prop: 'description',
@@ -19,14 +19,14 @@ const termFields = [
     prop: 'capacity',
     type: 'text',
     editable: true,
-    condition: term => term && term.taxonomy && term.taxonomy.slug === 'venue',
+    condition: term => term.taxonomy.slug === 'venue',
   },
   {
     label: 'Address',
     prop: 'address',
     type: 'textarea',
     editable: true,
-    condition: term => term && term.taxonomy && term.taxonomy.slug === 'venue',
+    condition: term => term.taxonomy.slug === 'venue',
   },
   term => {
     let featuredMedia = term.featuredMedia
@@ -43,7 +43,7 @@ const termFields = [
       value: () => featuredMedia,
       render: p => <FeaturedMedia onChange={onChange} media={p.featuredMedia} />,
       position: 'meta',
-      condition: t => t && t.taxonomy && ['artist', 'venue'].includes(t.taxonomy.slug),
+      condition: t => ['artist', 'venue'].includes(t.taxonomy.slug),
     };
   },
 ];

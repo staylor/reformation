@@ -21,6 +21,10 @@ const formatDate = date => {
 };
 
 export default function ShowsGrid({ shows }) {
+  if (!shows || !shows.edges || shows.edges.length === 0) {
+    return null;
+  }
+
   const years = {};
   const months = {};
 
