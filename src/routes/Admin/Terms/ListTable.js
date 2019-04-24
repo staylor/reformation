@@ -3,8 +3,8 @@ import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import Loading from 'components/Loading';
-import ListTable from 'components/ListTable';
-import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
+import ListTable, { renderThumbnail } from 'components/ListTable';
+import { rowActionsClass, rowTitleClass, thumbnailColumnClass } from 'components/ListTable/styled';
 import { offsetToCursor } from 'utils/connection';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 import TermQuery from './TermQuery.graphql';
@@ -12,44 +12,6 @@ import TermQuery from './TermQuery.graphql';
 /* eslint-disable react/prop-types */
 
 const PER_PAGE = 20;
-
-const columns = [
-  {
-    label: 'Name',
-    render: (term, { mutate, variables }) => {
-      const onClick = e => {
-        e.preventDefault();
-
-        mutate({
-          refetchQueries: [{ query: TermQuery, variables }],
-          variables: {
-            ids: [term.id],
-          },
-        });
-      };
-
-      const urlPath = `/terms/${term.taxonomy.id}/${term.id}`;
-
-      return (
-        <>
-          <strong className={rowTitleClass}>
-            <Link to={urlPath}>{term.name}</Link>
-          </strong>
-          <nav className={rowActionsClass}>
-            <Link to={urlPath}>Edit</Link> |{' '}
-            <a className="delete" onClick={onClick} href={urlPath}>
-              Delete
-            </a>
-          </nav>
-        </>
-      );
-    },
-  },
-  {
-    label: 'Slug',
-    prop: 'slug',
-  },
-];
 
 @compose(
   graphql(TermQuery, {
@@ -89,6 +51,71 @@ class Terms extends Component {
 
     if (loading && !terms) {
       return <Loading />;
+    }
+
+    let columns = [
+      {
+        className: thumbnailColumnClass,
+        render: term => {
+          if (
+            term.featuredMedia &&
+            term.featuredMedia[0] &&
+            term.featuredMedia[0].type === 'image'
+          ) {
+            return renderThumbnail(term.featuredMedia[0], 'crops');
+          }
+
+          return null;
+        },
+      },
+      {
+        label: 'Name',
+        render: term => {
+          const onClick = e => {
+            e.preventDefault();
+
+            mutate({
+              refetchQueries: [{ query: TermQuery, variables }],
+              variables: {
+                ids: [term.id],
+              },
+            });
+          };
+
+          const urlPath = `/terms/${term.taxonomy.id}/${term.id}`;
+
+          return (
+            <>
+              <strong className={rowTitleClass}>
+                <Link to={urlPath}>{term.name}</Link>
+              </strong>
+              <nav className={rowActionsClass}>
+                <Link to={urlPath}>Edit</Link> |{' '}
+                <a className="delete" onClick={onClick} href={urlPath}>
+                  Delete
+                </a>
+              </nav>
+            </>
+          );
+        },
+      },
+      {
+        label: 'Slug',
+        prop: 'slug',
+      },
+    ];
+
+    if (terms.taxonomy.slug === 'venue') {
+      columns = columns.concat([
+        {
+          label: 'Capacity',
+          prop: 'capacity',
+        },
+        {
+          label: 'Address',
+          prop: 'address',
+        },
+      ]);
     }
 
     return (

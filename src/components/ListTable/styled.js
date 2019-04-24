@@ -146,3 +146,13 @@ export const stripedRowClass = css`
     background: ${themeUtils.colors.background};
   }
 `;
+
+export const thumbnailColumnClass = css`
+  width: 62px;
+`;
+
+export const thumbnailClass = css`
+  display: block;
+  height: auto;
+  ${thumbnailColumnClass};
+`;

@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { cx } from 'emotion';
 import Select from 'components/Form/Select';
 import Checkbox from 'components/Form/Checkbox';
+import { uploadUrl } from 'utils/media';
 import {
   filtersClass,
   paginationClass,
@@ -13,9 +14,21 @@ import {
   cellHeadingClass,
   checkboxCellClass,
   noItemsClass,
+  thumbnailClass,
 } from './styled';
 
 /* eslint-disable class-methods-use-this */
+
+export const renderThumbnail = (media, field) => {
+  if (!media[field] || !media[field].length) {
+    return null;
+  }
+  const sorted = [...media[field]];
+  sorted.sort((a, b) => a.width - b.width);
+  return (
+    <img className={thumbnailClass} src={uploadUrl(media.destination, sorted[0].fileName)} alt="" />
+  );
+};
 
 @withRouter
 class ListTable extends Component {
