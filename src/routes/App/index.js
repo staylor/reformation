@@ -18,6 +18,7 @@ import * as styles from './styled';
 
 const Home = dynamic(() => import(/* webpackChunkName: "home" */ 'routes/App/Home'));
 const Shows = dynamic(() => import(/* webpackChunkName: "shows" */ 'routes/App/Shows'));
+const Artist = dynamic(() => import(/* webpackChunkName: "venue" */ 'routes/App/Artist'));
 const Venue = dynamic(() => import(/* webpackChunkName: "venue" */ 'routes/App/Venue'));
 const Videos = dynamic(() => import(/* webpackChunkName: "videos" */ 'routes/App/Videos'));
 const Video = dynamic(() => import(/* webpackChunkName: "video" */ 'routes/App/Video'));
@@ -136,6 +137,7 @@ class App extends Component {
                   <Route path="/shows/:taxonomy/:term" component={Shows} />
                   <Route exact path="/shows/list" component={Shows} />
                   <Route exact path="/shows" component={Shows} />
+                  <Route exact path="/artist/:slug" component={Artist} />
                   <Route exact path="/venue/:slug" component={Venue} />
                   <Route path="/video/:slug" component={Video} />
                   <Route path="/post/:slug" component={Post} />

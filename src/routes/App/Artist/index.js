@@ -5,25 +5,22 @@ import NotFound from 'components/NotFound';
 import Loading from 'components/Loading';
 import FeaturedMedia from 'components/FeaturedMedia';
 import ShowsGrid from 'routes/App/Shows/Grid';
-import { titleClass, textClass } from './styled';
+
+import { titleClass } from './styled';
 
 /* eslint-disable react/prop-types */
 
 @graphql(
   gql`
-    query VenueQuery($slug: String!, $first: Int) {
-      venue: term(slug: $slug, taxonomy: "venue") {
+    query ArtistQuery($slug: String!, $first: Int) {
+      artist: term(slug: $slug, taxonomy: "artist") {
         id
         name
         featuredMedia {
           ...FeaturedMedia_featuredMedia
         }
-        ... on Venue {
-          capacity
-          address
-        }
       }
-      shows(latest: true, term: $slug, taxonomy: "venue", first: $first) {
+      shows(latest: true, term: $slug, taxonomy: "artist", first: $first) {
         ...ShowsGrid_shows
       }
     }
@@ -36,10 +33,10 @@ import { titleClass, textClass } from './styled';
     }),
   }
 )
-class VenueRoute extends Component {
+class ArtistRoute extends Component {
   render() {
     const {
-      data: { loading, error, venue, shows },
+      data: { loading, error, artist, shows },
     } = this.props;
 
     if (loading) {
@@ -52,19 +49,12 @@ class VenueRoute extends Component {
 
     return (
       <>
-        <h1 className={titleClass}>{venue.name}</h1>
-        <FeaturedMedia featuredMedia={venue.featuredMedia} />
-        {venue.address && (
-          <p
-            className={textClass}
-            dangerouslySetInnerHTML={{ __html: venue.address.replace(/\n/g, '<br />') }}
-          />
-        )}
-        {venue.capacity && <p className={textClass}>Capacity: {venue.capacity}</p>}
+        <h1 className={titleClass}>{artist.name}</h1>
+        <FeaturedMedia featuredMedia={artist.featuredMedia} />
         <ShowsGrid shows={shows} />
       </>
     );
   }
 }
 
-export default VenueRoute;
+export default ArtistRoute;

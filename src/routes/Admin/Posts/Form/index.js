@@ -2,7 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import Editor from 'components/Editor';
 import Form from 'components/Form';
-import FeaturedMedia from './FeaturedMedia';
+import FeaturedMedia from 'components/Form/FeaturedMedia';
 import Tags from './Tags';
 import { postTitleClass, ViewPost } from './styled';
 

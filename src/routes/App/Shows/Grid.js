@@ -33,9 +33,7 @@ export default function ShowsGrid({ shows }) {
             <tr key={node.id}>
               <td className={styles.dateCellClass}>{d.formatted}</td>
               <td className={styles.artistCellClass}>
-                <Link to={`/shows/artist/${node.artist.slug}`}>
-                  {node.title || node.artist.name}
-                </Link>
+                <Link to={`/artist/${node.artist.slug}`}>{node.title || node.artist.name}</Link>
               </td>
               <td className={styles.venueCellClass}>
                 <Link to={`/venue/${node.venue.slug}`}>{node.venue.name}</Link>

@@ -28,17 +28,15 @@ export default class FeaturedMedia extends Component {
   render() {
     let media = [];
     if (this.state.media) {
-      // eslint-disable-next-line
-      media = this.state.media;
+      ({ media } = this.state);
     } else if (this.props.media) {
-      // eslint-disable-next-line
-      media = this.props.media;
+      ({ media } = this.props);
     }
 
     return (
       <>
         {this.state.modal && <ImageModal selectImage={this.selectImage} onClose={this.onClose} />}
-        {media.map(item => {
+        {media.filter(Boolean).map(item => {
           const crop = item.crops.find(c => c.width === 150);
           return (
             <FeaturedImage
