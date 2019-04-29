@@ -19,9 +19,9 @@
 		<language>en-us</language>
 		<itunes:explicit>no</itunes:explicit>
 		<itunes:category text="Music" />
-		<itunes:image href="https://storage.googleapis.com/wonderboymusic/HighForThis300x300.jpg" />
+		<itunes:image href="https://storage.googleapis.com/wonderboymusic/HighForThis3000x3000.jpg" />
 		<image>
-			<url>https://storage.googleapis.com/wonderboymusic/HighForThis300x300.jpg</url>
+			<url>https://storage.googleapis.com/wonderboymusic/HighForThis3000x3000.jpg</url>
 			<link>https://highforthis.com/podcast</link>
 			<title>High for This</title>
 		</image>
@@ -37,7 +37,7 @@
 		  <guid>https://storage.googleapis.com/wonderboymusic/4_29_Podcast.mp3</guid>
 			<pubDate>Mon, 29 Apr 2019 09:00:00 GMT</pubDate>
 			<itunes:explicit>no</itunes:explicit>
-			<itunes:image href="https://storage.googleapis.com/wonderboymusic/HighForThis300x300.jpg" />
+			<itunes:image href="https://storage.googleapis.com/wonderboymusic/HighForThis3000x3000.jpg" />
 			<itunes:duration>0:13:37</itunes:duration>
 		  <enclosure url="https://storage.googleapis.com/wonderboymusic/4_29_Podcast.mp3" type="audio/mpeg" length="52736" />
 		</item>
