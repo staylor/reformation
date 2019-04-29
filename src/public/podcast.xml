@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+	<channel>
+		<title>High for This</title>
+		<description>
+			<![CDATA[<p>The latest albums you need to hear. Suggested concerts, and how to navigate the live music scene in New York City. Hosted by Scott Taylor, with guests. Weekly.</p>]]>
+		</description>
+		<managingEditor>highforthisdotcom@gmail.com (High for This)</managingEditor>
+		<copyright>&#xA9;2019 High for This</copyright>
+		<generator>HighForThis</generator>
+		<atom:link href="https://highforthis.com/podcast.xml" rel="self" type="application/rss+xml"/>
+		<link>https://highforthis.com/podcast</link>
+		<itunes:owner>
+		   <itunes:name>Scott Taylor</itunes:name>
+		   <itunes:email>scott.c.taylor@mac.com</itunes:email>
+		</itunes:owner>
+		<itunes:author>Scott Taylor</itunes:author>
+		<itunes:summary><![CDATA[<p>The latest albums you need to hear. Suggested concerts, and how to navigate the live music scene in New York City. Hosted by Scott Taylor, with guests. Weekly.</p>]]></itunes:summary>
+		<language>en-us</language>
+		<itunes:explicit>no</itunes:explicit>
+		<itunes:category text="Music" />
+		<itunes:image href="https://storage.googleapis.com/wonderboymusic/HighForThis3000x3000.jpg" />
+		<image>
+			<url>https://storage.googleapis.com/wonderboymusic/HighForThis3000x3000.jpg</url>
+			<link>https://highforthis.com/podcast</link>
+			<title>High for This</title>
+		</image>
+		<item>
+		  <title>4/29 Podcast</title>
+		  <description>New music from Khalid, Lizzo, Weyes Blood, Craig Finn. Shows this week: Maren Morris, Eels, Big Red Machine.</description>
+			<itunes:title>4/29 Podcast</itunes:title>
+			<itunes:episodeType>full</itunes:episodeType>
+			<itunes:summary>New music from Khalid, Lizzo, Weyes Blood, Craig Finn. Shows this week: Maren Morris, Eels, Big Red Machine.</itunes:summary>
+      <content:encoded>
+         <![CDATA[<p>New music from Khalid, Lizzo, Weyes Blood, Craig Finn. Shows this week: Maren Morris, Eels, Big Red Machine.</p>]]>
+      </content:encoded>
+		  <guid>https://storage.googleapis.com/wonderboymusic/4_29_Podcast.mp3</guid>
+			<pubDate>Mon, 29 Apr 2019 09:00:00 GMT</pubDate>
+			<itunes:explicit>no</itunes:explicit>
+			<itunes:image href="https://storage.googleapis.com/wonderboymusic/HighForThis3000x3000.jpg" />
+			<itunes:duration>0:13:37</itunes:duration>
+		  <enclosure url="https://storage.googleapis.com/wonderboymusic/4_29_Podcast.mp3" type="audio/mpeg" length="52736" />
+		</item>
+	</channel>
+</rss>
