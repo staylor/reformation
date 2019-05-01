@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import appRouter from './app';
 import adminRouter from './admin';
 import loginRouter from './login';
+import podcast from './podcast';
 import apolloClient from './apolloClient';
 import serveResponse from './serve';
 
@@ -15,6 +16,8 @@ const assetMiddleware = entry => (req, res, next) => {
 };
 
 export default function router(app, passport) {
+  app.use('/podcast.xml', apolloClient, podcast);
+
   app.use('/oembed', async (req, res) => {
     const response = await fetch(
       `${req.query.provider}?url=${encodeURIComponent(req.query.url)}`

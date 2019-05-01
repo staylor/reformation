@@ -1,0 +1,9 @@
+#import "./PodcastSettings_settings.graphql"
+
+query PodcastSettingsQuery {
+  settings(id: "podcast") {
+    ... on PodcastSettings {
+      ...PodcastSettings_settings
+    }
+  }
+}

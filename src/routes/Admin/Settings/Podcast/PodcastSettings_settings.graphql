@@ -1,0 +1,25 @@
+fragment PodcastSettings_settings on PodcastSettings {
+  id
+  title
+  description
+  managingEditor
+  copyrightText
+  websiteLink
+  feedLink
+  itunesName
+  itunesEmail
+  generator
+  language
+  explicit
+  category
+  image {
+    id
+    type
+    destination
+    fileName
+    crops {
+      fileName
+      width
+    }
+  }
+}

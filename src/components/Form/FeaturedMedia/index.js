@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import ImageModal from 'components/Modals/Image';
+import MediaModal from 'components/Modals/Media';
 import { Button } from 'styles/utils';
 import { uploadUrl } from 'utils/media';
-import { FeaturedImage } from './styled';
+import { imageClass, audioClass } from './styled';
 
 /* eslint-disable react/prop-types */
 
 export default class FeaturedMedia extends Component {
+  static propTypes = {
+    type: PropTypes.string,
+    buttonText: PropTypes.string,
+  };
+
+  static defaultProps = {
+    type: undefined,
+    buttonText: 'Set Featured Media',
+  };
+
   state = {
     modal: false,
     media: null,
@@ -25,6 +36,11 @@ export default class FeaturedMedia extends Component {
     this.setState({ media: [data.image] });
   };
 
+  selectAudio = data => {
+    this.props.onChange([data.id]);
+    this.setState({ media: [data] });
+  };
+
   render() {
     let media = [];
     if (this.state.media) {
@@ -35,18 +51,41 @@ export default class FeaturedMedia extends Component {
 
     return (
       <>
-        {this.state.modal && <ImageModal selectImage={this.selectImage} onClose={this.onClose} />}
+        {this.state.modal && (
+          <MediaModal
+            type={this.props.type}
+            selectAudio={this.selectAudio}
+            selectImage={this.selectImage}
+            onClose={this.onClose}
+          />
+        )}
         {media.filter(Boolean).map(item => {
-          const crop = item.crops.find(c => c.width === 150);
-          return (
-            <FeaturedImage
-              key={crop.fileName}
-              alt=""
-              src={uploadUrl(item.destination, crop.fileName)}
-            />
-          );
+          if (this.props.type === 'audio') {
+            return (
+              <figure key={item.id} className={audioClass}>
+                <audio // eslint-disable-line
+                  controls
+                  src={uploadUrl(item.destination, item.fileName)}
+                />
+              </figure>
+            );
+          }
+
+          const crop = item && item.crops && item.crops.find(c => c.width === 150);
+          if (crop) {
+            return (
+              <img
+                className={imageClass}
+                key={crop.fileName}
+                alt=""
+                src={uploadUrl(item.destination, crop.fileName)}
+              />
+            );
+          }
+
+          return <p key={item.id}>{item.id}</p>;
         })}
-        <Button onClick={this.onClick}>Set Featured Media</Button>
+        <Button onClick={this.onClick}>{this.props.buttonText}</Button>
       </>
     );
   }
@@ -56,7 +95,9 @@ FeaturedMedia.fragments = {
   media: gql`
     fragment FeaturedMedia_media on MediaUpload {
       id
+      type
       destination
+      fileName
       ... on ImageUpload {
         crops {
           fileName

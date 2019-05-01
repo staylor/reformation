@@ -4,20 +4,29 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from 'components/Loading';
 import { uploadUrl } from 'utils/media';
-import { Modal, Frame, Item, ItemImage, CloseButton } from './styled';
+import { Modal, Frame, Item, ItemImage, ItemTitle, CloseButton } from './styled';
 
 /* eslint-disable react/prop-types */
 
 @graphql(
   gql`
-    query ImageModalQuery($cursor: String) {
-      uploads(after: $cursor, first: 25) @connection(key: "images") {
+    query MediaModalQuery($type: String, $first: Int, $cursor: String) {
+      uploads(after: $cursor, first: $first, type: $type) @connection(key: "media") {
         edges {
           node {
             id
+            title
+            type
             destination
+            fileName
             ... on ImageUpload {
               crops {
+                width
+                fileName
+              }
+            }
+            ... on AudioUpload {
+              images {
                 width
                 fileName
               }
@@ -32,12 +41,21 @@ import { Modal, Frame, Item, ItemImage, CloseButton } from './styled';
     }
   `,
   {
-    options: {
-      fetchPolicy: 'cache-and-network',
+    options: ({ type }) => {
+      const variables = { first: 25 };
+
+      if (type) {
+        variables.type = type;
+      }
+
+      return {
+        variables,
+        fetchPolicy: 'cache-and-network',
+      };
     },
   }
 )
-class ImageModal extends Component {
+class MediaModal extends Component {
   loadMore = () => {
     const { fetchMore, variables, uploads } = this.props.data;
     return fetchMore({
@@ -75,6 +93,8 @@ class ImageModal extends Component {
     });
   };
 
+  modalRef = null;
+
   render() {
     const {
       data: { loading, uploads },
@@ -92,34 +112,51 @@ class ImageModal extends Component {
     }
 
     return ReactDOM.createPortal(
-      <Modal>
+      <Modal
+        innerRef={ref => {
+          this.modalRef = ref;
+        }}
+        id="media-modal"
+      >
         <CloseButton className="dashicons dashicons-no" onClick={this.props.onClose} />
         <Frame innerRef={this.frameHandler}>
           {uploads.edges.map(({ node }) => {
-            const crop = node.crops.find(c => c.width === 150);
+            const prop = this.type === 'audio' ? 'images' : 'crops';
+            const crop = node[prop] && node[prop].find(c => c.width === 150);
             return (
               <Item
                 key={node.id}
                 onClick={e => {
                   e.preventDefault();
 
-                  const normalized = {
-                    destination: node.destination,
-                    crops: [],
-                  };
-                  node.crops.forEach(({ width, fileName }) => {
-                    normalized.crops.push({ width, fileName });
-                  });
+                  if (node.type === 'audio') {
+                    this.props.selectAudio({
+                      audio: node,
+                    });
+                  } else {
+                    const normalized = {
+                      destination: node.destination,
+                      crops: [],
+                    };
 
-                  this.props.selectImage({
-                    imageId: node.id,
-                    image: normalized,
-                    size: 'FEATURE',
-                  });
+                    node.crops.forEach(({ width, fileName }) => {
+                      normalized.crops.push({ width, fileName });
+                    });
+
+                    this.props.selectImage({
+                      imageId: node.id,
+                      image: normalized,
+                      size: 'FEATURE',
+                    });
+                  }
+
                   this.props.onClose(e);
                 }}
               >
-                <ItemImage alt="" src={uploadUrl(node.destination, crop.fileName)} />
+                {crop ? (
+                  <ItemImage alt="" src={uploadUrl(node.destination, crop.fileName)} />
+                ) : null}
+                <ItemTitle>{node.title}</ItemTitle>
               </Item>
             );
           })}
@@ -130,4 +167,4 @@ class ImageModal extends Component {
   }
 }
 
-export default ImageModal;
+export default MediaModal;

@@ -1,9 +1,12 @@
-import styled from 'react-emotion';
+import { css } from 'emotion';
 
-// eslint-disable-next-line
-export const FeaturedImage = styled.img`
+export const imageClass = css`
   display: block;
   height: auto;
   margin: 0 10px 10px 0;
   max-width: 100%;
+`;
+
+export const audioClass = css`
+  margin: 10px 0;
 `;

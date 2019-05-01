@@ -7,10 +7,10 @@ type Props = {
   editorState: EditorState,
   onToggle: string => void,
   openVideoModal: () => void,
-  openImageModal: () => void,
+  openMediaModal: () => void,
 };
 
-const BlockStyleControls = ({ editorState, onToggle, openVideoModal, openImageModal }: Props) => {
+const BlockStyleControls = ({ editorState, onToggle, openVideoModal, openMediaModal }: Props) => {
   const selection = editorState.getSelection();
   if (!selection) {
     return null;
@@ -30,7 +30,7 @@ const BlockStyleControls = ({ editorState, onToggle, openVideoModal, openImageMo
       label: '',
       style: 'atomic-image',
       className: 'dashicons dashicons-format-image',
-      onToggle: openImageModal,
+      onToggle: openMediaModal,
     },
     {
       label: '',

@@ -9,6 +9,9 @@ const MediaRouter = dynamic(() =>
 const VideoRouter = dynamic(() =>
   import(/* webpackChunkName: "video-router" */ 'routes/Admin/Videos')
 );
+const PodcastRouter = dynamic(() =>
+  import(/* webpackChunkName: "podcast-router" */ 'routes/Admin/Podcasts')
+);
 const ShowRouter = dynamic(() =>
   import(/* webpackChunkName: "show-router" */ 'routes/Admin/Shows')
 );
@@ -112,6 +115,22 @@ export default ({ taxonomies = [] }) => {
           },
         ],
       },
+      {
+        path: '/podcast',
+        label: 'Podcasts',
+        dashicon: 'microphone',
+        component: PodcastRouter,
+        routes: [
+          {
+            path: '/podcast',
+            label: 'All Podcasts',
+          },
+          {
+            path: '/podcast/add',
+            label: 'Add New',
+          },
+        ],
+      },
     ],
     [
       {
@@ -170,6 +189,10 @@ export default ({ taxonomies = [] }) => {
           {
             path: '/settings/media',
             label: 'Media',
+          },
+          {
+            path: '/settings/podcast',
+            label: 'Podcast',
           },
         ],
       },

@@ -29,8 +29,10 @@ export const Frame = styled.div`
 `;
 
 export const Item = styled.div`
+  background: ${themeUtils.colors.background};
   cursor: pointer;
   float: left;
+  height: 110px;
   margin: 5px;
   overflow: hidden;
   width: 120px;

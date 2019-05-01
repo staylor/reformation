@@ -13,7 +13,7 @@ import {
 } from 'draft-js';
 import { cx } from 'emotion';
 import Video from 'components/Videos/Video';
-import ImageModal from 'components/Modals/Image';
+import MediaModal from 'components/Modals/Media';
 import VideoModal from 'components/Modals/Video';
 import BlockStyleControls from './Controls/BlockStyle';
 import InlineStyleControls from './Controls/InlineStyle';
@@ -72,7 +72,7 @@ export default class Editor extends Component {
   state = {
     readOnly: false,
     blockToolbar: false,
-    imageModal: false,
+    mediaModal: false,
     videoModal: false,
     editorState: this.defaultEditorState(),
   };
@@ -308,7 +308,7 @@ export default class Editor extends Component {
           focus={this.focus}
         >
           <BlockStyleControls
-            openImageModal={() => this.setState({ imageModal: true })}
+            openMediaModal={() => this.setState({ mediaModal: true })}
             openVideoModal={() => this.setState({ videoModal: true })}
             editorState={editorState}
             onToggle={this.toggleBlockType}
@@ -353,12 +353,13 @@ export default class Editor extends Component {
             />
           </Toolbar>
         </RichEditor>
-        {this.state.imageModal && (
-          <ImageModal
+        {this.state.mediaModal && (
+          <MediaModal
             selectImage={this.setEntityData('IMAGE')}
+            selectAudio={this.setEntityData('AUDIO')}
             onClose={e => {
               e.preventDefault();
-              this.setState({ imageModal: false });
+              this.setState({ mediaModal: false });
             }}
           />
         )}

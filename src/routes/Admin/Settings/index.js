@@ -4,6 +4,7 @@ import Site from './Site';
 import Social from './Social';
 import Media from './Media';
 import Dashboard from './Dashboard';
+import Podcast from './Podcast';
 
 export default function SettingsRouter() {
   return (
@@ -12,6 +13,7 @@ export default function SettingsRouter() {
       <Route path="/settings/media" component={Media} />
       <Route path="/settings/site" component={Site} />
       <Route path="/settings/social" component={Social} />
+      <Route path="/settings/podcast" component={Podcast} />
       <Route path="/settings" component={Site} />
     </Switch>
   );
