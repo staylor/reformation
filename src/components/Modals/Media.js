@@ -130,9 +130,7 @@ class MediaModal extends Component {
                   e.preventDefault();
 
                   if (node.type === 'audio') {
-                    this.props.selectAudio({
-                      audio: node,
-                    });
+                    this.props.selectAudio(node);
                   } else {
                     const normalized = {
                       destination: node.destination,
