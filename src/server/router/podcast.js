@@ -56,9 +56,7 @@ export default (req, res) => {
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>${settings.title}</title>
-    <description>
-      <![CDATA[<p>${settings.description}</p>]]>
-    </description>
+    <description>${settings.description}</description>
     <managingEditor>${settings.managingEditor}</managingEditor>
     <copyright>${settings.copyrightText}</copyright>
     <generator>${settings.generator}</generator>
@@ -69,7 +67,7 @@ export default (req, res) => {
        <itunes:email>${settings.itunesEmail}</itunes:email>
     </itunes:owner>
     <itunes:author>${settings.itunesName}</itunes:author>
-    <itunes:summary><![CDATA[<p>${settings.description}</p>]]></itunes:summary>
+    <itunes:summary>${settings.description}</itunes:summary>
     <language>${settings.language}</language>
     <itunes:explicit>${settings.explicit}</itunes:explicit>
     <itunes:category text="${settings.category}" />
@@ -91,8 +89,6 @@ export default (req, res) => {
         return `<item>
       <title>${podcast.title}</title>
       <description>${podcast.description}</description>
-      <itunes:title>${podcast.title}</itunes:title>
-      <itunes:episodeType>full</itunes:episodeType>
       <itunes:summary>${podcast.description}</itunes:summary>
       <content:encoded>
          <![CDATA[<p>${podcast.description}</p>]]>
