@@ -50,8 +50,8 @@
     "react-dom": "16.8.3",
     "react-emotion": "9.2.12",
     "react-helmet-async": "0.2.0",
-    "react-router": "4.3.1",
-    "react-router-dom": "4.3.1",
+    "react-router": "5.0.0",
+    "react-router-dom": "5.0.0",
     "redraft": "0.10.2",
     "source-map-support": "^0.5.10",
     "styled-theming": "2.2.0"

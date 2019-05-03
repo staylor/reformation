@@ -31,6 +31,10 @@ export const navItemClass = css`
   text-transform: uppercase;
   vertical-align: middle;
 
+  &.active {
+    color: ${themeUtils.colors.pink};
+  }
+
   ${responsive.tablet} {
     font-size: 24px;
     margin: 0 20px 0 0;

@@ -37,6 +37,11 @@ export const logoClass = css`
   margin: 0 10px 0 0;
 `;
 
+export const appleClass = css`
+  height: 50px;
+  width: auto;
+`;
+
 export const googleClass = css`
   height: 50px;
   width: auto;
