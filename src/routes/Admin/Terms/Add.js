@@ -77,7 +77,7 @@ class AddTerm extends Component {
         {this.state.message === 'error' && <Message text={`Error adding ${taxonomy.name}.`} />}
         <FormWrap>
           <TermForm
-            data={{ taxonomy }}
+            term={{ taxonomy }}
             buttonLabel={`Add ${taxonomy.name}`}
             onSubmit={this.onSubmit}
           />
