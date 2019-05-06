@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import escape from 'html-escape';
 import { uploadUrl } from 'utils/media';
 
 export default (req, res) => {
@@ -67,7 +68,7 @@ export default (req, res) => {
        <itunes:email>${settings.itunesEmail}</itunes:email>
     </itunes:owner>
     <itunes:author>${settings.itunesName}</itunes:author>
-    <itunes:summary>${settings.description}</itunes:summary>
+    <itunes:summary>${escape(settings.description)}</itunes:summary>
     <language>${settings.language}</language>
     <itunes:explicit>${settings.explicit}</itunes:explicit>
     <itunes:category text="${settings.category}" />
@@ -87,11 +88,11 @@ export default (req, res) => {
         }
 
         return `<item>
-      <title>${podcast.title}</title>
-      <description>${podcast.description}</description>
-      <itunes:summary>${podcast.description}</itunes:summary>
+      <title>${escape(podcast.title)}</title>
+      <description>${escape(podcast.description)}</description>
+      <itunes:summary>${escape(podcast.description)}</itunes:summary>
       <content:encoded>
-         <![CDATA[<p>${podcast.description}</p>]]>
+         <![CDATA[<p>${escape(podcast.description)}</p>]]>
       </content:encoded>
       <guid>${audioUrl}</guid>
       <pubDate>${new Date(podcast.date).toGMTString()}</pubDate>

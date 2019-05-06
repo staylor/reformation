@@ -35,6 +35,7 @@
     "forever": "0.15.3",
     "graphql": "0.13.2",
     "graphql-tag": "2.10.1",
+    "html-escape": "^2.0.0",
     "http-proxy-middleware": "0.19.1",
     "invariant": "2.2.4",
     "isomorphic-fetch": "2.2.1",
