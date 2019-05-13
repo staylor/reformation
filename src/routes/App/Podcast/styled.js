@@ -26,6 +26,7 @@ export const figcaptionClass = css`
 
 export const linkClass = css`
   color: ${themeUtils.colors.pink};
+  display: block;
 `;
 
 export const footerClass = css`

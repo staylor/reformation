@@ -14,11 +14,12 @@ import * as styles from './styled';
 
 @graphql(
   gql`
-    query PodcastQuery($id: String!) {
+    query PodcastsQuery($first: Int) {
       settings(id: "podcast") {
         ... on PodcastSettings {
           title
           description
+          websiteLink
           feedLink
           image {
             id
@@ -27,84 +28,82 @@ import * as styles from './styled';
           }
         }
       }
-      podcast(id: $id) {
-        id
-        title
-        description
-        audio {
-          id
-          duration
-          destination
-          fileName
+      podcasts(first: $first) {
+        edges {
+          node {
+            id
+            title
+            description
+          }
         }
       }
     }
   `,
   {
-    options: ({ match: { params } }) => ({
-      variables: { id: params.id },
-    }),
+    options: {
+      variables: { first: 10 },
+    },
   }
 )
-class PodcastRoute extends Component {
+class PodcastsRoute extends Component {
   render() {
     const {
-      data: { loading, error, podcast, settings },
+      data: { loading, error, podcasts, settings },
     } = this.props;
 
     if (loading) {
       return <Loading />;
     }
 
-    if (error || !podcast || !settings) {
+    if (error || !podcasts || !settings) {
       return <NotFound />;
     }
 
     return (
       <AppContext.Consumer>
-        {({ socialSettings, siteSettings }) => {
-          const { siteUrl } = siteSettings;
+        {({ socialSettings }) => {
           const { twitterUsername } = socialSettings;
 
-          const podcastUrl = `${siteUrl}/podcast/${podcast.id}`;
-          const featuredImage = uploadUrl(settings.image.destination, settings.image.fileName);
+          const { title, description: summary, websiteLink: podcastUrl, image } = settings;
+
+          const featuredImage = uploadUrl(image.destination, image.fileName);
 
           return (
             <article className={styles.wrapperClass}>
               <Helmet>
-                <title>{podcast.title}</title>
+                <title>Podcast: {title}</title>
                 <link rel="canonical" href={podcastUrl} />
                 <link
                   rel="alternate"
                   type="application/rss+xml"
                   href={settings.feedLink}
-                  title={settings.title}
+                  title={title}
                 />
                 <meta property="og:type" content="article" />
-                <meta property="og:title" content={podcast.title} />
-                <meta property="og:description" content={podcast.description} />
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={summary} />
                 <meta property="og:url" content={podcastUrl} />
                 <meta property="og:image" content={featuredImage} />
                 <meta name="twitter:card" value="summary" />
                 {twitterUsername && <meta name="twitter:site" value={`@${twitterUsername}`} />}
                 {twitterUsername && <meta name="twitter:creator" value={`@${twitterUsername}`} />}
-                <meta name="twitter:title" content={podcast.title} />
-                <meta name="twitter:description" content={podcast.description} />
+                <meta name="twitter:title" content={title} />
+                <meta name="twitter:description" content={summary} />
                 <meta name="twitter:url" content={podcastUrl} />
                 {featuredImage && <meta name="twitter:image" content={featuredImage} />}
               </Helmet>
-              <figure className={styles.figureClass} key={podcast.id}>
-                <figcaption className={styles.figcaptionClass}>
-                  <a href={`/podcast/${podcast.id}`} className={styles.linkClass}>
-                    {podcast.title}
-                  </a>
-                  <p>{podcast.description}</p>
-                </figcaption>
-                <audio // eslint-disable-line
-                  src={uploadUrl(podcast.audio.destination, podcast.audio.fileName)}
-                  controls
-                />
-              </figure>
+              <h1 className={styles.titleClass}>Podcast: {title}</h1>
+              <p className={styles.textClass}>{summary}</p>
+              {podcasts.edges.map(({ node }) => (
+                <figure className={styles.figureClass} key={node.id}>
+                  <figcaption className={styles.figcaptionClass}>
+                    <a href={`/podcast/${node.id}`} className={styles.linkClass}>
+                      {node.title}
+                    </a>
+                    <p>{summary}</p>
+                  </figcaption>
+                </figure>
+              ))}
               <footer className={styles.footerClass}>
                 <a
                   href="https://podcasts.apple.com/us/podcast/high-for-this/id1461883255"
@@ -138,4 +137,4 @@ class PodcastRoute extends Component {
   }
 }
 
-export default PodcastRoute;
+export default PodcastsRoute;

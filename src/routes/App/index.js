@@ -23,6 +23,9 @@ const Venue = dynamic(() => import(/* webpackChunkName: "venue" */ 'routes/App/V
 const Videos = dynamic(() => import(/* webpackChunkName: "videos" */ 'routes/App/Videos'));
 const Video = dynamic(() => import(/* webpackChunkName: "video" */ 'routes/App/Video'));
 const Post = dynamic(() => import(/* webpackChunkName: "post" */ 'routes/App/Post'));
+const PodcastList = dynamic(() =>
+  import(/* webpackChunkName: "podcasts" */ 'routes/App/Podcast/List')
+);
 const Podcast = dynamic(() => import(/* webpackChunkName: "podcast" */ 'routes/App/Podcast'));
 
 @graphql(
@@ -142,7 +145,8 @@ class App extends Component {
                   <Route exact path="/venue/:slug" component={Venue} />
                   <Route path="/video/:slug" component={Video} />
                   <Route path="/post/:slug" component={Post} />
-                  <Route path="/podcast" component={Podcast} />
+                  <Route path="/podcast/:id" component={Podcast} />
+                  <Route path="/podcast" component={PodcastList} />
                   <Route exact path="/" component={Home} />
                   <Route path="*" component={NotFound} />
                 </Switch>
