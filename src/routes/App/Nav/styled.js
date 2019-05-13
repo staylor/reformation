@@ -3,11 +3,10 @@ import themeUtils from 'styles/theme';
 import responsive from 'styles/responsive';
 
 export const navClass = css`
-  display: flex;
-  justify-content: space-between;
   margin: ${themeUtils.padding}px 0;
 
   ${responsive.tablet} {
+    display: flex;
     justify-content: flex-start;
     margin: ${themeUtils.padding}px auto;
     text-align: center;
@@ -27,6 +26,7 @@ export const navItemClass = css`
   font-size: 18px;
   font-weight: ${themeUtils.fonts.weight.bold};
   line-height: 28px;
+  margin: 0 20px 0 0;
   text-decoration: none;
   text-transform: uppercase;
   vertical-align: middle;
@@ -37,6 +37,5 @@ export const navItemClass = css`
 
   ${responsive.tablet} {
     font-size: 24px;
-    margin: 0 20px 0 0;
   }
 `;

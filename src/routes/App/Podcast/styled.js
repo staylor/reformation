@@ -1,10 +1,16 @@
 import { css } from 'emotion';
 import themeUtils from 'styles/theme';
+import responsive from 'styles/responsive';
 import { h1styles } from 'styles/utils';
 
 export const wrapperClass = css`
+  margin: 0 auto;
   width: 640px;
   max-width: 100%;
+
+  ${responsive.desktop} {
+    margin: 0;
+  }
 `;
 
 export const titleClass = css`
@@ -30,12 +36,19 @@ export const linkClass = css`
 `;
 
 export const footerClass = css`
-  display: flex;
   margin: 40px 0 0;
+
+  ${responsive.tablet} {
+    display: flex;
+  }
 `;
 
 export const logoClass = css`
-  margin: 0 10px 0 0;
+  margin: 0 0 10px;
+
+  ${responsive.tablet} {
+    margin: 0 10px 0 0;
+  }
 `;
 
 export const appleClass = css`
