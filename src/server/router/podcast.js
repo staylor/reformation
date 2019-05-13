@@ -81,6 +81,7 @@ export default (req, res) => {
     ${podcasts.edges
       .map(({ node: podcast }) => {
         const { duration: d } = podcast.audio;
+        const guid = `https://highforthis.com/podcast/${podcast.id}`;
         const audioUrl = uploadUrl(podcast.audio.destination, podcast.audio.fileName);
         let podcastImageUrl = imageUrl;
         if (podcast.image) {
@@ -94,7 +95,7 @@ export default (req, res) => {
       <content:encoded>
          <![CDATA[<p>${escape(podcast.description)}</p>]]>
       </content:encoded>
-      <guid>${audioUrl}</guid>
+      <guid>${guid}</guid>
       <pubDate>${new Date(podcast.date).toGMTString()}</pubDate>
       <itunes:explicit>no</itunes:explicit>
       <itunes:image href="${podcastImageUrl}" />
