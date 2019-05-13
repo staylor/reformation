@@ -100,7 +100,7 @@ class PodcastsRoute extends Component {
                     <a href={`/podcast/${node.id}`} className={styles.linkClass}>
                       {node.title}
                     </a>
-                    <p>{summary}</p>
+                    <p>{node.description}</p>
                   </figcaption>
                 </figure>
               ))}

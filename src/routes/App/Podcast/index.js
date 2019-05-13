@@ -14,7 +14,7 @@ import * as styles from './styled';
 
 @graphql(
   gql`
-    query PodcastQuery($id: String!) {
+    query PodcastQuery($id: ObjID!) {
       settings(id: "podcast") {
         ... on PodcastSettings {
           title
@@ -62,7 +62,7 @@ class PodcastRoute extends Component {
 
     return (
       <AppContext.Consumer>
-        {({ socialSettings, siteSettings }) => {
+        {({ socialSettings, settings: siteSettings }) => {
           const { siteUrl } = siteSettings;
           const { twitterUsername } = socialSettings;
 
@@ -93,13 +93,9 @@ class PodcastRoute extends Component {
                 <meta name="twitter:url" content={podcastUrl} />
                 {featuredImage && <meta name="twitter:image" content={featuredImage} />}
               </Helmet>
+              <h1 className={styles.titleClass}>{podcast.title}</h1>
+              <p className={styles.textClass}>{podcast.description}</p>
               <figure className={styles.figureClass} key={podcast.id}>
-                <figcaption className={styles.figcaptionClass}>
-                  <a href={`/podcast/${podcast.id}`} className={styles.linkClass}>
-                    {podcast.title}
-                  </a>
-                  <p>{podcast.description}</p>
-                </figcaption>
                 <audio // eslint-disable-line
                   src={uploadUrl(podcast.audio.destination, podcast.audio.fileName)}
                   controls
