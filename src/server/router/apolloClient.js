@@ -1,4 +1,3 @@
-// @flow
 import client from 'apollo/client';
 
 export default (req, res, next) => {

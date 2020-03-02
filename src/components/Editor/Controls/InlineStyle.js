@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { RichUtils, EditorState } from 'draft-js';
+import { cx } from 'pretty-lights';
 import StyleButton from './StyleButton';
-import { LinkInput, LinkAction, Controls } from './styled';
+import { linkInputClass, linkActionClass, Controls } from './styled';
+
+/* eslint-disable react/prop-types */
 
 const INLINE_STYLES = [
   { label: '', style: 'BOLD', className: 'dashicons dashicons-editor-bold' },
@@ -42,24 +45,28 @@ const INLINE_STYLES = [
   { label: '', style: 'LINK', className: 'dashicons dashicons-admin-links' },
 ];
 
-type Props = {
-  editorState: EditorState,
-  onChange: EditorState => void,
-  onToggle: string => void,
-};
+// type Props = {
+//   editorState: EditorState,
+//   onChange: EditorState => void,
+//   onToggle: string => void,
+// };
+//
+// type State = {
+//   mode: string,
+//   urlValue: string,
+// };
 
-type State = {
-  mode: string,
-  urlValue: string,
-};
+class InlineStyleControls extends Component {
+  linkInput = React.createRef();
 
-export default class InlineStyleControls extends Component<Props, State> {
-  linkInput: HTMLInputElement;
+  constructor(props) {
+    super(props);
 
-  state = {
-    mode: '',
-    urlValue: '',
-  };
+    this.state = {
+      mode: '',
+      urlValue: '',
+    };
+  }
 
   static getDerivedStateFromProps(nextProps) {
     const selection = nextProps.editorState.getSelection();
@@ -89,11 +96,11 @@ export default class InlineStyleControls extends Component<Props, State> {
     }
 
     this.setState({ mode, urlValue }, () => {
-      setTimeout(() => this.linkInput.focus(), 0);
+      setTimeout(() => this.linkInput.current.focus(), 0);
     });
   };
 
-  addLink = (e: Event) => {
+  addLink = e => {
     e.preventDefault();
     const { editorState } = this.props;
     const { urlValue } = this.state;
@@ -168,10 +175,9 @@ export default class InlineStyleControls extends Component<Props, State> {
       <Controls>
         {!selection.isCollapsed() && ['ADD_LINK', 'EDIT_LINK'].includes(this.state.mode) ? (
           <>
-            <LinkInput
-              innerRef={linkInput => {
-                this.linkInput = linkInput;
-              }}
+            <input
+              className={linkInputClass}
+              innerRef={this.linkInput}
               placeholder="Type a URL and press Enter"
               value={this.state.urlValue}
               onChange={this.onLinkInputChange}
@@ -181,10 +187,16 @@ export default class InlineStyleControls extends Component<Props, State> {
               type="text"
             />
             {this.state.mode === 'EDIT_LINK' && (
-              <LinkAction className="dashicons dashicons-editor-unlink" onClick={this.removeLink} />
+              <span // eslint-disable-line
+                className={cx(linkActionClass, 'dashicons dashicons-editor-unlink')}
+                onClick={this.removeLink}
+              />
             )}
             {this.state.mode === 'ADD_LINK' && (
-              <LinkAction className="dashicons dashicons-no-alt" onClick={this.cancelLink} />
+              <span // eslint-disable-line
+                className={cx(linkActionClass, 'dashicons dashicons-no-alt')}
+                onClick={this.cancelLink}
+              />
             )}
           </>
         ) : (
@@ -203,3 +215,5 @@ export default class InlineStyleControls extends Component<Props, State> {
     );
   }
 }
+
+export default InlineStyleControls;

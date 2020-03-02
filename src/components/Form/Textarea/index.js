@@ -1,17 +1,18 @@
-// @flow
 import React, { Component } from 'react';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import { textareaClass } from './styled';
 
-type Props = {
-  value: string,
-  className?: string | null,
-  onChange?: (value: string) => void,
-  bindRef?: (element: any) => void,
-};
+// type Props = {
+//   value: string,
+//   className?: string | null,
+//   onChange?: (value: string) => void,
+//   bindRef?: (element: any) => void,
+// };
 
-export default class Textarea extends Component<Props> {
-  onChange = (e: { target: HTMLTextAreaElement }) => {
+/* eslint-disable react/prop-types */
+
+export default class Textarea extends Component {
+  onChange = e => {
     const value = e.target.value || '';
     if (this.props.onChange) {
       this.props.onChange(value);

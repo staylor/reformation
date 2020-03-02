@@ -1,6 +1,6 @@
 import React from 'react';
-import { css, keyframes } from 'emotion';
-import styled from 'react-emotion';
+import { css, keyframes, styled } from 'pretty-lights';
+
 import themeUtils from 'styles/theme';
 
 const Container = styled.div`
@@ -25,7 +25,7 @@ const bounce = keyframes`
   }
 `;
 
-const bouncing = css`
+const bouncingClass = css`
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -38,10 +38,10 @@ const bouncing = css`
 `;
 
 const Bounce1 = styled.div`
-  ${bouncing};
+  ${bouncingClass};
 `;
 const Bounce2 = styled.div`
-  ${bouncing};
+  ${bouncingClass};
   animation-delay: -1s;
 `;
 

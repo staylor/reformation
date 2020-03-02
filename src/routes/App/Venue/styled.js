@@ -1,9 +1,9 @@
-import { css } from 'emotion';
+import { css } from 'pretty-lights';
 import themeUtils from 'styles/theme';
-import { h1styles } from 'styles/utils';
+import { h1Class } from 'styles/utils';
 
 export const titleClass = css`
-  ${h1styles};
+  ${h1Class};
   color: ${themeUtils.colors.dark};
 `;
 

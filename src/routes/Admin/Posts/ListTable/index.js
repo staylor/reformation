@@ -81,8 +81,6 @@ const columns = [
 class Posts extends Component {
   render() {
     const {
-      location,
-      match,
       mutate,
       data: { variables, loading, posts },
     } = this.props;
@@ -95,7 +93,13 @@ class Posts extends Component {
       <>
         <Heading>Posts</Heading>
         <HeaderAdd to="/post/add">Add Post</HeaderAdd>
-        <ListTable {...{ location, match, columns, mutate, variables }} data={posts} path="/post" />
+        <ListTable
+          columns={columns}
+          mutate={mutate}
+          variables={variables}
+          data={posts}
+          path="/post"
+        />
       </>
     );
   }

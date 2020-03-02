@@ -72,8 +72,6 @@ const columns = [
 class Taxonomies extends Component {
   render() {
     const {
-      location,
-      match,
       mutate,
       data: { loading, taxonomies, variables },
     } = this.props;
@@ -87,7 +85,9 @@ class Taxonomies extends Component {
         <Heading>Taxonomy</Heading>
         <HeaderAdd to="/taxonomy/add">Add Taxonomy</HeaderAdd>
         <ListTable
-          {...{ location, match, columns, mutate, variables }}
+          columns={columns}
+          mutate={mutate}
+          variables={variables}
           data={taxonomies}
           path="/taxonomy"
         />

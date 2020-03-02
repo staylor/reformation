@@ -11,7 +11,7 @@ import {
   convertFromRaw,
   getVisibleSelectionRect,
 } from 'draft-js';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import Video from 'components/Videos/Video';
 import MediaModal from 'components/Modals/Media';
 import VideoModal from 'components/Modals/Video';
@@ -19,18 +19,27 @@ import BlockStyleControls from './Controls/BlockStyle';
 import InlineStyleControls from './Controls/InlineStyle';
 import LinkDecorator from './decorators/LinkDecorator';
 import TwitterDecorator from './decorators/TwitterDecorator';
-import { EditorWrap, RichEditor, hidePlaceholderClass, BlockButton, Toolbar } from './styled';
+import { editorWrapClass, RichEditor, hidePlaceholderClass, BlockButton, Toolbar } from './styled';
 import styleMap from './styleMap';
 import { blockRenderer, blockStyle } from './Blocks';
 import { getSelection } from './utils';
 
 /* eslint-disable react/prop-types, class-methods-use-this */
 
-export default class Editor extends Component {
-  static childContextTypes = {
-    setReadOnly: PropTypes.func,
-    setEditorState: PropTypes.func,
-  };
+class Editor extends Component {
+  constructor(props) {
+    super(props);
+
+    this.editor = null;
+
+    this.state = {
+      readOnly: false,
+      blockToolbar: false,
+      mediaModal: false,
+      videoModal: false,
+      editorState: this.defaultEditorState(),
+    };
+  }
 
   getChildContext() {
     return {
@@ -68,16 +77,6 @@ export default class Editor extends Component {
     }
     return EditorState.createWithContent(contentState, decorator);
   };
-
-  state = {
-    readOnly: false,
-    blockToolbar: false,
-    mediaModal: false,
-    videoModal: false,
-    editorState: this.defaultEditorState(),
-  };
-
-  editor = null;
 
   focus = () => this.editor.focus();
 
@@ -280,7 +279,7 @@ export default class Editor extends Component {
     const contentState = editorState.getCurrentContent();
 
     return (
-      <EditorWrap>
+      <div className={editorWrapClass}>
         <BlockButton
           className={cx('dashicons', {
             'dashicons-plus-alt': !this.state.blockToolbar,
@@ -372,7 +371,7 @@ export default class Editor extends Component {
             }}
           />
         )}
-      </EditorWrap>
+      </div>
     );
   }
 }
@@ -431,3 +430,10 @@ Editor.fragments = {
     ${Video.fragments.video}
   `,
 };
+
+Editor.childContextTypes = {
+  setReadOnly: PropTypes.func,
+  setEditorState: PropTypes.func,
+};
+
+export default Editor;

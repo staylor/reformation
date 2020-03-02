@@ -9,8 +9,14 @@ const flavorMap = [
   { label: 'Hot', value: 'hot' },
   { label: 'Fire', value: 'fire' },
 ];
-const tacoMap = [{ label: 'Crunchy', value: 'crunchy' }, { label: 'Soft', value: 'soft' }];
-const groups = [{ label: 'Tacos', choices: tacoMap }, { label: 'Saunce', choices: flavorMap }];
+const tacoMap = [
+  { label: 'Crunchy', value: 'crunchy' },
+  { label: 'Soft', value: 'soft' },
+];
+const groups = [
+  { label: 'Tacos', choices: tacoMap },
+  { label: 'Saunce', choices: flavorMap },
+];
 
 describe('Select', () => {
   test('empty', () => {

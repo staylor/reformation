@@ -26,7 +26,13 @@ const settingsFields = [
 function SocialSettings({ data, mutate }) {
   return (
     <FormWrap>
-      <Form id="social" title="Social Settings" {...{ settingsFields, data, mutate }} />
+      <Form
+        id="social"
+        title="Social Settings"
+        data={data}
+        mutate={mutate}
+        settingsFields={settingsFields}
+      />
     </FormWrap>
   );
 }

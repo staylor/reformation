@@ -114,6 +114,7 @@ export default (req, res) => {
       res.send(template);
     })
     .catch(e => {
+      // eslint-disable-next-line
       console.log(e);
       res.status(500).send('GraphQL Error.');
     });

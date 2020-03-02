@@ -1,5 +1,4 @@
-import { css } from 'emotion';
-import styled from 'react-emotion';
+import { css, styled } from 'pretty-lights';
 import themeUtils from 'styles/theme';
 import { Link } from 'react-router-dom';
 
@@ -57,7 +56,7 @@ export const HeaderAdd = styled(Link)`
   z-index: 1;
 `;
 
-export const Line = styled.br`
+export const lineClass = css`
   display: block;
 `;
 

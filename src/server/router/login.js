@@ -1,5 +1,5 @@
 import React from 'react';
-import { StaticRouter, Route } from 'react-router';
+import { StaticRouter, Route } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
 import { HelmetProvider } from 'react-helmet-async';
 import { DynamicImports } from 'kyt-runtime/server';

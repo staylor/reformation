@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { ThemeProvider } from 'emotion-theming';
+import { ThemeProvider } from 'pretty-lights';
 import fetch from 'isomorphic-fetch';
 import Cookies from 'js-cookie';
 import Message from 'components/Form/Message';

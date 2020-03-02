@@ -1,7 +1,7 @@
-import { css } from 'emotion';
+import { css } from 'pretty-lights';
 import themeUtils from 'styles/theme';
 import responsive from 'styles/responsive';
-import { h1styles } from 'styles/utils';
+import { h1Class } from 'styles/utils';
 
 export const wrapperClass = css`
   margin: 0 auto;
@@ -14,7 +14,7 @@ export const wrapperClass = css`
 `;
 
 export const titleClass = css`
-  ${h1styles};
+  ${h1Class};
   color: ${themeUtils.colors.dark};
 `;
 

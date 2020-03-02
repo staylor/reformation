@@ -57,7 +57,14 @@ export default function ShowForm({ show = {}, artists, venues, buttonLabel, onSu
     data.artist = show.artist.id;
     data.venue = show.venue.id;
   }
-  return <Form fields={showFields({ venues, artists })} {...{ data, buttonLabel, onSubmit }} />;
+  return (
+    <Form
+      fields={showFields({ venues, artists })}
+      data={data}
+      buttonLabel={buttonLabel}
+      onSubmit={onSubmit}
+    />
+  );
 }
 
 ShowForm.fragments = {

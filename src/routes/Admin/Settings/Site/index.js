@@ -35,7 +35,13 @@ const settingsFields = [
 function SiteSettings({ data, mutate }) {
   return (
     <FormWrap>
-      <Form id="site" title="General Settings" {...{ settingsFields, data, mutate }} />
+      <Form
+        id="site"
+        title="General Settings"
+        data={data}
+        mutate={mutate}
+        settingsFields={settingsFields}
+      />
     </FormWrap>
   );
 }

@@ -90,8 +90,6 @@ const columns = [
 class Shows extends Component {
   render() {
     const {
-      location,
-      match,
       mutate,
       data: { variables, loading, shows },
     } = this.props;
@@ -104,7 +102,13 @@ class Shows extends Component {
       <>
         <Heading>Show</Heading>
         <HeaderAdd to="/show/add">Add Show</HeaderAdd>
-        <ListTable {...{ location, match, columns, mutate, variables }} data={shows} path="/show" />
+        <ListTable
+          columns={columns}
+          mutate={mutate}
+          variables={variables}
+          data={shows}
+          path="/show"
+        />
       </>
     );
   }

@@ -96,8 +96,6 @@ const columns = [
 class Podcasts extends Component {
   render() {
     const {
-      location,
-      match,
       mutate,
       data: { variables, loading, podcasts },
     } = this.props;
@@ -111,7 +109,9 @@ class Podcasts extends Component {
         <Heading>Podcast</Heading>
         <HeaderAdd to="/podcast/add">Add Podcast</HeaderAdd>
         <ListTable
-          {...{ location, match, columns, mutate, variables }}
+          columns={columns}
+          mutate={mutate}
+          variables={variables}
           data={podcasts}
           path="/podcast"
         />

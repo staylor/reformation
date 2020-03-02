@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import NavLink from './NavLink';
 import SubNav from './SubNav';
 import CollapseButton from './CollapseButton';
@@ -57,17 +57,15 @@ class NavMenu extends Component {
                   onMouseEnter={() => this.mouseEnter(key)}
                   onMouseLeave={this.mouseLeave}
                 >
-                  <>
-                    <NavLink
-                      item={item}
-                      isHovered={active}
-                      hasSubNav={hasSubNav}
-                      isCollapsed={isCollapsed}
-                    />
-                    {item.routes && (
-                      <SubNav item={item} isHovered={active} isCollapsed={isCollapsed} />
-                    )}
-                  </>
+                  <NavLink
+                    item={item}
+                    isHovered={active}
+                    hasSubNav={hasSubNav}
+                    isCollapsed={isCollapsed}
+                  />
+                  {item.routes && (
+                    <SubNav item={item} isHovered={active} isCollapsed={isCollapsed} />
+                  )}
                 </div>
               );
             })}

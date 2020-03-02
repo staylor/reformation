@@ -34,17 +34,21 @@ describe('InfoColumn', () => {
   });
 
   test('with info and meta fields', () => {
-    const wrapper = shallow(<InfoColumn {...{ infoFields, metaFields }} />);
+    const wrapper = shallow(<InfoColumn infoFields={infoFields} metaFields={metaFields} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   test('no button', () => {
-    const wrapper = shallow(<InfoColumn {...{ label, infoFields, metaFields }} />);
+    const wrapper = shallow(
+      <InfoColumn label={label} infoFields={infoFields} metaFields={metaFields} />
+    );
     expect(wrapper).toMatchSnapshot();
   });
 
   test('with button', () => {
-    const wrapper = shallow(<InfoColumn {...{ label, button, infoFields, metaFields }} />);
+    const wrapper = shallow(
+      <InfoColumn label={label} infoFields={infoFields} metaFields={metaFields} button={button} />
+    );
     expect(wrapper).toMatchSnapshot();
   });
 });

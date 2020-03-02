@@ -4,7 +4,7 @@ const aliasesConfig = require('./webpack.aliases.config.js');
 module.exports = {
   reactHotLoader: true,
   modifyWebpackConfig: baseConfig => {
-    const config = Object.assign({}, baseConfig);
+    const config = { ...baseConfig };
     if (config.target === 'web') {
       const entries = [...config.entry.main];
       entries.pop();
@@ -19,11 +19,10 @@ module.exports = {
     });
 
     // Aliases
-    config.resolve.alias = Object.assign(
-      {},
-      config.resolve.alias || {},
-      aliasesConfig.resolve.alias
-    );
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      ...aliasesConfig.resolve.alias,
+    };
 
     return config;
   },

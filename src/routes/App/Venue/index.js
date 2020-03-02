@@ -57,6 +57,7 @@ class VenueRoute extends Component {
         {venue.address && (
           <p
             className={textClass}
+            // eslint-disable-next-line
             dangerouslySetInnerHTML={{ __html: venue.address.replace(/\n/g, '<br />') }}
           />
         )}

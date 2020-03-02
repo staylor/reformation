@@ -1,7 +1,6 @@
 import React from 'react';
-import { cx } from 'emotion';
-import { withRouter } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { cx } from 'pretty-lights';
+import { withRouter, NavLink } from 'react-router-dom';
 import { subNavClass, subNavLinkClass } from './styled';
 
 /* eslint-disable react/prop-types */

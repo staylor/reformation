@@ -1,4 +1,4 @@
-import styled from 'react-emotion';
+import { styled } from 'pretty-lights';
 import themeUtils from 'styles/theme';
 
 export const Modal = styled.div`

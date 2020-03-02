@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatDate } from './utils';
 
 /* eslint-disable react/prop-types */
 
@@ -9,7 +10,7 @@ export default function ShowsList({ shows }) {
   return (
     <pre>
       {shows.edges.map(({ node }) => {
-        const d = this.formatDate(node.date);
+        const d = formatDate(node.date);
 
         const showRow = `${d.formatted} ${node.title || node.artist.name} - ${node.venue.name}\n`;
 

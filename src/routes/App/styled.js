@@ -1,4 +1,4 @@
-import { css } from 'emotion';
+import { css } from 'pretty-lights';
 import themeUtils from 'styles/theme';
 import responsive from 'styles/responsive';
 
@@ -84,7 +84,7 @@ export const socialNavClass = css`
   }
 `;
 
-const socialIcon = css`
+const socialIconClass = css`
   color: ${themeUtils.colors.dark};
   display: inline-block;
   font-size: 20px;
@@ -110,7 +110,7 @@ const socialIcon = css`
 `;
 
 export const facebookIconClass = css`
-  ${socialIcon};
+  ${socialIconClass};
   width: 22px;
   ${responsive.desktop} {
     width: 30px;
@@ -121,14 +121,14 @@ export const facebookIconClass = css`
   }
 `;
 export const twitterIconClass = css`
-  ${socialIcon};
+  ${socialIconClass};
 
   &::before {
     content: '\\ea91';
   }
 `;
 export const instagramIconClass = css`
-  ${socialIcon};
+  ${socialIconClass};
 
   &::before {
     content: '\\e603';
@@ -138,16 +138,4 @@ export const instagramIconClass = css`
 export const footerNavClass = css`
   margin: 10px 0;
   text-align: center;
-`;
-
-export const newsletterForm = css`
-  margin: 0 0 10px;
-`;
-
-export const newsletterInput = css`
-  display: inline-block;
-  margin: 0 5px;
-  max-width: 50%;
-  transform: translateY(-2px);
-  width: 300px;
 `;

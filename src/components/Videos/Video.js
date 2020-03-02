@@ -1,33 +1,34 @@
-// @flow
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import { Heading } from 'styles/utils';
 import * as styles from './styled';
 
+/* eslint-disable react/prop-types */
+
 const { VideoLink, Placeholder, Title, EmbedTitle } = styles;
 
-type Thumbnail = {
-  width: number,
-  height: number,
-  url: string,
-  className?: string,
-};
-
-type Props = {
-  video: {
-    dataId: string,
-    title: string,
-    slug: string,
-    thumbnails: Array<Thumbnail>,
-  },
-  single: boolean,
-  embed: boolean,
-};
+// type Thumbnail = {
+//   width: number,
+//   height: number,
+//   url: string,
+//   className?: string,
+// };
+//
+// type Props = {
+//   video: {
+//     dataId: string,
+//     title: string,
+//     slug: string,
+//     thumbnails: Array<Thumbnail>,
+//   },
+//   single: boolean,
+//   embed: boolean,
+// };
 
 const maxWidth = 640;
 
-const findThumb = (thumbs: Array<Thumbnail>, { single, embed }) => {
+const findThumb = (thumbs, { single, embed }) => {
   const sizes = embed || single ? [640, 480, 320] : [480, 640, 320];
   let thumb = thumbs.find(t => t.width === sizes[0]);
   if (thumb) {
@@ -45,8 +46,8 @@ const findThumb = (thumbs: Array<Thumbnail>, { single, embed }) => {
   return thumb;
 };
 
-export default class Video extends Component<Props> {
-  onClick = (e: Event & { currentTarget: HTMLElement }) => {
+export default class Video extends Component {
+  onClick = e => {
     e.preventDefault();
 
     const iframe = document.createElement('iframe');
@@ -74,19 +75,19 @@ export default class Video extends Component<Props> {
 
     if (embed) {
       return (
-        <Fragment>
+        <>
           <VideoLink
             to={`/video/${video.slug}`}
             onClick={this.onClick}
             width={thumb ? thumb.width : maxWidth}
-            className={styles.embedVideoLink}
+            className={styles.embedVideoLinkClass}
           >
             {placeholder}
           </VideoLink>
           <EmbedTitle>
             {single ? video.title : <Link to={`/video/${video.slug}`}>{video.title}</Link>}
           </EmbedTitle>
-        </Fragment>
+        </>
       );
     }
 

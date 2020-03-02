@@ -43,8 +43,6 @@ const PER_PAGE = 20;
 class Terms extends Component {
   render() {
     const {
-      location,
-      match,
       mutate,
       data: { variables, loading, terms },
     } = this.props;
@@ -123,7 +121,9 @@ class Terms extends Component {
         <Heading>{terms.taxonomy.plural}</Heading>
         <HeaderAdd to={`/terms/${terms.taxonomy.id}/add`}>Add {terms.taxonomy.name}</HeaderAdd>
         <ListTable
-          {...{ location, match, columns, mutate, variables }}
+          columns={columns}
+          mutate={mutate}
+          variables={variables}
           data={terms}
           path={`/terms/${terms.taxonomy.id}`}
         />

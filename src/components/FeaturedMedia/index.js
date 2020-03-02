@@ -1,6 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { css } from 'emotion';
+import { css } from 'pretty-lights';
 import { uploadUrl } from 'utils/media';
 
 /* eslint-disable react/prop-types */
@@ -17,21 +17,17 @@ function FeaturedMedia({ featuredMedia, cropSize = 640, className = imageClass }
     return null;
   }
 
-  return (
-    <>
-      {featuredMedia.filter(Boolean).map(media => {
-        const crop = media.crops.find(c => c.width === cropSize);
-        return (
-          <img
-            key={crop.fileName}
-            className={className}
-            alt=""
-            src={uploadUrl(media.destination, crop.fileName)}
-          />
-        );
-      })}
-    </>
-  );
+  return featuredMedia.filter(Boolean).map(media => {
+    const crop = media.crops.find(c => c.width === cropSize);
+    return (
+      <img
+        key={crop.fileName}
+        className={className}
+        alt=""
+        src={uploadUrl(media.destination, crop.fileName)}
+      />
+    );
+  });
 }
 
 FeaturedMedia.fragments = {

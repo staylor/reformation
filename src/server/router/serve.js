@@ -1,5 +1,5 @@
 import { renderToString } from 'react-dom/server';
-import { extractCritical } from 'emotion-server';
+import { extractCritical } from 'pretty-lights/server';
 import { getDataFromTree } from 'react-apollo';
 import { getLoadableBundles } from 'kyt-runtime/server';
 // eslint-disable-next-line

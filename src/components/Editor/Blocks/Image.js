@@ -1,7 +1,8 @@
-// @flow
 import React from 'react';
 import { uploadUrl } from 'utils/media';
 import { imageClass } from './styled';
+
+/* eslint-disable react/prop-types */
 
 const cropMap = {
   FEATURE: 640,
@@ -9,23 +10,7 @@ const cropMap = {
   THUMB: 150,
 };
 
-type Crop = {
-  width: number,
-  height: number,
-  fileName: string,
-};
-
-type ImageUpload = {
-  destination: string,
-  crops: Crop[],
-};
-
-type Props = {
-  image: ImageUpload,
-  size: string,
-};
-
-function Image(props: Props) {
+function Image(props) {
   const { image, size } = props;
   if (!image) {
     return null;

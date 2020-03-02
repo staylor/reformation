@@ -1,4 +1,3 @@
-import React from 'react';
 import gql from 'graphql-tag';
 import redraft from 'redraft';
 import Video from 'components/Videos/Video';
@@ -7,13 +6,9 @@ import renderers from './renderers';
 /* eslint-disable react/prop-types */
 
 export default function Content({ contentState }) {
-  return (
-    <>
-      {redraft(contentState, renderers, {
-        cleanup: { after: 'all', types: 'all', trim: true },
-      })}
-    </>
-  );
+  return redraft(contentState, renderers, {
+    cleanup: { after: 'all', types: 'all', trim: true },
+  });
 }
 
 Content.fragments = {

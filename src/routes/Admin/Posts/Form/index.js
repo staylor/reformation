@@ -86,13 +86,16 @@ const postFields = [
     prop: 'status',
     type: 'select',
     editable: true,
-    choices: [{ label: 'Publish', value: 'PUBLISH' }, { label: 'Draft', value: 'DRAFT' }],
+    choices: [
+      { label: 'Publish', value: 'PUBLISH' },
+      { label: 'Draft', value: 'DRAFT' },
+    ],
     position: 'info',
   },
 ];
 
 export default function PostForm({ post = {}, buttonLabel = 'Submit', onSubmit }) {
-  return <Form fields={postFields} data={post} {...{ buttonLabel, onSubmit }} />;
+  return <Form fields={postFields} data={post} buttonLabel={buttonLabel} onSubmit={onSubmit} />;
 }
 
 PostForm.fragments = {

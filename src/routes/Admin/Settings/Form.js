@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import Form from 'components/Form';
-import { Heading, Line } from 'routes/Admin/styled';
+import { Heading, lineClass } from 'routes/Admin/styled';
 
 /* eslint-disable react/prop-types */
 
@@ -39,7 +39,7 @@ export default class SettingsForm extends Component {
     return (
       <>
         <Heading>{title}</Heading>
-        <Line />
+        <br className={lineClass} />
         {this.state.message === 'updated' && <Message text="Settings Updated." />}
         {loading && !settings ? (
           <Loading />

@@ -6,7 +6,7 @@ import NotFound from 'components/NotFound';
 import AppContext from 'routes/App/Context';
 import { uploadUrl } from 'utils/media';
 import Content from './Content';
-import { Wrapper, Title } from './styled';
+import { wrapperClass, Title } from './styled';
 
 /* eslint-disable react/prop-types */
 
@@ -69,7 +69,7 @@ class PostRoute extends Component {
           }
 
           return (
-            <Wrapper>
+            <article className={wrapperClass}>
               <Helmet>
                 <title>{post.title}</title>
                 <link rel="canonical" href={postUrl} />
@@ -88,7 +88,7 @@ class PostRoute extends Component {
               </Helmet>
               <Title>{post.title}</Title>
               <Content contentState={post.contentState} />
-            </Wrapper>
+            </article>
           );
         }}
       </AppContext.Consumer>

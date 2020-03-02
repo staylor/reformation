@@ -81,7 +81,9 @@ class EditShow extends Component {
         {this.state.message === 'updated' && <Message text="Show updated." />}
         <FormWrap>
           <ShowForm
-            {...{ show, artists, venues }}
+            show={show}
+            artists={artists}
+            venues={venues}
             buttonLabel="Update Show"
             onSubmit={this.onSubmit}
           />

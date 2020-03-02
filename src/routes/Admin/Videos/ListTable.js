@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import debounce from 'debounce';
-import { parse, stringify } from 'utils/query-string';
+import { parse, stringify } from 'query-string';
 import Loading from 'components/Loading';
 import Input from 'components/Form/Input';
 import Select from 'components/Form/Select';
@@ -118,7 +118,6 @@ class Videos extends Component {
   render() {
     const {
       location,
-      match,
       data: { loading, videos, variables },
     } = this.props;
 
@@ -149,7 +148,9 @@ class Videos extends Component {
           />
         </div>
         <ListTable
-          {...{ location, match, columns, filters, variables }}
+          columns={columns}
+          filters={filters}
+          variables={variables}
           data={videos}
           path="/video"
         />

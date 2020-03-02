@@ -3,7 +3,7 @@ import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import debounce from 'debounce';
-import { parse, stringify } from 'utils/query-string';
+import { parse, stringify } from 'query-string';
 import Loading from 'components/Loading';
 import Input from 'components/Form/Input';
 import Select from 'components/Form/Select';
@@ -146,7 +146,6 @@ class Media extends Component {
   render() {
     const {
       location,
-      match,
       mutate,
       data: { variables, loading, uploads },
     } = this.props;
@@ -191,15 +190,11 @@ class Media extends Component {
           />
         </div>
         <ListTable
-          {...{
-            location,
-            match,
-            columns,
-            filters,
-            mutate,
-            variables,
-            query: UploadsQuery,
-          }}
+          columns={columns}
+          filters={filters}
+          mutate={mutate}
+          variables={variables}
+          query={UploadsQuery}
           data={uploads}
           path="/media"
         />

@@ -1,9 +1,9 @@
-import { css } from 'emotion';
+import { css } from 'pretty-lights';
 import themeUtils from 'styles/theme';
 
 const mediumQuery = `@media screen and (max-width: ${themeUtils.breakpoint.medium}px)`;
 
-const flyout = css`
+const flyoutClass = css`
   background-color: ${themeUtils.colors.dark};
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   display: block;
@@ -39,12 +39,12 @@ export const subNavClass = css`
   }
 
   &.flyout {
-    ${flyout};
+    ${flyoutClass};
   }
 
   &.hovered {
     ${mediumQuery} {
-      ${flyout};
+      ${flyoutClass};
     }
   }
 `;

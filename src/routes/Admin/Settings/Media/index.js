@@ -40,7 +40,13 @@ const settingsFields = [
 function MediaSettings({ data, mutate }) {
   return (
     <FormWrap>
-      <Form id="media" title="Media Settings" {...{ settingsFields, data, mutate }} />
+      <Form
+        id="media"
+        title="Media Settings"
+        data={data}
+        mutate={mutate}
+        settingsFields={settingsFields}
+      />
     </FormWrap>
   );
 }

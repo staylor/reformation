@@ -1,4 +1,3 @@
-// @flow
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
@@ -7,13 +6,7 @@ import fetch from 'isomorphic-fetch';
 import fragmentMatcher from './fragmentMatcher';
 import errorLink from './error';
 
-type ClientOps = {
-  uri: string,
-  authToken?: string,
-  ssrMode?: boolean,
-};
-
-export default function client({ uri, authToken = null, ssrMode = false }: ClientOps) {
+export default function client({ uri, authToken = null, ssrMode = false }) {
   const headers = {};
   if (authToken) {
     headers.Authorization = `Bearer ${authToken}`;

@@ -1,14 +1,14 @@
-import styled from 'react-emotion';
+import { styled, css } from 'pretty-lights';
 import themeUtils from 'styles/theme';
-import { h1styles, h2Styles, h3Styles, h4Styles } from 'styles/utils';
+import { h1Class, h2Class, h3Class, h4Class } from 'styles/utils';
 
-export const Wrapper = styled.article`
+export const wrapperClass = css`
   width: 640px;
   max-width: 100%;
 `;
 
 export const Title = styled.h1`
-  ${h1styles};
+  ${h1Class};
   color: ${themeUtils.colors.dark};
 `;
 
@@ -21,35 +21,35 @@ export const Paragraph = styled.p`
 `;
 
 export const Heading = styled.h2`
-  ${h2Styles};
+  ${h2Class};
   color: ${themeUtils.colors.dark};
 `;
 
 export const SubHeading = styled.h3`
-  ${h3Styles};
+  ${h3Class};
   color: ${themeUtils.colors.dark};
 `;
 
 export const BoldHeading = styled.h4`
-  ${h4Styles};
+  ${h4Class};
   color: ${themeUtils.colors.dark};
 `;
 
-export const Embed = styled.div`
+export const embedClass = css`
   margin: 20px 0;
 `;
 
-export const List = styled.ul`
+export const listClass = css`
   list-style-type: disc;
   margin: 20px 0 20px 32px;
 `;
 
-export const OrderedList = styled.ol`
+export const orderedListClass = css`
   list-style-type: decimal;
   margin: 20px 0 20px 32px;
 `;
 
-export const Image = styled.img`
+export const imageClass = css`
   display: block;
   height: auto;
   margin: 10px 0;

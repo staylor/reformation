@@ -1,18 +1,11 @@
-// @flow
 import React, { Component } from 'react';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import { StyleButton as StyledButton, activeButtonClass } from './styled';
 
-type Props = {
-  style: string,
-  onToggle: string => void,
-  className: string,
-  active: boolean,
-  label: any,
-};
+/* eslint-disable react/prop-types */
 
-export default class StyleButton extends Component<Props> {
-  onToggle = (e: Event) => {
+class StyleButton extends Component {
+  onToggle = e => {
     e.preventDefault();
     e.stopPropagation();
     this.props.onToggle(this.props.style);
@@ -33,3 +26,5 @@ export default class StyleButton extends Component<Props> {
     );
   }
 }
+
+export default StyleButton;

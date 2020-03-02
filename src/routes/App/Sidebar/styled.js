@@ -1,9 +1,9 @@
-import { css } from 'emotion';
+import { css } from 'pretty-lights';
 import themeUtils from 'styles/theme';
-import { headingStyles } from 'styles/utils';
+import { baseHeadingClass } from 'styles/utils';
 
 export const headingClass = css`
-  ${headingStyles};
+  ${baseHeadingClass};
   color: ${themeUtils.colors.dark};
   font-family: ${themeUtils.fonts.futura};
   font-size: 25px;

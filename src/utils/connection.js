@@ -1,12 +1,11 @@
-// @flow
 import { base64Decode, base64Encode } from 'utils/base64';
 
 const PREFIX = 'arrayconnection:';
 
-export function cursorToOffset(cursor: string) {
+export function cursorToOffset(cursor) {
   return parseInt(base64Decode(cursor).substring(PREFIX.length), 10);
 }
 
-export function offsetToCursor(offset: number) {
+export function offsetToCursor(offset) {
   return base64Encode(PREFIX + offset);
 }

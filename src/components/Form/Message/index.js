@@ -1,16 +1,9 @@
-// @flow
 import React, { Component } from 'react';
 import { messageWrapClass, messageTextClass, dismissButtonClass } from './styled';
 
-type Props = {
-  text: string,
-};
+/* eslint-disable react/prop-types */
 
-type State = {
-  hidden: boolean,
-};
-
-export default class Message extends Component<Props, State> {
+export default class Message extends Component {
   state = {
     hidden: false,
   };
@@ -23,7 +16,11 @@ export default class Message extends Component<Props, State> {
     return this.state.hidden ? null : (
       <div className={messageWrapClass}>
         <p className={messageTextClass}>{this.props.text}</p>
-        <button type="button" className={dismissButtonClass} onClick={this.onClick} />
+        <button // eslint-disable-line
+          type="button"
+          className={dismissButtonClass}
+          onClick={this.onClick}
+        />
       </div>
     );
   }

@@ -1,10 +1,9 @@
-import styled from 'react-emotion';
-import { css } from 'emotion';
+import { styled, css } from 'pretty-lights';
 import facepaint from 'facepaint';
 import themeUtils from 'styles/theme';
 import responsive from 'styles/responsive';
 
-export const headingStyles = css`
+export const baseHeadingClass = css`
   display: block;
   font-weight: ${themeUtils.fonts.weight.bold};
   letter-spacing: 0.3px;
@@ -16,8 +15,8 @@ export const headingStyles = css`
   }
 `;
 
-export const h1styles = css`
-  ${headingStyles};
+export const h1Class = css`
+  ${baseHeadingClass};
   font-size: 30px;
 
   ${responsive.desktop} {
@@ -25,26 +24,26 @@ export const h1styles = css`
   }
 `;
 
-export const h2Styles = css`
-  ${headingStyles};
+export const h2Class = css`
+  ${baseHeadingClass};
   font-family: ${themeUtils.fonts.futura};
   font-size: 24px;
 `;
 
-export const h3Styles = css`
-  ${headingStyles};
+export const h3Class = css`
+  ${baseHeadingClass};
   font-family: ${themeUtils.fonts.futura};
   font-size: 20px;
 `;
 
-export const h4Styles = css`
-  ${headingStyles};
+export const h4Class = css`
+  ${baseHeadingClass};
   font-family: ${themeUtils.fonts.futura};
   font-size: 18px;
 `;
 
 export const Heading = styled.h2`
-  ${headingStyles};
+  ${baseHeadingClass};
   color: ${themeUtils.colors.black};
   font-family: ${themeUtils.fonts.futura};
   font-size: 25px;
@@ -74,7 +73,7 @@ export const LoadMore = styled.button`
   }
 `;
 
-export const buttonStyles = css`
+export const baseButtonClass = css`
   appearance: none;
   border-radius: 3px;
   box-sizing: border-box;
@@ -113,12 +112,12 @@ const generateButtonColors = c =>
 export const buttonColors = generateButtonColors(themeUtils.buttons.base);
 
 export const Button = styled.button`
-  ${buttonStyles};
+  ${baseButtonClass};
   ${buttonColors};
 `;
 
-export const largeButtonStyles = css`
-  ${buttonStyles};
+export const largeButtonClass = css`
+  ${baseButtonClass};
   height: 30px;
   line-height: 28px;
   padding: 0 12px 2px;
@@ -127,13 +126,13 @@ export const largeButtonStyles = css`
 const primaryButtonColors = generateButtonColors(themeUtils.buttons.primary);
 
 export const PrimaryButton = styled.button`
-  ${largeButtonStyles};
+  ${largeButtonClass};
   ${primaryButtonColors};
   text-shadow: ${themeUtils.buttons.primary.textShadow};
 `;
 
-export const smallButtonStyles = css`
-  ${buttonStyles};
+export const smallButtonClass = css`
+  ${baseButtonClass};
   font-size: 11px;
   height: 24px;
   line-height: 22px;
@@ -141,6 +140,6 @@ export const smallButtonStyles = css`
 `;
 
 export const SecondaryButton = styled.button`
-  ${smallButtonStyles};
+  ${smallButtonClass};
   ${buttonColors};
 `;

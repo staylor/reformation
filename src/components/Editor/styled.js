@@ -1,6 +1,5 @@
-import styled from 'react-emotion';
-import { css } from 'emotion';
-import { h2Styles, h3Styles, h4Styles } from 'styles/utils';
+import { styled, css } from 'pretty-lights';
+import { h2Class, h3Class, h4Class } from 'styles/utils';
 import themeUtils from 'styles/theme';
 
 export const hidePlaceholderClass = css`
@@ -24,7 +23,7 @@ export const BlockButton = styled.div`
   }
 `;
 
-export const EditorWrap = styled.div`
+export const editorWrapClass = css`
   background: #fff;
   position: relative;
 `;
@@ -45,17 +44,17 @@ export const RichEditor = styled.div`
   }
 
   h2[data-offset-key] {
-    ${h2Styles};
+    ${h2Class};
     color: ${themeUtils.colors.dark};
   }
 
   h3[data-offset-key] {
-    ${h3Styles};
+    ${h3Class};
     color: ${themeUtils.colors.dark};
   }
 
   h4[data-offset-key] {
-    ${h4Styles};
+    ${h4Class};
     color: ${themeUtils.colors.dark};
   }
 

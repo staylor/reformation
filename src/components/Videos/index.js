@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from 'components/Loading';
@@ -71,12 +71,12 @@ class Videos extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         {videos.edges.map(edge => (
           <Video key={edge.node.id} video={edge.node} />
         ))}
         {videos.pageInfo.hasNextPage && <LoadMore onClick={this.loadMore}>MORE</LoadMore>}
-      </Fragment>
+      </>
     );
   }
 }

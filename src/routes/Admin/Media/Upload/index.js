@@ -82,22 +82,20 @@ export default class Media extends Component {
         >
           <p className={styles.dropzoneInfoClass}>Drop files Here</p>
         </div>
-        <>
-          {Object.keys(this.state).map(key => {
-            const upload = this.state[key];
-            return (
-              <div className={styles.progressBarClass} key={key}>
-                <div className={styles.progressTextClass}>
-                  {upload.name} {upload.id ? <Link to={`/media/${upload.id}`}>Edit</Link> : null}
-                </div>
-                <div
-                  className={styles.statusBarClass}
-                  style={{ width: upload.id ? '3px' : `${upload.progress}%` }}
-                />
+        {Object.keys(this.state).map(key => {
+          const upload = this.state[key];
+          return (
+            <div className={styles.progressBarClass} key={key}>
+              <div className={styles.progressTextClass}>
+                {upload.name} {upload.id ? <Link to={`/media/${upload.id}`}>Edit</Link> : null}
               </div>
-            );
-          })}
-        </>
+              <div
+                className={styles.statusBarClass}
+                style={{ width: upload.id ? '3px' : `${upload.progress}%` }}
+              />
+            </div>
+          );
+        })}
       </>
     );
   }

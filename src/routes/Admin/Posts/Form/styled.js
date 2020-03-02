@@ -1,10 +1,10 @@
-import styled from 'react-emotion';
-import { css } from 'emotion';
+import { styled, css } from 'pretty-lights';
+
 import themeUtils from 'styles/theme';
-import { h1styles, buttonStyles, buttonColors } from 'styles/utils';
+import { h1Class, baseButtonClass, buttonColors } from 'styles/utils';
 
 export const postTitleClass = css`
-  ${h1styles};
+  ${h1Class};
   border: 0 none;
   box-shadow: none;
   height: 47px;
@@ -20,7 +20,7 @@ export const FeaturedImage = styled.img`
 `;
 
 export const ViewPost = styled.a`
-  ${buttonStyles};
+  ${baseButtonClass};
   ${buttonColors};
 `;
 

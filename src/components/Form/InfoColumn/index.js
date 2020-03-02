@@ -1,15 +1,9 @@
-// @flow
 import React from 'react';
 import { infoColumnClass, infoBoxClass, infoBoxHeaderClass, infoBoxContentClass } from './styled';
 
-type Props = {
-  infoFields?: Array<any>,
-  metaFields?: Array<any>,
-  label?: string,
-  button?: any,
-};
+/* eslint-disable react/prop-types */
 
-export default function InfoColumn({ infoFields, metaFields, label, button }: Props) {
+export default function InfoColumn({ infoFields, metaFields, label, button }) {
   return (
     <section className={infoColumnClass}>
       {infoFields.length > 0 ? (

@@ -62,8 +62,6 @@ const columns = [
 class Users extends Component {
   render() {
     const {
-      location,
-      match,
       mutate,
       data: { variables, loading, users },
     } = this.props;
@@ -76,7 +74,13 @@ class Users extends Component {
       <>
         <Heading>User</Heading>
         <HeaderAdd to="/user/add">Add User</HeaderAdd>
-        <ListTable {...{ location, match, columns, mutate, variables }} data={users} path="/user" />
+        <ListTable
+          columns={columns}
+          mutate={mutate}
+          variables={variables}
+          data={users}
+          path="/user"
+        />
       </>
     );
   }

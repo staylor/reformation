@@ -3,6 +3,7 @@ import React from 'react';
 export default function Mailchimp() {
   return (
     <section
+      // eslint-disable-next-line
       dangerouslySetInnerHTML={{
         __html: `
         <!-- Begin Mailchimp Signup Form -->

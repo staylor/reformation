@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { cx } from 'emotion';
-import { ThemeProvider } from 'emotion-theming';
+import { cx, ThemeProvider } from 'pretty-lights';
 import Helmet from 'react-helmet-async';
 import dynamic from 'kyt-runtime/dynamic';
 import NotFound from 'components/NotFound';
@@ -109,15 +108,11 @@ class App extends Component {
               {dashboardSettings.googleTrackingId && (
                 <script
                   async
-                  src={`https://www.googletagmanager.com/gtag/js?id=${
-                    dashboardSettings.googleTrackingId
-                  }`}
+                  src={`https://www.googletagmanager.com/gtag/js?id=${dashboardSettings.googleTrackingId}`}
                 />
               )}
               {dashboardSettings.googleTrackingId && (
-                <script>{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${
-                  dashboardSettings.googleTrackingId
-                }');`}</script>
+                <script>{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${dashboardSettings.googleTrackingId}');`}</script>
               )}
               <link rel="canonical" href={settings.siteUrl} />
               {socialSettings.facebookAppId && (
@@ -138,9 +133,10 @@ class App extends Component {
               <section className={styles.primaryClass}>
                 <Switch>
                   <Route exact path="/videos/:year(\d{4})?" component={Videos} />
-                  <Route path="/shows/:taxonomy/:term" component={Shows} />
-                  <Route exact path="/shows/list" component={Shows} />
-                  <Route exact path="/shows" component={Shows} />
+                  <Route
+                    path={['/shows/:taxonomy/:term', '/shows/list', '/shows']}
+                    component={Shows}
+                  />
                   <Route exact path="/artist/:slug" component={Artist} />
                   <Route exact path="/venue/:slug" component={Venue} />
                   <Route path="/video/:slug" component={Video} />
