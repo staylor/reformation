@@ -11,7 +11,7 @@ import {
   convertFromRaw,
   getVisibleSelectionRect,
 } from 'draft-js';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import Video from 'components/Videos/Video';
 import MediaModal from 'components/Modals/Media';
 import VideoModal from 'components/Modals/Video';

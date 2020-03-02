@@ -1,5 +1,5 @@
 module.exports = {
-  snapshotSerializers: ['enzyme-to-json/serializer', 'jest-emotion/serializer'],
+  snapshotSerializers: ['enzyme-to-json/serializer', 'pretty-lights/jest'],
   setupFiles: ['raf/polyfill'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import Select from 'components/Form/Select';
 import Checkbox from 'components/Form/Checkbox';
 import { uploadUrl } from 'utils/media';

@@ -1,4 +1,4 @@
-import { css } from 'emotion';
+import { css } from 'pretty-lights';
 import themeUtils from 'styles/theme';
 import { headingStyles } from 'styles/utils';
 

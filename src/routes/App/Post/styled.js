@@ -1,4 +1,4 @@
-import styled from 'react-emotion';
+import { styled } from 'pretty-lights';
 import themeUtils from 'styles/theme';
 import { h1styles, h2Styles, h3Styles, h4Styles } from 'styles/utils';
 

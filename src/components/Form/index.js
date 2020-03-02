@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { convertToRaw } from 'draft-js';
 import type { ContentState } from 'draft-js';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import invariant from 'invariant';
 import Editor from 'components/Editor';
 import { PrimaryButton } from 'styles/utils';

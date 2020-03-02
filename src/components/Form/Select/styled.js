@@ -1,4 +1,4 @@
-import { css } from 'emotion';
+import { css } from 'pretty-lights';
 import inputStyles from 'components/Form/styled';
 
 // eslint-disable-next-line

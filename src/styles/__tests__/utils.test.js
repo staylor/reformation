@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import { headingStyles, Heading, largeButtonStyles, smallButtonStyles } from '../utils';
 
 describe('Style utils', () => {

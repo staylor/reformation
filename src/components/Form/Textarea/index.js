@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import { textareaClass } from './styled';
 
 type Props = {

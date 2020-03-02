@@ -1,4 +1,4 @@
-import { injectGlobal } from 'emotion';
+import { injectGlobal } from 'pretty-lights';
 import themeUtils from 'styles/theme';
 import iconsWoff from 'public/fonts/icons/icons.woff';
 import iconsWoff2 from 'public/fonts/icons/icons.woff2';

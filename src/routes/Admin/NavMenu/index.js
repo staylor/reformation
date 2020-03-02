@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import NavLink from './NavLink';
 import SubNav from './SubNav';
 import CollapseButton from './CollapseButton';

@@ -1,5 +1,5 @@
-import styled from 'react-emotion';
-import { css } from 'emotion';
+import { styled, css } from 'pretty-lights';
+
 import facepaint from 'facepaint';
 import themeUtils from 'styles/theme';
 import responsive from 'styles/responsive';

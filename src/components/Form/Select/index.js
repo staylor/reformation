@@ -1,6 +1,6 @@
 // @flow
 import React, { Component, type Node } from 'react';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import { selectClass } from 'components/Form/styled';
 
 export type Choice = string | number | { label: string, value: string | number };

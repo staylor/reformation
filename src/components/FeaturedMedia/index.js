@@ -1,6 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { css } from 'emotion';
+import { css } from 'pretty-lights';
 import { uploadUrl } from 'utils/media';
 
 /* eslint-disable react/prop-types */

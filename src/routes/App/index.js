@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { cx } from 'emotion';
-import { ThemeProvider } from 'emotion-theming';
+import { cx, ThemeProvider } from 'pretty-lights';
+
 import Helmet from 'react-helmet-async';
 import dynamic from 'kyt-runtime/dynamic';
 import NotFound from 'components/NotFound';

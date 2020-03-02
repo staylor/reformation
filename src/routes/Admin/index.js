@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Helmet from 'react-helmet-async';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import Loading from 'components/Loading';
 import NotFound from 'components/NotFound';
 import { mediaSettingsShape } from 'types/PropTypes';

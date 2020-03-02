@@ -10,13 +10,13 @@
   ],
   "env": {
     "production": {
-      "plugins": [["emotion", { "hoist": true }]]
+      "plugins": [["pretty-lights/babel", { "hoist": true }]]
     },
     "development": {
-      "plugins": [["emotion", { "sourceMap": true, "autoLabel": true }]]
+      "plugins": [["pretty-lights/babel", { "sourceMap": true, "autoLabel": true }]]
     },
     "test": {
-      "plugins": [["emotion", { "hoist": true, "autoLabel": true }]]
+      "plugins": [["pretty-lights/babel", { "hoist": true, "autoLabel": true }]]
     }
   }
 }

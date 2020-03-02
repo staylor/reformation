@@ -1,5 +1,5 @@
-import styled from 'react-emotion';
-import { css } from 'emotion';
+import { styled, css } from 'pretty-lights';
+
 import themeUtils from 'styles/theme';
 import { h1styles, buttonStyles, buttonColors } from 'styles/utils';
 

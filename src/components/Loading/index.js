@@ -1,6 +1,6 @@
 import React from 'react';
-import { css, keyframes } from 'emotion';
-import styled from 'react-emotion';
+import { css, keyframes, styled } from 'pretty-lights';
+
 import themeUtils from 'styles/theme';
 
 const Container = styled.div`

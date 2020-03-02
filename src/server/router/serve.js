@@ -1,7 +1,7 @@
 import { renderToString } from 'react-dom/server';
-import { extractCritical } from 'emotion-server';
+import { extractCritical } from 'pretty-lights/server';
 import { getDataFromTree } from 'react-apollo';
-import { getLoadableBundles } from 'kyt-runtime/server';
+import { getBundles } from 'kyt-runtime/server';
 // eslint-disable-next-line
 import template from 'server/template';
 import injectStyles from 'styles/inject';
@@ -32,7 +32,7 @@ export default async (req, res) => {
 
   const { html, ids, css } = extractCritical(renderToString(app));
 
-  const bundles = getLoadableBundles(modules);
+  const bundles = getBundles({ modules });
   bundles.scripts = bundles.scripts.filter(
     b => ![clientAssets['main.js'], clientAssets['admin.js'], clientAssets['login.js']].includes(b)
   );

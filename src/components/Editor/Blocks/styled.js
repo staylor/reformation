@@ -1,4 +1,4 @@
-import { css } from 'emotion';
+import { css } from 'pretty-lights';
 
 export const blockquoteClass = css`
   border-left: 5px solid #eee;

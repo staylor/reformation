@@ -1,4 +1,4 @@
-import { css } from 'emotion';
+import { css } from 'pretty-lights';
 import themeUtils from 'styles/theme';
 
 const mediumQuery = `@media screen and (max-width: ${themeUtils.breakpoint.medium}px)`;

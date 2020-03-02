@@ -1,5 +1,5 @@
 import React from 'react';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import { withRouter, NavLink } from 'react-router-dom';
 
 import { subNavClass, subNavLinkClass } from './styled';

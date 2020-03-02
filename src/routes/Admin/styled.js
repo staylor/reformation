@@ -1,5 +1,5 @@
-import { css } from 'emotion';
-import styled from 'react-emotion';
+import { css, styled } from 'pretty-lights';
+
 import themeUtils from 'styles/theme';
 import { Link } from 'react-router-dom';
 

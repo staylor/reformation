@@ -1,4 +1,4 @@
-import { css } from 'emotion';
+import { css } from 'pretty-lights';
 
 export const thumbnailColumnClass = css`
   width: 62px;

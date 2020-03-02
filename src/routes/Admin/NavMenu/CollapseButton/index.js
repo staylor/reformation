@@ -1,5 +1,5 @@
 import React from 'react';
-import { cx } from 'emotion';
+import { cx } from 'pretty-lights';
 import { buttonClass, collapsedButtonClass, buttonIconClass, buttonLabelClass } from './styled';
 
 /* eslint-disable react/prop-types,react/button-has-type */
