@@ -71,12 +71,12 @@ class Videos extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         {videos.edges.map(edge => (
           <Video key={edge.node.id} video={edge.node} />
         ))}
         {videos.pageInfo.hasNextPage && <LoadMore onClick={this.loadMore}>MORE</LoadMore>}
-      </Fragment>
+      </>
     );
   }
 }

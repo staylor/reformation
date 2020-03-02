@@ -1,7 +1,7 @@
 import React from 'react';
 import { cx } from 'emotion';
-import { withRouter } from 'react-router';
-import { NavLink as RRNavLink } from 'react-router-dom';
+import { withRouter, NavLink as RRNavLink } from 'react-router-dom';
+
 import { linkClass, dashiconClass } from './styled';
 
 /* eslint-disable react/prop-types */

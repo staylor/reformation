@@ -4,7 +4,7 @@ const aliasesConfig = require('./webpack.aliases.config.js');
 module.exports = {
   serverURL: 'http://localhost:3006',
   modifyWebpackConfig: baseConfig => {
-    const config = Object.assign({}, baseConfig);
+    const config = { ...baseConfig };
     if (config.target === 'web') {
       config.entry.main = `${clientSrcPath}/index.js`;
       config.entry.admin = `${clientSrcPath}/admin.js`;
@@ -17,11 +17,10 @@ module.exports = {
     });
 
     // Aliases
-    config.resolve.alias = Object.assign(
-      {},
-      config.resolve.alias || {},
-      aliasesConfig.resolve.alias
-    );
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      ...aliasesConfig.resolve.alias,
+    };
 
     return config;
   },

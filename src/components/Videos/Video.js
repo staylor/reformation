@@ -74,7 +74,7 @@ export default class Video extends Component<Props> {
 
     if (embed) {
       return (
-        <Fragment>
+        <>
           <VideoLink
             to={`/video/${video.slug}`}
             onClick={this.onClick}
@@ -86,7 +86,7 @@ export default class Video extends Component<Props> {
           <EmbedTitle>
             {single ? video.title : <Link to={`/video/${video.slug}`}>{video.title}</Link>}
           </EmbedTitle>
-        </Fragment>
+        </>
       );
     }
 

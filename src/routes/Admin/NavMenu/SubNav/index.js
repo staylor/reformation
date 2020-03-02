@@ -1,7 +1,7 @@
 import React from 'react';
 import { cx } from 'emotion';
-import { withRouter } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
+
 import { subNavClass, subNavLinkClass } from './styled';
 
 /* eslint-disable react/prop-types */

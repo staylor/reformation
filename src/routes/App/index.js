@@ -109,15 +109,11 @@ class App extends Component {
               {dashboardSettings.googleTrackingId && (
                 <script
                   async
-                  src={`https://www.googletagmanager.com/gtag/js?id=${
-                    dashboardSettings.googleTrackingId
-                  }`}
+                  src={`https://www.googletagmanager.com/gtag/js?id=${dashboardSettings.googleTrackingId}`}
                 />
               )}
               {dashboardSettings.googleTrackingId && (
-                <script>{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${
-                  dashboardSettings.googleTrackingId
-                }');`}</script>
+                <script>{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${dashboardSettings.googleTrackingId}');`}</script>
               )}
               <link rel="canonical" href={settings.siteUrl} />
               {socialSettings.facebookAppId && (

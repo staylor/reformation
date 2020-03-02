@@ -1,4 +1,6 @@
-{
+const path = require('path');
+
+module.exports = {
   "extends": ["eslint-config-kyt"],
 
   "rules": {
@@ -13,7 +15,7 @@
   "settings": {
     "import/resolver": {
       "webpack": {
-        "config": "webpack.aliases.config.js"
+        "config": path.resolve(__dirname, "./webpack.aliases.config.js")
       }
     }
   }
