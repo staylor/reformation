@@ -6,7 +6,7 @@ import FeaturedMedia from 'components/Form/FeaturedMedia';
 import Tags from './Tags';
 import { postTitleClass, ViewPost } from './styled';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/no-multi-comp */
 
 const postFields = [
   {

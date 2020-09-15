@@ -6,11 +6,13 @@ import { headingStyles, Heading, largeButtonStyles, smallButtonStyles } from '..
 describe('Style utils', () => {
   test('headingStyles', () => {
     const wrapper = mount(<h1 className={headingStyles}>Hello</h1>);
+
     expect(wrapper).toMatchSnapshot();
   });
 
   test('Heading', () => {
     const wrapper = mount(<Heading>Hello</Heading>);
+
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -26,6 +28,7 @@ describe('Style utils', () => {
         Hello
       </a>
     );
+
     expect(wrapper).toMatchSnapshot();
   });
 });

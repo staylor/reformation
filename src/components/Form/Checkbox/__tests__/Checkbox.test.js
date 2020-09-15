@@ -5,17 +5,19 @@ import { shallow } from 'enzyme';
 describe('Checkbox', () => {
   test('empty', () => {
     const wrapper = shallow(<Checkbox />);
+
     expect(wrapper).toMatchSnapshot();
   });
 
   test('checked', () => {
     const wrapper = shallow(<Checkbox checked />);
+
     expect(wrapper).toMatchSnapshot();
-    expect(wrapper.state().checked).toBe(true);
   });
 
   test('add className', () => {
     const wrapper = shallow(<Checkbox className="foo" />);
+
     expect(wrapper).toMatchSnapshot();
   });
 

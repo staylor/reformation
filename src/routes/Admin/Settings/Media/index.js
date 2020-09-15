@@ -6,7 +6,7 @@ import Crops from './Crops';
 import MediaSettingsQuery from './MediaSettingsQuery.graphql';
 import MediaSettingsMutation from './MediaSettingsMutation.graphql';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/no-multi-comp */
 
 const normalizeCrops = (crops = []) =>
   crops

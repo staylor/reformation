@@ -58,7 +58,7 @@ export const inputClass = css`
 `;
 
 export const buttonClass = css`
-  apperance: none;
+  appearance: none;
   background: ${themeUtils.colors.white};
   border: 1px solid ${themeUtils.colors.detail};
   border-radius: 3px;

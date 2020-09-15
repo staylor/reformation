@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Textarea add className 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -20,14 +20,13 @@ exports[`Textarea add className 1`] = `
 }
 
 <textarea
-  className="emotion-0 foo"
+  className="lights-0 foo"
   onChange={[Function]}
-  value=""
 />
 `;
 
 exports[`Textarea empty 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -46,8 +45,7 @@ exports[`Textarea empty 1`] = `
 }
 
 <textarea
-  className="emotion-0"
+  className="lights-0"
   onChange={[Function]}
-  value=""
 />
 `;

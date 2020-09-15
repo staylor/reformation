@@ -9,7 +9,7 @@ import { offsetToCursor } from 'utils/connection';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 import PostsQuery from './PostsQuery.graphql';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/no-multi-comp */
 
 const PER_PAGE = 20;
 

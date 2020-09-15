@@ -39,6 +39,7 @@ export const titleClass = css`
 
 export const contentClass = css`
   padding: ${themeUtils.padding}px 0;
+
   ${responsive.desktop} {
     display: flex;
   }
@@ -47,6 +48,7 @@ export const contentClass = css`
 export const primaryClass = css`
   margin-bottom: ${themeUtils.padding}px;
   max-width: 100%;
+
   ${responsive.desktop} {
     flex: 4;
     margin-right: ${themeUtils.padding}px;
@@ -60,6 +62,7 @@ export const secondaryClass = css`
   max-width: 100%;
   padding-top: ${themeUtils.padding}px;
   width: 640px;
+
   ${responsive.desktop} {
     border: 0;
     margin: 0;
@@ -76,6 +79,7 @@ export const footerClass = css`
 export const socialNavClass = css`
   margin: 20px 0 0;
   text-align: center;
+
   ${responsive.desktop} {
     margin: 0;
     position: absolute;
@@ -93,6 +97,7 @@ const socialIcon = css`
   text-align: center;
   text-decoration: none;
   width: 35px;
+
   ${responsive.desktop} {
     font-size: 28px;
     height: 28px;
@@ -112,6 +117,7 @@ const socialIcon = css`
 export const facebookIconClass = css`
   ${socialIcon};
   width: 22px;
+
   ${responsive.desktop} {
     width: 30px;
   }

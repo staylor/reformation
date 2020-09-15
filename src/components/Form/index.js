@@ -90,7 +90,7 @@ export default class Form extends Component<Props> {
     // eslint-disable-next-line no-param-reassign
     field.value = () => initialValue;
 
-    return (value: string) => {
+    return value => {
       initialValue = value;
     };
   };

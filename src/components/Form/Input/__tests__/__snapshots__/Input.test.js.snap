@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Input add className 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -18,24 +18,24 @@ exports[`Input add className 1`] = `
   width: 100%;
 }
 
-.emotion-0::-webkit-input-placeholder {
+.lights-0::-webkit-input-placeholder {
   color: #e6e6e6;
 }
 
-.emotion-0::-moz-placeholder {
+.lights-0::-moz-placeholder {
   color: #e6e6e6;
 }
 
-.emotion-0:-ms-input-placeholder {
+.lights-0:-ms-input-placeholder {
   color: #e6e6e6;
 }
 
-.emotion-0::placeholder {
+.lights-0::placeholder {
   color: #e6e6e6;
 }
 
 <input
-  className="emotion-0 foo"
+  className="lights-0 foo"
   defaultValue=""
   onChange={[Function]}
   type="text"
@@ -43,7 +43,7 @@ exports[`Input add className 1`] = `
 `;
 
 exports[`Input empty 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -60,24 +60,24 @@ exports[`Input empty 1`] = `
   width: 100%;
 }
 
-.emotion-0::-webkit-input-placeholder {
+.lights-0::-webkit-input-placeholder {
   color: #e6e6e6;
 }
 
-.emotion-0::-moz-placeholder {
+.lights-0::-moz-placeholder {
   color: #e6e6e6;
 }
 
-.emotion-0:-ms-input-placeholder {
+.lights-0:-ms-input-placeholder {
   color: #e6e6e6;
 }
 
-.emotion-0::placeholder {
+.lights-0::placeholder {
   color: #e6e6e6;
 }
 
 <input
-  className="emotion-0"
+  className="lights-0"
   defaultValue=""
   onChange={[Function]}
   type="text"

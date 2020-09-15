@@ -34,6 +34,7 @@ export const dismissButtonClass = css`
     color: ${themeUtils.colors.text};
     content: '\f153';
     display: block;
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font: normal 16px/20px dashicons;
     height: 20px;
     speak: none;

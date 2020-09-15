@@ -21,28 +21,32 @@ const groups = [
 describe('Select', () => {
   test('empty', () => {
     const wrapper = shallow(<Select />);
+
     expect(wrapper).toMatchSnapshot();
-    expect(wrapper.state('value')).toEqual('');
   });
 
   test('add className', () => {
     const wrapper = shallow(<Select className="foo" />);
+
     expect(wrapper).toMatchSnapshot();
   });
 
   describe('placeholder', () => {
     test('no choices', () => {
       const wrapper = shallow(<Select placeholder={placeholder} />);
+
       expect(wrapper).toMatchSnapshot();
     });
 
     test('choices', () => {
       const wrapper = shallow(<Select placeholder={placeholder} choices={flavors} />);
+
       expect(wrapper).toMatchSnapshot();
     });
 
     test('choices as objects', () => {
       const wrapper = shallow(<Select placeholder={placeholder} choices={flavorMap} />);
+
       expect(wrapper).toMatchSnapshot();
     });
   });
@@ -50,26 +54,31 @@ describe('Select', () => {
   describe('multiple', () => {
     test('true', () => {
       const wrapper = shallow(<Select multiple />);
+
       expect(wrapper).toMatchSnapshot();
     });
 
     test('false', () => {
       const wrapper = shallow(<Select multiple={false} />);
+
       expect(wrapper).toMatchSnapshot();
     });
 
     test('string', () => {
       const wrapper = shallow(<Select multiple="multiple" />);
+
       expect(wrapper).toMatchSnapshot();
     });
 
     test('truthy', () => {
       const wrapper = shallow(<Select multiple="1" />);
+
       expect(wrapper).toMatchSnapshot();
     });
 
     test('falsey', () => {
       const wrapper = shallow(<Select multiple="0" />);
+
       expect(wrapper).toMatchSnapshot();
     });
   });
@@ -80,7 +89,8 @@ describe('Select', () => {
       const wrapper = shallow(<Select onChange={func} choices={flavorMap} />);
       const value = 'fire';
       wrapper.simulate('change', { target: { value } });
-      expect(wrapper.state('value')).toEqual(value);
+
+      expect(func).toHaveBeenCalledWith(value);
     });
 
     test('values', () => {
@@ -89,60 +99,62 @@ describe('Select', () => {
       wrapper.simulate('change', {
         target: { selectedOptions: [{ value: 'mild' }, { value: 'fire' }] },
       });
-      expect(wrapper.state('value')).toEqual(['mild', 'fire']);
+
+      expect(func).toHaveBeenCalledWith(['mild', 'fire']);
     });
   });
 
   describe('choices', () => {
     test('choices', () => {
       const wrapper = shallow(<Select choices={flavors} />);
+
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.state('value')).toEqual('');
     });
 
     test('choices as objects', () => {
       const wrapper = shallow(<Select choices={flavorMap} />);
+
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.state('value')).toEqual('');
     });
 
     test('choice', () => {
       const value = 'medium';
       const wrapper = shallow(<Select choices={flavorMap} value={value} />);
+
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.state('value')).toEqual(value);
     });
   });
 
   describe('groups', () => {
     test('no value', () => {
       const wrapper = shallow(<Select groups={groups} />);
+
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.state('value')).toEqual('');
     });
 
     test('value', () => {
       const value = 'mild';
       const wrapper = shallow(<Select groups={groups} value={value} />);
+
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.state('value')).toEqual(value);
     });
 
     test('values', () => {
       const value = ['soft', 'mild'];
       const wrapper = shallow(<Select multiple groups={groups} value={value} />);
+
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.state('value')).toEqual(value);
     });
   });
 
-  describe('groups', () => {
+  describe('child nodes', () => {
     test('children', () => {
       const wrapper = shallow(
         <Select>
           <option value="meximelt">Mexi-melt</option>
         </Select>
       );
+
       expect(wrapper).toMatchSnapshot();
     });
 
@@ -152,6 +164,7 @@ describe('Select', () => {
           <option value="meximelt">Mexi-melt</option>
         </Select>
       );
+
       expect(wrapper).toMatchSnapshot();
     });
   });

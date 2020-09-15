@@ -43,6 +43,7 @@ export const buttonIconClass = css`
   &::after {
     content: '\f148';
     display: block;
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font: normal 20px/1 dashicons !important;
     position: relative;
     speak: none;

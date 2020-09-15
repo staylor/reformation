@@ -21,6 +21,7 @@ export const wrapClass = css`
 
 export const articleClass = css`
   margin: 0 0 ${themeUtils.padding}px;
+
   &::after {
     clear: both;
     content: ' ';

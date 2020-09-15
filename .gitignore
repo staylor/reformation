@@ -1,3 +1,4 @@
+/.caches
 /.env
 /.env-cmdrc
 /.nyc_output

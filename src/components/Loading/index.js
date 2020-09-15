@@ -17,11 +17,13 @@ const Wrap = styled.div`
 `;
 
 const bounce = keyframes`
-  0%, 100% {
-    transform: scale(0.0);
+  0%,
+  100% {
+    transform: scale(0);
   }
+
   50% {
-    transform: scale(1.0);
+    transform: scale(1);
   }
 `;
 

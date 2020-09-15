@@ -4,6 +4,8 @@ import facepaint from 'facepaint';
 import themeUtils from 'styles/theme';
 import responsive from 'styles/responsive';
 
+/* eslint-disable pretty-lights/move-rules-to-file */
+
 export const headingStyles = css`
   display: block;
   font-weight: ${themeUtils.fonts.weight.bold};

@@ -52,6 +52,7 @@ export const DeleteTag = styled.a`
     color: ${themeUtils.colors.dark};
     content: '\\f153';
     display: block;
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font: 400 16px/20px dashicons;
     height: 20px;
     line-height: 1.28;

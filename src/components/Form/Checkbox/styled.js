@@ -25,6 +25,7 @@ export const checkboxClass = css`
       content: '\f147';
       float: left;
       display: inline-block;
+      /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
       font: normal 21px/1 dashicons;
       margin: -3px 0 0 -4px;
       speak: none;

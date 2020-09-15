@@ -8,7 +8,7 @@ import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 import TaxonomyQuery from './TaxonomyQuery.graphql';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/no-multi-comp */
 
 const columns = [
   {

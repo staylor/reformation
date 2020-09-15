@@ -12,7 +12,7 @@ import AudioInfo from './AudioInfo';
 import VideoInfo from './VideoInfo';
 import { audioClass, videoClass, croppedClass } from './styled';
 
-/* eslint-disable react/prop-types, jsx-a11y/media-has-caption */
+/* eslint-disable react/prop-types,react/no-multi-comp,jsx-a11y/media-has-caption */
 
 const mediaFields = [
   {

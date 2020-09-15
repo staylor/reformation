@@ -7,12 +7,14 @@ const TEXT_VALUE = 'Run for the border.';
 describe('Input', () => {
   test('empty', () => {
     const wrapper = shallow(<Input />);
+
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.state('value')).toEqual('');
   });
 
   test('add className', () => {
     const wrapper = shallow(<Input className="foo" />);
+
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -22,7 +24,8 @@ describe('Input', () => {
       const wrapper = shallow(<Input onChange={func} />);
       const value = TEXT_VALUE;
       wrapper.simulate('change', { target: { value } });
-      expect(wrapper.state('value')).toEqual(value);
+
+      expect(func).toHaveBeenCalledWith(value);
     });
 
     test('removing text', () => {
@@ -30,7 +33,8 @@ describe('Input', () => {
       const value = TEXT_VALUE;
       const wrapper = shallow(<Input onChange={func} value={value} />);
       wrapper.simulate('change', { target: { value: '' } });
-      expect(wrapper.state('value')).toEqual('');
+
+      expect(func).toHaveBeenCalledWith('');
     });
 
     test('bad event', () => {
@@ -38,7 +42,8 @@ describe('Input', () => {
       const value = TEXT_VALUE;
       const wrapper = shallow(<Input onChange={func} value={value} />);
       wrapper.simulate('change', { target: { foo: 'bar' } });
-      expect(wrapper.state('value')).toEqual('');
+
+      expect(func).toHaveBeenCalledWith('');
     });
 
     test('bad type', () => {
@@ -46,7 +51,8 @@ describe('Input', () => {
       const value = TEXT_VALUE;
       const wrapper = shallow(<Input onChange={func} value={value} />);
       wrapper.simulate('change', { target: { value: false } });
-      expect(wrapper.state('value')).toEqual('');
+
+      expect(func).toHaveBeenCalledWith('');
     });
   });
 });

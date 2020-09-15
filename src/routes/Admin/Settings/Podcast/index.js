@@ -6,7 +6,7 @@ import FeaturedMedia from 'components/Form/FeaturedMedia';
 import PodcastSettingsQuery from './PodcastSettingsQuery.graphql';
 import PodcastSettingsMutation from './PodcastSettingsMutation.graphql';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/no-multi-comp */
 
 const settingsFields = [
   { label: 'Podcast Title', prop: 'title', editable: true },

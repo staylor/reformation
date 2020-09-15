@@ -61,6 +61,7 @@ export default function inject() {
     }
 
     .icon-font {
+      /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
       font-family: 'icons';
       font-style: normal;
       font-variant: normal;

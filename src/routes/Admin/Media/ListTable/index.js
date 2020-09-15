@@ -19,7 +19,7 @@ import { Heading, HeaderAdd } from 'routes/Admin/styled';
 import { titleColumnClass } from './styled';
 import UploadsQuery from './UploadsQuery.graphql';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/no-multi-comp */
 
 const PER_PAGE = 20;
 

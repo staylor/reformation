@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import Form from 'components/Form';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/no-multi-comp */
 
 function showFields({ artists, venues }) {
   const date = new Date();

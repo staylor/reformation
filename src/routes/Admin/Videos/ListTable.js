@@ -12,7 +12,7 @@ import { rowActionsClass, rowTitleClass, searchBoxClass } from 'components/ListT
 import { offsetToCursor } from 'utils/connection';
 import { Heading } from '../styled';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/no-multi-comp */
 
 const PER_PAGE = 20;
 

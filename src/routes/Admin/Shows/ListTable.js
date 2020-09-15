@@ -9,7 +9,7 @@ import { offsetToCursor } from 'utils/connection';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 import ShowQuery from './ShowQuery.graphql';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/no-multi-comp */
 
 const PER_PAGE = 20;
 

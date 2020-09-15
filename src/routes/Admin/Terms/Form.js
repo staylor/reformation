@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import Form from 'components/Form';
 import FeaturedMedia from 'components/Form/FeaturedMedia';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/no-multi-comp */
 
 const termFields = [
   { label: 'Name', prop: 'name', editable: true },

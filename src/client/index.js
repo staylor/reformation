@@ -19,3 +19,8 @@ preloadDynamicImports().then(() => {
     document.getElementById('main')
   );
 });
+
+// enable Hot Module Replacement (HMR) via Webpack polling
+if (process.env.NODE_ENV !== 'production' && module.hot) {
+  module.hot.accept();
+}

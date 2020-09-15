@@ -5,9 +5,11 @@ describe('connection', () => {
     const value = 7;
 
     const serialized = offsetToCursor(value);
+
     expect(serialized).toMatchSnapshot();
 
     const deserialized = cursorToOffset(serialized);
+
     expect(deserialized).toEqual(value);
   });
 });

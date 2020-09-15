@@ -2,7 +2,6 @@ const { clientSrcPath } = require('kyt-utils/paths')();
 const aliasesConfig = require('./webpack.aliases.config.js');
 
 module.exports = {
-  reactHotLoader: true,
   modifyWebpackConfig: baseConfig => {
     const config = { ...baseConfig };
     if (config.target === 'web') {

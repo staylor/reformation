@@ -7,7 +7,7 @@ import { ThumbWrapper, thumb480Class } from 'components/Videos/styled';
 import Form from 'components/Form';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/no-multi-comp */
 
 const videoFields = [
   { label: 'Title', prop: 'title' },
