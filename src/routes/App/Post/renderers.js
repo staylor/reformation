@@ -14,6 +14,8 @@ import {
   Image,
 } from './styled';
 
+/* eslint-disable react/no-multi-comp */
+
 // just a helper to add a <br /> after a block
 const addBreaklines = children => children.map(child => [child, <br />]);
 

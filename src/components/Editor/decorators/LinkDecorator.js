@@ -17,13 +17,15 @@ function findLinkEntities(
   }, callback);
 }
 
-type Props = {
-  contentState: ContentState,
-  entityKey: string,
-  children: any,
-};
+/* eslint-disable react/prop-types */
 
-const Link = ({ contentState, entityKey, children }: Props) => {
+// type Props = {
+//   contentState: ContentState,
+//   entityKey: string,
+//   children: any,
+// };
+
+const Link = ({ contentState, entityKey, children }) => {
   const { href } = contentState.getEntity(entityKey).getData();
   return (
     <a href={href} className={linkClass}>

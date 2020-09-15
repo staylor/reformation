@@ -1,16 +1,9 @@
-// @flow
 import React, { Component } from 'react';
 import { messageWrapClass, messageTextClass, dismissButtonClass } from './styled';
 
-type Props = {
-  text: string,
-};
+/* eslint-disable react/prop-types,jsx-a11y/control-has-associated-label */
 
-type State = {
-  hidden: boolean,
-};
-
-export default class Message extends Component<Props, State> {
+export default class Message extends Component {
   state = {
     hidden: false,
   };

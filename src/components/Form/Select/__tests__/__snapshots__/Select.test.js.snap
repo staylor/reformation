@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Select add className 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -20,22 +20,22 @@ exports[`Select add className 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0 foo"
+  className="lights-0 foo"
   defaultValue={null}
   multiple={false}
   onChange={[Function]}
 />
 `;
 
-exports[`Select choices choice 1`] = `
-.emotion-0 {
+exports[`Select child nodes children 1`] = `
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -54,14 +54,112 @@ exports[`Select choices choice 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
+  defaultValue={null}
+  multiple={false}
+  onChange={[Function]}
+>
+  <option
+    value="meximelt"
+  >
+    Mexi-melt
+  </option>
+</select>
+`;
+
+exports[`Select child nodes children with choices 1`] = `
+.lights-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.lights-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+<select
+  className="lights-0"
+  defaultValue={null}
+  multiple={false}
+  onChange={[Function]}
+>
+  <option
+    key="mild"
+    value="mild"
+  >
+    Mild
+  </option>
+  <option
+    key="hot"
+    value="hot"
+  >
+    Hot
+  </option>
+  <option
+    key="fire"
+    value="fire"
+  >
+    Fire
+  </option>
+  <option
+    value="meximelt"
+  >
+    Mexi-melt
+  </option>
+</select>
+`;
+
+exports[`Select choices choice 1`] = `
+.lights-0 {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+  box-sizing: border-box;
+  color: #32373c;
+  font-size: 14px;
+  outline: none;
+  -webkit-transition: 0.05s border-color ease-in-out;
+  transition: 0.05s border-color ease-in-out;
+  height: 28px;
+  line-height: 28px;
+  margin: 1px;
+  max-width: 200px;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+.lights-0[multiple] {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+<select
+  className="lights-0"
   defaultValue="medium"
   multiple={false}
   onChange={[Function]}
@@ -88,7 +186,7 @@ exports[`Select choices choice 1`] = `
 `;
 
 exports[`Select choices choices 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -107,14 +205,14 @@ exports[`Select choices choices 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={null}
   multiple={false}
   onChange={[Function]}
@@ -141,7 +239,7 @@ exports[`Select choices choices 1`] = `
 `;
 
 exports[`Select choices choices as objects 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -160,14 +258,14 @@ exports[`Select choices choices as objects 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={null}
   multiple={false}
   onChange={[Function]}
@@ -194,7 +292,7 @@ exports[`Select choices choices as objects 1`] = `
 `;
 
 exports[`Select empty 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -213,120 +311,22 @@ exports[`Select empty 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={null}
   multiple={false}
   onChange={[Function]}
 />
 `;
 
-exports[`Select groups children 1`] = `
-.emotion-0 {
-  background-color: #fff;
-  border: 1px solid #e6e6e6;
-  border-radius: 0;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
-  box-sizing: border-box;
-  color: #32373c;
-  font-size: 14px;
-  outline: none;
-  -webkit-transition: 0.05s border-color ease-in-out;
-  transition: 0.05s border-color ease-in-out;
-  height: 28px;
-  line-height: 28px;
-  margin: 1px;
-  max-width: 200px;
-  padding: 2px;
-  vertical-align: middle;
-}
-
-.emotion-0[multiple] {
-  display: block;
-  height: auto;
-  width: 100%;
-}
-
-<select
-  className="emotion-0"
-  defaultValue={null}
-  multiple={false}
-  onChange={[Function]}
->
-  <option
-    value="meximelt"
-  >
-    Mexi-melt
-  </option>
-</select>
-`;
-
-exports[`Select groups children with choices 1`] = `
-.emotion-0 {
-  background-color: #fff;
-  border: 1px solid #e6e6e6;
-  border-radius: 0;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
-  box-sizing: border-box;
-  color: #32373c;
-  font-size: 14px;
-  outline: none;
-  -webkit-transition: 0.05s border-color ease-in-out;
-  transition: 0.05s border-color ease-in-out;
-  height: 28px;
-  line-height: 28px;
-  margin: 1px;
-  max-width: 200px;
-  padding: 2px;
-  vertical-align: middle;
-}
-
-.emotion-0[multiple] {
-  display: block;
-  height: auto;
-  width: 100%;
-}
-
-<select
-  className="emotion-0"
-  defaultValue={null}
-  multiple={false}
-  onChange={[Function]}
->
-  <option
-    key="mild"
-    value="mild"
-  >
-    Mild
-  </option>
-  <option
-    key="hot"
-    value="hot"
-  >
-    Hot
-  </option>
-  <option
-    key="fire"
-    value="fire"
-  >
-    Fire
-  </option>
-  <option
-    value="meximelt"
-  >
-    Mexi-melt
-  </option>
-</select>
-`;
-
 exports[`Select groups no value 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -345,14 +345,14 @@ exports[`Select groups no value 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={null}
   multiple={false}
   onChange={[Function]}
@@ -401,7 +401,7 @@ exports[`Select groups no value 1`] = `
 `;
 
 exports[`Select groups value 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -420,14 +420,14 @@ exports[`Select groups value 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue="mild"
   multiple={false}
   onChange={[Function]}
@@ -476,7 +476,7 @@ exports[`Select groups value 1`] = `
 `;
 
 exports[`Select groups values 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -495,14 +495,14 @@ exports[`Select groups values 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={
     Array [
       "soft",
@@ -556,7 +556,7 @@ exports[`Select groups values 1`] = `
 `;
 
 exports[`Select multiple false 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -575,14 +575,14 @@ exports[`Select multiple false 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={null}
   multiple={false}
   onChange={[Function]}
@@ -590,7 +590,7 @@ exports[`Select multiple false 1`] = `
 `;
 
 exports[`Select multiple falsey 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -609,14 +609,14 @@ exports[`Select multiple falsey 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={null}
   multiple={true}
   onChange={[Function]}
@@ -624,7 +624,7 @@ exports[`Select multiple falsey 1`] = `
 `;
 
 exports[`Select multiple string 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -643,14 +643,14 @@ exports[`Select multiple string 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={null}
   multiple={true}
   onChange={[Function]}
@@ -658,7 +658,7 @@ exports[`Select multiple string 1`] = `
 `;
 
 exports[`Select multiple true 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -677,14 +677,14 @@ exports[`Select multiple true 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={null}
   multiple={true}
   onChange={[Function]}
@@ -692,7 +692,7 @@ exports[`Select multiple true 1`] = `
 `;
 
 exports[`Select multiple truthy 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -711,14 +711,14 @@ exports[`Select multiple truthy 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={null}
   multiple={true}
   onChange={[Function]}
@@ -726,7 +726,7 @@ exports[`Select multiple truthy 1`] = `
 `;
 
 exports[`Select placeholder choices 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -745,14 +745,14 @@ exports[`Select placeholder choices 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={null}
   multiple={false}
   onChange={[Function]}
@@ -785,7 +785,7 @@ exports[`Select placeholder choices 1`] = `
 `;
 
 exports[`Select placeholder choices as objects 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -804,14 +804,14 @@ exports[`Select placeholder choices as objects 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={null}
   multiple={false}
   onChange={[Function]}
@@ -844,7 +844,7 @@ exports[`Select placeholder choices as objects 1`] = `
 `;
 
 exports[`Select placeholder no choices 1`] = `
-.emotion-0 {
+.lights-0 {
   background-color: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 0;
@@ -863,14 +863,14 @@ exports[`Select placeholder no choices 1`] = `
   vertical-align: middle;
 }
 
-.emotion-0[multiple] {
+.lights-0[multiple] {
   display: block;
   height: auto;
   width: 100%;
 }
 
 <select
-  className="emotion-0"
+  className="lights-0"
   defaultValue={null}
   multiple={false}
   onChange={[Function]}

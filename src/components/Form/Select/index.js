@@ -1,29 +1,30 @@
-// @flow
-import React, { Component, type Node } from 'react';
+import React, { Component } from 'react';
 import { cx } from 'pretty-lights';
 import { selectClass } from 'components/Form/styled';
 
-export type Choice = string | number | { label: string, value: string | number };
-export type Choices = Array<Choice>;
-export type Groups = Array<{ label: string, choices: Choices }>;
+/* eslint-disable react/prop-types,jsx-a11y/control-has-associated-label */
 
-type Props = {
-  className?: string | null,
-  multiple?: boolean,
-  onChange?: (value: any) => any,
-  bindRef?: (element: any) => void,
-  value?: string | number | Array<string | number> | null,
-  placeholder?: string,
-  choices?: Choices,
-  groups?: Groups,
-  children?: Node,
-};
+// export type Choice = string | number | { label: string, value: string | number };
+// export type Choices = Array<Choice>;
+// export type Groups = Array<{ label: string, choices: Choices }>;
 
-type State = {
-  value: any,
-};
+// type Props = {
+//   className?: string | null,
+//   multiple?: boolean,
+//   onChange?: (value: any) => any,
+//   bindRef?: (element: any) => void,
+//   value?: string | number | Array<string | number> | null,
+//   placeholder?: string,
+//   choices?: Choices,
+//   groups?: Groups,
+//   children?: Node,
+// };
+//
+// type State = {
+//   value: any,
+// };
 
-const renderOption = (choice: Choice): Node => {
+const renderOption = choice => {
   if (typeof choice === 'object') {
     return (
       <option key={choice.value} value={choice.value}>
@@ -38,8 +39,8 @@ const renderOption = (choice: Choice): Node => {
   );
 };
 
-export default class Select extends Component<Props, State> {
-  onChange = (e: { target: HTMLSelectElement }) => {
+export default class Select extends Component {
+  onChange = e => {
     let { value } = e.target;
     const multiple = Boolean(this.props.multiple);
     if (multiple) {

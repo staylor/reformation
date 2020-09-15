@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 import { convertToRaw } from 'draft-js';
-import type { ContentState } from 'draft-js';
 import { cx } from 'pretty-lights';
 import invariant from 'invariant';
 import Editor from 'components/Editor';
@@ -9,53 +8,55 @@ import { PrimaryButton } from 'styles/utils';
 import InfoColumn from './InfoColumn';
 import Input from './Input';
 import Textarea from './Textarea';
-import Select, { type Choices } from './Select';
+import Select from './Select';
 import Date from './Date';
 import * as styles from './styled';
 
 const { FieldName, FieldValue } = styles;
 
-type Data = {};
-type Updates = {};
-type F = {
-  prop: string,
-  value?: () => any,
-  defaultValue?: any,
-  render?: (?Data) => any,
-  className?: string | null,
-  label?: string,
-  type?: string,
-  placeholder?: string,
-  choices?: Choices,
-  inputType?: string,
-  editable?: boolean,
-  multiple?: boolean,
-  condition?: Data => boolean,
-};
+// type Data = {};
+// type Updates = {};
+// type F = {
+//   prop: string,
+//   value?: () => any,
+//   defaultValue?: any,
+//   render?: (?Data) => any,
+//   className?: string | null,
+//   label?: string,
+//   type?: string,
+//   placeholder?: string,
+//   choices?: Choices,
+//   inputType?: string,
+//   editable?: boolean,
+//   multiple?: boolean,
+//   condition?: Data => boolean,
+// };
+//
+// type Props = {
+//   data: Data,
+//   fields: Array<F>,
+//   boxLabel?: string,
+//   buttonLabel?: string,
+//   onSubmit: (Event, Updates) => void,
+// };
+//
+// type RawContent = {
+//   blocks: Array<{}>,
+//   entityMap: any,
+// };
 
-type Props = {
-  data: Data,
-  fields: Array<F>,
-  boxLabel?: string,
-  buttonLabel?: string,
-  onSubmit: (Event, Updates) => void,
-};
+/* eslint-disable react/prop-types */
 
-type RawContent = {
-  blocks: Array<{}>,
-  entityMap: any,
-};
-
-export default class Form extends Component<Props> {
+export default class Form extends Component {
   boundRefs = {};
 
   fields = {};
 
-  bindRef = (prop: string) => (ref: HTMLElement) => {
+  bindRef = (prop: string) => ref => {
     this.boundRefs[prop] = ref;
   };
 
-  onSubmit = (e: Event & { target: HTMLButtonElement }) => {
+  onSubmit = e => {
     e.preventDefault();
     // $FlowFixMe
     e.target.blur();
@@ -84,7 +85,7 @@ export default class Form extends Component<Props> {
     onSubmit(e, updates);
   };
 
-  bindOnChange = (field: F, data: Data) => {
+  bindOnChange = (field, data) => {
     let initialValue = data[field.prop];
 
     // eslint-disable-next-line no-param-reassign
@@ -95,9 +96,9 @@ export default class Form extends Component<Props> {
     };
   };
 
-  editorOnChange = (field: F) => (content: ContentState) => {
+  editorOnChange = field => content => {
     const converted = convertToRaw(content);
-    const value: RawContent = {
+    const value = {
       blocks: [...converted.blocks],
       entityMap: { ...converted.entityMap },
     };
@@ -132,7 +133,7 @@ export default class Form extends Component<Props> {
     };
   };
 
-  editableField(field: F, data: Data = {}) {
+  editableField(field, data = {}) {
     if (field.type === 'editor') {
       return (
         <Editor

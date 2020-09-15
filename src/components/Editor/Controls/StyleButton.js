@@ -1,17 +1,18 @@
-// @flow
 import React, { Component } from 'react';
 import { cx } from 'pretty-lights';
 import { StyleButton as StyledButton, activeButtonClass } from './styled';
 
-type Props = {
-  style: string,
-  onToggle: string => void,
-  className: string,
-  active: boolean,
-  label: any,
-};
+/* eslint-disable react/prop-types */
 
-export default class StyleButton extends Component<Props> {
+// type Props = {
+//   style: string,
+//   onToggle: string => void,
+//   className: string,
+//   active: boolean,
+//   label: any,
+// };
+
+export default class StyleButton extends Component {
   onToggle = (e: Event) => {
     e.preventDefault();
     e.stopPropagation();

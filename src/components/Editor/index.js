@@ -189,11 +189,13 @@ export default class Editor extends Component {
     // ensure that toolbar is positioned in the middle
     // and above the selection, regardless of toolbar state
     this.inlineToolbar.style.width = `${TOOLBAR_WIDTH}px`;
-    this.inlineToolbar.style.top = `${selectionBoundary.top -
+    this.inlineToolbar.style.top = `${
+      selectionBoundary.top -
       editorBoundary.top -
       TOOLBAR_HEIGHT -
       // $TODO: Magic Number
-      10}px`;
+      10
+    }px`;
     const widthDiff = selectionBoundary.width - TOOLBAR_WIDTH;
     let leftOffset;
     if (widthDiff >= 0) {
@@ -318,10 +320,7 @@ export default class Editor extends Component {
           className={cx({
             [hidePlaceholderClass]:
               !contentState.hasText() &&
-              contentState
-                .getBlockMap()
-                .first()
-                .getType() !== 'unstyled',
+              contentState.getBlockMap().first().getType() !== 'unstyled',
           })}
           onClick={this.focus}
         >

@@ -1,16 +1,17 @@
 import React from 'react';
-import type { EditorState } from 'draft-js';
 import StyleButton from './StyleButton';
 import { Controls } from './styled';
 
-type Props = {
-  editorState: EditorState,
-  onToggle: string => void,
-  openVideoModal: () => void,
-  openMediaModal: () => void,
-};
+/* eslint-disable react/prop-types */
 
-const BlockStyleControls = ({ editorState, onToggle, openVideoModal, openMediaModal }: Props) => {
+// type Props = {
+//   editorState: EditorState,
+//   onToggle: string => void,
+//   openVideoModal: () => void,
+//   openMediaModal: () => void,
+// };
+
+const BlockStyleControls = ({ editorState, onToggle, openVideoModal, openMediaModal }) => {
   const selection = editorState.getSelection();
   if (!selection) {
     return null;

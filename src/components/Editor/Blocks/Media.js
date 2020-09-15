@@ -1,14 +1,10 @@
 import React from 'react';
-import type { ContentState, ContentBlock } from 'draft-js';
 import Video from 'components/Videos/Video';
 import Image from './Image';
 
-type Props = {
-  contentState: ContentState,
-  block: ContentBlock,
-};
+/* eslint-disable react/prop-types */
 
-export default function Media(props: Props) {
+export default function Media(props) {
   const { contentState, block } = props;
   const entityKey = block.getEntityAt(0);
   if (!entityKey) {

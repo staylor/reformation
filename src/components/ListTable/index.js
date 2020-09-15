@@ -17,7 +17,7 @@ import {
   thumbnailClass,
 } from './styled';
 
-/* eslint-disable class-methods-use-this */
+/* eslint-disable class-methods-use-this,react/prop-types */
 
 export const renderThumbnail = (media, field) => {
   if (!media[field] || !media[field].length) {

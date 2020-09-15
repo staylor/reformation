@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Select, { type Groups } from 'components/Form/Select';
+import Select /* , { type Groups } */ from 'components/Form/Select';
 
 const FEBRUARY = 1;
 const APRIL = 3;
@@ -22,7 +22,7 @@ const monthChoices = [
   { value: 11, label: 'December' },
 ];
 
-const dayChoices = ({ month = 1, year }): Array<string> => {
+const dayChoices = ({ month = 1, year }) => {
   const monthNum = parseInt(month, 10);
   const yearNum = parseInt(year, 10);
   let days = 31;
@@ -37,13 +37,13 @@ const dayChoices = ({ month = 1, year }): Array<string> => {
   return [...Array(days).keys()].map(i => (i < 9 ? `0${i + 1}` : `${i + 1}`));
 };
 
-const yearChoices = (currentYear: number): Array<number> => {
+const yearChoices = currentYear => {
   const start = currentYear - 100;
   const end = currentYear + 10;
   return [...Array(end - start).keys()].map(i => start + i);
 };
 
-const hourChoices: Groups = [
+const hourChoices = [
   {
     label: 'AM',
     choices: [
@@ -82,21 +82,23 @@ const hourChoices: Groups = [
 
 const minuteChoices = [...Array(60).keys()].map(i => (i < 10 ? `0${i}` : `${i}`));
 
-type Props = {
-  date: number | null,
-  onChange: (value: any) => void,
-};
+// type Props = {
+//   date: number | null,
+//   onChange: (value: any) => void,
+// };
+//
+// type State = {
+//   month: string,
+//   day: string,
+//   year: string,
+//   hour: string,
+//   minutes: string,
+//   yearChoices: number[],
+// };
 
-type State = {
-  month: string,
-  day: string,
-  year: string,
-  hour: string,
-  minutes: string,
-  yearChoices: number[],
-};
+/* eslint-disable react/prop-types */
 
-export default class DatePicker extends Component<Props, State> {
+export default class DatePicker extends Component {
   constructor(props) {
     super(props);
 
@@ -106,6 +108,7 @@ export default class DatePicker extends Component<Props, State> {
     const hour = d.getHours();
     const minute = d.getMinutes();
 
+    // eslint-disable-next-line react/state-in-constructor
     this.state = {
       month: `${month}`,
       day: `${day < 10 ? `0${day}` : day}`,
@@ -127,27 +130,27 @@ export default class DatePicker extends Component<Props, State> {
     this.props.onChange(date.getTime());
   }
 
-  setProp = (prop: string, value: any) => {
+  setProp = (prop, value) => {
     this.setState({ [prop]: value }, this.changeDate);
   };
 
-  setDay = (day: string) => {
+  setDay = day => {
     this.setProp('day', day);
   };
 
-  setYear = (year: string) => {
+  setYear = year => {
     this.setProp('year', year);
   };
 
-  setMonth = (month: string) => {
+  setMonth = month => {
     this.setProp('month', month);
   };
 
-  setHour = (hour: string) => {
+  setHour = hour => {
     this.setProp('hour', hour);
   };
 
-  setMinutes = (minutes: string) => {
+  setMinutes = minutes => {
     this.setProp('minutes', minutes);
   };
 

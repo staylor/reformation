@@ -1,8 +1,7 @@
-import type { ContentBlock } from 'draft-js';
 import Media from './Media';
 import { blockquoteClass, paragraphClass } from './styled';
 
-export function blockRenderer(block: ContentBlock) {
+export function blockRenderer(block) {
   if (block.getType() === 'atomic') {
     return {
       component: Media,
@@ -13,7 +12,7 @@ export function blockRenderer(block: ContentBlock) {
   return null;
 }
 
-export function blockStyle(block: ContentBlock) {
+export function blockStyle(block) {
   switch (block.getType()) {
     case 'blockquote':
       return blockquoteClass;

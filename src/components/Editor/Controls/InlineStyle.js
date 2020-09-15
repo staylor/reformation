@@ -3,6 +3,8 @@ import { RichUtils, EditorState } from 'draft-js';
 import StyleButton from './StyleButton';
 import { LinkInput, LinkAction, Controls } from './styled';
 
+/* eslint-disable react/prop-types */
+
 const INLINE_STYLES = [
   { label: '', style: 'BOLD', className: 'dashicons dashicons-editor-bold' },
   {
@@ -42,19 +44,8 @@ const INLINE_STYLES = [
   { label: '', style: 'LINK', className: 'dashicons dashicons-admin-links' },
 ];
 
-type Props = {
-  editorState: EditorState,
-  onChange: EditorState => void,
-  onToggle: string => void,
-};
-
-type State = {
-  mode: string,
-  urlValue: string,
-};
-
-export default class InlineStyleControls extends Component<Props, State> {
-  linkInput: HTMLInputElement;
+export default class InlineStyleControls extends Component {
+  linkInput = React.createRef();
 
   state = {
     mode: '',
@@ -113,7 +104,7 @@ export default class InlineStyleControls extends Component<Props, State> {
     });
   };
 
-  removeLink = (e: Event) => {
+  removeLink = e => {
     e.preventDefault();
     const { editorState } = this.props;
     const selection = editorState.getSelection();
@@ -128,23 +119,23 @@ export default class InlineStyleControls extends Component<Props, State> {
     });
   };
 
-  cancelLink = (e: Event) => {
+  cancelLink = e => {
     e.preventDefault();
 
     this.setState({ mode: '', urlValue: '' });
   };
 
-  onLinkInputChange = (e: { target: HTMLInputElement }) => {
+  onLinkInputChange = e => {
     this.setState({ urlValue: e.target.value });
   };
 
-  onLinkInputKeyDown = (e: Event) => {
+  onLinkInputKeyDown = e => {
     if (e.which === 13) {
       this.addLink(e);
     }
   };
 
-  onLinkInputMouseDown = (e: Event) => {
+  onLinkInputMouseDown = e => {
     e.preventDefault();
     e.stopPropagation();
   };

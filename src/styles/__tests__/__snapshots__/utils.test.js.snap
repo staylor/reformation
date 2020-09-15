@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Style utils Heading 1`] = `
-.emotion-0 {
+.lights-0 {
   display: block;
   font-weight: 700;
   -webkit-letter-spacing: 0.3px;
@@ -16,14 +16,14 @@ exports[`Style utils Heading 1`] = `
 }
 
 @media only screen and (min-width:1024px) {
-  .emotion-0 {
+  .lights-0 {
     margin-bottom: 15px;
   }
 }
 
 <Heading>
   <h2
-    className="emotion-0 emotion-1"
+    className="lights-0 lights-1"
   >
     Hello
   </h2>
@@ -31,7 +31,7 @@ exports[`Style utils Heading 1`] = `
 `;
 
 exports[`Style utils cx 1`] = `
-.emotion-0 {
+.lights-0 {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -60,14 +60,14 @@ exports[`Style utils cx 1`] = `
   padding: 0 12px 2px;
 }
 
-.emotion-0:active {
+.lights-0:active {
   -webkit-transform: translateY(1px);
   -ms-transform: translateY(1px);
   transform: translateY(1px);
 }
 
 <a
-  className="emotion-0"
+  className="lights-0"
   href="http://foo.com"
 >
   Hello
@@ -75,7 +75,7 @@ exports[`Style utils cx 1`] = `
 `;
 
 exports[`Style utils headingStyles 1`] = `
-.emotion-0 {
+.lights-0 {
   display: block;
   font-weight: 700;
   -webkit-letter-spacing: 0.3px;
@@ -87,13 +87,13 @@ exports[`Style utils headingStyles 1`] = `
 }
 
 @media only screen and (min-width:1024px) {
-  .emotion-0 {
+  .lights-0 {
     margin-bottom: 15px;
   }
 }
 
 <h1
-  className="emotion-0"
+  className="lights-0"
 >
   Hello
 </h1>

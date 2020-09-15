@@ -1,21 +1,22 @@
-// @flow
 import React, { Component } from 'react';
 import { cx } from 'pretty-lights';
 import { checkboxClass } from './styled';
 
-type Props = {
-  id: string,
-  className?: string | null,
-  checked?: boolean,
-  onChange?: (checked: boolean, id?: string | null) => void,
-  bindRef?: (element: any) => void,
-};
+/* eslint-disable react/prop-types */
 
-type State = {
-  checked: boolean,
-};
+// type Props = {
+//   id: string,
+//   className?: string | null,
+//   checked?: boolean,
+//   onChange?: (checked: boolean, id?: string | null) => void,
+//   bindRef?: (element: any) => void,
+// };
+//
+// type State = {
+//   checked: boolean,
+// };
 
-export default class Checkbox extends Component<Props, State> {
+export default class Checkbox extends Component {
   state = {
     checked: false,
   };
@@ -27,7 +28,7 @@ export default class Checkbox extends Component<Props, State> {
     return null;
   }
 
-  onChange = (e: { target: HTMLInputElement }) => {
+  onChange = e => {
     const value = Boolean(e.target.checked);
     this.setState({ checked: value }, () => {
       if (this.props.onChange) {

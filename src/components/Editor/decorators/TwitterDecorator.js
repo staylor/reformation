@@ -1,8 +1,9 @@
-// @flow
 import React from 'react';
 import type { ContentBlock } from 'draft-js';
 import themeUtils from 'styles/theme';
 import { findWithRegex } from '../utils';
+
+/* eslint-disable react/prop-types */
 
 const HANDLE_REGEX = /@[\w]+/g;
 
@@ -10,12 +11,7 @@ function handleStrategy(contentBlock: ContentBlock, callback: () => void) {
   findWithRegex(HANDLE_REGEX, contentBlock, callback);
 }
 
-type RedraftProps = {
-  decoratedText: string,
-  children: any,
-};
-
-const RedraftHandle = ({ children, decoratedText }: RedraftProps) => (
+const RedraftHandle = ({ children, decoratedText }) => (
   <a
     key={decoratedText}
     target="_blank"
@@ -31,12 +27,8 @@ export const TwitterRedraftDecorator = {
   component: RedraftHandle,
 };
 
-type Props = {
-  offsetKey: string,
-  children: any,
-};
-
-const HandleSpan = (props: Props) => (
+// eslint-disable-next-line react/no-multi-comp
+const HandleSpan = props => (
   <span style={{ color: themeUtils.colors.pink }} data-offset-key={props.offsetKey}>
     {props.children}
   </span>

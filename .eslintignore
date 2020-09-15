@@ -1,2 +1,4 @@
-node_modules
-build
+/.caches
+/node_modules
+/build
+/highforthis

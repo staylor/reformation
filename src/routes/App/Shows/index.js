@@ -11,7 +11,7 @@ import ShowsGrid from 'routes/App/Shows/Grid';
   gql`
     query ShowsQuery($first: Int, $after: String, $taxonomy: String, $term: String) {
       shows(latest: true, first: $first, after: $after, taxonomy: $taxonomy, term: $term)
-        @connection(key: "shows", filter: ["taxonomy", "term"]) {
+      @connection(key: "shows", filter: ["taxonomy", "term"]) {
         ...ShowsGrid_shows
       }
     }

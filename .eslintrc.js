@@ -37,7 +37,7 @@ module.exports = {
       files: ['jest.setup.js'],
       rules: {
         'jest/no-standalone-expect': 'off',
-      }
+      },
     },
     {
       files: ['*.test.js', '**/__tests__/**/*.js'],

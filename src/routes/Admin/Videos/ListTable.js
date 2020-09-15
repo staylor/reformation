@@ -58,7 +58,7 @@ const columns = [
   gql`
     query VideosQuery($first: Int, $after: String, $year: Int, $search: String) {
       videos(first: $first, after: $after, year: $year, search: $search)
-        @connection(key: "videos", filter: ["year", "search", "first", "after"]) {
+      @connection(key: "videos", filter: ["year", "search", "first", "after"]) {
         count
         years
         edges {

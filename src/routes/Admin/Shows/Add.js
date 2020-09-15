@@ -13,11 +13,11 @@ import ShowForm from './Form';
     gql`
       query CreateShowQuery {
         artists: terms(taxonomy: "artist", first: 250)
-          @connection(key: "terms", filter: ["taxonomy"]) {
+        @connection(key: "terms", filter: ["taxonomy"]) {
           ...ShowForm_terms
         }
         venues: terms(taxonomy: "venue", first: 250)
-          @connection(key: "terms", filter: ["taxonomy"]) {
+        @connection(key: "terms", filter: ["taxonomy"]) {
           ...ShowForm_terms
         }
       }

@@ -1,20 +1,21 @@
-// @flow
 import React, { Component } from 'react';
 import { cx } from 'pretty-lights';
 import { inputClass } from './styled';
 
-type Props = {
-  value: string,
-  className?: string | null,
-  onChange?: (value: string) => void,
-  bindRef?: (element: any) => void,
-};
+/* eslint-disable react/prop-types */
 
-type State = {
-  value: string,
-};
+// type Props = {
+//   value: string,
+//   className?: string | null,
+//   onChange?: (value: string) => void,
+//   bindRef?: (element: any) => void,
+// };
+//
+// type State = {
+//   value: string,
+// };
 
-export default class Input extends Component<Props, State> {
+export default class Input extends Component {
   state = {
     value: '',
   };
@@ -26,7 +27,7 @@ export default class Input extends Component<Props, State> {
     return { value: nextProps.value || '' };
   }
 
-  onChange = (e: { target: HTMLInputElement }) => {
+  onChange = e => {
     const value = e.target.value || '';
     this.setState({ value }, () => {
       if (this.props.onChange) {
