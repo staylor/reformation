@@ -1,4 +1,3 @@
-// @flow
 import { base64Decode, base64Encode } from 'utils/base64';
 
 const PREFIX = 'arrayconnection:';

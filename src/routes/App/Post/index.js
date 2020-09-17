@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import Helmet from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 import NotFound from 'components/NotFound';
 import AppContext from 'routes/App/Context';
 import { uploadUrl } from 'utils/media';

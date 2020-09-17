@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react';
 import { convertToRaw } from 'draft-js';
 import { cx } from 'pretty-lights';
@@ -52,7 +51,7 @@ export default class Form extends Component {
 
   fields = {};
 
-  bindRef = (prop: string) => ref => {
+  bindRef = prop => ref => {
     this.boundRefs[prop] = ref;
   };
 

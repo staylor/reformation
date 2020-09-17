@@ -23,7 +23,7 @@
     "debounce": "1.2.0",
     "decode-uri-component": "0.2.0",
     "draft-js": "0.11.7",
-    "env-cmd": "8.0.2",
+    "env-cmd": "10.1.0",
     "express": "4.17.1",
     "facepaint": "1.2.1",
     "forever": "3.0.2",
@@ -51,17 +51,18 @@
     "source-map-support": "0.5.19"
   },
   "scripts": {
-    "test": "env-cmd dev BABEL_ENV=test jest --forceExit --detectOpenHandles",
-    "test-watch": "env-cmd dev BABEL_ENV=test jest --watch --verbose false",
-    "test-update": "BABEL_ENV=test jest -u",
-    "dev": "env-cmd dev kyt dev -C kyt.dev.js",
-    "prod:build": "NODE_ENV=production env-cmd prod kyt -C kyt.prod.js build",
+    "test": "env-cmd -e dev BABEL_ENV=test jest --forceExit --detectOpenHandles",
+    "test-watch": "yarn test --watch",
+    "test-update": "yarn test -u",
+    "dev": "env-cmd -e dev kyt dev -C kyt.dev.js",
+    "prod:build": "NODE_ENV=production env-cmd -e prod kyt -C kyt.prod.js build",
     "prod:stop": "forever stop highforthis",
-    "prod:start": "NODE_ENV=production env-cmd prod forever start -a forever.prod.json",
-    "prod": "npm run prod:build && npm run prod:stop && npm run prod:start",
-    "prod:local": "yarn install && yarn prod:build && yarn prod:local:start",
-    "prod:local:start": "env-cmd prod node build/server/main.js",
-    "lint-fix": "eslint . --fix"
+    "prod:start": "NODE_ENV=production env-cmd -e prod forever start -a forever.prod.json",
+    "prod": "yarn prod:build && yarn prod:stop && yarn prod:start",
+    "prod:local": "yarn && yarn prod:build && yarn prod:local:start",
+    "prod:local:start": "env-cmd -e prod node build/server/main.js",
+    "lint": "eslint .",
+    "lint-fix": "yarn lint --fix"
   },
   "husky": {
     "hooks": {
@@ -93,7 +94,7 @@
     "jest-preset-kyt-enzyme": "1.0.3",
     "jest-preset-kyt-styled": "1.0.4",
     "kyt": "1.0.0-beta.40.13",
-    "prettier": "2.1.1",
+    "prettier": "2.1.2",
     "rimraf": "3.0.2"
   }
 }

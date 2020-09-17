@@ -84,7 +84,7 @@ export default class InlineStyleControls extends Component {
     });
   };
 
-  addLink = (e: Event) => {
+  addLink = e => {
     e.preventDefault();
     const { editorState } = this.props;
     const { urlValue } = this.state;

@@ -1,5 +1,20 @@
 module.exports = {
-  presets: [['babel-preset-kyt-react', { includeRuntime: true }]],
+  presets: [
+    [
+      'babel-preset-kyt-react',
+      {
+        includeRuntime: true,
+        envOptions: {
+          client: {
+            useBuiltIns: 'usage',
+          },
+          server: {
+            useBuiltIns: 'usage',
+          },
+        },
+      },
+    ],
+  ],
   plugins: ['kyt-runtime/babel'],
   env: {
     production: {

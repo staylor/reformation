@@ -1,5 +1,4 @@
 import React from 'react';
-import type { ContentBlock } from 'draft-js';
 import themeUtils from 'styles/theme';
 import { findWithRegex } from '../utils';
 
@@ -7,7 +6,7 @@ import { findWithRegex } from '../utils';
 
 const HANDLE_REGEX = /@[\w]+/g;
 
-function handleStrategy(contentBlock: ContentBlock, callback: () => void) {
+function handleStrategy(contentBlock, callback) {
   findWithRegex(HANDLE_REGEX, contentBlock, callback);
 }
 

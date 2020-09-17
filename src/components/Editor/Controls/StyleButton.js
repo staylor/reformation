@@ -13,7 +13,7 @@ import { StyleButton as StyledButton, activeButtonClass } from './styled';
 // };
 
 export default class StyleButton extends Component {
-  onToggle = (e: Event) => {
+  onToggle = e => {
     e.preventDefault();
     e.stopPropagation();
     this.props.onToggle(this.props.style);

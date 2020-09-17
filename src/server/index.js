@@ -1,7 +1,7 @@
 import path from 'path';
 import express from 'express';
 import passport from 'passport';
-import httpProxy from 'http-proxy-middleware';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import morgan from 'morgan';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -27,7 +27,7 @@ function startServer() {
   // use a local GQL server by default
   const gqlHost = process.env.GQL_HOST || 'http://localhost:8080';
 
-  const proxy = httpProxy({
+  const proxy = createProxyMiddleware({
     target: gqlHost,
     changeOrigin: true,
   });

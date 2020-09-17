@@ -1,13 +1,7 @@
-// @flow
 import React from 'react';
-import type { ContentBlock, ContentState } from 'draft-js';
 import { linkClass } from '../styled';
 
-function findLinkEntities(
-  contentBlock: ContentBlock,
-  callback: () => void,
-  contentState: ContentState
-) {
+function findLinkEntities(contentBlock, callback, contentState) {
   contentBlock.findEntityRanges(character => {
     const entityKey = character.getEntity();
     if (!entityKey) {

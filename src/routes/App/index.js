@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { cx, ThemeProvider } from 'pretty-lights';
 
-import Helmet from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 import dynamic from 'kyt-runtime/dynamic';
 import NotFound from 'components/NotFound';
 import Logo from 'components/Logo';

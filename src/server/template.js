@@ -1,21 +1,20 @@
-// @flow
-type Template = {
-  html: string,
-  css: string,
-  ids: string[],
-  helmet: any,
-  stylesheets: string[],
-  state: {},
-  runtimeJSBundle?: string,
-  mainJSBundle?: string,
-  bundles: {
-    scripts: string[],
-    styles: string[],
-  },
-  clientAssets: {
-    [string]: string,
-  },
-};
+// type Template = {
+//   html: string,
+//   css: string,
+//   ids: string[],
+//   helmet: any,
+//   stylesheets: string[],
+//   state: {},
+//   runtimeJSBundle?: string,
+//   mainJSBundle?: string,
+//   bundles: {
+//     scripts: string[],
+//     styles: string[],
+//   },
+//   clientAssets: {
+//     [string]: string,
+//   },
+// };
 
 export default function template({
   html,
@@ -28,7 +27,7 @@ export default function template({
   runtimeJSBundle,
   bundles,
   clientAssets,
-}: Template): string {
+}) {
   return `<!DOCTYPE html>
 <html ${helmet.htmlAttributes.toString()}>
 <head>

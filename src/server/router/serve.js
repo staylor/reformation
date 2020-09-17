@@ -4,7 +4,7 @@ import { getDataFromTree } from 'react-apollo';
 import { getBundles } from 'kyt-runtime/server';
 // eslint-disable-next-line
 import template from 'server/template';
-import injectStyles from 'styles/inject';
+import 'styles/inject';
 
 export default async (req, res) => {
   const {
@@ -18,8 +18,6 @@ export default async (req, res) => {
   } = res.locals;
 
   try {
-    injectStyles();
-
     await getDataFromTree(app);
   } catch (e) {
     // eslint-disable-next-line
