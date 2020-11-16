@@ -1,6 +1,5 @@
 import React from 'react';
 
-// eslint-disable-next-line react/prop-types
 export default function Apple({ className = undefined }) {
   return (
     <svg viewBox="0 0 164.857 40" className={className}>

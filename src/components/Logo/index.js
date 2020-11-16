@@ -1,7 +1,5 @@
 import React from 'react';
 
-/* eslint-disable react/prop-types */
-
 export default function Logo({ fill = '#000' }) {
   return (
     <svg viewBox="0 0 615 64">

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Input from 'components/Form/Input';
 import { fieldNumberClass } from 'components/Form/styled';
 import { SecondaryButton } from 'styles/utils';
-import { Table, Cell, CellHeading } from './styled';
+import { tableClass, cellClass, cellHeadingClass } from './styled';
 
 /* eslint-disable react/prop-types */
 
@@ -51,17 +51,17 @@ class Crops extends Component {
     return (
       <>
         <SecondaryButton onClick={this.addCrop}>Add Crop</SecondaryButton>
-        <Table>
+        <table className={tableClass}>
           <thead>
             <tr>
-              <CellHeading>Name</CellHeading>
-              <CellHeading>Dimensions</CellHeading>
+              <th className={cellHeadingClass}>Name</th>
+              <th className={cellHeadingClass}>Dimensions</th>
             </tr>
           </thead>
           <tbody>
             {crops.map((crop, i) => (
               <tr key={i.toString(16)}>
-                <Cell>
+                <td className={cellClass}>
                   <Input
                     size={20}
                     type="text"
@@ -69,8 +69,8 @@ class Crops extends Component {
                     onChange={this.bindOnChange('name', i)}
                     value={crop.name || ''}
                   />
-                </Cell>
-                <Cell>
+                </td>
+                <td className={cellClass}>
                   <Input
                     className={fieldNumberClass}
                     size={4}
@@ -88,11 +88,11 @@ class Crops extends Component {
                     onChange={this.bindOnChange('height', i)}
                     value={crop.height || 0}
                   />
-                </Cell>
+                </td>
               </tr>
             ))}
           </tbody>
-        </Table>
+        </table>
       </>
     );
   }

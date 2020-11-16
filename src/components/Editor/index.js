@@ -19,7 +19,7 @@ import BlockStyleControls from './Controls/BlockStyle';
 import InlineStyleControls from './Controls/InlineStyle';
 import LinkDecorator from './decorators/LinkDecorator';
 import TwitterDecorator from './decorators/TwitterDecorator';
-import { EditorWrap, RichEditor, hidePlaceholderClass, BlockButton, Toolbar } from './styled';
+import { editorWrapClass, RichEditor, hidePlaceholderClass, BlockButton, Toolbar } from './styled';
 import styleMap from './styleMap';
 import { blockRenderer, blockStyle } from './Blocks';
 import { getSelection } from './utils';
@@ -282,7 +282,7 @@ export default class Editor extends Component {
     const contentState = editorState.getCurrentContent();
 
     return (
-      <EditorWrap>
+      <div className={editorWrapClass}>
         <BlockButton
           className={cx('dashicons', {
             'dashicons-plus-alt': !this.state.blockToolbar,
@@ -336,6 +336,7 @@ export default class Editor extends Component {
             blockRendererFn={blockRenderer}
             blockStyleFn={blockStyle}
             customStyleMap={styleMap}
+            // eslint-disable-next-line
             {...rest}
           />
           <Toolbar
@@ -371,7 +372,7 @@ export default class Editor extends Component {
             }}
           />
         )}
-      </EditorWrap>
+      </div>
     );
   }
 }

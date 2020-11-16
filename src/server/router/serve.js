@@ -2,7 +2,6 @@ import { renderToString } from 'react-dom/server';
 import { extractCritical } from 'pretty-lights/server';
 import { getDataFromTree } from 'react-apollo';
 import { getBundles } from 'kyt-runtime/server';
-// eslint-disable-next-line
 import template from 'server/template';
 import 'styles/inject';
 

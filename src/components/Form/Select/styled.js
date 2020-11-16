@@ -1,9 +1,9 @@
 import { css } from 'pretty-lights';
-import inputStyles from 'components/Form/styled';
+import { inputBaseClass } from 'components/Form/styled';
 
 // eslint-disable-next-line
 export const selectClass = css`
-  ${inputStyles};
+  ${inputBaseClass};
   height: 28px;
   line-height: 28px;
   margin: 1px;

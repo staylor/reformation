@@ -1,16 +1,16 @@
-import { styled } from 'pretty-lights';
+import { css } from 'pretty-lights';
 
-export const Table = styled.table`
+export const tableClass = css`
   margin: 20px 0;
 `;
 
-export const CellHeading = styled.td`
+export const cellHeadingClass = css`
   font-size: 14px;
   line-height: 1.4;
   padding: 4px 10px 4px 0;
   text-align: left;
 `;
 
-export const Cell = styled.td`
+export const cellClass = css`
   padding: 4px 10px 4px 0;
 `;

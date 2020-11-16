@@ -41,8 +41,6 @@ class EditPodcast extends Component {
   onSubmit = (e, updates) => {
     e.preventDefault();
 
-    console.log(updates);
-
     const { podcast } = this.props.data;
     this.props
       .mutate({

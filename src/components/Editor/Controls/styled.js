@@ -10,7 +10,7 @@ export const Controls = styled.div`
   user-select: none;
 `;
 
-export const LinkInput = styled.input`
+export const linkInputClass = css`
   background: transparent;
   border: 0 none;
   display: block;
@@ -25,7 +25,7 @@ export const LinkInput = styled.input`
   }
 `;
 
-export const LinkAction = styled.span`
+export const linkActionClass = css`
   cursor: pointer;
   display: block;
   height: 32px;

@@ -27,7 +27,7 @@ const bounce = keyframes`
   }
 `;
 
-const bouncing = css`
+const bouncingClass = css`
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -40,17 +40,17 @@ const bouncing = css`
 `;
 
 const Bounce1 = styled.div`
-  ${bouncing};
+  ${bouncingClass};
 `;
 const Bounce2 = styled.div`
-  ${bouncing};
+  ${bouncingClass};
   animation-delay: -1s;
 `;
 
-export default function Loading(props) {
+export default function Loading() {
   return (
-    <Container {...props}>
-      <Wrap {...props}>
+    <Container>
+      <Wrap>
         <Bounce1 />
         <Bounce2 />
       </Wrap>

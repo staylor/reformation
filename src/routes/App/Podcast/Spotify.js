@@ -1,6 +1,5 @@
 import React from 'react';
 
-// eslint-disable-next-line react/prop-types
 export default function Spotify({ className = undefined }) {
   return (
     <svg viewBox="0 0 330 80" className={className}>

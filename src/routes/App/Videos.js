@@ -16,7 +16,7 @@ export default function VideosRoute(props) {
         <title>{params.year ? `${params.year} » ` : ''}Videos</title>
       </Helmet>
       <Heading>{params.year || 'Videos'}</Heading>
-      <Videos {...props} />
+      {React.createElement(Videos, props)}
     </>
   );
 }

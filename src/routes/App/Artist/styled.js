@@ -1,9 +1,9 @@
 import { css } from 'pretty-lights';
 import themeUtils from 'styles/theme';
-import { h1styles } from 'styles/utils';
+import { h1BaseClass } from 'styles/utils';
 
 export const titleClass = css`
-  ${h1styles};
+  ${h1BaseClass};
   color: ${themeUtils.colors.dark};
 `;
 

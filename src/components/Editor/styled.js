@@ -1,6 +1,6 @@
 import { styled, css } from 'pretty-lights';
 
-import { h2Styles, h3Styles, h4Styles } from 'styles/utils';
+import { h2BaseClass, h3BaseClass, h4BaseClass } from 'styles/utils';
 import themeUtils from 'styles/theme';
 
 export const hidePlaceholderClass = css`
@@ -24,7 +24,7 @@ export const BlockButton = styled.div`
   }
 `;
 
-export const EditorWrap = styled.div`
+export const editorWrapClass = css`
   background: #fff;
   position: relative;
 `;
@@ -45,17 +45,17 @@ export const RichEditor = styled.div`
   }
 
   h2[data-offset-key] {
-    ${h2Styles};
+    ${h2BaseClass};
     color: ${themeUtils.colors.dark};
   }
 
   h3[data-offset-key] {
-    ${h3Styles};
+    ${h3BaseClass};
     color: ${themeUtils.colors.dark};
   }
 
   h4[data-offset-key] {
-    ${h4Styles};
+    ${h4BaseClass};
     color: ${themeUtils.colors.dark};
   }
 

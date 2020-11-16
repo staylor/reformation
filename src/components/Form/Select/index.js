@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { cx } from 'pretty-lights';
 import { selectClass } from 'components/Form/styled';
 
-/* eslint-disable react/prop-types,jsx-a11y/control-has-associated-label */
+/* eslint-disable react/prop-types */
 
 // export type Choice = string | number | { label: string, value: string | number };
 // export type Choices = Array<Choice>;
@@ -67,6 +67,7 @@ export default class Select extends Component {
 
     return (
       <select
+        // eslint-disable-next-line
         {...rest}
         ref={bindRef}
         multiple={multiple ? Boolean(multiple) : false}
@@ -93,7 +94,7 @@ export default class Select extends Component {
 }
 
 Select.defaultProps = {
-  className: null,
+  className: undefined,
   multiple: false,
   onChange: () => null,
   bindRef: () => null,

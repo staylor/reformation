@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Input from 'components/Form/Input';
-import { TagWrap, Tag, DeleteTag } from './styled';
+import { tagWrapClass, tagClass, DeleteTag } from './styled';
 
 /* eslint-disable react/prop-types */
 
@@ -38,13 +38,13 @@ export default class Tags extends Component {
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
         />
-        <TagWrap>
+        <div className={tagWrapClass}>
           {this.state.pending.map(tag => (
-            <Tag key={tag}>
+            <div className={tagClass} key={tag}>
               <DeleteTag onClick={this.bindClick(tag)} /> {tag}
-            </Tag>
+            </div>
           ))}
-        </TagWrap>
+        </div>
       </>
     );
   }

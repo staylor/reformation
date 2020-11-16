@@ -80,7 +80,7 @@ export default class Video extends Component {
             to={`/video/${video.slug}`}
             onClick={this.onClick}
             width={thumb ? thumb.width : maxWidth}
-            className={styles.embedVideoLink}
+            className={styles.embedVideoLinkClass}
           >
             {placeholder}
           </VideoLink>

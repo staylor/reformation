@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   extends: ['eslint-config-kyt'],
 
-  plugins: ['pretty-lights'],
+  plugins: ['kyt', 'pretty-lights'],
 
   rules: {
     'import/no-cycle': 'warn',
@@ -11,9 +11,14 @@ module.exports = {
     'jsx-a11y/label-has-for': [2, { allowChildren: true }],
     'jsx-a11y/href-no-hash': 'off',
     'jsx-a11y/anchor-is-valid': ['warn', { aspects: ['invalidHref'] }],
+    'kyt/default-props': 'error',
+    'kyt/css-in-js-namespace': 'error',
+    'kyt/no-direct-moment-import': 'error',
+    'kyt/validate-double-underscore-dirs': 'error',
     'no-underscore-dangle': ['error', { allow: ['_id', '__typename', '__APOLLO_STATE__'] }],
     'pretty-lights/disambiguate-vars': 'warn',
     'pretty-lights/favor-css-over-styled': 'warn',
+    'pretty-lights/lowercase-css-name': 'error',
     'pretty-lights/move-rules-to-file': 'error',
     'pretty-lights/no-css-prop': 'error',
     'pretty-lights/no-emotion': 'error',

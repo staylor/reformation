@@ -4,7 +4,14 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from 'components/Loading';
 import { uploadUrl } from 'utils/media';
-import { Modal, Frame, Item, ItemImage, ItemTitle, CloseButton } from './styled';
+import {
+  modalClass,
+  frameClass,
+  Item,
+  itemImageClass,
+  itemTitleClass,
+  CloseButton,
+} from './styled';
 
 /* eslint-disable react/prop-types */
 
@@ -104,22 +111,23 @@ class MediaModal extends Component {
 
     if (loading && !uploads) {
       return ReactDOM.createPortal(
-        <Modal>
+        <div className={modalClass}>
           <Loading />
-        </Modal>,
+        </div>,
         portal
       );
     }
 
     return ReactDOM.createPortal(
-      <Modal
+      <div
+        className={modalClass}
         innerRef={ref => {
           this.modalRef = ref;
         }}
         id="media-modal"
       >
         <CloseButton className="dashicons dashicons-no" onClick={this.props.onClose} />
-        <Frame innerRef={this.frameHandler}>
+        <div className={frameClass} innerRef={this.frameHandler}>
           {uploads.edges.map(({ node }) => {
             const prop = this.type === 'audio' ? 'images' : 'crops';
             const crop = node[prop] && node[prop].find(c => c.width === 150);
@@ -152,14 +160,18 @@ class MediaModal extends Component {
                 }}
               >
                 {crop ? (
-                  <ItemImage alt="" src={uploadUrl(node.destination, crop.fileName)} />
+                  <img
+                    className={itemImageClass}
+                    alt=""
+                    src={uploadUrl(node.destination, crop.fileName)}
+                  />
                 ) : null}
-                <ItemTitle>{node.title}</ItemTitle>
+                <span className={itemTitleClass}>{node.title}</span>
               </Item>
             );
           })}
-        </Frame>
-      </Modal>,
+        </div>
+      </div>,
       portal
     );
   }

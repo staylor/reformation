@@ -57,7 +57,7 @@ export const HeaderAdd = styled(Link)`
   z-index: 1;
 `;
 
-export const Line = styled.br`
+export const lineClass = css`
   display: block;
 `;
 

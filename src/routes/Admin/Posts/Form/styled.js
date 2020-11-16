@@ -1,10 +1,10 @@
 import { styled, css } from 'pretty-lights';
 
 import themeUtils from 'styles/theme';
-import { h1styles, buttonStyles, buttonColors } from 'styles/utils';
+import { h1BaseClass, buttonBaseClass, buttonColors } from 'styles/utils';
 
 export const postTitleClass = css`
-  ${h1styles};
+  ${h1BaseClass};
   border: 0 none;
   box-shadow: none;
   height: 47px;
@@ -12,25 +12,18 @@ export const postTitleClass = css`
   padding: 0;
 `;
 
-export const FeaturedImage = styled.img`
-  display: block;
-  height: auto;
-  margin: 0 10px 10px 0;
-  max-width: 100%;
-`;
-
 export const ViewPost = styled.a`
-  ${buttonStyles};
+  ${buttonBaseClass};
   ${buttonColors};
 `;
 
-export const TagWrap = styled.div`
+export const tagWrapClass = css`
   font-size: 12px;
   margin: 6px 0;
   overflow: auto;
 `;
 
-export const Tag = styled.div`
+export const tagClass = css`
   cursor: default;
   float: left;
   font-size: 13px;

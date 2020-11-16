@@ -1,7 +1,7 @@
-import { styled } from 'pretty-lights';
+import { styled, css } from 'pretty-lights';
 import themeUtils from 'styles/theme';
 
-export const Modal = styled.div`
+export const modalClass = css`
   background: ${themeUtils.colors.white};
   border: 2px solid ${themeUtils.colors.dark};
   bottom: 10%;
@@ -13,7 +13,7 @@ export const Modal = styled.div`
   z-index: 100000;
 `;
 
-export const Frame = styled.div`
+export const frameClass = css`
   bottom: 40px;
   left: 30px;
   overflow: auto;
@@ -38,7 +38,7 @@ export const Item = styled.div`
   width: 120px;
 `;
 
-export const VideoItem = styled.div`
+export const videoItemClass = css`
   cursor: pointer;
   float: left;
   height: 110px;
@@ -47,7 +47,7 @@ export const VideoItem = styled.div`
   width: 120px;
 `;
 
-export const ItemTitle = styled.span`
+export const itemTitleClass = css`
   display: block;
   font-size: 13px;
   overflow: hidden;
@@ -55,7 +55,7 @@ export const ItemTitle = styled.span`
   white-space: nowrap;
 `;
 
-export const ItemImage = styled.img`
+export const itemImageClass = css`
   display: block;
   height: auto;
   max-width: 100%;

@@ -11,7 +11,7 @@ import Select from './Select';
 import Date from './Date';
 import * as styles from './styled';
 
-const { FieldName, FieldValue } = styles;
+const { fieldNameClass, fieldValueClass } = styles;
 
 // type Data = {};
 // type Updates = {};
@@ -68,13 +68,10 @@ export default class Form extends Component {
         const prop = this.boundRefs[field.prop];
         if (!prop) {
           invariant(field.value, 'Custom editable fields must provide a value() method.');
-          // eslint-disable-next-line no-param-reassign
           memo[field.prop] = field.value();
         } else if (field.type === 'select' && field.multiple) {
-          // eslint-disable-next-line no-param-reassign
           memo[field.prop] = [...prop.selectedOptions].map(o => o.value);
         } else {
-          // eslint-disable-next-line no-param-reassign
           memo[field.prop] = prop.value;
         }
       }
@@ -87,7 +84,6 @@ export default class Form extends Component {
   bindOnChange = (field, data) => {
     let initialValue = data[field.prop];
 
-    // eslint-disable-next-line no-param-reassign
     field.value = () => initialValue;
 
     return value => {
@@ -215,25 +211,27 @@ export default class Form extends Component {
         );
         formField = (
           <div key={key} className={styles.wrapClass}>
-            {field.label && <FieldName>{field.label}</FieldName>}
+            {field.label && <span className={fieldNameClass}>{field.label}</span>}
             {field.render(data)}
           </div>
         );
       } else if (field.type === 'date' || field.type === 'editor') {
         formField = (
           <div key={key} className={styles.wrapClass}>
-            {field.label && <FieldName>{field.label}</FieldName>}
+            {field.label && <span className={fieldNameClass}>{field.label}</span>}
             {this.editableField(field, data)}
           </div>
         );
       } else {
         formField = (
           <p key={key} className={styles.fieldClass}>
-            {field.label && <FieldName>{field.label}</FieldName>}
+            {field.label && <span className={fieldNameClass}>{field.label}</span>}
             {field.editable ? (
               this.editableField(field, data)
             ) : (
-              <FieldValue>{(field.render && field.render(data)) || data[field.prop]}</FieldValue>
+              <span className={fieldValueClass}>
+                {(field.render && field.render(data)) || data[field.prop]}
+              </span>
             )}
           </p>
         );

@@ -4,7 +4,14 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from 'components/Loading';
 import Video from 'components/Videos/Video';
-import { Modal, Frame, ItemTitle, ItemImage, VideoItem, CloseButton } from './styled';
+import {
+  modalClass,
+  frameClass,
+  itemTitleClass,
+  itemImageClass,
+  videoItemClass,
+  CloseButton,
+} from './styled';
 
 /* eslint-disable react/prop-types */
 
@@ -79,21 +86,22 @@ class VideoModal extends Component {
 
     if (loading && !videos) {
       return ReactDOM.createPortal(
-        <Modal>
+        <div className={modalClass}>
           <Loading />
-        </Modal>,
+        </div>,
         portal
       );
     }
 
     return ReactDOM.createPortal(
-      <Modal>
+      <div className={modalClass}>
         <CloseButton className="dashicons dashicons-no" onClick={this.props.onClose} />
-        <Frame innerRef={this.frameHandler}>
+        <div className={frameClass} innerRef={this.frameHandler}>
           {videos.edges.map(({ node }) => {
             const crop = node.thumbnails.find(c => c.width === 120);
             return (
-              <VideoItem
+              <div // eslint-disable-line
+                className={videoItemClass}
                 key={node.id}
                 onClick={e => {
                   e.preventDefault();
@@ -115,13 +123,13 @@ class VideoModal extends Component {
                   this.props.onClose(e);
                 }}
               >
-                <ItemImage alt="" src={crop.url} />
-                <ItemTitle>{node.title}</ItemTitle>
-              </VideoItem>
+                <img className={itemImageClass} alt="" src={crop.url} />
+                <span className={itemTitleClass}>{node.title}</span>
+              </div>
             );
           })}
-        </Frame>
-      </Modal>,
+        </div>
+      </div>,
       document.getElementById('portal')
     );
   }

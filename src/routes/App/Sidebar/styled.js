@@ -1,9 +1,9 @@
 import { css } from 'pretty-lights';
 import themeUtils from 'styles/theme';
-import { headingStyles } from 'styles/utils';
+import { headingBaseClass } from 'styles/utils';
 
 export const headingClass = css`
-  ${headingStyles};
+  ${headingBaseClass};
   color: ${themeUtils.colors.dark};
   font-family: ${themeUtils.fonts.futura};
   font-size: 25px;

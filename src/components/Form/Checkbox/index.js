@@ -42,6 +42,7 @@ export default class Checkbox extends Component {
 
     return (
       <input
+        // eslint-disable-next-line
         {...props}
         ref={bindRef}
         className={cx(checkboxClass, className)}
@@ -54,7 +55,7 @@ export default class Checkbox extends Component {
 }
 
 Checkbox.defaultProps = {
-  className: null,
+  className: undefined,
   checked: false,
   onChange: () => null,
   bindRef: () => null,

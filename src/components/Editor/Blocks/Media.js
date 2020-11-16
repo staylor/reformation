@@ -15,13 +15,12 @@ export default function Media(props) {
 
   if (type === 'EMBED') {
     const { html } = entity.getData();
-    // eslint-disable-next-line react/no-danger
     return <span dangerouslySetInnerHTML={{ __html: html }} />;
   }
 
   if (type === 'IMAGE') {
     const { image, size } = entity.getData();
-    return <Image {...{ image, size }} />;
+    return React.createElement(Image, { image, size });
   }
 
   if (type === 'VIDEO') {

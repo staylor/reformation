@@ -154,10 +154,7 @@ class App extends Component {
             <nav className={styles.footerNavClass}>{social}</nav>
             <footer className={styles.footerClass}>
               <Mailchimp />
-              <section
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{ __html: settings.copyrightText }}
-              />
+              <section dangerouslySetInnerHTML={{ __html: settings.copyrightText }} />
             </footer>
           </div>
         </ThemeProvider>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { RichUtils, EditorState } from 'draft-js';
 import StyleButton from './StyleButton';
-import { LinkInput, LinkAction, Controls } from './styled';
+import { linkInputClass, linkActionClass, Controls } from './styled';
 
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events */
 
 const INLINE_STYLES = [
   { label: '', style: 'BOLD', className: 'dashicons dashicons-editor-bold' },
@@ -159,7 +159,8 @@ export default class InlineStyleControls extends Component {
       <Controls>
         {!selection.isCollapsed() && ['ADD_LINK', 'EDIT_LINK'].includes(this.state.mode) ? (
           <>
-            <LinkInput
+            <input
+              className={linkInputClass}
               innerRef={linkInput => {
                 this.linkInput = linkInput;
               }}
@@ -172,10 +173,16 @@ export default class InlineStyleControls extends Component {
               type="text"
             />
             {this.state.mode === 'EDIT_LINK' && (
-              <LinkAction className="dashicons dashicons-editor-unlink" onClick={this.removeLink} />
+              <span
+                className={`dashicons dashicons-editor-unlink ${linkActionClass}`}
+                onClick={this.removeLink}
+              />
             )}
             {this.state.mode === 'ADD_LINK' && (
-              <LinkAction className="dashicons dashicons-no-alt" onClick={this.cancelLink} />
+              <span
+                className={`dashicons dashicons-no-alt ${linkActionClass}`}
+                onClick={this.cancelLink}
+              />
             )}
           </>
         ) : (

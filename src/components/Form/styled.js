@@ -35,7 +35,7 @@ export const wrapClass = css`
   margin: ${themeUtils.padding}px 0;
 `;
 
-export const FieldName = styled.span`
+export const fieldNameClass = css`
   display: block;
   font-size: 14px;
   letter-spacing: 0.2px;
@@ -43,7 +43,7 @@ export const FieldName = styled.span`
   margin: 0 0 5px;
 `;
 
-export const inputStyles = css`
+export const inputBaseClass = css`
   background-color: #fff;
   border: 1px solid ${themeUtils.colors.detail};
   border-radius: 0;
@@ -56,7 +56,7 @@ export const inputStyles = css`
 `;
 
 export const selectClass = css`
-  ${inputStyles};
+  ${inputBaseClass};
   height: 28px;
   line-height: 28px;
   margin: 1px;
@@ -72,7 +72,7 @@ export const selectClass = css`
 `;
 
 export const FieldInput = styled.input`
-  ${inputStyles};
+  ${inputBaseClass};
   display: block;
   height: 32px;
   padding: 3px 5px;
@@ -84,7 +84,7 @@ export const FieldInput = styled.input`
 `;
 
 export const SizedInput = styled.input`
-  ${inputStyles};
+  ${inputBaseClass};
   display: block;
   height: 32px;
   padding: 3px 5px;
@@ -97,7 +97,7 @@ export const fieldNumberClass = css`
   width: 64px;
 `;
 
-export const FieldValue = styled.span`
+export const fieldValueClass = css`
   display: block;
   font-size: 14px;
   line-height: 1.4;

@@ -74,7 +74,7 @@ exports[`Style utils cx 1`] = `
 </a>
 `;
 
-exports[`Style utils headingStyles 1`] = `
+exports[`Style utils headingBaseClass 1`] = `
 .lights-0 {
   display: block;
   font-weight: 700;

@@ -7,6 +7,7 @@ import { buttonClass, collapsedButtonClass, buttonIconClass, buttonLabelClass } 
 function CollapseButton({ isCollapsed, ...rest }) {
   return (
     <button
+      // eslint-disable-next-line
       {...rest}
       className={cx(buttonClass, {
         [collapsedButtonClass]: isCollapsed,

@@ -34,7 +34,7 @@ export const VideoLink = styled(Link)`
   max-width: 100%;
 `;
 
-export const embedVideoLink = css`
+export const embedVideoLinkClass = css`
   margin: 0;
 `;
 

@@ -23,6 +23,7 @@ export default class Textarea extends Component {
     const { className, onChange, value, bindRef, ...props } = this.props;
     return (
       <textarea
+        // eslint-disable-next-line
         {...props}
         ref={bindRef}
         className={cx(textareaClass, className)}
@@ -34,7 +35,7 @@ export default class Textarea extends Component {
 }
 
 Textarea.defaultProps = {
-  className: null,
+  className: undefined,
   onChange: () => null,
   bindRef: () => null,
 };

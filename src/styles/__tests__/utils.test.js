@@ -1,11 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { cx } from 'pretty-lights';
-import { headingStyles, Heading, largeButtonStyles, smallButtonStyles } from '../utils';
+import { headingBaseClass, Heading, largeButtonClass, smallButtonClass } from '../utils';
 
 describe('Style utils', () => {
-  test('headingStyles', () => {
-    const wrapper = mount(<h1 className={headingStyles}>Hello</h1>);
+  test('headingBaseClass', () => {
+    const wrapper = mount(<h1 className={headingBaseClass}>Hello</h1>);
 
     expect(wrapper).toMatchSnapshot();
   });
@@ -21,8 +21,8 @@ describe('Style utils', () => {
       <a
         href="http://foo.com"
         className={cx({
-          [largeButtonStyles]: typeof largeButtonStyles === 'string',
-          [smallButtonStyles]: typeof smallButtonStyles !== 'string',
+          [largeButtonClass]: typeof largeButtonClass === 'string',
+          [smallButtonClass]: typeof smallButtonClass !== 'string',
         })}
       >
         Hello

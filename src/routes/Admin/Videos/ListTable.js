@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import debounce from 'debounce';
-import { parse, stringify } from 'utils/query-string';
+import { parse, stringify } from 'query-string';
 import Loading from 'components/Loading';
 import Input from 'components/Form/Input';
 import Select from 'components/Form/Select';
@@ -58,7 +58,7 @@ const columns = [
   gql`
     query VideosQuery($first: Int, $after: String, $year: Int, $search: String) {
       videos(first: $first, after: $after, year: $year, search: $search)
-      @connection(key: "videos", filter: ["year", "search", "first", "after"]) {
+        @connection(key: "videos", filter: ["year", "search", "first", "after"]) {
         count
         years
         edges {

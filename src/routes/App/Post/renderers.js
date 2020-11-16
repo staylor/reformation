@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { cx } from 'pretty-lights';
 import Video from 'components/Videos/Video';
 import { TwitterRedraftDecorator } from 'components/Editor/decorators/TwitterDecorator';
 import { uploadUrl } from 'utils/media';
@@ -8,10 +9,10 @@ import {
   Heading,
   SubHeading,
   BoldHeading,
-  List,
-  OrderedList,
-  Embed,
-  Image,
+  listClass,
+  orderedListClass,
+  embedClass,
+  imageClass,
 } from './styled';
 
 /* eslint-disable react/no-multi-comp */
@@ -57,18 +58,18 @@ export default {
     'code-block': (children, { keys }) => <pre key={keys[0]}>{addBreaklines(children)}</pre>,
     // or depth for nested lists
     'unordered-list-item': (children, { depth, keys }) => (
-      <List key={keys[keys.length - 1]} className={`ul-level-${depth}`}>
+      <ul key={keys[keys.length - 1]} className={cx(`ul-level-${depth}`, listClass)}>
         {children.map(child => (
           <li>{child}</li>
         ))}
-      </List>
+      </ul>
     ),
     'ordered-list-item': (children, { depth, keys }) => (
-      <OrderedList key={keys.join('|')} className={`ol-level-${depth}`}>
+      <ol key={keys.join('|')} className={cx(`ol-level-${depth}`, orderedListClass)}>
         {children.map((child, index) => (
           <li key={keys[index]}>{child}</li>
         ))}
-      </OrderedList>
+      </ol>
     ),
 
     // If your blocks use meta data it can also be accessed like keys
@@ -86,7 +87,7 @@ export default {
       </a>
     ),
     EMBED: (children, data, { key }) => (
-      <Embed key={key} dangerouslySetInnerHTML={{ __html: data.html }} />
+      <div className={embedClass} key={key} dangerouslySetInnerHTML={{ __html: data.html }} />
     ),
     IMAGE: (children, data, { key }) => {
       const { image } = data;
@@ -94,7 +95,14 @@ export default {
       if (!crop) {
         [crop] = image.crops;
       }
-      return <Image key={key} src={uploadUrl(image.destination, crop.fileName)} />;
+      return (
+        <img
+          className={imageClass}
+          alt=""
+          key={key}
+          src={uploadUrl(image.destination, crop.fileName)}
+        />
+      );
     },
     VIDEO: (children, data, { key }) => {
       const { video } = data;

@@ -41,6 +41,7 @@ export default class Input extends Component {
     return (
       <input
         type="text"
+        // eslint-disable-next-line
         {...props}
         ref={bindRef}
         className={cx(inputClass, className)}
@@ -52,7 +53,7 @@ export default class Input extends Component {
 }
 
 Input.defaultProps = {
-  className: null,
+  className: undefined,
   onChange: () => null,
   bindRef: () => null,
 };
