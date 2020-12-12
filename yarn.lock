@@ -6901,10 +6901,10 @@ known-css-properties@^0.20.0:
   resolved "https://registry.yarnpkg.com/known-css-properties/-/known-css-properties-0.20.0.tgz#0570831661b47dd835293218381166090ff60e96"
   integrity sha512-URvsjaA9ypfreqJ2/ylDr5MUERhJZ+DhguoWRr2xgS5C7aGCalXo+ewL+GixgKBfhT2vuL02nbIgNGqVWgTOYw==
 
-kyt-runtime@1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/kyt-runtime/-/kyt-runtime-1.2.3.tgz#75024c8d328d131b6e544aa395ab2c21d010cd44"
-  integrity sha512-nWWzMlP4/PsS4eZIA6WdqTjHyjJNLfPEQfNjZCvOCdk+cKW+qtqkwHWoQZq99aWHBRRG3yccLUc0STFyarN7lg==
+kyt-runtime@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/kyt-runtime/-/kyt-runtime-1.2.4.tgz#1ddb0a77ffe7c11f3c3f1df0d03e214e12a684c8"
+  integrity sha512-pZTH3oHp48H3jIyFzGR+FVPZsFmrdweFItycaN7Mm8UfwxSR+rx+GJUgqizIjp9v2fyyzNJpAOaFufuXNSJRbg==
   dependencies:
     kyt-utils "1.2.0"
     webpack-assets-manifest "3.1.1"
@@ -6914,10 +6914,10 @@ kyt-utils@1.2.0:
   resolved "https://registry.yarnpkg.com/kyt-utils/-/kyt-utils-1.2.0.tgz#8a05e590adc1b5111ee64b48fee2b384a52444b7"
   integrity sha512-yeFGgPrdySmrE5q8AnvuDZpVi34ESvhhbK6oPljsJNxdHC2fPrOI8Q+htb4PgcBzrknQAEv9so17qNB6Qvhjqw==
 
-kyt@1.0.0-beta.40.34:
-  version "1.0.0-beta.40.34"
-  resolved "https://registry.yarnpkg.com/kyt/-/kyt-1.0.0-beta.40.34.tgz#1a95ac216d312fc3cdd0dd83590db3d6a338a6ee"
-  integrity sha512-mtArsAbOXd0hWYX2YfORWsTNPrSZutpU3oc+ti+o+T+HLWyT/EFzcgBCQuM8SHmFcK6vDTqBzuer/TIJBMCnqg==
+kyt@1.0.0-beta.40.35:
+  version "1.0.0-beta.40.35"
+  resolved "https://registry.yarnpkg.com/kyt/-/kyt-1.0.0-beta.40.35.tgz#7052e621b9475f42a5ddab58eab67498e485983b"
+  integrity sha512-QNZsP3xnMCPKUo6dndgOHu7Sm2x/jrWeevL1qQqyDTPKK1qUeOqDfPPiHPnesXJzK1OH/n1Erpm3RwCS0kjwQg==
   dependencies:
     "@babel/code-frame" "7.10.4"
     "@babel/runtime" "7.12.5"
@@ -6934,7 +6934,7 @@ kyt@1.0.0-beta.40.34:
     inquirer "7.3.3"
     install "0.13.0"
     jest-message-util "26.6.2"
-    kyt-runtime "1.2.3"
+    kyt-runtime "1.2.4"
     kyt-utils "1.2.0"
     lodash.clonedeep "4.5.0"
     lodash.merge "4.6.2"
@@ -7076,6 +7076,11 @@ lodash.clonedeep@4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+
+lodash.debounce@4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+  integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
 lodash.escape@^4.0.1:
   version "4.0.1"
