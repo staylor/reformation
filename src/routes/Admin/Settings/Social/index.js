@@ -1,5 +1,5 @@
 import React from 'react';
-import { compose, graphql } from 'react-apollo';
+import { graphql } from '@apollo/client/react/hoc';
 import { FormWrap } from 'routes/Admin/styled';
 import Form from 'routes/Admin/Settings/Form';
 import SocialSettingsQuery from './SocialSettingsQuery.graphql';
@@ -37,13 +37,8 @@ function SocialSettings({ data, mutate }) {
   );
 }
 
-const composed = compose(
-  graphql(SocialSettingsQuery, {
-    options: {
-      fetchPolicy: 'cache-and-network',
-    },
-  }),
-  graphql(SocialSettingsMutation)
-);
-
-export default composed(SocialSettings);
+export default graphql(SocialSettingsQuery, {
+  options: {
+    fetchPolicy: 'cache-and-network',
+  },
+})(graphql(SocialSettingsMutation)(SocialSettings));

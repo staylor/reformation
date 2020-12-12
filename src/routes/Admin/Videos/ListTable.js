@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import debounce from 'debounce';
 import { parse, stringify } from 'query-string';

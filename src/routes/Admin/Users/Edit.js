@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
@@ -8,31 +8,29 @@ import UserForm from './Form';
 
 /* eslint-disable react/prop-types */
 
-@compose(
-  graphql(
-    gql`
-      query UserAdminQuery($id: ObjID!) {
-        user(id: $id) {
-          ...UserForm_user
-        }
-      }
-      ${UserForm.fragments.user}
-    `,
-    {
-      options: ({ match: { params } }) => ({
-        variables: { id: params.id },
-      }),
-    }
-  ),
-  graphql(gql`
-    mutation UpdateUserMutation($id: ObjID!, $input: UpdateUserInput!) {
-      updateUser(id: $id, input: $input) {
+@graphql(
+  gql`
+    query UserAdminQuery($id: ObjID!) {
+      user(id: $id) {
         ...UserForm_user
       }
     }
     ${UserForm.fragments.user}
-  `)
+  `,
+  {
+    options: ({ match: { params } }) => ({
+      variables: { id: params.id },
+    }),
+  }
 )
+@graphql(gql`
+  mutation UpdateUserMutation($id: ObjID!, $input: UpdateUserInput!) {
+    updateUser(id: $id, input: $input) {
+      ...UserForm_user
+    }
+  }
+  ${UserForm.fragments.user}
+`)
 class EditUser extends Component {
   state = {
     message: null,

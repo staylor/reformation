@@ -1,5 +1,5 @@
 import React from 'react';
-import { compose, graphql } from 'react-apollo';
+import { graphql } from '@apollo/client/react/hoc';
 import { FormWrap } from 'routes/Admin/styled';
 import Form from 'routes/Admin/Settings/Form';
 import Crops from './Crops';
@@ -51,13 +51,8 @@ function MediaSettings({ data, mutate }) {
   );
 }
 
-const composed = compose(
-  graphql(MediaSettingsQuery, {
-    options: {
-      fetchPolicy: 'cache-and-network',
-    },
-  }),
-  graphql(MediaSettingsMutation)
-);
-
-export default composed(MediaSettings);
+export default graphql(MediaSettingsQuery, {
+  options: {
+    fetchPolicy: 'cache-and-network',
+  },
+})(graphql(MediaSettingsMutation)(MediaSettings));

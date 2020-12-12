@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import UserForm from './Form';
 
 /* eslint-disable react/prop-types */
 
-@compose(
-  graphql(gql`
-    mutation CreateUserMutation($input: CreateUserInput!) {
-      createUser(input: $input) {
-        id
-      }
+@graphql(gql`
+  mutation CreateUserMutation($input: CreateUserInput!) {
+    createUser(input: $input) {
+      id
     }
-  `)
-)
+  }
+`)
 class AddUser extends Component {
   state = {
     message: null,

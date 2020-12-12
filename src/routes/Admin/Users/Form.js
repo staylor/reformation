@@ -1,5 +1,5 @@
 import React from 'react';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import Form from 'components/Form';
 
 /* eslint-disable react/prop-types */

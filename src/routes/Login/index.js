@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import { ThemeProvider } from 'pretty-lights';
 import fetch from 'isomorphic-fetch';
 import Cookies from 'js-cookie';

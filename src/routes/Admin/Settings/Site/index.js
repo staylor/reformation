@@ -1,5 +1,5 @@
 import React from 'react';
-import { compose, graphql } from 'react-apollo';
+import { graphql } from '@apollo/client/react/hoc';
 import { FormWrap } from 'routes/Admin/styled';
 import Form from 'routes/Admin/Settings/Form';
 import SiteSettingsQuery from './SiteSettingsQuery.graphql';
@@ -46,13 +46,8 @@ function SiteSettings({ data, mutate }) {
   );
 }
 
-const composed = compose(
-  graphql(SiteSettingsQuery, {
-    options: {
-      fetchPolicy: 'cache-and-network',
-    },
-  }),
-  graphql(SiteSettingsMutation)
-);
-
-export default composed(SiteSettings);
+export default graphql(SiteSettingsQuery, {
+  options: {
+    fetchPolicy: 'cache-and-network',
+  },
+})(graphql(SiteSettingsMutation)(SiteSettings));

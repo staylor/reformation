@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
@@ -58,77 +58,75 @@ const columns = [
   },
 ];
 
-@compose(
-  graphql(
-    gql`
-      query ShowQuery(
-        $first: Int
-        $after: String
-        $date: Float
-        $taxonomy: String
-        $term: String
-        $search: String
-        $order: ShowOrder
-      ) {
-        shows(
-          first: $first
-          after: $after
-          date: $date
-          taxonomy: $taxonomy
-          term: $term
-          search: $search
-          order: $order
-        ) @connection(key: "shows", filter: ["date", "taxonomy", "term", "search"]) {
-          count
-          edges {
-            node {
+@graphql(
+  gql`
+    query ShowQuery(
+      $first: Int
+      $after: String
+      $date: Float
+      $taxonomy: String
+      $term: String
+      $search: String
+      $order: ShowOrder
+    ) {
+      shows(
+        first: $first
+        after: $after
+        date: $date
+        taxonomy: $taxonomy
+        term: $term
+        search: $search
+        order: $order
+      ) @connection(key: "shows", filter: ["date", "taxonomy", "term", "search"]) {
+        count
+        edges {
+          node {
+            id
+            title
+            date
+            artist {
               id
-              title
-              date
-              artist {
-                id
-                name
-              }
-              venue {
-                id
-                name
-              }
+              name
+            }
+            venue {
+              id
+              name
             }
           }
-          pageInfo {
-            hasNextPage
-          }
+        }
+        pageInfo {
+          hasNextPage
         }
       }
-    `,
-    {
-      options: ({ match }) => {
-        const { params } = match;
-
-        const variables = { first: PER_PAGE, order: 'DESC' };
-        if (params.page) {
-          const pageOffset = parseInt(params.page, 10) - 1;
-          if (pageOffset > 0) {
-            variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
-          }
-        }
-
-        return {
-          variables,
-          // This ensures that the table is up to date when shows are mutated.
-          // The alternative is to specify refetchQueries on all Show mutations.
-          fetchPolicy: 'cache-and-network',
-        };
-      },
     }
-  ),
-  graphql(
-    gql`
-      mutation DeleteShowMutation($ids: [ObjID]!) {
-        removeShow(ids: $ids)
+  `,
+  {
+    options: ({ match }) => {
+      const { params } = match;
+
+      const variables = { first: PER_PAGE, order: 'DESC' };
+      if (params.page) {
+        const pageOffset = parseInt(params.page, 10) - 1;
+        if (pageOffset > 0) {
+          variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
+        }
       }
-    `
-  )
+
+      return {
+        variables,
+        // This ensures that the table is up to date when shows are mutated.
+        // The alternative is to specify refetchQueries on all Show mutations.
+        fetchPolicy: 'cache-and-network',
+      };
+    },
+  }
+)
+@graphql(
+  gql`
+    mutation DeleteShowMutation($ids: [ObjID]!) {
+      removeShow(ids: $ids)
+    }
+  `
 )
 class Shows extends Component {
   render() {

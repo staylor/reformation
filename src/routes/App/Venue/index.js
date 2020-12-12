@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import NotFound from 'components/NotFound';
 import Loading from 'components/Loading';
 import FeaturedMedia from 'components/FeaturedMedia';

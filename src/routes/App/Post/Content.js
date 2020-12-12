@@ -1,5 +1,5 @@
 import React from 'react';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import redraft from 'redraft';
 import Video from 'components/Videos/Video';
 import renderers from './renderers';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StaticRouter, Route } from 'react-router-dom';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/client/react/context';
 import { HelmetProvider } from 'react-helmet-async';
 import { DynamicImports } from 'kyt-runtime/server';
 import Login from 'routes/Login';

@@ -1,6 +1,6 @@
 import { renderToString } from 'react-dom/server';
 import { extractCritical } from 'pretty-lights/server';
-import { getDataFromTree } from 'react-apollo';
+import { getDataFromTree } from '@apollo/client/react/ssr';
 import { getBundles } from 'kyt-runtime/server';
 import template from 'server/template';
 import 'styles/inject';

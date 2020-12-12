@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
@@ -8,32 +8,30 @@ import TaxonomyForm from './Form';
 
 /* eslint-disable react/prop-types */
 
-@compose(
-  graphql(
-    gql`
-      query TaxonomyAdminQuery($id: ObjID) {
-        taxonomy(id: $id) {
-          ...TaxonomyForm_taxonomy
-        }
+@graphql(
+  gql`
+    query TaxonomyAdminQuery($id: ObjID) {
+      taxonomy(id: $id) {
+        ...TaxonomyForm_taxonomy
       }
-      ${TaxonomyForm.fragments.taxonomy}
-    `,
-    {
-      options: ({ match: { params } }) => ({
-        variables: { id: params.id },
-      }),
     }
-  ),
-  graphql(
-    gql`
-      mutation UpdateTaxonomyMutation($id: ObjID!, $input: UpdateTaxonomyInput!) {
-        updateTaxonomy(id: $id, input: $input) {
-          ...TaxonomyForm_taxonomy
-        }
+    ${TaxonomyForm.fragments.taxonomy}
+  `,
+  {
+    options: ({ match: { params } }) => ({
+      variables: { id: params.id },
+    }),
+  }
+)
+@graphql(
+  gql`
+    mutation UpdateTaxonomyMutation($id: ObjID!, $input: UpdateTaxonomyInput!) {
+      updateTaxonomy(id: $id, input: $input) {
+        ...TaxonomyForm_taxonomy
       }
-      ${TaxonomyForm.fragments.taxonomy}
-    `
-  )
+    }
+    ${TaxonomyForm.fragments.taxonomy}
+  `
 )
 class EditTaxonomy extends Component {
   state = {

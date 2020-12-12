@@ -19,7 +19,7 @@ import {
 
 const reducer = (a, b) => ({ ...a, ...b });
 
-/* eslint-disable class-methods-use-this,react/prop-types */
+/* eslint-disable react/prop-types */
 
 export const renderThumbnail = (media, field) => {
   if (!media[field] || !media[field].length) {

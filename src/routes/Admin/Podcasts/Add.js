@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import PodcastForm from './Form';
 
 /* eslint-disable react/prop-types */
 
-@compose(
-  graphql(gql`
-    mutation CreatePodcastMutation($input: CreatePodcastInput!) {
-      createPodcast(input: $input) {
-        id
-      }
+@graphql(gql`
+  mutation CreatePodcastMutation($input: CreatePodcastInput!) {
+    createPodcast(input: $input) {
+      id
     }
-  `)
-)
+  }
+`)
 class AddPodcast extends Component {
   state = {
     message: null,

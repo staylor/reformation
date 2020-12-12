@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import {
   Editor as DraftEditor,
   EditorState,

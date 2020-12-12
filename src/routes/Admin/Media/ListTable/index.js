@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import debounce from 'debounce';
 import { parse, stringify } from 'query-string';
@@ -91,83 +91,81 @@ const columns = [
   },
 ];
 
-@compose(
-  graphql(
-    gql`
-      query UploadsQuery(
-        $first: Int
-        $after: String
-        $type: String
-        $mimeType: String
-        $search: String
-      ) {
-        uploads(first: $first, after: $after, type: $type, mimeType: $mimeType, search: $search)
-          @connection(key: "uploads", filter: ["type", "mimeType", "search"]) {
-          types
-          mimeTypes
-          count
-          edges {
-            node {
-              id
-              type
-              mimeType
-              title
-              originalName
-              destination
-              ... on ImageUpload {
-                crops {
-                  fileName
-                  width
-                }
+@graphql(
+  gql`
+    query UploadsQuery(
+      $first: Int
+      $after: String
+      $type: String
+      $mimeType: String
+      $search: String
+    ) {
+      uploads(first: $first, after: $after, type: $type, mimeType: $mimeType, search: $search)
+        @connection(key: "uploads", filter: ["type", "mimeType", "search"]) {
+        types
+        mimeTypes
+        count
+        edges {
+          node {
+            id
+            type
+            mimeType
+            title
+            originalName
+            destination
+            ... on ImageUpload {
+              crops {
+                fileName
+                width
               }
-              ... on AudioUpload {
-                images {
-                  fileName
-                  width
-                }
+            }
+            ... on AudioUpload {
+              images {
+                fileName
+                width
               }
             }
           }
-          pageInfo {
-            hasNextPage
-          }
+        }
+        pageInfo {
+          hasNextPage
         }
       }
-    `,
-    {
-      options: ({ match, location }) => {
-        const queryParams = parse(location.search);
-        const { params } = match;
+    }
+  `,
+  {
+    options: ({ match, location }) => {
+      const queryParams = parse(location.search);
+      const { params } = match;
 
-        const variables = { first: PER_PAGE };
-        if (queryParams.search) {
-          // $TODO: sanitize this
-          variables.search = queryParams.search;
+      const variables = { first: PER_PAGE };
+      if (queryParams.search) {
+        // $TODO: sanitize this
+        variables.search = queryParams.search;
+      }
+      if (queryParams.type) {
+        variables.type = queryParams.type;
+      }
+      if (queryParams.mimeType) {
+        variables.mimeType = queryParams.mimeType;
+      }
+      if (params.page) {
+        const pageOffset = parseInt(params.page, 10) - 1;
+        if (pageOffset > 0) {
+          variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
         }
-        if (queryParams.type) {
-          variables.type = queryParams.type;
-        }
-        if (queryParams.mimeType) {
-          variables.mimeType = queryParams.mimeType;
-        }
-        if (params.page) {
-          const pageOffset = parseInt(params.page, 10) - 1;
-          if (pageOffset > 0) {
-            variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
-          }
-        }
-        // This ensures that the table is up to date when uploads are mutated.
-        // The alternative is to specify refetchQueries on all Post mutations.
-        return { variables, fetchPolicy: 'cache-and-network' };
-      },
-    }
-  ),
-  graphql(gql`
-    mutation DeleteMediaMutation($ids: [ObjID]!) {
-      removeMediaUpload(ids: $ids)
-    }
-  `)
+      }
+      // This ensures that the table is up to date when uploads are mutated.
+      // The alternative is to specify refetchQueries on all Post mutations.
+      return { variables, fetchPolicy: 'cache-and-network' };
+    },
+  }
 )
+@graphql(gql`
+  mutation DeleteMediaMutation($ids: [ObjID]!) {
+    removeMediaUpload(ids: $ids)
+  }
+`)
 class Media extends Component {
   updateProp = prop => value => {
     const params = {};

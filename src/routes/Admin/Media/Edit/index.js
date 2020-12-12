@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
+import { graphql } from '@apollo/client/react/hoc';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import Form from 'components/Form';
@@ -150,13 +150,8 @@ class EditMedia extends Component {
   }
 }
 
-const composed = compose(
-  graphql(MediaAdminQuery, {
-    options: ({ match: { params } }) => ({
-      variables: { id: params.id },
-    }),
+export default graphql(MediaAdminQuery, {
+  options: ({ match: { params } }) => ({
+    variables: { id: params.id },
   }),
-  graphql(UpdateMediaMutation)
-);
-
-export default composed(EditMedia);
+})(graphql(UpdateMediaMutation)(EditMedia));

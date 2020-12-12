@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
@@ -8,31 +8,28 @@ import ShowForm from './Form';
 
 /* eslint-disable react/prop-types */
 
-@compose(
-  graphql(
-    gql`
-      query CreateShowQuery {
-        artists: terms(taxonomy: "artist", first: 250)
-          @connection(key: "terms", filter: ["taxonomy"]) {
-          ...ShowForm_terms
-        }
-        venues: terms(taxonomy: "venue", first: 250)
-          @connection(key: "terms", filter: ["taxonomy"]) {
-          ...ShowForm_terms
-        }
+@graphql(
+  gql`
+    query CreateShowQuery {
+      artists: terms(taxonomy: "artist", first: 250)
+        @connection(key: "terms", filter: ["taxonomy"]) {
+        ...ShowForm_terms
       }
-      ${ShowForm.fragments.terms}
-    `,
-    { options: { fetchPolicy: 'cache-and-network' } }
-  ),
-  graphql(gql`
-    mutation CreateShowMutation($input: CreateShowInput!) {
-      createShow(input: $input) {
-        id
+      venues: terms(taxonomy: "venue", first: 250) @connection(key: "terms", filter: ["taxonomy"]) {
+        ...ShowForm_terms
       }
     }
-  `)
+    ${ShowForm.fragments.terms}
+  `,
+  { options: { fetchPolicy: 'cache-and-network' } }
 )
+@graphql(gql`
+  mutation CreateShowMutation($input: CreateShowInput!) {
+    createShow(input: $input) {
+      id
+    }
+  }
+`)
 class AddShow extends Component {
   state = {
     message: null,

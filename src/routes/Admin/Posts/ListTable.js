@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
@@ -55,49 +55,47 @@ const columns = [
   },
 ];
 
-@compose(
-  graphql(
-    gql`
-      query PostsQuery($first: Int, $after: String, $search: String) {
-        posts(first: $first, after: $after, search: $search)
-          @connection(key: "posts", filter: ["search"]) {
-          count
-          edges {
-            node {
-              id
-              title
-              slug
-              status
-              date
-            }
+@graphql(
+  gql`
+    query PostsQuery($first: Int, $after: String, $search: String) {
+      posts(first: $first, after: $after, search: $search)
+        @connection(key: "posts", filter: ["search"]) {
+        count
+        edges {
+          node {
+            id
+            title
+            slug
+            status
+            date
           }
-          pageInfo {
-            hasNextPage
-          }
+        }
+        pageInfo {
+          hasNextPage
         }
       }
-    `,
-    {
-      options: ({ match }) => {
-        const { params } = match;
+    }
+  `,
+  {
+    options: ({ match }) => {
+      const { params } = match;
 
-        const variables = { first: PER_PAGE };
-        if (params.page) {
-          const pageOffset = parseInt(params.page, 10) - 1;
-          if (pageOffset > 0) {
-            variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
-          }
+      const variables = { first: PER_PAGE };
+      if (params.page) {
+        const pageOffset = parseInt(params.page, 10) - 1;
+        if (pageOffset > 0) {
+          variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
         }
-        return { variables };
-      },
-    }
-  ),
-  graphql(gql`
-    mutation DeletePostMutation($ids: [ObjID]!) {
-      removePost(ids: $ids)
-    }
-  `)
+      }
+      return { variables };
+    },
+  }
 )
+@graphql(gql`
+  mutation DeletePostMutation($ids: [ObjID]!) {
+    removePost(ids: $ids)
+  }
+`)
 class Posts extends Component {
   render() {
     const {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { Heading } from 'styles/utils';
 import * as styles from './styled';

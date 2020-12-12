@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { compose, graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { ThumbWrapper, thumb480Class } from 'components/Videos/styled';
@@ -40,31 +40,29 @@ const frag = gql`
   }
 `;
 
-@compose(
-  graphql(
-    gql`
-      query VideoAdminQuery($id: ObjID) {
-        video(id: $id) {
-          ...AdminVideo_video
-        }
-      }
-      ${frag}
-    `,
-    {
-      options: ({ match: { params } }) => ({
-        variables: { id: params.id },
-      }),
-    }
-  ),
-  graphql(gql`
-    mutation UpdateVideoMutation($id: ObjID!, $input: UpdateVideoInput!) {
-      updateVideo(id: $id, input: $input) {
+@graphql(
+  gql`
+    query VideoAdminQuery($id: ObjID) {
+      video(id: $id) {
         ...AdminVideo_video
       }
     }
     ${frag}
-  `)
+  `,
+  {
+    options: ({ match: { params } }) => ({
+      variables: { id: params.id },
+    }),
+  }
 )
+@graphql(gql`
+  mutation UpdateVideoMutation($id: ObjID!, $input: UpdateVideoInput!) {
+    updateVideo(id: $id, input: $input) {
+      ...AdminVideo_video
+    }
+  }
+  ${frag}
+`)
 class VideoRoute extends Component {
   state = {
     message: null,

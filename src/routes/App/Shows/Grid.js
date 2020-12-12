@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import * as styles from './styled';
 
 /* eslint-disable react/prop-types */

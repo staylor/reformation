@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable, { renderThumbnail } from 'components/ListTable';
@@ -12,87 +12,85 @@ import { Heading, HeaderAdd } from 'routes/Admin/styled';
 
 const PER_PAGE = 20;
 
-@compose(
-  graphql(
-    gql`
-      query TermQuery(
-        $first: Int
-        $after: String
-        $taxonomyId: ObjID!
-        $taxonomy: String
-        $search: String
-      ) {
-        terms(
-          first: $first
-          after: $after
-          taxonomyId: $taxonomyId
-          taxonomy: $taxonomy
-          search: $search
-        ) @connection(key: "terms", filter: ["taxonomyId", "taxonomy", "search"]) {
-          taxonomy {
+@graphql(
+  gql`
+    query TermQuery(
+      $first: Int
+      $after: String
+      $taxonomyId: ObjID!
+      $taxonomy: String
+      $search: String
+    ) {
+      terms(
+        first: $first
+        after: $after
+        taxonomyId: $taxonomyId
+        taxonomy: $taxonomy
+        search: $search
+      ) @connection(key: "terms", filter: ["taxonomyId", "taxonomy", "search"]) {
+        taxonomy {
+          id
+          name
+          slug
+          plural
+        }
+        count
+        edges {
+          node {
             id
             name
             slug
-            plural
-          }
-          count
-          edges {
-            node {
+            taxonomy {
               id
-              name
-              slug
-              taxonomy {
-                id
-              }
-              featuredMedia {
-                ... on ImageUpload {
-                  type
-                  destination
-                  crops {
-                    fileName
-                    width
-                  }
+            }
+            featuredMedia {
+              ... on ImageUpload {
+                type
+                destination
+                crops {
+                  fileName
+                  width
                 }
               }
-              ... on Venue {
-                capacity
-                address
-              }
+            }
+            ... on Venue {
+              capacity
+              address
             }
           }
-          pageInfo {
-            hasNextPage
-          }
+        }
+        pageInfo {
+          hasNextPage
         }
       }
-    `,
-    {
-      options: ({ match }) => {
-        const { params } = match;
+    }
+  `,
+  {
+    options: ({ match }) => {
+      const { params } = match;
 
-        const variables = { first: PER_PAGE, taxonomyId: params.taxonomyId };
-        if (params.page) {
-          const pageOffset = parseInt(params.page, 10) - 1;
-          if (pageOffset > 0) {
-            variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
-          }
+      const variables = { first: PER_PAGE, taxonomyId: params.taxonomyId };
+      if (params.page) {
+        const pageOffset = parseInt(params.page, 10) - 1;
+        if (pageOffset > 0) {
+          variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
         }
+      }
 
-        return {
-          // This ensures that the table is up to date when taxonomies are mutated.
-          // The alternative is to specify refetchQueries on all Taxonomy mutations.
-          variables,
-          fetchPolicy: 'cache-and-network',
-        };
-      },
-    }
-  ),
-  graphql(gql`
-    mutation DeleteTermMutation($ids: [ObjID]!) {
-      removeTerm(ids: $ids)
-    }
-  `)
+      return {
+        // This ensures that the table is up to date when taxonomies are mutated.
+        // The alternative is to specify refetchQueries on all Taxonomy mutations.
+        variables,
+        fetchPolicy: 'cache-and-network',
+      };
+    },
+  }
 )
+@graphql(gql`
+  mutation DeleteTermMutation($ids: [ObjID]!) {
+    removeTerm(ids: $ids)
+  }
+`)
 class Terms extends Component {
   render() {
     const {

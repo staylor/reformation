@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import Message from 'components/Form/Message';
 import { FormWrap } from 'routes/Admin/styled';
 import PostForm from './Form';

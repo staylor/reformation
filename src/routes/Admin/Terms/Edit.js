@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
@@ -8,32 +8,30 @@ import TermForm from './Form';
 
 /* eslint-disable react/prop-types */
 
-@compose(
-  graphql(
-    gql`
-      query TermAdminQuery($id: ObjID) {
-        term(id: $id) {
-          ...TermForm_term
-        }
+@graphql(
+  gql`
+    query TermAdminQuery($id: ObjID) {
+      term(id: $id) {
+        ...TermForm_term
       }
-      ${TermForm.fragments.term}
-    `,
-    {
-      options: ({ match: { params } }) => ({
-        variables: { id: params.id },
-      }),
     }
-  ),
-  graphql(
-    gql`
-      mutation UpdateTermMutation($id: ObjID!, $input: UpdateTermInput!) {
-        updateTerm(id: $id, input: $input) {
-          ...TermForm_term
-        }
+    ${TermForm.fragments.term}
+  `,
+  {
+    options: ({ match: { params } }) => ({
+      variables: { id: params.id },
+    }),
+  }
+)
+@graphql(
+  gql`
+    mutation UpdateTermMutation($id: ObjID!, $input: UpdateTermInput!) {
+      updateTerm(id: $id, input: $input) {
+        ...TermForm_term
       }
-      ${TermForm.fragments.term}
-    `
-  )
+    }
+    ${TermForm.fragments.term}
+  `
 )
 class EditTerm extends Component {
   state = {

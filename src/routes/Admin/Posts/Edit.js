@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { FormWrap } from 'routes/Admin/styled';
@@ -8,32 +8,30 @@ import PostForm from './Form';
 
 /* eslint-disable react/prop-types */
 
-@compose(
-  graphql(
-    gql`
-      query PostAdminQuery($id: ObjID!) {
-        post(id: $id) {
-          ...PostForm_post
-        }
-      }
-      ${PostForm.fragments.post}
-    `,
-    {
-      options: ({ match: { params } }) => ({
-        variables: { id: params.id },
-        fetchPolicy: 'cache-and-network',
-      }),
-    }
-  ),
-  graphql(gql`
-    mutation UpdatePostMutation($id: ObjID!, $input: UpdatePostInput!) {
-      updatePost(id: $id, input: $input) {
+@graphql(
+  gql`
+    query PostAdminQuery($id: ObjID!) {
+      post(id: $id) {
         ...PostForm_post
       }
     }
     ${PostForm.fragments.post}
-  `)
+  `,
+  {
+    options: ({ match: { params } }) => ({
+      variables: { id: params.id },
+      fetchPolicy: 'cache-and-network',
+    }),
+  }
 )
+@graphql(gql`
+  mutation UpdatePostMutation($id: ObjID!, $input: UpdatePostInput!) {
+    updatePost(id: $id, input: $input) {
+      ...PostForm_post
+    }
+  }
+  ${PostForm.fragments.post}
+`)
 class EditPost extends Component {
   state = {
     message: null,

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import escape from 'html-escape';
 import { uploadUrl } from 'utils/media';
 

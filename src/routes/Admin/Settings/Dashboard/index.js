@@ -1,5 +1,5 @@
 import React from 'react';
-import { compose, graphql } from 'react-apollo';
+import { graphql } from '@apollo/client/react/hoc';
 import { FormWrap } from 'routes/Admin/styled';
 import Form from 'routes/Admin/Settings/Form';
 import DashboardSettingsQuery from './DashboardSettingsQuery.graphql';
@@ -26,13 +26,8 @@ function DashboardSettings({ data, mutate }) {
   );
 }
 
-const composed = compose(
-  graphql(DashboardSettingsQuery, {
-    options: {
-      fetchPolicy: 'cache-and-network',
-    },
-  }),
-  graphql(DashboardSettingsMutation)
-);
-
-export default composed(DashboardSettings);
+export default graphql(DashboardSettingsQuery, {
+  options: {
+    fetchPolicy: 'cache-and-network',
+  },
+})(graphql(DashboardSettingsMutation)(DashboardSettings));

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import MediaModal from 'components/Modals/Media';
 import { Button } from 'styles/utils';
 import { uploadUrl } from 'utils/media';

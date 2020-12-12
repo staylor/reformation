@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
@@ -8,31 +8,29 @@ import PodcastForm from './Form';
 
 /* eslint-disable react/prop-types */
 
-@compose(
-  graphql(
-    gql`
-      query PodcastAdminQuery($id: ObjID!) {
-        podcast(id: $id) {
-          ...PodcastForm_podcast
-        }
-      }
-      ${PodcastForm.fragments.podcast}
-    `,
-    {
-      options: ({ match: { params } }) => ({
-        variables: { id: params.id },
-      }),
-    }
-  ),
-  graphql(gql`
-    mutation UpdatePodcastMutation($id: ObjID!, $input: UpdatePodcastInput!) {
-      updatePodcast(id: $id, input: $input) {
+@graphql(
+  gql`
+    query PodcastAdminQuery($id: ObjID!) {
+      podcast(id: $id) {
         ...PodcastForm_podcast
       }
     }
     ${PodcastForm.fragments.podcast}
-  `)
+  `,
+  {
+    options: ({ match: { params } }) => ({
+      variables: { id: params.id },
+    }),
+  }
 )
+@graphql(gql`
+  mutation UpdatePodcastMutation($id: ObjID!, $input: UpdatePodcastInput!) {
+    updatePodcast(id: $id, input: $input) {
+      ...PodcastForm_podcast
+    }
+  }
+  ${PodcastForm.fragments.podcast}
+`)
 class EditPodcast extends Component {
   state = {
     message: null,

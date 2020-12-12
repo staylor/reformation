@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
@@ -42,40 +42,38 @@ const columns = [
   },
 ];
 
-@compose(
-  graphql(
-    gql`
-      query UsersQuery {
-        users @connection(key: "users") {
-          count
-          edges {
-            node {
-              id
-              name
-            }
-          }
-          pageInfo {
-            hasNextPage
+@graphql(
+  gql`
+    query UsersQuery {
+      users @connection(key: "users") {
+        count
+        edges {
+          node {
+            id
+            name
           }
         }
+        pageInfo {
+          hasNextPage
+        }
       }
-    `,
-    {
-      options: {
-        variables: { first: 1000 },
-        // This ensures that the table is up to date when users are mutated.
-        // The alternative is to specify refetchQueries on all User mutations.
-        fetchPolicy: 'cache-and-network',
-      },
     }
-  ),
-  graphql(
-    gql`
-      mutation DeleteUserMutation($ids: [ObjID]!) {
-        removeUser(ids: $ids)
-      }
-    `
-  )
+  `,
+  {
+    options: {
+      variables: { first: 1000 },
+      // This ensures that the table is up to date when users are mutated.
+      // The alternative is to specify refetchQueries on all User mutations.
+      fetchPolicy: 'cache-and-network',
+    },
+  }
+)
+@graphql(
+  gql`
+    mutation DeleteUserMutation($ids: [ObjID]!) {
+      removeUser(ids: $ids)
+    }
+  `
 )
 class Users extends Component {
   render() {

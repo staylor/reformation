@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { compose, graphql } from '@apollo/client/react/hoc';
+import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
@@ -52,42 +52,40 @@ const columns = [
   },
 ];
 
-@compose(
-  graphql(
-    gql`
-      query TaxonomyQuery {
-        taxonomies @connection(key: "taxonomies") {
-          count
-          edges {
-            node {
-              id
-              name
-              slug
-              description
-            }
-          }
-          pageInfo {
-            hasNextPage
+@graphql(
+  gql`
+    query TaxonomyQuery {
+      taxonomies @connection(key: "taxonomies") {
+        count
+        edges {
+          node {
+            id
+            name
+            slug
+            description
           }
         }
+        pageInfo {
+          hasNextPage
+        }
       }
-    `,
-    {
-      options: {
-        variables: { first: 1000 },
-        // This ensures that the table is up to date when taxonomies are mutated.
-        // The alternative is to specify refetchQueries on all Taxonomy mutations.
-        fetchPolicy: 'cache-and-network',
-      },
     }
-  ),
-  graphql(
-    gql`
-      mutation DeleteTaxonomyMutation($ids: [ObjID]!) {
-        removeTaxonomy(ids: $ids)
-      }
-    `
-  )
+  `,
+  {
+    options: {
+      variables: { first: 1000 },
+      // This ensures that the table is up to date when taxonomies are mutated.
+      // The alternative is to specify refetchQueries on all Taxonomy mutations.
+      fetchPolicy: 'cache-and-network',
+    },
+  }
+)
+@graphql(
+  gql`
+    mutation DeleteTaxonomyMutation($ids: [ObjID]!) {
+      removeTaxonomy(ids: $ids)
+    }
+  `
 )
 class Taxonomies extends Component {
   render() {

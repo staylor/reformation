@@ -1,5 +1,5 @@
 import React from 'react';
-import { compose, graphql } from 'react-apollo';
+import { graphql } from '@apollo/client/react/hoc';
 import { FormWrap } from 'routes/Admin/styled';
 import Form from 'routes/Admin/Settings/Form';
 import FeaturedMedia from 'components/Form/FeaturedMedia';
@@ -94,13 +94,8 @@ function PodcastSettings({ data, mutate }) {
   );
 }
 
-const composed = compose(
-  graphql(PodcastSettingsQuery, {
-    options: {
-      fetchPolicy: 'cache-and-network',
-    },
-  }),
-  graphql(PodcastSettingsMutation)
-);
-
-export default composed(PodcastSettings);
+export default graphql(PodcastSettingsQuery, {
+  options: {
+    fetchPolicy: 'cache-and-network',
+  },
+})(graphql(PodcastSettingsMutation)(PodcastSettings));
