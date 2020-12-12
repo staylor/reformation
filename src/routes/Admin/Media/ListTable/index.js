@@ -17,7 +17,6 @@ import {
 import { offsetToCursor } from 'utils/connection';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 import { titleColumnClass } from './styled';
-import UploadsQuery from './UploadsQuery.graphql';
 
 /* eslint-disable react/prop-types,react/no-multi-comp */
 
@@ -41,15 +40,16 @@ const columns = [
   {
     className: titleColumnClass,
     label: 'Title',
-    render: (media, { mutate, variables }) => {
+    render: (media, { mutate, refetch }) => {
       const onClick = e => {
         e.preventDefault();
 
         mutate({
-          refetchQueries: [{ query: UploadsQuery, variables }],
           variables: {
             ids: [media.id],
           },
+        }).then(() => {
+          refetch();
         });
       };
 
@@ -92,33 +92,76 @@ const columns = [
 ];
 
 @compose(
-  graphql(UploadsQuery, {
-    options: ({ match, location }) => {
-      const queryParams = parse(location.search);
-      const { params } = match;
-
-      const variables = { first: PER_PAGE };
-      if (queryParams.search) {
-        // $TODO: sanitize this
-        variables.search = queryParams.search;
-      }
-      if (queryParams.type) {
-        variables.type = queryParams.type;
-      }
-      if (queryParams.mimeType) {
-        variables.mimeType = queryParams.mimeType;
-      }
-      if (params.page) {
-        const pageOffset = parseInt(params.page, 10) - 1;
-        if (pageOffset > 0) {
-          variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
+  graphql(
+    gql`
+      query UploadsQuery(
+        $first: Int
+        $after: String
+        $type: String
+        $mimeType: String
+        $search: String
+      ) {
+        uploads(first: $first, after: $after, type: $type, mimeType: $mimeType, search: $search)
+          @connection(key: "uploads", filter: ["type", "mimeType", "search"]) {
+          types
+          mimeTypes
+          count
+          edges {
+            node {
+              id
+              type
+              mimeType
+              title
+              originalName
+              destination
+              ... on ImageUpload {
+                crops {
+                  fileName
+                  width
+                }
+              }
+              ... on AudioUpload {
+                images {
+                  fileName
+                  width
+                }
+              }
+            }
+          }
+          pageInfo {
+            hasNextPage
+          }
         }
       }
-      // This ensures that the table is up to date when uploads are mutated.
-      // The alternative is to specify refetchQueries on all Post mutations.
-      return { variables, fetchPolicy: 'cache-and-network' };
-    },
-  }),
+    `,
+    {
+      options: ({ match, location }) => {
+        const queryParams = parse(location.search);
+        const { params } = match;
+
+        const variables = { first: PER_PAGE };
+        if (queryParams.search) {
+          // $TODO: sanitize this
+          variables.search = queryParams.search;
+        }
+        if (queryParams.type) {
+          variables.type = queryParams.type;
+        }
+        if (queryParams.mimeType) {
+          variables.mimeType = queryParams.mimeType;
+        }
+        if (params.page) {
+          const pageOffset = parseInt(params.page, 10) - 1;
+          if (pageOffset > 0) {
+            variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
+          }
+        }
+        // This ensures that the table is up to date when uploads are mutated.
+        // The alternative is to specify refetchQueries on all Post mutations.
+        return { variables, fetchPolicy: 'cache-and-network' };
+      },
+    }
+  ),
   graphql(gql`
     mutation DeleteMediaMutation($ids: [ObjID]!) {
       removeMediaUpload(ids: $ids)
@@ -148,7 +191,7 @@ class Media extends Component {
       location,
       match,
       mutate,
-      data: { variables, loading, uploads },
+      data: { variables, refetch, loading, uploads },
     } = this.props;
 
     if (loading && !uploads) {
@@ -198,7 +241,7 @@ class Media extends Component {
             filters,
             mutate,
             variables,
-            query: UploadsQuery,
+            refetch,
           }}
           data={uploads}
           path="/media"
