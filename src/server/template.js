@@ -1,3 +1,5 @@
+import resetCSS from 'public/css/reset.css';
+
 // type Template = {
 //   html: string,
 //   css: string,
@@ -35,11 +37,10 @@ export default function template({
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 ${helmet.title.toString()}${helmet.script.toString()}${helmet.meta.toString()}${helmet.link.toString()}
 <link rel="stylesheet" href="https://use.typekit.net/tts4dcv.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+<link rel="stylesheet" href="${resetCSS}" />
 ${stylesheets.map(sheet => `<link rel="stylesheet" href="${sheet}" />`).join('')}
-${css && `<style>${css}</style>`}
+${css && `<style data-lights-css="${ids.join(' ')}">${css}</style>`}
 ${(bundles.styles || []).map(e => `<link rel="stylesheet" href="${e}">`).join('\n')}
-<script>window.__emotion = ${JSON.stringify(ids)};</script>
 </head>
 <body ${helmet.bodyAttributes.toString()}>
   <main id="main">${html}</main>
