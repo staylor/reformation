@@ -15,7 +15,13 @@ const settingsFields = [
 function DashboardSettings({ data, mutate }) {
   return (
     <FormWrap>
-      <Form id="dashboard" title="Dashboard Settings" {...{ settingsFields, data, mutate }} />
+      <Form
+        id="dashboard"
+        title="Dashboard Settings"
+        settingsFields={settingsFields}
+        data={data}
+        mutate={mutate}
+      />
     </FormWrap>
   );
 }
