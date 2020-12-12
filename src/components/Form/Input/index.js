@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { cx } from 'pretty-lights';
 import { inputClass } from './styled';
 
@@ -15,41 +15,28 @@ import { inputClass } from './styled';
 //   value: string,
 // };
 
-export default class Input extends Component {
-  state = {
-    value: '',
-  };
+export default function Input({ value, onChange, className, bindRef, ...props }) {
+  const [inputValue, setValue] = useState(value || '');
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.value === prevState.value) {
-      return null;
+  const inputOnChange = e => {
+    const newValue = e.target.value || '';
+    setValue(newValue);
+    if (onChange) {
+      onChange(newValue);
     }
-    return { value: nextProps.value || '' };
-  }
-
-  onChange = e => {
-    const value = e.target.value || '';
-    this.setState({ value }, () => {
-      if (this.props.onChange) {
-        this.props.onChange(value);
-      }
-    });
   };
 
-  render() {
-    const { className, onChange, bindRef, value, ...props } = this.props;
-    return (
-      <input
-        type="text"
-        // eslint-disable-next-line
-        {...props}
-        ref={bindRef}
-        className={cx(inputClass, className)}
-        onChange={this.onChange}
-        defaultValue={this.state.value}
-      />
-    );
-  }
+  return (
+    <input
+      type="text"
+      // eslint-disable-next-line
+      {...props}
+      ref={bindRef}
+      className={cx(inputClass, className)}
+      onChange={inputOnChange}
+      defaultValue={inputValue}
+    />
+  );
 }
 
 Input.defaultProps = {

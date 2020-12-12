@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useReducer, useRef } from 'react';
 import { RichUtils, EditorState } from 'draft-js';
 import StyleButton from './StyleButton';
 import { linkInputClass, linkActionClass, Controls } from './styled';
@@ -44,25 +44,17 @@ const INLINE_STYLES = [
   { label: '', style: 'LINK', className: 'dashicons dashicons-admin-links' },
 ];
 
-export default class InlineStyleControls extends Component {
-  linkInput = React.createRef();
+const reducer = (a, b) => ({ ...a, ...b });
 
-  state = {
+export default function InlineStyleControls({ editorState, onChange, onToggle }) {
+  const linkInput = useRef(null);
+  const [state, setState] = useReducer(reducer, {
     mode: '',
     urlValue: '',
-  };
-
-  static getDerivedStateFromProps(nextProps) {
-    const selection = nextProps.editorState.getSelection();
-    if (selection.isCollapsed()) {
-      return { mode: '', urlValue: '' };
-    }
-    return null;
-  }
+  });
 
   // event propagation is already handled
-  showLink = () => {
-    const { editorState } = this.props;
+  const showLink = () => {
     const selection = editorState.getSelection();
     if (selection.isCollapsed()) {
       return;
@@ -79,19 +71,16 @@ export default class InlineStyleControls extends Component {
       mode = 'EDIT_LINK';
     }
 
-    this.setState({ mode, urlValue }, () => {
-      setTimeout(() => this.linkInput.focus(), 0);
-    });
+    setState({ mode, urlValue });
+    setTimeout(() => linkInput.current.focus(), 0);
   };
 
-  addLink = e => {
+  const addLink = e => {
     e.preventDefault();
-    const { editorState } = this.props;
-    const { urlValue } = this.state;
     const contentState = editorState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity('LINK', 'MUTABLE', {
       type: 'LINK',
-      href: urlValue,
+      href: state.urlValue,
       target: null,
     });
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
@@ -99,105 +88,97 @@ export default class InlineStyleControls extends Component {
     const newEditorState = RichUtils.toggleLink(editorState, selection, entityKey);
     const selectionState = EditorState.forceSelection(newEditorState, selection);
 
-    this.setState({ mode: '', urlValue: '' }, () => {
-      this.props.onChange(selectionState);
-    });
+    setState({ mode: '', urlValue: '' });
+    onChange(selectionState);
   };
 
-  removeLink = e => {
+  const removeLink = e => {
     e.preventDefault();
-    const { editorState } = this.props;
     const selection = editorState.getSelection();
     if (selection.isCollapsed()) {
       return;
     }
 
-    this.setState({ mode: '', urlValue: '' }, () => {
-      const newEditorState = RichUtils.toggleLink(editorState, selection, null);
-      const selectionState = EditorState.forceSelection(newEditorState, selection);
-      this.props.onChange(selectionState);
-    });
+    setState({ mode: '', urlValue: '' });
+    const newEditorState = RichUtils.toggleLink(editorState, selection, null);
+    const selectionState = EditorState.forceSelection(newEditorState, selection);
+    onChange(selectionState);
   };
 
-  cancelLink = e => {
+  const cancelLink = e => {
     e.preventDefault();
 
-    this.setState({ mode: '', urlValue: '' });
+    setState({ mode: '', urlValue: '' });
   };
 
-  onLinkInputChange = e => {
-    this.setState({ urlValue: e.target.value });
+  const onLinkInputChange = e => {
+    setState({ urlValue: e.target.value });
   };
 
-  onLinkInputKeyDown = e => {
+  const onLinkInputKeyDown = e => {
     if (e.which === 13) {
-      this.addLink(e);
+      addLink(e);
     }
   };
 
-  onLinkInputMouseDown = e => {
+  const onLinkInputMouseDown = e => {
     e.preventDefault();
     e.stopPropagation();
   };
 
-  render() {
-    const { editorState, onToggle } = this.props;
-    const contentState = editorState.getCurrentContent();
-    const selection = editorState.getSelection();
-    const block = contentState.getBlockForKey(selection.getStartKey());
-    if (!block) {
-      return null;
-    }
-    const currentStyle = editorState.getCurrentInlineStyle();
-
-    let linkKey = '';
-    if (!selection.isCollapsed()) {
-      linkKey = block.getEntityAt(selection.getStartOffset());
-    }
-
-    return (
-      <Controls>
-        {!selection.isCollapsed() && ['ADD_LINK', 'EDIT_LINK'].includes(this.state.mode) ? (
-          <>
-            <input
-              className={linkInputClass}
-              innerRef={linkInput => {
-                this.linkInput = linkInput;
-              }}
-              placeholder="Type a URL and press Enter"
-              value={this.state.urlValue}
-              onChange={this.onLinkInputChange}
-              onKeyDown={this.onLinkInputKeyDown}
-              onMouseDown={this.onLinkInputMouseDown}
-              onClick={this.onLinkInputMouseDown}
-              type="text"
-            />
-            {this.state.mode === 'EDIT_LINK' && (
-              <span
-                className={`dashicons dashicons-editor-unlink ${linkActionClass}`}
-                onClick={this.removeLink}
-              />
-            )}
-            {this.state.mode === 'ADD_LINK' && (
-              <span
-                className={`dashicons dashicons-no-alt ${linkActionClass}`}
-                onClick={this.cancelLink}
-              />
-            )}
-          </>
-        ) : (
-          INLINE_STYLES.map(type => (
-            <StyleButton
-              key={type.style}
-              className={type.className}
-              active={currentStyle.has(type.style) || (type.style === 'LINK' && linkKey !== '')}
-              label={type.label}
-              onToggle={type.style === 'LINK' ? this.showLink : onToggle}
-              style={type.style}
-            />
-          ))
-        )}
-      </Controls>
-    );
+  const contentState = editorState.getCurrentContent();
+  const selection = editorState.getSelection();
+  const block = contentState.getBlockForKey(selection.getStartKey());
+  if (!block) {
+    return null;
   }
+  const currentStyle = editorState.getCurrentInlineStyle();
+
+  let linkKey = '';
+  if (!selection.isCollapsed()) {
+    linkKey = block.getEntityAt(selection.getStartOffset());
+  }
+
+  return (
+    <Controls>
+      {!selection.isCollapsed() && ['ADD_LINK', 'EDIT_LINK'].includes(state.mode) ? (
+        <>
+          <input
+            className={linkInputClass}
+            innerRef={linkInput}
+            placeholder="Type a URL and press Enter"
+            value={state.urlValue}
+            onChange={onLinkInputChange}
+            onKeyDown={onLinkInputKeyDown}
+            onMouseDown={onLinkInputMouseDown}
+            onClick={onLinkInputMouseDown}
+            type="text"
+          />
+          {state.mode === 'EDIT_LINK' && (
+            <span
+              className={`dashicons dashicons-editor-unlink ${linkActionClass}`}
+              onClick={removeLink}
+            />
+          )}
+          {state.mode === 'ADD_LINK' && (
+            <span
+              className={`dashicons dashicons-no-alt ${linkActionClass}`}
+              onClick={cancelLink}
+            />
+          )}
+        </>
+      ) : (
+        INLINE_STYLES.map(type => (
+          <StyleButton
+            key={type.style}
+            className={type.className}
+            active={currentStyle.has(type.style) || (type.style === 'LINK' && linkKey !== '')}
+            label={type.label}
+            onToggle={type.style === 'LINK' ? showLink : onToggle}
+            style={type.style}
+          />
+        ))
+      )}
+    </Controls>
+  );
 }
