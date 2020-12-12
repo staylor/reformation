@@ -1,12 +1,12 @@
 import React from 'react';
 import { cx } from 'pretty-lights';
-import { withRouter, NavLink as RRNavLink } from 'react-router-dom';
-
+import { useLocation, NavLink as RRNavLink } from 'react-router-dom';
 import { linkClass, dashiconClass } from './styled';
 
 /* eslint-disable react/prop-types */
 
-function NavLink({ item, isCollapsed, isHovered, hasSubNav, location }) {
+function NavLink({ item, isCollapsed, isHovered, hasSubNav }) {
+  const location = useLocation();
   return (
     <RRNavLink
       to={item.path}
@@ -30,4 +30,4 @@ function NavLink({ item, isCollapsed, isHovered, hasSubNav, location }) {
   );
 }
 
-export default withRouter(NavLink);
+export default NavLink;
