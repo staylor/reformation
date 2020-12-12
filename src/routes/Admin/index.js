@@ -6,7 +6,6 @@ import { Helmet } from 'react-helmet-async';
 import { cx } from 'pretty-lights';
 import Loading from 'components/Loading';
 import NotFound from 'components/NotFound';
-import { mediaSettingsShape } from 'types/PropTypes';
 import * as styles from './styled';
 import NavMenu from './NavMenu';
 import routeConfig from './routeConfig';
@@ -14,16 +13,6 @@ import routeConfig from './routeConfig';
 /* eslint-disable react/prop-types */
 
 class Admin extends Component {
-  static childContextTypes = {
-    mediaSettings: mediaSettingsShape,
-  };
-
-  getChildContext() {
-    return {
-      mediaSettings: this.props.data.mediaSettings,
-    };
-  }
-
   state = {
     collapsed: false,
   };
@@ -95,15 +84,6 @@ export default graphql(
           siteTitle
           siteUrl
           language
-        }
-      }
-      mediaSettings: settings(id: "media") {
-        ... on MediaSettings {
-          crops {
-            name
-            width
-            height
-          }
         }
       }
       taxonomies @connection(key: "taxonomies") {
