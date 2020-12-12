@@ -255,7 +255,12 @@ export default class Form extends Component {
             {primaryFields}
             {infoFields.length === 0 ? button : null}
           </div>
-          <InfoColumn {...{ infoFields, metaFields, label: boxLabel, button }} />
+          <InfoColumn
+            infoFields={infoFields}
+            metaFields={metaFields}
+            button={button}
+            label={boxLabel}
+          />
         </fieldset>
       </form>
     );

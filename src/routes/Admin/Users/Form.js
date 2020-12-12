@@ -25,7 +25,7 @@ const userFields = [
 ];
 
 export default function UserForm({ user = {}, buttonLabel = 'Submit', onSubmit }) {
-  return <Form fields={userFields} data={user} {...{ buttonLabel, onSubmit }} />;
+  return <Form fields={userFields} data={user} buttonLabel={buttonLabel} onSubmit={onSubmit} />;
 }
 
 UserForm.fragments = {

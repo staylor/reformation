@@ -95,7 +95,7 @@ const postFields = [
 ];
 
 export default function PostForm({ post = {}, buttonLabel = 'Submit', onSubmit }) {
-  return <Form fields={postFields} data={post} {...{ buttonLabel, onSubmit }} />;
+  return <Form fields={postFields} data={post} buttonLabel={buttonLabel} onSubmit={onSubmit} />;
 }
 
 PostForm.fragments = {

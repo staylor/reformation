@@ -99,7 +99,7 @@ class Podcasts extends Component {
       location,
       match,
       mutate,
-      data: { variables, loading, podcasts },
+      data: { variables, refetch, loading, podcasts },
     } = this.props;
 
     if (loading && !podcasts) {
@@ -111,7 +111,12 @@ class Podcasts extends Component {
         <Heading>Podcast</Heading>
         <HeaderAdd to="/podcast/add">Add Podcast</HeaderAdd>
         <ListTable
-          {...{ location, match, columns, mutate, variables }}
+          location={location}
+          match={match}
+          columns={columns}
+          mutate={mutate}
+          refetch={refetch}
+          variables={variables}
           data={podcasts}
           path="/podcast"
         />

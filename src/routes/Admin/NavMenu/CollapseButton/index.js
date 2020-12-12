@@ -4,11 +4,10 @@ import { buttonClass, collapsedButtonClass, buttonIconClass, buttonLabelClass } 
 
 /* eslint-disable react/prop-types,react/button-has-type */
 
-function CollapseButton({ isCollapsed, ...rest }) {
+function CollapseButton({ isCollapsed, onClick }) {
   return (
     <button
-      // eslint-disable-next-line
-      {...rest}
+      onClick={onClick}
       className={cx(buttonClass, {
         [collapsedButtonClass]: isCollapsed,
       })}

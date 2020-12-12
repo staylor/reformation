@@ -234,15 +234,13 @@ class Media extends Component {
           />
         </div>
         <ListTable
-          {...{
-            location,
-            match,
-            columns,
-            filters,
-            mutate,
-            variables,
-            refetch,
-          }}
+          location={location}
+          match={match}
+          filters={filters}
+          columns={columns}
+          variables={variables}
+          mutate={mutate}
+          refetch={refetch}
           data={uploads}
           path="/media"
         />

@@ -70,7 +70,12 @@ class AddShow extends Component {
         <Heading>Add Show</Heading>
         {this.state.message === 'error' && <Message text="Error adding show." />}
         <FormWrap>
-          <ShowForm {...{ artists, venues }} buttonLabel="Add Show" onSubmit={this.onSubmit} />
+          <ShowForm
+            artists={artists}
+            venues={venues}
+            buttonLabel="Add Show"
+            onSubmit={this.onSubmit}
+          />
         </FormWrap>
       </>
     );
