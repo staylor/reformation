@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { ThemeProvider } from 'pretty-lights';
 import fetch from 'isomorphic-fetch';
 import Cookies from 'js-cookie';
@@ -11,12 +10,33 @@ import * as styles from './styled';
 
 /* eslint-disable react/prop-types */
 
-function Login({ data }) {
+function Login() {
   const form = useRef(null);
   const params = useParams();
   const initialError =
     params.action === 'unauthorized' ? 'You must login to access this area.' : undefined;
   const [error, setError] = useState(initialError);
+  const { loading, data } = useQuery(
+    gql`
+      query LoginQuery($id: String) {
+        settings(id: $id) {
+          ... on SiteSettings {
+            siteTitle
+            siteUrl
+          }
+        }
+      }
+    `,
+    {
+      variables: { id: 'site' },
+    }
+  );
+
+  if (loading && !data) {
+    return null;
+  }
+
+  const { settings } = data;
 
   const submitForm = e => {
     e.preventDefault();
@@ -50,12 +70,6 @@ function Login({ data }) {
       });
   };
 
-  const { loading, settings } = data;
-
-  if (loading && !settings) {
-    return null;
-  }
-
   return (
     <ThemeProvider theme={{}}>
       <div className={styles.wrapperClass}>
@@ -81,20 +95,4 @@ function Login({ data }) {
   );
 }
 
-export default graphql(
-  gql`
-    query LoginQuery($id: String) {
-      settings(id: $id) {
-        ... on SiteSettings {
-          siteTitle
-          siteUrl
-        }
-      }
-    }
-  `,
-  {
-    options: {
-      variables: { id: 'site' },
-    },
-  }
-)(Login);
+export default Login;
