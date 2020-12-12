@@ -1,11 +1,8 @@
 import React from 'react';
-import { graphql } from '@apollo/client/react/hoc';
 import { FormWrap } from 'routes/Admin/styled';
 import Form from 'routes/Admin/Settings/Form';
 import SocialSettingsQuery from './SocialSettingsQuery.graphql';
 import SocialSettingsMutation from './SocialSettingsMutation.graphql';
-
-/* eslint-disable react/prop-types */
 
 const settingsFields = [
   { label: 'Twitter Username', prop: 'twitterUsername', editable: true },
@@ -23,22 +20,18 @@ const settingsFields = [
   },
 ];
 
-function SocialSettings({ data, mutate }) {
+function SocialSettings() {
   return (
     <FormWrap>
       <Form
         id="social"
         title="Social Settings"
         settingsFields={settingsFields}
-        data={data}
-        mutate={mutate}
+        query={SocialSettingsQuery}
+        mutation={SocialSettingsMutation}
       />
     </FormWrap>
   );
 }
 
-export default graphql(SocialSettingsQuery, {
-  options: {
-    fetchPolicy: 'cache-and-network',
-  },
-})(graphql(SocialSettingsMutation)(SocialSettings));
+export default SocialSettings;

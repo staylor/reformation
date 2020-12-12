@@ -1,11 +1,8 @@
 import React from 'react';
-import { graphql } from '@apollo/client/react/hoc';
 import { FormWrap } from 'routes/Admin/styled';
 import Form from 'routes/Admin/Settings/Form';
 import SiteSettingsQuery from './SiteSettingsQuery.graphql';
 import SiteSettingsMutation from './SiteSettingsMutation.graphql';
-
-/* eslint-disable react/prop-types */
 
 const settingsFields = [
   { label: 'Site Title', prop: 'siteTitle', editable: true },
@@ -32,22 +29,18 @@ const settingsFields = [
   },
 ];
 
-function SiteSettings({ data, mutate }) {
+function SiteSettings() {
   return (
     <FormWrap>
       <Form
         id="site"
         title="General Settings"
         settingsFields={settingsFields}
-        data={data}
-        mutate={mutate}
+        query={SiteSettingsQuery}
+        mutation={SiteSettingsMutation}
       />
     </FormWrap>
   );
 }
 
-export default graphql(SiteSettingsQuery, {
-  options: {
-    fetchPolicy: 'cache-and-network',
-  },
-})(graphql(SiteSettingsMutation)(SiteSettings));
+export default SiteSettings;

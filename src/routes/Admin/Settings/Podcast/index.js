@@ -1,12 +1,11 @@
 import React from 'react';
-import { graphql } from '@apollo/client/react/hoc';
 import { FormWrap } from 'routes/Admin/styled';
 import Form from 'routes/Admin/Settings/Form';
 import FeaturedMedia from 'components/Form/FeaturedMedia';
 import PodcastSettingsQuery from './PodcastSettingsQuery.graphql';
 import PodcastSettingsMutation from './PodcastSettingsMutation.graphql';
 
-/* eslint-disable react/prop-types,react/no-multi-comp */
+/* eslint-disable react/no-multi-comp */
 
 const settingsFields = [
   { label: 'Podcast Title', prop: 'title', editable: true },
@@ -80,22 +79,18 @@ const settingsFields = [
   },
 ];
 
-function PodcastSettings({ data, mutate }) {
+function PodcastSettings() {
   return (
     <FormWrap>
       <Form
         id="podcast"
         title="Podcast Settings"
         settingsFields={settingsFields}
-        data={data}
-        mutate={mutate}
+        query={PodcastSettingsQuery}
+        mutation={PodcastSettingsMutation}
       />
     </FormWrap>
   );
 }
 
-export default graphql(PodcastSettingsQuery, {
-  options: {
-    fetchPolicy: 'cache-and-network',
-  },
-})(graphql(PodcastSettingsMutation)(PodcastSettings));
+export default PodcastSettings;

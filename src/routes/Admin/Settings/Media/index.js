@@ -1,12 +1,11 @@
 import React from 'react';
-import { graphql } from '@apollo/client/react/hoc';
 import { FormWrap } from 'routes/Admin/styled';
 import Form from 'routes/Admin/Settings/Form';
 import Crops from './Crops';
 import MediaSettingsQuery from './MediaSettingsQuery.graphql';
 import MediaSettingsMutation from './MediaSettingsMutation.graphql';
 
-/* eslint-disable react/prop-types,react/no-multi-comp */
+/* eslint-disable react/no-multi-comp */
 
 const normalizeCrops = (crops = []) =>
   crops
@@ -37,22 +36,18 @@ const settingsFields = [
   },
 ];
 
-function MediaSettings({ data, mutate }) {
+function MediaSettings() {
   return (
     <FormWrap>
       <Form
         id="media"
         title="Media Settings"
         settingsFields={settingsFields}
-        data={data}
-        mutate={mutate}
+        query={MediaSettingsQuery}
+        mutation={MediaSettingsMutation}
       />
     </FormWrap>
   );
 }
 
-export default graphql(MediaSettingsQuery, {
-  options: {
-    fetchPolicy: 'cache-and-network',
-  },
-})(graphql(MediaSettingsMutation)(MediaSettings));
+export default MediaSettings;

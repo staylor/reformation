@@ -1,33 +1,26 @@
 import React from 'react';
-import { graphql } from '@apollo/client/react/hoc';
 import { FormWrap } from 'routes/Admin/styled';
 import Form from 'routes/Admin/Settings/Form';
 import DashboardSettingsQuery from './DashboardSettingsQuery.graphql';
 import DashboardSettingsMutation from './DashboardSettingsMutation.graphql';
-
-/* eslint-disable react/prop-types */
 
 const settingsFields = [
   { label: 'Google Analytics Client ID', prop: 'googleClientId', editable: true },
   { label: 'Google Analytics Tracking ID', prop: 'googleTrackingId', editable: true },
 ];
 
-function DashboardSettings({ data, mutate }) {
+function DashboardSettings() {
   return (
     <FormWrap>
       <Form
         id="dashboard"
         title="Dashboard Settings"
         settingsFields={settingsFields}
-        data={data}
-        mutate={mutate}
+        query={DashboardSettingsQuery}
+        mutation={DashboardSettingsMutation}
       />
     </FormWrap>
   );
 }
 
-export default graphql(DashboardSettingsQuery, {
-  options: {
-    fetchPolicy: 'cache-and-network',
-  },
-})(graphql(DashboardSettingsMutation)(DashboardSettings));
+export default DashboardSettings;
