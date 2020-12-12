@@ -6,14 +6,13 @@ import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
-import TaxonomyQuery from './TaxonomyQuery.graphql';
 
 /* eslint-disable react/prop-types,react/no-multi-comp */
 
 const columns = [
   {
     label: 'Name',
-    render: (taxonomy, { mutate }) => {
+    render: (taxonomy, { mutate, refetch }) => {
       const onClick = e => {
         e.preventDefault();
 
@@ -21,6 +20,8 @@ const columns = [
           variables: {
             ids: [taxonomy.id],
           },
+        }).then(() => {
+          refetch();
         });
       };
 
@@ -52,21 +53,40 @@ const columns = [
 ];
 
 @compose(
-  graphql(TaxonomyQuery, {
-    options: {
-      variables: { first: 1000 },
-      // This ensures that the table is up to date when taxonomies are mutated.
-      // The alternative is to specify refetchQueries on all Taxonomy mutations.
-      fetchPolicy: 'cache-and-network',
-    },
-  }),
+  graphql(
+    gql`
+      query TaxonomyQuery {
+        taxonomies @connection(key: "taxonomies") {
+          count
+          edges {
+            node {
+              id
+              name
+              slug
+              description
+            }
+          }
+          pageInfo {
+            hasNextPage
+          }
+        }
+      }
+    `,
+    {
+      options: {
+        variables: { first: 1000 },
+        // This ensures that the table is up to date when taxonomies are mutated.
+        // The alternative is to specify refetchQueries on all Taxonomy mutations.
+        fetchPolicy: 'cache-and-network',
+      },
+    }
+  ),
   graphql(
     gql`
       mutation DeleteTaxonomyMutation($ids: [ObjID]!) {
         removeTaxonomy(ids: $ids)
       }
-    `,
-    { options: { refetchQueries: [{ query: TaxonomyQuery }] } }
+    `
   )
 )
 class Taxonomies extends Component {
@@ -75,7 +95,7 @@ class Taxonomies extends Component {
       location,
       match,
       mutate,
-      data: { loading, taxonomies, variables },
+      data: { loading, taxonomies, refetch, variables },
     } = this.props;
 
     if (loading && !taxonomies) {
@@ -87,7 +107,12 @@ class Taxonomies extends Component {
         <Heading>Taxonomy</Heading>
         <HeaderAdd to="/taxonomy/add">Add Taxonomy</HeaderAdd>
         <ListTable
-          {...{ location, match, columns, mutate, variables }}
+          location={location}
+          match={match}
+          columns={columns}
+          mutate={mutate}
+          refetch={refetch}
+          variables={variables}
           data={taxonomies}
           path="/taxonomy"
         />

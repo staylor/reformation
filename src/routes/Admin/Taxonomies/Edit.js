@@ -4,7 +4,6 @@ import gql from 'graphql-tag';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
-import TaxonomyQuery from './TaxonomyQuery.graphql';
 import TaxonomyForm from './Form';
 
 /* eslint-disable react/prop-types */
@@ -33,12 +32,7 @@ import TaxonomyForm from './Form';
         }
       }
       ${TaxonomyForm.fragments.taxonomy}
-    `,
-    {
-      options: {
-        refetchQueries: [{ query: TaxonomyQuery }],
-      },
-    }
+    `
   )
 )
 class EditTaxonomy extends Component {

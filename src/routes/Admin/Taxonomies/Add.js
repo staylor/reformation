@@ -3,7 +3,6 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
-import TaxonomyQuery from './TaxonomyQuery.graphql';
 import TaxonomyForm from './Form';
 
 /* eslint-disable react/prop-types */
@@ -16,12 +15,7 @@ import TaxonomyForm from './Form';
       }
     }
     ${TaxonomyForm.fragments.taxonomy}
-  `,
-  {
-    options: {
-      refetchQueries: [{ query: TaxonomyQuery }],
-    },
-  }
+  `
 )
 class AddTaxonomy extends Component {
   state = {
