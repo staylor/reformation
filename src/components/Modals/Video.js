@@ -48,17 +48,6 @@ class VideoModal extends Component {
         first: 25,
         cursor: videos.pageInfo.endCursor,
       },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        const { edges: previousEdges } = previousResult.videos;
-        const { edges: newEdges } = fetchMoreResult.videos;
-        const newVideos = {
-          videos: {
-            ...fetchMoreResult.videos,
-            edges: [...previousEdges, ...newEdges],
-          },
-        };
-        return newVideos;
-      },
     });
   };
 
@@ -96,7 +85,7 @@ class VideoModal extends Component {
     return ReactDOM.createPortal(
       <div className={modalClass}>
         <CloseButton className="dashicons dashicons-no" onClick={this.props.onClose} />
-        <div className={frameClass} innerRef={this.frameHandler}>
+        <div className={frameClass} ref={this.frameHandler}>
           {videos.edges.map(({ node }) => {
             const crop = node.thumbnails.find(c => c.width === 120);
             return (

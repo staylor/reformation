@@ -70,17 +70,6 @@ class MediaModal extends Component {
         ...variables,
         cursor: uploads.pageInfo.endCursor,
       },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        const { edges: previousEdges } = previousResult.uploads;
-        const { edges: newEdges } = fetchMoreResult.uploads;
-        const newUploads = {
-          uploads: {
-            ...fetchMoreResult.uploads,
-            edges: [...previousEdges, ...newEdges],
-          },
-        };
-        return newUploads;
-      },
     });
   };
 
@@ -127,7 +116,7 @@ class MediaModal extends Component {
         id="media-modal"
       >
         <CloseButton className="dashicons dashicons-no" onClick={this.props.onClose} />
-        <div className={frameClass} innerRef={this.frameHandler}>
+        <div className={frameClass} ref={this.frameHandler}>
           {uploads.edges.map(({ node }) => {
             const prop = this.type === 'audio' ? 'images' : 'crops';
             const crop = node[prop] && node[prop].find(c => c.width === 150);

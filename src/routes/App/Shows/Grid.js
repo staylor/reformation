@@ -22,7 +22,7 @@ const formatDate = date => {
 
 export default function ShowsGrid({ shows }) {
   if (!shows || !shows.edges || shows.edges.length === 0) {
-    return null;
+    return <p>No recommended shows at this time.</p>;
   }
 
   const years = {};

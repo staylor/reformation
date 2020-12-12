@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React from 'react';
+import { gql, useQuery } from '@apollo/client';
+import { useParams } from 'react-router-dom';
 import NotFound from 'components/NotFound';
 import Loading from 'components/Loading';
 import FeaturedMedia from 'components/FeaturedMedia';
@@ -10,51 +10,47 @@ import { titleClass } from './styled';
 
 /* eslint-disable react/prop-types */
 
-@graphql(
-  gql`
-    query ArtistQuery($slug: String!, $first: Int) {
-      artist: term(slug: $slug, taxonomy: "artist") {
-        id
-        name
-        featuredMedia {
-          ...FeaturedMedia_featuredMedia
+function ArtistRoute() {
+  const params = useParams();
+  const { loading, error, data } = useQuery(
+    gql`
+      query ArtistQuery($slug: String!, $first: Int) {
+        artist: term(slug: $slug, taxonomy: "artist") {
+          id
+          name
+          featuredMedia {
+            ...FeaturedMedia_featuredMedia
+          }
+        }
+        shows(latest: true, term: $slug, taxonomy: "artist", first: $first) {
+          ...ShowsGrid_shows
         }
       }
-      shows(latest: true, term: $slug, taxonomy: "artist", first: $first) {
-        ...ShowsGrid_shows
-      }
-    }
-    ${FeaturedMedia.fragments.featuredMedia}
-    ${ShowsGrid.fragments.shows}
-  `,
-  {
-    options: ({ match: { params } }) => ({
+      ${FeaturedMedia.fragments.featuredMedia}
+      ${ShowsGrid.fragments.shows}
+    `,
+    {
       variables: { first: 100, slug: params.slug },
-    }),
-  }
-)
-class ArtistRoute extends Component {
-  render() {
-    const {
-      data: { loading, error, artist, shows },
-    } = this.props;
-
-    if (loading) {
-      return <Loading />;
     }
+  );
 
-    if (error || !artist) {
-      return <NotFound />;
-    }
-
-    return (
-      <>
-        <h1 className={titleClass}>{artist.name}</h1>
-        <FeaturedMedia featuredMedia={artist.featuredMedia} />
-        <ShowsGrid shows={shows} />
-      </>
-    );
+  if (loading) {
+    return <Loading />;
   }
+
+  if (error || !data) {
+    return <NotFound />;
+  }
+
+  const { artist, shows } = data;
+
+  return (
+    <>
+      <h1 className={titleClass}>{artist.name}</h1>
+      <FeaturedMedia featuredMedia={artist.featuredMedia} />
+      <ShowsGrid shows={shows} />
+    </>
+  );
 }
 
 export default ArtistRoute;

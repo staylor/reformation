@@ -1,84 +1,64 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React from 'react';
+import { gql, useQuery } from '@apollo/client';
+import { useParams } from 'react-router-dom';
 import Loading from 'components/Loading';
 import { LoadMore } from 'styles/utils';
 import Video from './Video';
 
 /* eslint-disable react/prop-types */
 
-@graphql(
-  gql`
-    query VideosQuery($first: Int, $after: String, $year: Int) {
-      videos(first: $first, after: $after, year: $year)
-        @connection(key: "videos", filter: ["year"]) {
-        edges {
-          node {
-            id
-            ...Video_video
-          }
-          cursor
-        }
-        pageInfo {
-          hasNextPage
-        }
-      }
-    }
-    ${Video.fragments.video}
-  `,
-  {
-    options: ({ match: { params } }) => {
-      const variables = { first: 10 };
-      if (params.year) {
-        variables.year = parseInt(params.year, 10);
-      }
-      return { variables };
-    },
+function Videos() {
+  const params = useParams();
+  const vars = { first: 10 };
+  if (params.year) {
+    vars.year = parseInt(params.year, 10);
   }
-)
-class Videos extends Component {
-  loadMore = e => {
-    e.preventDefault();
+  const { loading, fetchMore, variables, data } = useQuery(
+    gql`
+      query VideosQuery($first: Int, $after: String, $year: Int) {
+        videos(first: $first, after: $after, year: $year)
+          @connection(key: "videos", filter: ["year"]) {
+          edges {
+            node {
+              id
+              ...Video_video
+            }
+            cursor
+          }
+          pageInfo {
+            hasNextPage
+          }
+        }
+      }
+      ${Video.fragments.video}
+    `,
+    { variables: vars }
+  );
+  if (loading && !data) {
+    return <Loading />;
+  }
 
-    const { fetchMore, variables, videos } = this.props.data;
+  const { videos } = data;
+
+  const loadMore = e => {
+    e.preventDefault();
 
     return fetchMore({
       variables: {
         ...variables,
         after: videos.edges[videos.edges.length - 1].cursor,
       },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        const mergedResult = {
-          ...fetchMoreResult,
-          videos: {
-            ...fetchMoreResult.videos,
-            edges: previousResult.videos.edges.concat(fetchMoreResult.videos.edges),
-          },
-        };
-
-        return mergedResult;
-      },
     });
   };
 
-  render() {
-    const {
-      data: { loading, videos },
-    } = this.props;
-
-    if (loading && !videos) {
-      return <Loading />;
-    }
-
-    return (
-      <>
-        {videos.edges.map(edge => (
-          <Video key={edge.node.id} video={edge.node} />
-        ))}
-        {videos.pageInfo.hasNextPage && <LoadMore onClick={this.loadMore}>MORE</LoadMore>}
-      </>
-    );
-  }
+  return (
+    <>
+      {videos.edges.map(edge => (
+        <Video key={edge.node.id} video={edge.node} />
+      ))}
+      {videos.pageInfo.hasNextPage && <LoadMore onClick={loadMore}>MORE</LoadMore>}
+    </>
+  );
 }
 
 export default Videos;
