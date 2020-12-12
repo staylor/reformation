@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import MediaModal from 'components/Modals/Media';
@@ -8,87 +8,73 @@ import { imageClass, audioClass } from './styled';
 
 /* eslint-disable react/prop-types */
 
-export default class FeaturedMedia extends Component {
-  static propTypes = {
-    type: PropTypes.string,
-    buttonText: PropTypes.string,
-  };
+function FeaturedMedia({ media, type, onChange, buttonText }) {
+  const [modal, setModal] = useState(false);
+  const [selected, setSelected] = useState(null);
 
-  static defaultProps = {
-    type: undefined,
-    buttonText: 'Set Featured Media',
-  };
+  const onClose = () => setModal(false);
 
-  state = {
-    modal: false,
-    media: null,
-  };
-
-  onClose = () => this.setState({ modal: false });
-
-  onClick = e => {
+  const onClick = e => {
     e.preventDefault();
-    this.setState({ modal: true });
+    setModal(true);
   };
 
-  selectImage = data => {
-    this.props.onChange([data.imageId]);
-    this.setState({ media: [data.image] });
+  const selectImage = data => {
+    onChange([data.imageId]);
+    setSelected([data.image]);
   };
 
-  selectAudio = data => {
-    this.props.onChange([data.id]);
-    this.setState({ media: [data] });
+  const selectAudio = data => {
+    onChange([data.id]);
+    setSelected([data]);
   };
 
-  render() {
-    let media = [];
-    if (this.state.media) {
-      ({ media } = this.state);
-    } else if (this.props.media) {
-      ({ media } = this.props);
-    }
-
-    return (
-      <>
-        {this.state.modal && (
-          <MediaModal
-            type={this.props.type}
-            selectAudio={this.selectAudio}
-            selectImage={this.selectImage}
-            onClose={this.onClose}
-          />
-        )}
-        {media.filter(Boolean).map(item => {
-          if (this.props.type === 'audio') {
-            return (
-              <figure key={item.id} className={audioClass}>
-                <audio // eslint-disable-line
-                  controls
-                  src={uploadUrl(item.destination, item.fileName)}
-                />
-              </figure>
-            );
-          }
-
-          const crop = item && item.crops && item.crops.find(c => c.width === 150);
-          if (crop) {
-            return (
-              <img
-                className={imageClass}
-                key={crop.fileName}
-                alt=""
-                src={uploadUrl(item.destination, crop.fileName)}
-              />
-            );
-          }
-
-          return <p key={item.id}>{item.id}</p>;
-        })}
-        <Button onClick={this.onClick}>{this.props.buttonText}</Button>
-      </>
-    );
+  let featured = [];
+  if (selected) {
+    featured = selected;
+  } else if (media) {
+    featured = media;
   }
+
+  return (
+    <>
+      {modal && (
+        <MediaModal
+          type={type}
+          selectAudio={selectAudio}
+          selectImage={selectImage}
+          onClose={onClose}
+        />
+      )}
+      {featured.filter(Boolean).map(item => {
+        if (type === 'audio') {
+          return (
+            <figure key={item.id} className={audioClass}>
+              <audio // eslint-disable-line
+                controls
+                src={uploadUrl(item.destination, item.fileName)}
+              />
+            </figure>
+          );
+        }
+
+        const crop = item && item.crops && item.crops.find(c => c.width === 150);
+        if (crop) {
+          return (
+            <img
+              className={imageClass}
+              key={crop.fileName}
+              alt=""
+              src={uploadUrl(item.destination, crop.fileName)}
+            />
+          );
+        }
+
+        return <p key={item.id}>{item.id}</p>;
+      })}
+      <Button onClick={onClick}>{buttonText}</Button>
+    </>
+  );
 }
 
 FeaturedMedia.fragments = {
@@ -107,3 +93,15 @@ FeaturedMedia.fragments = {
     }
   `,
 };
+
+FeaturedMedia.propTypes = {
+  type: PropTypes.string,
+  buttonText: PropTypes.string,
+};
+
+FeaturedMedia.defaultProps = {
+  type: undefined,
+  buttonText: 'Set Featured Media',
+};
+
+export default FeaturedMedia;

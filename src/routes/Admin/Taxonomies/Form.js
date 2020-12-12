@@ -17,7 +17,9 @@ const taxonomyFields = [
 ];
 
 export default function TaxonomyForm({ taxonomy = {}, buttonLabel, onSubmit }) {
-  return <Form fields={taxonomyFields} data={taxonomy} buttonLabel={buttonLabel} onSubmit={onSubmit} />;
+  return (
+    <Form fields={taxonomyFields} data={taxonomy} buttonLabel={buttonLabel} onSubmit={onSubmit} />
+  );
 }
 
 TaxonomyForm.fragments = {
