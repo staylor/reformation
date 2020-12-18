@@ -3,13 +3,11 @@ import themeUtils from 'styles/theme';
 import responsive from 'styles/responsive';
 
 export const wrapClass = css`
-  &::after {
-    clear: both;
-    content: ' ';
-    display: table;
-  }
+  display: flex;
+  flex-direction: column-reverse;
 
   ${responsive.tablet} {
+    flex-direction: row;
     margin: 0 auto;
     width: 730px;
   }
@@ -27,7 +25,6 @@ export const videosClass = css`
 
   ${responsive.tablet} {
     border: 0 none;
-    float: left;
     margin: 0;
     padding: 0;
     width: 480px;

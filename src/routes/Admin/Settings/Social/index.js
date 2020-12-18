@@ -5,6 +5,7 @@ import SocialSettingsQuery from './SocialSettingsQuery.graphql';
 import SocialSettingsMutation from './SocialSettingsMutation.graphql';
 
 const settingsFields = [
+  { label: 'YouTube Pathname', prop: 'youtubeUsername', editable: true },
   { label: 'Twitter Username', prop: 'twitterUsername', editable: true },
   { label: 'Instagram Username', prop: 'instagramUsername', editable: true },
   {

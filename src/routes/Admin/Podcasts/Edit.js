@@ -6,31 +6,32 @@ import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import PodcastForm from './Form';
 
+const podcastQuery = gql`
+  query PodcastEditQuery($id: ObjID!) {
+    podcast(id: $id) {
+      ...PodcastForm_podcast
+    }
+  }
+  ${PodcastForm.fragments.podcast}
+`;
+
+const podcastMutation = gql`
+  mutation UpdatePodcastMutation($id: ObjID!, $input: UpdatePodcastInput!) {
+    updatePodcast(id: $id, input: $input) {
+      ...PodcastForm_podcast
+    }
+  }
+  ${PodcastForm.fragments.podcast}
+`;
+
 function EditPodcast() {
   const params = useParams();
   const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(
-    gql`
-      query PodcastEditQuery($id: ObjID!) {
-        podcast(id: $id) {
-          ...PodcastForm_podcast
-        }
-      }
-      ${PodcastForm.fragments.podcast}
-    `,
-    {
-      variables: { id: params.id },
-      fetchPolicy: 'cache-and-network',
-    }
-  );
-  const [mutate] = useMutation(gql`
-    mutation UpdatePodcastMutation($id: ObjID!, $input: UpdatePodcastInput!) {
-      updatePodcast(id: $id, input: $input) {
-        ...PodcastForm_podcast
-      }
-    }
-    ${PodcastForm.fragments.podcast}
-  `);
+  const { loading, data } = useQuery(podcastQuery, {
+    variables: { id: params.id },
+    fetchPolicy: 'cache-and-network',
+  });
+  const [mutate] = useMutation(podcastMutation);
 
   if (loading && !data) {
     return <Loading />;

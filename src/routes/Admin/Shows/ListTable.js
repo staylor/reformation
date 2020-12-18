@@ -57,6 +57,48 @@ const columns = [
   },
 ];
 
+const showsQuery = gql`
+  query ShowsAdminQuery(
+    $first: Int
+    $after: String
+    $date: Float
+    $taxonomy: String
+    $term: String
+    $search: String
+    $order: ShowOrder
+  ) {
+    shows(
+      first: $first
+      after: $after
+      date: $date
+      taxonomy: $taxonomy
+      term: $term
+      search: $search
+      order: $order
+    ) @cache(key: "admin") {
+      count
+      edges {
+        node {
+          id
+          title
+          date
+          artist {
+            id
+            name
+          }
+          venue {
+            id
+            name
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+`;
+
 function ShowsListTable() {
   const params = useParams();
   const vars = { first: PER_PAGE, order: 'DESC' };
@@ -66,55 +108,12 @@ function ShowsListTable() {
       vars.after = offsetToCursor(pageOffset * PER_PAGE - 1);
     }
   }
-  const { loading, refetch, variables, data } = useQuery(
-    gql`
-      query ShowsAdminQuery(
-        $first: Int
-        $after: String
-        $date: Float
-        $taxonomy: String
-        $term: String
-        $search: String
-        $order: ShowOrder
-      ) {
-        shows(
-          first: $first
-          after: $after
-          date: $date
-          taxonomy: $taxonomy
-          term: $term
-          search: $search
-          order: $order
-        ) @cache(key: "admin") {
-          count
-          edges {
-            node {
-              id
-              title
-              date
-              artist {
-                id
-                name
-              }
-              venue {
-                id
-                name
-              }
-            }
-          }
-          pageInfo {
-            hasNextPage
-          }
-        }
-      }
-    `,
-    {
-      variables: vars,
-      // This ensures that the table is up to date when shows are mutated.
-      // The alternative is to specify refetchQueries on all Show mutations.
-      fetchPolicy: 'cache-and-network',
-    }
-  );
+  const { loading, refetch, variables, data } = useQuery(showsQuery, {
+    variables: vars,
+    // This ensures that the table is up to date when shows are mutated.
+    // The alternative is to specify refetchQueries on all Show mutations.
+    fetchPolicy: 'cache-and-network',
+  });
   const [mutate] = useMutation(gql`
     mutation DeleteShowMutation($ids: [ObjID]!) {
       removeShow(ids: $ids)

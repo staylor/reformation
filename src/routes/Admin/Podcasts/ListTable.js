@@ -39,49 +39,48 @@ const columns = [
   },
 ];
 
-function PodcastListTable() {
-  const { variables, refetch, loading, data } = useQuery(
-    gql`
-      query PodcastsAdminQuery {
-        podcasts @cache(key: "admin") {
-          count
-          edges {
-            node {
-              id
-              title
-              image {
-                id
-                type
-                destination
-                crops {
-                  fileName
-                  width
-                }
-              }
-              audio {
-                id
-                type
-                destination
-                images {
-                  fileName
-                  width
-                }
-              }
+const podcastsQuery = gql`
+  query PodcastsAdminQuery {
+    podcasts @cache(key: "admin") {
+      count
+      edges {
+        node {
+          id
+          title
+          image {
+            id
+            type
+            destination
+            crops {
+              fileName
+              width
             }
           }
-          pageInfo {
-            hasNextPage
+          audio {
+            id
+            type
+            destination
+            images {
+              fileName
+              width
+            }
           }
         }
       }
-    `,
-    {
-      variables: { first: 1000 },
-      // This ensures that the table is up to date when podcasts are mutated.
-      // The alternative is to specify refetchQueries on all Podcast mutations.
-      fetchPolicy: 'cache-and-network',
+      pageInfo {
+        hasNextPage
+      }
     }
-  );
+  }
+`;
+
+function PodcastListTable() {
+  const { variables, refetch, loading, data } = useQuery(podcastsQuery, {
+    variables: { first: 1000 },
+    // This ensures that the table is up to date when podcasts are mutated.
+    // The alternative is to specify refetchQueries on all Podcast mutations.
+    fetchPolicy: 'cache-and-network',
+  });
   const [mutate] = useMutation(gql`
     mutation DeletePodcastMutation($ids: [ObjID]!) {
       removePodcast(ids: $ids)

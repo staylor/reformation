@@ -7,33 +7,32 @@ import FeaturedMedia from 'components/FeaturedMedia';
 import ShowsGrid from 'routes/App/Shows/Grid';
 import { titleClass, textClass } from './styled';
 
+const venueQuery = gql`
+  query VenueQuery($slug: String!, $first: Int) {
+    venue: term(slug: $slug, taxonomy: "venue") {
+      id
+      name
+      featuredMedia {
+        ...FeaturedMedia_featuredMedia
+      }
+      ... on Venue {
+        capacity
+        address
+      }
+    }
+    shows(latest: true, term: $slug, taxonomy: "venue", first: $first) {
+      ...ShowsGrid_shows
+    }
+  }
+  ${FeaturedMedia.fragments.featuredMedia}
+  ${ShowsGrid.fragments.shows}
+`;
+
 function VenueRoute() {
   const params = useParams();
-  const { error, loading, data } = useQuery(
-    gql`
-      query VenueQuery($slug: String!, $first: Int) {
-        venue: term(slug: $slug, taxonomy: "venue") {
-          id
-          name
-          featuredMedia {
-            ...FeaturedMedia_featuredMedia
-          }
-          ... on Venue {
-            capacity
-            address
-          }
-        }
-        shows(latest: true, term: $slug, taxonomy: "venue", first: $first) {
-          ...ShowsGrid_shows
-        }
-      }
-      ${FeaturedMedia.fragments.featuredMedia}
-      ${ShowsGrid.fragments.shows}
-    `,
-    {
-      variables: { first: 100, slug: params.slug },
-    }
-  );
+  const { error, loading, data } = useQuery(venueQuery, {
+    variables: { first: 100, slug: params.slug },
+  });
 
   if (loading) {
     return <Loading />;

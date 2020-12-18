@@ -4,4 +4,5 @@ fragment SocialSettings_settings on SocialSettings {
   facebookAppId
   twitterUsername
   instagramUsername
+  youtubeUsername
 }

@@ -10,7 +10,7 @@ export const navClass = css`
     justify-content: flex-start;
     margin: ${themeUtils.padding}px auto;
     text-align: center;
-    width: 640px;
+    width: 540px;
   }
 
   ${responsive.desktop} {

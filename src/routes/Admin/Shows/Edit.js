@@ -6,38 +6,39 @@ import Message from 'components/Form/Message';
 import { Heading, HeaderAdd, FormWrap } from 'routes/Admin/styled';
 import ShowForm from './Form';
 
+const showQuery = gql`
+  query ShowEditQuery($id: ObjID!) {
+    show(id: $id) {
+      ...ShowForm_show
+    }
+    artists: terms(taxonomy: "artist", first: 250) @cache(key: "admin") {
+      ...ShowForm_terms
+    }
+    venues: terms(taxonomy: "venue", first: 250) @cache(key: "admin") {
+      ...ShowForm_terms
+    }
+  }
+  ${ShowForm.fragments.show}
+  ${ShowForm.fragments.terms}
+`;
+
+const showMutation = gql`
+  mutation UpdateShowMutation($id: ObjID!, $input: UpdateShowInput!) {
+    updateShow(id: $id, input: $input) {
+      ...ShowForm_show
+    }
+  }
+  ${ShowForm.fragments.show}
+`;
+
 function EditShow() {
   const params = useParams();
   const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(
-    gql`
-      query ShowEditQuery($id: ObjID!) {
-        show(id: $id) {
-          ...ShowForm_show
-        }
-        artists: terms(taxonomy: "artist", first: 250) @cache(key: "admin") {
-          ...ShowForm_terms
-        }
-        venues: terms(taxonomy: "venue", first: 250) @cache(key: "admin") {
-          ...ShowForm_terms
-        }
-      }
-      ${ShowForm.fragments.show}
-      ${ShowForm.fragments.terms}
-    `,
-    {
-      variables: { id: params.id },
-      fetchPolicy: 'cache-and-network',
-    }
-  );
-  const [mutate] = useMutation(gql`
-    mutation UpdateShowMutation($id: ObjID!, $input: UpdateShowInput!) {
-      updateShow(id: $id, input: $input) {
-        ...ShowForm_show
-      }
-    }
-    ${ShowForm.fragments.show}
-  `);
+  const { loading, data } = useQuery(showQuery, {
+    variables: { id: params.id },
+    fetchPolicy: 'cache-and-network',
+  });
+  const [mutate] = useMutation(showMutation);
 
   if (loading && !data) {
     return <Loading />;

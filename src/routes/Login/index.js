@@ -8,27 +8,26 @@ import Message from 'components/Form/Message';
 import { TOKEN_KEY } from 'utils/constants';
 import * as styles from './styled';
 
+const loginQuery = gql`
+  query LoginQuery($id: String) {
+    settings(id: $id) {
+      ... on SiteSettings {
+        siteTitle
+        siteUrl
+      }
+    }
+  }
+`;
+
 function Login() {
   const form = useRef(null);
   const params = useParams();
   const initialError =
     params.action === 'unauthorized' ? 'You must login to access this area.' : undefined;
   const [error, setError] = useState(initialError);
-  const { loading, data } = useQuery(
-    gql`
-      query LoginQuery($id: String) {
-        settings(id: $id) {
-          ... on SiteSettings {
-            siteTitle
-            siteUrl
-          }
-        }
-      }
-    `,
-    {
-      variables: { id: 'site' },
-    }
-  );
+  const { loading, data } = useQuery(loginQuery, {
+    variables: { id: 'site' },
+  });
 
   if (loading && !data) {
     return null;

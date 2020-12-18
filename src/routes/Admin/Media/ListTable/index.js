@@ -90,6 +90,48 @@ const columns = [
   },
 ];
 
+const uploadsQuery = gql`
+  query UploadsAdminQuery(
+    $first: Int
+    $after: String
+    $type: String
+    $mimeType: String
+    $search: String
+  ) {
+    uploads(first: $first, after: $after, type: $type, mimeType: $mimeType, search: $search)
+      @cache(key: "admin") {
+      types
+      mimeTypes
+      count
+      edges {
+        node {
+          id
+          type
+          mimeType
+          title
+          originalName
+          destination
+          ... on ImageUpload {
+            crops {
+              fileName
+              width
+            }
+          }
+          ... on AudioUpload {
+            images {
+              fileName
+              width
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+`;
+
 function MediaListTable() {
   const location = useLocation();
   const params = useParams();
@@ -113,52 +155,12 @@ function MediaListTable() {
       vars.after = offsetToCursor(pageOffset * PER_PAGE - 1);
     }
   }
-  const { variables, refetch, loading, data } = useQuery(
-    gql`
-      query UploadsAdminQuery(
-        $first: Int
-        $after: String
-        $type: String
-        $mimeType: String
-        $search: String
-      ) {
-        uploads(first: $first, after: $after, type: $type, mimeType: $mimeType, search: $search)
-          @cache(key: "admin") {
-          types
-          mimeTypes
-          count
-          edges {
-            node {
-              id
-              type
-              mimeType
-              title
-              originalName
-              destination
-              ... on ImageUpload {
-                crops {
-                  fileName
-                  width
-                }
-              }
-              ... on AudioUpload {
-                images {
-                  fileName
-                  width
-                }
-              }
-            }
-          }
-          pageInfo {
-            hasNextPage
-          }
-        }
-      }
-    `,
+  const { variables, refetch, loading, data } = useQuery(uploadsQuery, {
+    variables: vars,
     // This ensures that the table is up to date when uploads are mutated.
-    // The alternative is to specify refetchQueries on all Post mutations.
-    { variables: vars, fetchPolicy: 'cache-and-network' }
-  );
+    // The alternative is to specify refetchQueries on all Upload mutations.
+    fetchPolicy: 'cache-and-network',
+  });
 
   const [mutate] = useMutation(gql`
     mutation DeleteMediaMutation($ids: [ObjID]!) {

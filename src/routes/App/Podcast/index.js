@@ -10,40 +10,39 @@ import AppleLogo from './Apple';
 import SpotifyLogo from './Spotify';
 import * as styles from './styled';
 
-function PodcastRoute() {
-  const params = useParams();
-  const { loading, error, data } = useQuery(
-    gql`
-      query PodcastQuery($id: ObjID!) {
-        settings(id: "podcast") {
-          ... on PodcastSettings {
-            title
-            description
-            feedLink
-            image {
-              id
-              destination
-              fileName
-            }
-          }
-        }
-        podcast(id: $id) {
+const podcastQuery = gql`
+  query PodcastQuery($id: ObjID!) {
+    settings(id: "podcast") {
+      ... on PodcastSettings {
+        title
+        description
+        feedLink
+        image {
           id
-          title
-          description
-          audio {
-            id
-            duration
-            destination
-            fileName
-          }
+          destination
+          fileName
         }
       }
-    `,
-    {
-      variables: { id: params.id },
     }
-  );
+    podcast(id: $id) {
+      id
+      title
+      description
+      audio {
+        id
+        duration
+        destination
+        fileName
+      }
+    }
+  }
+`;
+
+function PodcastRoute() {
+  const params = useParams();
+  const { loading, error, data } = useQuery(podcastQuery, {
+    variables: { id: params.id },
+  });
 
   if (loading) {
     return <Loading />;
@@ -108,17 +107,6 @@ function PodcastRoute() {
                 className={styles.logoClass}
               >
                 <SpotifyLogo className={styles.spotifyClass} />
-              </a>
-              <a
-                href="https://playmusic.app.goo.gl/?ibi=com.google.PlayMusic&amp;isi=691797987&amp;ius=googleplaymusic&amp;apn=com.google.android.music&amp;link=https://play.google.com/music/m/Iukr2tc7jjrlfprqwtnkf7wswcy?t%3DHigh_for_This%26pcampaignid%3DMKT-na-all-co-pr-mu-pod-16"
-                rel="nofollow"
-                className={styles.logoClass}
-              >
-                <img
-                  className={styles.googleClass}
-                  alt="Listen on Google Play Music"
-                  src="https://play.google.com/intl/en_us/badges-music/images/badges/en_badge_web_music.png"
-                />
               </a>
             </footer>
           </article>

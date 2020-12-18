@@ -1,6 +1,6 @@
 #import "./PodcastSettings_settings.graphql"
 
-mutation UpdateSettingsMutation($id: String!, $input: PodcastSettingsInput!) {
+mutation UpdatePodcastSettingsMutation($id: String!, $input: PodcastSettingsInput!) {
   updatePodcastSettings(id: $id, input: $input) {
     ...PodcastSettings_settings
   }

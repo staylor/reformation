@@ -4,7 +4,6 @@ import responsive from 'styles/responsive';
 
 export const wrapClass = css`
   ${responsive.tablet} {
-    float: left;
     margin-right: 20px;
     width: 230px;
   }

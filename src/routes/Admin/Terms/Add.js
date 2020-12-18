@@ -6,32 +6,33 @@ import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import TermForm from './Form';
 
+const termQuery = gql`
+  query TermTaxonomyQuery($id: ObjID) {
+    taxonomy(id: $id) {
+      ...TermForm_taxonomy
+    }
+  }
+  ${TermForm.fragments.taxonomy}
+`;
+
+const termMutation = gql`
+  mutation CreateTermMutation($input: CreateTermInput!) {
+    createTerm(input: $input) {
+      ...TermForm_term
+    }
+  }
+  ${TermForm.fragments.term}
+`;
+
 function AddTerm() {
   const params = useParams();
   const history = useHistory();
   const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(
-    gql`
-      query TermTaxonomyQuery($id: ObjID) {
-        taxonomy(id: $id) {
-          ...TermForm_taxonomy
-        }
-      }
-      ${TermForm.fragments.taxonomy}
-    `,
-    {
-      variables: { id: params.taxonomyId },
-      fetchPolicy: 'cache-and-network',
-    }
-  );
-  const [mutate] = useMutation(gql`
-    mutation CreateTermMutation($input: CreateTermInput!) {
-      createTerm(input: $input) {
-        ...TermForm_term
-      }
-    }
-    ${TermForm.fragments.term}
-  `);
+  const { loading, data } = useQuery(termQuery, {
+    variables: { id: params.taxonomyId },
+    fetchPolicy: 'cache-and-network',
+  });
+  const [mutate] = useMutation(termMutation);
 
   if (loading && !data) {
     return <Loading />;

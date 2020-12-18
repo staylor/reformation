@@ -51,38 +51,39 @@ const columns = [
   },
 ];
 
-function TaxonomiesListTable() {
-  const { loading, variables, refetch, data } = useQuery(
-    gql`
-      query TaxonomiesAdminQuery {
-        taxonomies @cache(key: "admin") {
-          count
-          edges {
-            node {
-              id
-              name
-              slug
-              description
-            }
-          }
-          pageInfo {
-            hasNextPage
-          }
+const taxQuery = gql`
+  query TaxonomiesAdminQuery {
+    taxonomies @cache(key: "admin") {
+      count
+      edges {
+        node {
+          id
+          name
+          slug
+          description
         }
       }
-    `,
-    {
-      variables: { first: 1000 },
-      // This ensures that the table is up to date when taxonomies are mutated.
-      // The alternative is to specify refetchQueries on all Taxonomy mutations.
-      fetchPolicy: 'cache-and-network',
+      pageInfo {
+        hasNextPage
+      }
     }
-  );
-  const [mutate] = useMutation(gql`
-    mutation DeleteTaxonomyMutation($ids: [ObjID]!) {
-      removeTaxonomy(ids: $ids)
-    }
-  `);
+  }
+`;
+
+const taxMutation = gql`
+  mutation DeleteTaxonomyMutation($ids: [ObjID]!) {
+    removeTaxonomy(ids: $ids)
+  }
+`;
+
+function TaxonomiesListTable() {
+  const { loading, variables, refetch, data } = useQuery(taxQuery, {
+    variables: { first: 1000 },
+    // This ensures that the table is up to date when taxonomies are mutated.
+    // The alternative is to specify refetchQueries on all Taxonomy mutations.
+    fetchPolicy: 'cache-and-network',
+  });
+  const [mutate] = useMutation(taxMutation);
 
   if (loading && !data) {
     return <Loading />;

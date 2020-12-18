@@ -1,8 +1,10 @@
 import React from 'react';
+import { mailchimpClass } from './styled';
 
 export default function Mailchimp() {
   return (
     <section
+      className={mailchimpClass}
       dangerouslySetInnerHTML={{
         __html: `
         <!-- Begin Mailchimp Signup Form -->

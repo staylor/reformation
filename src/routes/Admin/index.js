@@ -9,34 +9,33 @@ import * as styles from './styled';
 import NavMenu from './NavMenu';
 import routeConfig from './routeConfig';
 
-function Admin() {
-  const [isCollapsed, setCollapsed] = useState(false);
-  const { loading, data } = useQuery(
-    gql`
-      query AdminQuery {
-        settings(id: "site") {
-          ... on SiteSettings {
-            siteTitle
-            siteUrl
-            language
-          }
-        }
-        taxonomies @cache(key: "admin") {
-          edges {
-            node {
-              id
-              name
-              plural
-              slug
-            }
-          }
+const adminQuery = gql`
+  query AdminQuery {
+    settings(id: "site") {
+      ... on SiteSettings {
+        siteTitle
+        siteUrl
+        language
+      }
+    }
+    taxonomies @cache(key: "admin") {
+      edges {
+        node {
+          id
+          name
+          plural
+          slug
         }
       }
-    `,
-    {
-      fetchPolicy: 'cache-and-network',
     }
-  );
+  }
+`;
+
+function Admin() {
+  const [isCollapsed, setCollapsed] = useState(false);
+  const { loading, data } = useQuery(adminQuery, {
+    fetchPolicy: 'cache-and-network',
+  });
 
   if (loading && !data) {
     return <Loading />;

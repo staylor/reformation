@@ -8,34 +8,33 @@ import { uploadUrl } from 'utils/media';
 import Content from './Content';
 import { wrapperClass, Title } from './styled';
 
-function PostRoute() {
-  const params = useParams();
-  const { loading, error, data } = useQuery(
-    gql`
-      query PostQuery($slug: String) {
-        post(slug: $slug) {
-          id
-          title
-          slug
-          contentState {
-            ...Content_contentState
-          }
-          summary
-          featuredMedia {
-            destination
-            ... on ImageUpload {
-              crops {
-                fileName
-                width
-              }
-            }
+const postQuery = gql`
+  query PostQuery($slug: String) {
+    post(slug: $slug) {
+      id
+      title
+      slug
+      contentState {
+        ...Content_contentState
+      }
+      summary
+      featuredMedia {
+        destination
+        ... on ImageUpload {
+          crops {
+            fileName
+            width
           }
         }
       }
-      ${Content.fragments.contentState}
-    `,
-    { variables: { slug: params.slug } }
-  );
+    }
+  }
+  ${Content.fragments.contentState}
+`;
+
+function PostRoute() {
+  const params = useParams();
+  const { loading, error, data } = useQuery(postQuery, { variables: { slug: params.slug } });
 
   if (error) {
     return <NotFound />;

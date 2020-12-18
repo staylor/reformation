@@ -6,31 +6,32 @@ import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import TermForm from './Form';
 
+const termQuery = gql`
+  query TermEditQuery($id: ObjID) {
+    term(id: $id) {
+      ...TermForm_term
+    }
+  }
+  ${TermForm.fragments.term}
+`;
+
+const termMutation = gql`
+  mutation UpdateTermMutation($id: ObjID!, $input: UpdateTermInput!) {
+    updateTerm(id: $id, input: $input) {
+      ...TermForm_term
+    }
+  }
+  ${TermForm.fragments.term}
+`;
+
 function EditTerm() {
   const params = useParams();
   const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(
-    gql`
-      query TermEditQuery($id: ObjID) {
-        term(id: $id) {
-          ...TermForm_term
-        }
-      }
-      ${TermForm.fragments.term}
-    `,
-    {
-      variables: { id: params.id },
-      fetchPolicy: 'cache-and-network',
-    }
-  );
-  const [mutate] = useMutation(gql`
-    mutation UpdateTermMutation($id: ObjID!, $input: UpdateTermInput!) {
-      updateTerm(id: $id, input: $input) {
-        ...TermForm_term
-      }
-    }
-    ${TermForm.fragments.term}
-  `);
+  const { loading, data } = useQuery(termQuery, {
+    variables: { id: params.id },
+    fetchPolicy: 'cache-and-network',
+  });
+  const [mutate] = useMutation(termMutation);
 
   if (loading && !data) {
     return <Loading />;

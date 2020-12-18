@@ -56,11 +56,6 @@ export const appleClass = css`
   width: auto;
 `;
 
-export const googleClass = css`
-  height: 50px;
-  width: auto;
-`;
-
 export const spotifyClass = css`
   height: 50px;
   width: auto;

@@ -5,6 +5,15 @@ import Loading from 'components/Loading';
 import ShowsList from 'routes/App/Shows/List';
 import ShowsGrid from 'routes/App/Shows/Grid';
 
+const showsQuery = gql`
+  query ShowsQuery($first: Int, $after: String, $taxonomy: String, $term: String) {
+    shows(latest: true, first: $first, after: $after, taxonomy: $taxonomy, term: $term) {
+      ...ShowsGrid_shows
+    }
+  }
+  ${ShowsGrid.fragments.shows}
+`;
+
 function Shows() {
   const location = useLocation();
   const params = useParams();
@@ -13,19 +22,9 @@ function Shows() {
     variables.taxonomy = params.taxonomy;
     variables.term = params.term;
   }
-  const { loading, data } = useQuery(
-    gql`
-      query ShowsQuery($first: Int, $after: String, $taxonomy: String, $term: String) {
-        shows(latest: true, first: $first, after: $after, taxonomy: $taxonomy, term: $term) {
-          ...ShowsGrid_shows
-        }
-      }
-      ${ShowsGrid.fragments.shows}
-    `,
-    {
-      variables,
-    }
-  );
+  const { loading, data } = useQuery(showsQuery, {
+    variables,
+  });
 
   if (loading && !data) {
     return <Loading />;

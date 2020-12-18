@@ -4,30 +4,32 @@ import { Link } from 'react-router-dom';
 import { uploadUrl } from 'utils/media';
 import * as styles from './styled';
 
-function Latest() {
-  const { loading, data } = useQuery(gql`
-    query LatestPostsQuery {
-      posts(first: 5, status: PUBLISH) @cache(key: "latest") {
-        edges {
-          node {
-            id
-            slug
-            title
-            summary
-            featuredMedia {
-              destination
-              ... on ImageUpload {
-                crops {
-                  fileName
-                  width
-                }
+const latestQuery = gql`
+  query LatestPostsQuery {
+    posts(first: 5, status: PUBLISH) @cache(key: "latest") {
+      edges {
+        node {
+          id
+          slug
+          title
+          summary
+          featuredMedia {
+            destination
+            ... on ImageUpload {
+              crops {
+                fileName
+                width
               }
             }
           }
         }
       }
     }
-  `);
+  }
+`;
+
+function Latest() {
+  const { loading, data } = useQuery(latestQuery);
 
   if (loading && !data) {
     return null;

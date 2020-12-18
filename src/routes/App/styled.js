@@ -16,7 +16,22 @@ export const headerClass = css`
 
 export const titleClass = css`
   display: block;
+  font-family: ${themeUtils.fonts.futura};
+  font-size: 42px;
+  font-weight: bold;
+  line-height: 52px;
   margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+
+  ${responsive.tablet} {
+    font-size: 84px;
+    line-height: 92px;
+  }
+
+  ${responsive.desktop} {
+    text-align: left;
+  }
 
   a {
     text-decoration: none;
@@ -73,6 +88,7 @@ export const secondaryClass = css`
 
 export const footerClass = css`
   font-size: 14px;
+  overflow: hidden;
   text-align: center;
 `;
 
@@ -80,8 +96,11 @@ export const socialNavClass = css`
   margin: 20px 0 0;
   text-align: center;
 
-  ${responsive.desktop} {
+  ${responsive.tablet} {
     margin: 0;
+  }
+
+  ${responsive.desktop} {
     position: absolute;
     right: 0;
     top: 13px;
@@ -98,15 +117,15 @@ const socialIconClass = css`
   text-decoration: none;
   width: 35px;
 
-  ${responsive.desktop} {
+  ${responsive.tablet} {
     font-size: 28px;
     height: 28px;
     line-height: 28px;
-    width: 45px;
+    width: 65px;
   }
 
   &:hover {
-    color: ${themeUtils.colors.black};
+    color: ${themeUtils.colors.pink};
   }
 
   span {
@@ -119,7 +138,7 @@ export const facebookIconClass = css`
   width: 22px;
 
   ${responsive.desktop} {
-    width: 30px;
+    width: 45px;
   }
 
   &::before {
@@ -143,7 +162,26 @@ export const instagramIconClass = css`
   }
 `;
 
+export const youtubeIconClass = css`
+  ${socialIconClass};
+
+  &::before {
+    content: '\\e604';
+  }
+`;
+
 export const footerNavClass = css`
   margin: 10px 0;
   text-align: center;
+`;
+
+export const mailchimpClass = css`
+  ${responsive.tablet} {
+    margin: 0 auto;
+    width: 320px;
+  }
+
+  ${responsive.desktop} {
+    width: auto;
+  }
 `;

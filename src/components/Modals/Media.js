@@ -13,45 +13,44 @@ import {
   CloseButton,
 } from './styled';
 
-function MediaModal({ type, onClose, selectAudio, selectImage }) {
-  const frameRef = useRef(null);
-  const { loading, fetchMore, data } = useQuery(
-    gql`
-      query MediaModalQuery($type: String, $first: Int, $cursor: String) {
-        uploads(after: $cursor, first: $first, type: $type) @cache(key: "modal") {
-          edges {
-            node {
-              id
-              title
-              type
-              destination
+const uploadsQuery = gql`
+  query MediaModalQuery($type: String, $first: Int, $cursor: String) {
+    uploads(after: $cursor, first: $first, type: $type) @cache(key: "modal") {
+      edges {
+        node {
+          id
+          title
+          type
+          destination
+          fileName
+          ... on ImageUpload {
+            crops {
+              width
               fileName
-              ... on ImageUpload {
-                crops {
-                  width
-                  fileName
-                }
-              }
-              ... on AudioUpload {
-                images {
-                  width
-                  fileName
-                }
-              }
             }
           }
-          pageInfo {
-            hasNextPage
-            endCursor
+          ... on AudioUpload {
+            images {
+              width
+              fileName
+            }
           }
         }
       }
-    `,
-    {
-      variables: { first: 50, type },
-      fetchPolicy: 'network-only',
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
-  );
+  }
+`;
+
+function MediaModal({ type, onClose, selectAudio, selectImage }) {
+  const frameRef = useRef(null);
+  const { loading, fetchMore, data } = useQuery(uploadsQuery, {
+    variables: { first: 50, type },
+    fetchPolicy: 'cache-and-network',
+  });
 
   const scrollListener = debounce(() => {
     const { uploads } = data;

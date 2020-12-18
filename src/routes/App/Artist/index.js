@@ -5,32 +5,30 @@ import NotFound from 'components/NotFound';
 import Loading from 'components/Loading';
 import FeaturedMedia from 'components/FeaturedMedia';
 import ShowsGrid from 'routes/App/Shows/Grid';
-
 import { titleClass } from './styled';
+
+const artistQuery = gql`
+  query ArtistQuery($slug: String!, $first: Int) {
+    artist: term(slug: $slug, taxonomy: "artist") {
+      id
+      name
+      featuredMedia {
+        ...FeaturedMedia_featuredMedia
+      }
+    }
+    shows(latest: true, term: $slug, taxonomy: "artist", first: $first) {
+      ...ShowsGrid_shows
+    }
+  }
+  ${FeaturedMedia.fragments.featuredMedia}
+  ${ShowsGrid.fragments.shows}
+`;
 
 function ArtistRoute() {
   const params = useParams();
-  const { loading, error, data } = useQuery(
-    gql`
-      query ArtistQuery($slug: String!, $first: Int) {
-        artist: term(slug: $slug, taxonomy: "artist") {
-          id
-          name
-          featuredMedia {
-            ...FeaturedMedia_featuredMedia
-          }
-        }
-        shows(latest: true, term: $slug, taxonomy: "artist", first: $first) {
-          ...ShowsGrid_shows
-        }
-      }
-      ${FeaturedMedia.fragments.featuredMedia}
-      ${ShowsGrid.fragments.shows}
-    `,
-    {
-      variables: { first: 100, slug: params.slug },
-    }
-  );
+  const { loading, error, data } = useQuery(artistQuery, {
+    variables: { first: 100, slug: params.slug },
+  });
 
   if (loading) {
     return <Loading />;

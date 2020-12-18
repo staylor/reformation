@@ -54,6 +54,26 @@ const columns = [
   },
 ];
 
+const postsQuery = gql`
+  query PostsAdminQuery($first: Int, $after: String, $search: String) {
+    posts(first: $first, after: $after, search: $search) @cache(key: "admin") {
+      count
+      edges {
+        node {
+          id
+          title
+          slug
+          status
+          date
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+`;
+
 function PostsListTable() {
   const params = useParams();
   const vars = { first: PER_PAGE };
@@ -63,30 +83,12 @@ function PostsListTable() {
       vars.after = offsetToCursor(pageOffset * PER_PAGE - 1);
     }
   }
-  const { variables, refetch, loading, data } = useQuery(
-    gql`
-      query PostsAdminQuery($first: Int, $after: String, $search: String) {
-        posts(first: $first, after: $after, search: $search) @cache(key: "admin") {
-          count
-          edges {
-            node {
-              id
-              title
-              slug
-              status
-              date
-            }
-          }
-          pageInfo {
-            hasNextPage
-          }
-        }
-      }
-    `,
+  const { variables, refetch, loading, data } = useQuery(postsQuery, {
+    variables: vars,
     // This ensures that the table is up to date when uploads are mutated.
     // The alternative is to specify refetchQueries on all Post mutations.
-    { variables: vars, fetchPolicy: 'cache-and-network' }
-  );
+    fetchPolicy: 'cache-and-network',
+  });
   const [mutate] = useMutation(gql`
     mutation DeletePostMutation($ids: [ObjID]!) {
       removePost(ids: $ids)

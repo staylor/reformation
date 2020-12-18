@@ -6,31 +6,32 @@ import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import TaxonomyForm from './Form';
 
+const taxQuery = gql`
+  query TaxonomyEditQuery($id: ObjID) {
+    taxonomy(id: $id) {
+      ...TaxonomyForm_taxonomy
+    }
+  }
+  ${TaxonomyForm.fragments.taxonomy}
+`;
+
+const taxMutation = gql`
+  mutation UpdateTaxonomyMutation($id: ObjID!, $input: UpdateTaxonomyInput!) {
+    updateTaxonomy(id: $id, input: $input) {
+      ...TaxonomyForm_taxonomy
+    }
+  }
+  ${TaxonomyForm.fragments.taxonomy}
+`;
+
 function EditTaxonomy() {
   const params = useParams();
   const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(
-    gql`
-      query TaxonomyEditQuery($id: ObjID) {
-        taxonomy(id: $id) {
-          ...TaxonomyForm_taxonomy
-        }
-      }
-      ${TaxonomyForm.fragments.taxonomy}
-    `,
-    {
-      variables: { id: params.id },
-      fetchPolicy: 'cache-and-network',
-    }
-  );
-  const [mutate] = useMutation(gql`
-    mutation UpdateTaxonomyMutation($id: ObjID!, $input: UpdateTaxonomyInput!) {
-      updateTaxonomy(id: $id, input: $input) {
-        ...TaxonomyForm_taxonomy
-      }
-    }
-    ${TaxonomyForm.fragments.taxonomy}
-  `);
+  const { loading, data } = useQuery(taxQuery, {
+    variables: { id: params.id },
+    fetchPolicy: 'cache-and-network',
+  });
+  const [mutate] = useMutation(taxMutation);
 
   if (loading && !data) {
     return <Loading />;

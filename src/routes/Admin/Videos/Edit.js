@@ -40,31 +40,32 @@ const frag = gql`
   }
 `;
 
+const videoQuery = gql`
+  query VideoEditQuery($id: ObjID) {
+    video(id: $id) {
+      ...AdminVideo_video
+    }
+  }
+  ${frag}
+`;
+
+const videoMutation = gql`
+  mutation UpdateVideoMutation($id: ObjID!, $input: UpdateVideoInput!) {
+    updateVideo(id: $id, input: $input) {
+      ...AdminVideo_video
+    }
+  }
+  ${frag}
+`;
+
 function EditVideo() {
   const params = useParams();
   const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(
-    gql`
-      query VideoEditQuery($id: ObjID) {
-        video(id: $id) {
-          ...AdminVideo_video
-        }
-      }
-      ${frag}
-    `,
-    {
-      variables: { id: params.id },
-      fetchPolicy: 'cache-and-network',
-    }
-  );
-  const [mutate] = useMutation(gql`
-    mutation UpdateVideoMutation($id: ObjID!, $input: UpdateVideoInput!) {
-      updateVideo(id: $id, input: $input) {
-        ...AdminVideo_video
-      }
-    }
-    ${frag}
-  `);
+  const { loading, data } = useQuery(videoQuery, {
+    variables: { id: params.id },
+    fetchPolicy: 'cache-and-network',
+  });
+  const [mutate] = useMutation(videoMutation);
 
   if (loading && !data) {
     return <Loading />;

@@ -1,0 +1,765 @@
+directive @cache(key: String = "") on FIELD
+
+directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
+
+"""
+Direct the client to resolve this field locally, either from the cache or local resolvers.
+"""
+directive @client(
+  """
+  When true, the client will never use the cache for this value. See
+  https://www.apollographql.com/docs/react/essentials/local-state/#forcing-resolvers-with-clientalways-true
+  """
+  always: Boolean
+) on FIELD | FRAGMENT_DEFINITION | INLINE_FRAGMENT
+
+"""
+Export this locally resolved field as a variable to be used in the remainder of this query. See
+https://www.apollographql.com/docs/react/essentials/local-state/#using-client-fields-as-variables
+"""
+directive @export(
+  """The variable name to export this field as."""
+  as: String!
+) on FIELD
+
+"""
+Specify a custom store key for this result. See
+https://www.apollographql.com/docs/react/advanced/caching/#the-connection-directive
+"""
+directive @connection(
+  """Specify the store key."""
+  key: String!
+
+  """
+  An array of query argument names to include in the generated custom store key.
+  """
+  filter: [String!]
+) on FIELD
+
+"""Id representation, based on Mongo Object Ids"""
+scalar ObjID
+
+type Query {
+  uploads(first: Int, after: String, last: Int, before: String, type: String, mimeType: String, search: String): MediaUploadConnection
+  media(id: ObjID): MediaUpload
+  podcasts(first: Int, after: String, last: Int, before: String, search: String, order: PodcastOrder): PodcastConnection
+  podcast(id: ObjID, slug: String): Podcast
+  posts(first: Int, after: String, last: Int, before: String, year: Int, status: PostStatus, search: String): PostConnection
+  post(id: ObjID, slug: String): Post
+  settings(id: String): Settings
+  shows(first: Int, after: String, last: Int, before: String, latest: Boolean, date: Float, taxonomy: String, term: String, search: String, order: ShowOrder): ShowConnection
+  show(id: ObjID, slug: String): Show
+  taxonomies(first: Int, after: String, last: Int, before: String): TaxonomyConnection
+  taxonomy(id: ObjID, slug: String): Taxonomy
+  terms(first: Int, after: String, last: Int, before: String, taxonomyId: ObjID, taxonomy: String, search: String): TermConnection
+  term(id: ObjID, slug: String, taxonomy: String): Term
+  users(first: Int, after: String, last: Int, before: String, search: String): UserConnection
+  user(id: ObjID!): User
+  videos(first: Int, after: String, last: Int, before: String, year: Int, search: String): VideoConnection
+  video(id: ObjID, slug: String): Video
+}
+
+type Mutation {
+  updateMediaUpload(id: ObjID!, input: UpdateMediaUploadInput!): MediaUpload
+  removeMediaUpload(ids: [ObjID]!): Boolean
+  createPodcast(input: CreatePodcastInput!): Podcast
+  updatePodcast(id: ObjID!, input: UpdatePodcastInput!): Podcast
+  removePodcast(ids: [ObjID]!): Boolean
+  createPost(input: CreatePostInput!): Post
+  updatePost(id: ObjID!, input: UpdatePostInput!): Post
+  removePost(ids: [ObjID]!): Boolean
+  updateSiteSettings(id: String!, input: SiteSettingsInput!): Settings
+  updateDashboardSettings(id: String!, input: DashboardSettingsInput!): Settings
+  updateSocialSettings(id: String!, input: SocialSettingsInput!): Settings
+  updateMediaSettings(id: String!, input: MediaSettingsInput!): Settings
+  updatePodcastSettings(id: String!, input: PodcastSettingsInput!): Settings
+  createShow(input: CreateShowInput!): Show
+  updateShow(id: ObjID!, input: UpdateShowInput!): Show
+  removeShow(ids: [ObjID]!): Boolean
+  createTaxonomy(input: CreateTaxonomyInput!): Taxonomy
+  updateTaxonomy(id: ObjID!, input: UpdateTaxonomyInput!): Taxonomy
+  removeTaxonomy(ids: [ObjID]!): Boolean
+  createTerm(input: CreateTermInput!): Term
+  updateTerm(id: ObjID!, input: UpdateTermInput!): Term
+  removeTerm(ids: [ObjID]!): Boolean
+  createUser(input: CreateUserInput!): User
+  updateUser(id: ObjID!, input: UpdateUserInput!): User
+  removeUser(ids: [ObjID]!): Boolean
+  createVideo(input: CreateVideoInput!): Video
+  updateVideo(id: ObjID!, input: UpdateVideoInput!): Video
+  removeVideo(id: ObjID!): Boolean
+}
+
+type PageInfo {
+  startCursor: String
+  endCursor: String
+  hasPreviousPage: Boolean
+  hasNextPage: Boolean
+}
+
+type InlineStyleRange {
+  offset: Int
+  length: Int
+  style: String
+}
+
+input InlineStyleRangeInput {
+  offset: Int
+  length: Int
+  style: String
+}
+
+type EntityRange {
+  offset: Int
+  length: Int
+  key: Int
+}
+
+input EntityRangeInput {
+  offset: Int
+  length: Int
+  key: Int
+}
+
+type Data {
+  id: String
+}
+
+input DataInput {
+  id: String
+}
+
+type Block {
+  key: String
+  text: String
+  type: String
+  depth: Int
+  inlineStyleRanges: [InlineStyleRange]
+  entityRanges: [EntityRange]
+  data: Data
+}
+
+input BlockInput {
+  key: String
+  text: String
+  type: String
+  depth: Int
+  inlineStyleRanges: [InlineStyleRangeInput]
+  entityRanges: [EntityRangeInput]
+  data: DataInput
+}
+
+type LinkData {
+  type: String
+  href: String
+  target: String
+}
+
+type EmbedData {
+  type: String
+  url: String
+  html: String
+}
+
+type ImageData {
+  type: String
+  imageId: ObjID
+  image: ImageUpload
+  size: String
+}
+
+type VideoData {
+  type: String
+  videoId: ObjID
+  video: Video
+}
+
+union EntityData = LinkData | EmbedData | ImageData | VideoData
+
+input EntityDataInput {
+  type: String!
+  url: String
+  html: String
+  href: String
+  target: String
+  imageId: String
+  size: String
+  videoId: String
+}
+
+enum EntityType {
+  LINK
+  TOKEN
+  PHOTO
+  IMAGE
+  EMBED
+  VIDEO
+}
+
+enum EntityMutability {
+  MUTABLE
+  IMMUTABLE
+  SEGMENTED
+}
+
+type Entity {
+  type: EntityType
+  mutability: EntityMutability
+  data: EntityData
+}
+
+input EntityInput {
+  type: EntityType
+  mutability: EntityMutability
+  data: EntityDataInput
+}
+
+type ContentState {
+  blocks: [Block]
+  entityMap: [Entity]
+}
+
+input ContentStateInput {
+  blocks: [BlockInput]
+  entityMap: [EntityInput]
+}
+
+interface MediaUpload {
+  id: ObjID!
+  title: String
+  originalName: String
+  destination: String
+  fileName: String
+  mimeType: String
+  type: String
+  fileSize: Int
+}
+
+type ImageUploadCrop {
+  fileName: String
+  width: Int
+  height: Int
+  fileSize: Int
+}
+
+input ImageUploadCropInput {
+  fileName: String
+  width: Int
+  height: Int
+  fileSize: Int
+}
+
+type ImageUpload implements MediaUpload {
+  id: ObjID!
+  title: String
+  originalName: String
+  destination: String
+  fileName: String
+  mimeType: String
+  type: String
+  fileSize: Int
+  width: Int
+  height: Int
+  caption: String
+  altText: String
+  crops: [ImageUploadCrop]
+}
+
+type AudioUpload implements MediaUpload {
+  id: ObjID!
+  title: String
+  description: String
+  originalName: String
+  destination: String
+  fileName: String
+  mimeType: String
+  type: String
+  fileSize: Int
+  artist: [String]
+  album: String
+  albumArtist: [String]
+  genre: [String]
+  year: Int
+  duration: Float
+  images: [ImageUploadCrop]
+}
+
+type VideoUpload implements MediaUpload {
+  id: ObjID!
+  title: String
+  description: String
+  originalName: String
+  destination: String
+  fileName: String
+  mimeType: String
+  type: String
+  fileSize: Int
+  width: Int
+  height: Int
+  duration: Float
+}
+
+type FileUpload implements MediaUpload {
+  id: ObjID!
+  title: String
+  description: String
+  originalName: String
+  destination: String
+  fileName: String
+  mimeType: String
+  type: String
+  fileSize: Int
+}
+
+type MediaUploadEdge {
+  node: MediaUpload
+  cursor: String
+}
+
+type MediaUploadConnection {
+  types: [String]
+  mimeTypes: [String]
+  count: Int
+  edges: [MediaUploadEdge]
+  pageInfo: PageInfo
+}
+
+input UpdateMediaUploadInput {
+  title: String
+  description: String
+  caption: String
+  altText: String
+}
+
+type Podcast {
+  id: ObjID!
+  title: String!
+  description: String!
+  image: ImageUpload
+  audio: AudioUpload
+  date: Float
+}
+
+type PodcastEdge {
+  node: Podcast
+  cursor: String
+}
+
+type PodcastConnection {
+  count: Int
+  edges: [PodcastEdge]
+  pageInfo: PageInfo
+}
+
+input CreatePodcastInput {
+  title: String!
+  description: String
+  image: ObjID
+  audio: ObjID
+  date: Float
+}
+
+input UpdatePodcastInput {
+  title: String!
+  description: String
+  image: ObjID
+  audio: ObjID
+  date: Float
+}
+
+enum PodcastOrder {
+  ASC
+  DESC
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISH
+}
+
+type Post {
+  id: ObjID!
+  title: String!
+  slug: String!
+  contentState: ContentState
+  summary: String
+  status: PostStatus
+  featuredMedia: [MediaUpload]
+  artists: [Term]
+  date: Float
+}
+
+type PostEdge {
+  node: Post
+  cursor: String
+}
+
+type PostConnection {
+  count: Int
+  edges: [PostEdge]
+  pageInfo: PageInfo
+}
+
+input CreatePostInput {
+  title: String!
+  contentState: ContentStateInput
+  summary: String
+  status: PostStatus
+  featuredMedia: [String]
+  artists: [String]
+  date: Float
+}
+
+input UpdatePostInput {
+  title: String
+  contentState: ContentStateInput
+  summary: String
+  status: PostStatus
+  featuredMedia: [String]
+  artists: [String]
+  date: Float
+}
+
+interface Settings {
+  id: String
+}
+
+type SiteSettings implements Settings {
+  id: String
+  siteTitle: String
+  tagline: String
+  siteUrl: String
+  emailAddress: String
+  language: String
+  copyrightText: String
+}
+
+input SiteSettingsInput {
+  siteTitle: String
+  tagline: String
+  siteUrl: String
+  emailAddress: String
+  language: String
+  copyrightText: String
+}
+
+type DashboardSettings implements Settings {
+  id: String
+  googleClientId: String
+  googleTrackingId: String
+}
+
+input DashboardSettingsInput {
+  googleClientId: String
+  googleTrackingId: String
+}
+
+type SocialSettings implements Settings {
+  id: String
+  facebookUrl: String
+  facebookAppId: String
+  twitterUsername: String
+  instagramUsername: String
+  youtubeUsername: String
+}
+
+input SocialSettingsInput {
+  facebookUrl: String
+  facebookAppId: String
+  twitterUsername: String
+  instagramUsername: String
+  youtubeUsername: String
+}
+
+type PodcastSettings implements Settings {
+  id: String
+  title: String
+  description: String
+  managingEditor: String
+  copyrightText: String
+  websiteLink: String
+  feedLink: String
+  image: ImageUpload
+  itunesName: String
+  itunesEmail: String
+  generator: String
+  language: String
+  explicit: String
+  category: String
+}
+
+input PodcastSettingsInput {
+  title: String
+  description: String
+  managingEditor: String
+  copyrightText: String
+  websiteLink: String
+  feedLink: String
+  image: ObjID
+  itunesName: String
+  itunesEmail: String
+  generator: String
+  language: String
+  explicit: String
+  category: String
+}
+
+type MediaCropSetting {
+  name: String
+  width: Int
+  height: Int
+}
+
+input MediaCropSettingInput {
+  name: String
+  width: Int
+  height: Int
+}
+
+type MediaSettings implements Settings {
+  id: String
+  crops: [MediaCropSetting]
+}
+
+input MediaSettingsInput {
+  crops: [MediaCropSettingInput]
+}
+
+type Show {
+  id: ObjID!
+  title: String!
+  notes: String
+  date: Float!
+  url: String
+  artist: Term
+  venue: Term
+}
+
+type ShowEdge {
+  node: Show
+  cursor: String
+}
+
+type ShowConnection {
+  count: Int
+  edges: [ShowEdge]
+  pageInfo: PageInfo
+}
+
+input CreateShowInput {
+  title: String!
+  notes: String
+  date: Float!
+  url: String
+  artist: ObjID!
+  venue: ObjID!
+}
+
+input UpdateShowInput {
+  title: String
+  notes: String
+  date: Float
+  url: String
+  artist: ObjID
+  venue: ObjID
+}
+
+enum ShowOrder {
+  ASC
+  DESC
+}
+
+type Taxonomy {
+  id: ObjID!
+  name: String
+  plural: String
+  slug: String
+  description: String
+}
+
+type TaxonomyEdge {
+  node: Taxonomy
+  cursor: String
+}
+
+type TaxonomyConnection {
+  count: Int
+  edges: [TaxonomyEdge]
+  pageInfo: PageInfo
+}
+
+input CreateTaxonomyInput {
+  name: String!
+  plural: String
+  slug: String
+  description: String
+}
+
+input UpdateTaxonomyInput {
+  name: String
+  plural: String
+  slug: String
+  description: String
+}
+
+interface Term {
+  id: ObjID!
+  name: String
+  slug: String
+  description: String
+  taxonomy: Taxonomy
+  featuredMedia: [MediaUpload]
+}
+
+type Artist implements Term {
+  id: ObjID!
+  name: String
+  slug: String
+  description: String
+  taxonomy: Taxonomy
+  featuredMedia: [MediaUpload]
+}
+
+type Venue implements Term {
+  id: ObjID!
+  name: String
+  slug: String
+  description: String
+  taxonomy: Taxonomy
+  capacity: String
+  address: String
+  featuredMedia: [MediaUpload]
+}
+
+type TermEdge {
+  node: Term
+  cursor: String
+}
+
+type TermConnection {
+  taxonomy: Taxonomy
+  count: Int
+  edges: [TermEdge]
+  pageInfo: PageInfo
+}
+
+input CreateTermInput {
+  name: String!
+  slug: String
+  description: String
+  taxonomy: ObjID!
+  featuredMedia: [String]
+  capacity: String
+  address: String
+}
+
+input UpdateTermInput {
+  name: String
+  slug: String
+  description: String
+  taxonomy: ObjID
+  featuredMedia: [String]
+  capacity: String
+  address: String
+}
+
+type User {
+  id: ObjID!
+  name: String
+  email: String!
+  bio: String
+  roles: [String]
+}
+
+type UserEdge {
+  node: User
+  cursor: String
+}
+
+type UserConnection {
+  count: Int
+  edges: [UserEdge]
+  pageInfo: PageInfo
+}
+
+input CreateUserInput {
+  name: String
+  email: String
+  bio: String
+  password: String
+  roles: [String]
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  bio: String
+  password: String
+  roles: [String]
+}
+
+type Video {
+  id: ObjID!
+  dataId: String
+  slug: String
+  dataType: String
+  dataPlaylistIds: [String]
+  year: Int
+  publishedAt: Float!
+  publishedISO: String
+  title: String
+  thumbnails: [VideoThumbnail]
+  position: Int
+  createdAt: Float!
+  updatedAt: Float!
+}
+
+type VideoThumbnail {
+  url: String
+  width: Int
+  height: Int
+}
+
+type VideoEdge {
+  node: Video
+  cursor: String
+}
+
+type VideoConnection {
+  years: [Int]
+  count: Int
+  edges: [VideoEdge]
+  pageInfo: PageInfo
+}
+
+input CreateVideoInput {
+  dataId: String
+  slug: String!
+  dataType: String
+  dataPlaylistIds: [String]
+  year: Int!
+  publishedAt: Float!
+  publishedISO: String
+  title: String!
+  position: Int
+}
+
+input UpdateVideoInput {
+  dataId: String
+  slug: String
+  dataType: String
+  dataPlaylistIds: [String]
+  year: Int
+  publishedAt: Float
+  publishedISO: String
+  title: String
+  position: Int
+}
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

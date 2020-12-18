@@ -6,31 +6,32 @@ import Message from 'components/Form/Message';
 import { FormWrap } from 'routes/Admin/styled';
 import PostForm from './Form';
 
+const postQuery = gql`
+  query PostEditQuery($id: ObjID!) {
+    post(id: $id) {
+      ...PostForm_post
+    }
+  }
+  ${PostForm.fragments.post}
+`;
+
+const postMutation = gql`
+  mutation UpdatePostMutation($id: ObjID!, $input: UpdatePostInput!) {
+    updatePost(id: $id, input: $input) {
+      ...PostForm_post
+    }
+  }
+  ${PostForm.fragments.post}
+`;
+
 function EditPost() {
   const params = useParams();
   const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(
-    gql`
-      query PostEditQuery($id: ObjID!) {
-        post(id: $id) {
-          ...PostForm_post
-        }
-      }
-      ${PostForm.fragments.post}
-    `,
-    {
-      variables: { id: params.id },
-      fetchPolicy: 'cache-and-network',
-    }
-  );
-  const [mutate] = useMutation(gql`
-    mutation UpdatePostMutation($id: ObjID!, $input: UpdatePostInput!) {
-      updatePost(id: $id, input: $input) {
-        ...PostForm_post
-      }
-    }
-    ${PostForm.fragments.post}
-  `);
+  const { loading, data } = useQuery(postQuery, {
+    variables: { id: params.id },
+    fetchPolicy: 'cache-and-network',
+  });
+  const [mutate] = useMutation(postMutation);
 
   if (loading && !data) {
     return <Loading />;

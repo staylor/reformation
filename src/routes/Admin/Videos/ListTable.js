@@ -53,6 +53,27 @@ const columns = [
   },
 ];
 
+const videosQuery = gql`
+  query VideosAdminQuery($first: Int, $after: String, $year: Int, $search: String) {
+    videos(first: $first, after: $after, year: $year, search: $search) @cache(key: "admin") {
+      count
+      years
+      edges {
+        node {
+          id
+          title
+          slug
+          publishedAt
+          year
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+`;
+
 function VideosListTable() {
   const location = useLocation();
   const params = useParams();
@@ -72,31 +93,12 @@ function VideosListTable() {
       vars.after = offsetToCursor(pageOffset * PER_PAGE - 1);
     }
   }
-  const { loading, variables, data } = useQuery(
-    gql`
-      query VideosAdminQuery($first: Int, $after: String, $year: Int, $search: String) {
-        videos(first: $first, after: $after, year: $year, search: $search) @cache(key: "admin") {
-          count
-          years
-          edges {
-            node {
-              id
-              title
-              slug
-              publishedAt
-              year
-            }
-          }
-          pageInfo {
-            hasNextPage
-          }
-        }
-      }
-    `,
+  const { loading, variables, data } = useQuery(videosQuery, {
+    variables: vars,
     // This ensures that the table is up to date when uploads are mutated.
-    // The alternative is to specify refetchQueries on all Post mutations.
-    { variables: vars, fetchPolicy: 'cache-and-network' }
-  );
+    // The alternative is to specify refetchQueries on all Video mutations.
+    fetchPolicy: 'cache-and-network',
+  });
 
   const updateProp = prop => value => {
     const p = {};

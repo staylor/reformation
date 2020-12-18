@@ -13,32 +13,31 @@ import {
   CloseButton,
 } from './styled';
 
-function VideoModal({ selectVideo, onClose }) {
-  const frameRef = useRef(null);
-  const { loading, fetchMore, data } = useQuery(
-    gql`
-      query VideoModalQuery($cursor: String, $first: Int) {
-        videos(after: $cursor, first: $first) @cache(key: "modal") {
-          edges {
-            node {
-              id
-              ...Video_video
-            }
-          }
-          pageInfo {
-            hasNextPage
-            endCursor
-          }
+const videosQuery = gql`
+  query VideoModalQuery($cursor: String, $first: Int) {
+    videos(after: $cursor, first: $first) @cache(key: "modal") {
+      edges {
+        node {
+          id
+          ...Video_video
         }
       }
-      ${Video.fragments.video},
-    `,
-    {
-      variables: {
-        first: 50,
-      },
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
-  );
+  }
+  ${Video.fragments.video},
+`;
+
+function VideoModal({ selectVideo, onClose }) {
+  const frameRef = useRef(null);
+  const { loading, fetchMore, data } = useQuery(videosQuery, {
+    variables: {
+      first: 50,
+    },
+  });
 
   const scrollListener = debounce(() => {
     const { videos } = data;

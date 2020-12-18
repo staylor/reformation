@@ -11,6 +11,59 @@ import { Heading, HeaderAdd } from 'routes/Admin/styled';
 
 const PER_PAGE = 20;
 
+const termsQuery = gql`
+  query TermsAdminQuery(
+    $first: Int
+    $after: String
+    $taxonomyId: ObjID!
+    $taxonomy: String
+    $search: String
+  ) {
+    terms(
+      first: $first
+      after: $after
+      taxonomyId: $taxonomyId
+      taxonomy: $taxonomy
+      search: $search
+    ) @cache(key: "admin") {
+      taxonomy {
+        id
+        name
+        slug
+        plural
+      }
+      count
+      edges {
+        node {
+          id
+          name
+          slug
+          taxonomy {
+            id
+          }
+          featuredMedia {
+            ... on ImageUpload {
+              type
+              destination
+              crops {
+                fileName
+                width
+              }
+            }
+          }
+          ... on Venue {
+            capacity
+            address
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+`;
+
 function TermsListTable() {
   const params = useParams();
   const vars = { first: PER_PAGE, taxonomyId: params.taxonomyId };
@@ -20,66 +73,12 @@ function TermsListTable() {
       vars.after = offsetToCursor(pageOffset * PER_PAGE - 1);
     }
   }
-  const { variables, refetch, loading, data } = useQuery(
-    gql`
-      query TermsAdminQuery(
-        $first: Int
-        $after: String
-        $taxonomyId: ObjID!
-        $taxonomy: String
-        $search: String
-      ) {
-        terms(
-          first: $first
-          after: $after
-          taxonomyId: $taxonomyId
-          taxonomy: $taxonomy
-          search: $search
-        ) @cache(key: "admin") {
-          taxonomy {
-            id
-            name
-            slug
-            plural
-          }
-          count
-          edges {
-            node {
-              id
-              name
-              slug
-              taxonomy {
-                id
-              }
-              featuredMedia {
-                ... on ImageUpload {
-                  type
-                  destination
-                  crops {
-                    fileName
-                    width
-                  }
-                }
-              }
-              ... on Venue {
-                capacity
-                address
-              }
-            }
-          }
-          pageInfo {
-            hasNextPage
-          }
-        }
-      }
-    `,
+  const { variables, refetch, loading, data } = useQuery(termsQuery, {
+    variables: vars,
     // This ensures that the table is up to date when taxonomies are mutated.
-    // The alternative is to specify refetchQueries on all Taxonomy mutations.
-    {
-      variables: vars,
-      fetchPolicy: 'cache-and-network',
-    }
-  );
+    // The alternative is to specify refetchQueries on all Term mutations.
+    fetchPolicy: 'cache-and-network',
+  });
   const [mutate] = useMutation(gql`
     mutation DeleteTermMutation($ids: [ObjID]!) {
       removeTerm(ids: $ids)

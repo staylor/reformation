@@ -41,36 +41,37 @@ const columns = [
   },
 ];
 
-function UsersListTable() {
-  const { variables, refetch, loading, data } = useQuery(
-    gql`
-      query UsersAdminQuery {
-        users @cache(key: "admin") {
-          count
-          edges {
-            node {
-              id
-              name
-            }
-          }
-          pageInfo {
-            hasNextPage
-          }
+const usersQuery = gql`
+  query UsersAdminQuery {
+    users @cache(key: "admin") {
+      count
+      edges {
+        node {
+          id
+          name
         }
       }
-    `,
-    {
-      variables: { first: 1000 },
-      // This ensures that the table is up to date when users are mutated.
-      // The alternative is to specify refetchQueries on all User mutations.
-      fetchPolicy: 'cache-and-network',
+      pageInfo {
+        hasNextPage
+      }
     }
-  );
-  const [mutate] = useMutation(gql`
-    mutation DeleteUserMutation($ids: [ObjID]!) {
-      removeUser(ids: $ids)
-    }
-  `);
+  }
+`;
+
+const usersMutation = gql`
+  mutation DeleteUserMutation($ids: [ObjID]!) {
+    removeUser(ids: $ids)
+  }
+`;
+
+function UsersListTable() {
+  const { variables, refetch, loading, data } = useQuery(usersQuery, {
+    variables: { first: 1000 },
+    // This ensures that the table is up to date when users are mutated.
+    // The alternative is to specify refetchQueries on all User mutations.
+    fetchPolicy: 'cache-and-network',
+  });
+  const [mutate] = useMutation(usersMutation);
 
   if (loading && !data) {
     return <Loading />;

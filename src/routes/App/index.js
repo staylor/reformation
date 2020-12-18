@@ -5,7 +5,6 @@ import { cx, ThemeProvider } from 'pretty-lights';
 import { Helmet } from 'react-helmet-async';
 import dynamic from 'kyt-runtime/dynamic';
 import NotFound from 'components/NotFound';
-import Logo from 'components/Logo';
 import Sidebar from './Sidebar';
 import Navigation from './Nav';
 import AppContext from './Context';
@@ -24,38 +23,41 @@ const PodcastList = dynamic(() =>
 );
 const Podcast = dynamic(() => import(/* webpackChunkName: "podcast" */ 'routes/App/Podcast'));
 
+const appQuery = gql`
+  query AppQuery {
+    settings(id: "site") {
+      ... on SiteSettings {
+        siteTitle
+        tagline
+        siteUrl
+        language
+        copyrightText
+      }
+    }
+    dashboardSettings: settings(id: "dashboard") {
+      ... on DashboardSettings {
+        googleTrackingId
+      }
+    }
+    socialSettings: settings(id: "social") {
+      ... on SocialSettings {
+        facebookUrl
+        facebookAppId
+        twitterUsername
+        instagramUsername
+        youtubeUsername
+      }
+    }
+  }
+`;
+
 function App() {
   const location = useLocation();
   useEffect(() => {
     document.documentElement.scrollTop = 0;
   }, [location.pathname]);
 
-  const { loading, data } = useQuery(gql`
-    query AppQuery {
-      settings(id: "site") {
-        ... on SiteSettings {
-          siteTitle
-          tagline
-          siteUrl
-          language
-          copyrightText
-        }
-      }
-      dashboardSettings: settings(id: "dashboard") {
-        ... on DashboardSettings {
-          googleTrackingId
-        }
-      }
-      socialSettings: settings(id: "social") {
-        ... on SocialSettings {
-          facebookUrl
-          facebookAppId
-          twitterUsername
-          instagramUsername
-        }
-      }
-    }
-  `);
+  const { loading, data } = useQuery(appQuery);
 
   if (loading && !data) {
     return null;
@@ -65,6 +67,14 @@ function App() {
 
   const social = (
     <>
+      {socialSettings.youtubeUsername && (
+        <a
+          className={cx('icon-font', styles.youtubeIconClass)}
+          href={`https://youtube.com/${socialSettings.twitterUsername}`}
+        >
+          <span>YouTube</span>
+        </a>
+      )}
       {socialSettings.instagramUsername && (
         <a
           className={cx('icon-font', styles.instagramIconClass)}
@@ -113,9 +123,7 @@ function App() {
           </Helmet>
           <header className={styles.headerClass}>
             <h1 className={styles.titleClass}>
-              <Link to="/">
-                <Logo />
-              </Link>
+              <Link to="/">High for This</Link>
             </h1>
             <nav className={styles.socialNavClass}>{social}</nav>
             <Navigation />

@@ -7,34 +7,33 @@ import Video from './Video';
 
 /* eslint-disable react/prop-types */
 
+const videosQuery = gql`
+  query VideosQuery($first: Int, $after: String, $year: Int, $cacheKey: String) {
+    videos(first: $first, after: $after, year: $year) @cache(key: $cacheKey) {
+      edges {
+        node {
+          id
+          ...Video_video
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+  ${Video.fragments.video}
+`;
+
 function Videos({ cacheKey }) {
   const params = useParams();
   const variables = { first: 10, cacheKey: cacheKey || 'videos' };
   if (params.year) {
     variables.year = parseInt(params.year, 10);
   }
-  const { loading, fetchMore, data } = useQuery(
-    gql`
-      query VideosQuery($first: Int, $after: String, $year: Int, $cacheKey: String) {
-        videos(first: $first, after: $after, year: $year) @cache(key: $cacheKey) {
-          edges {
-            node {
-              id
-              ...Video_video
-            }
-            cursor
-          }
-          pageInfo {
-            hasNextPage
-          }
-        }
-      }
-      ${Video.fragments.video}
-    `,
-    {
-      variables,
-    }
-  );
+  const { loading, fetchMore, data } = useQuery(videosQuery, {
+    variables,
+  });
   if (loading && !data) {
     return <Loading />;
   }
