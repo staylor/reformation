@@ -1,4 +1,4 @@
-import client from 'apollo/client';
+import client from '../../apollo/client';
 
 export default (req, res, next) => {
   const port = parseInt(KYT.SERVER_PORT, 10);
