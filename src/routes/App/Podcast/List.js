@@ -9,8 +9,6 @@ import AppleLogo from './Apple';
 import SpotifyLogo from './Spotify';
 import * as styles from './styled';
 
-/* eslint-disable react/prop-types */
-
 function PodcastsRoute() {
   const { loading, error, data } = useQuery(
     gql`

@@ -8,8 +8,6 @@ import ShowsGrid from 'routes/App/Shows/Grid';
 
 import { titleClass } from './styled';
 
-/* eslint-disable react/prop-types */
-
 function ArtistRoute() {
   const params = useParams();
   const { loading, error, data } = useQuery(

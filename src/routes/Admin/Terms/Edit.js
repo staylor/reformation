@@ -1,84 +1,68 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import TermForm from './Form';
 
-/* eslint-disable react/prop-types */
-
-@graphql(
-  gql`
-    query TermAdminQuery($id: ObjID) {
-      term(id: $id) {
-        ...TermForm_term
+function EditTerm() {
+  const params = useParams();
+  const [message, setMessage] = useState(null);
+  const { loading, data } = useQuery(
+    gql`
+      query TermEditQuery($id: ObjID) {
+        term(id: $id) {
+          ...TermForm_term
+        }
       }
-    }
-    ${TermForm.fragments.term}
-  `,
-  {
-    options: ({ match: { params } }) => ({
+      ${TermForm.fragments.term}
+    `,
+    {
       variables: { id: params.id },
-    }),
-  }
-)
-@graphql(
-  gql`
+      fetchPolicy: 'cache-and-network',
+    }
+  );
+  const [mutate] = useMutation(gql`
     mutation UpdateTermMutation($id: ObjID!, $input: UpdateTermInput!) {
       updateTerm(id: $id, input: $input) {
         ...TermForm_term
       }
     }
     ${TermForm.fragments.term}
-  `
-)
-class EditTerm extends Component {
-  state = {
-    message: null,
-  };
+  `);
 
-  onSubmit = (e, updates) => {
+  if (loading && !data) {
+    return <Loading />;
+  }
+
+  const { term } = data;
+
+  const onSubmit = (e, updates) => {
     e.preventDefault();
 
-    const { term } = this.props.data;
-    this.props
-      .mutate({
-        variables: {
-          id: term.id,
-          input: updates,
-        },
-      })
+    mutate({
+      variables: {
+        id: term.id,
+        input: updates,
+      },
+    })
       .then(() => {
-        this.setState({ message: 'updated' });
+        setMessage('updated');
         document.documentElement.scrollTop = 0;
       })
-      .catch(() => this.setState({ message: 'error' }));
+      .catch(() => setMessage('error'));
   };
 
-  render() {
-    const {
-      data: { loading, term },
-    } = this.props;
-
-    if (loading && !term) {
-      return <Loading />;
-    }
-
-    return (
-      <>
-        <Heading>{`Edit ${term.taxonomy.name}`}</Heading>
-        {this.state.message === 'updated' && <Message text={`${term.taxonomy.name} updated.`} />}
-        <FormWrap>
-          <TermForm
-            term={term}
-            buttonLabel={`Update ${term.taxonomy.name}`}
-            onSubmit={this.onSubmit}
-          />
-        </FormWrap>
-      </>
-    );
-  }
+  return (
+    <>
+      <Heading>{`Edit ${term.taxonomy.name}`}</Heading>
+      {message === 'updated' && <Message text={`${term.taxonomy.name} updated.`} />}
+      <FormWrap>
+        <TermForm term={term} buttonLabel={`Update ${term.taxonomy.name}`} onSubmit={onSubmit} />
+      </FormWrap>
+    </>
+  );
 }
 
 export default EditTerm;

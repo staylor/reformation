@@ -1,78 +1,68 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import UserForm from './Form';
 
-/* eslint-disable react/prop-types */
-
-@graphql(
-  gql`
-    query UserAdminQuery($id: ObjID!) {
-      user(id: $id) {
+function EditUser() {
+  const params = useParams();
+  const [message, setMessage] = useState(null);
+  const { loading, data } = useQuery(
+    gql`
+      query UserEditQuery($id: ObjID!) {
+        user(id: $id) {
+          ...UserForm_user
+        }
+      }
+      ${UserForm.fragments.user}
+    `,
+    {
+      variables: { id: params.id },
+      fetchPolicy: 'cache-and-network',
+    }
+  );
+  const [mutate] = useMutation(gql`
+    mutation UpdateUserMutation($id: ObjID!, $input: UpdateUserInput!) {
+      updateUser(id: $id, input: $input) {
         ...UserForm_user
       }
     }
     ${UserForm.fragments.user}
-  `,
-  {
-    options: ({ match: { params } }) => ({
-      variables: { id: params.id },
-    }),
-  }
-)
-@graphql(gql`
-  mutation UpdateUserMutation($id: ObjID!, $input: UpdateUserInput!) {
-    updateUser(id: $id, input: $input) {
-      ...UserForm_user
-    }
-  }
-  ${UserForm.fragments.user}
-`)
-class EditUser extends Component {
-  state = {
-    message: null,
-  };
+  `);
 
-  onSubmit = (e, updates) => {
+  if (loading && !data) {
+    return <Loading />;
+  }
+
+  const { user } = data;
+
+  const onSubmit = (e, updates) => {
     e.preventDefault();
 
-    const { user } = this.props.data;
-    this.props
-      .mutate({
-        variables: {
-          id: user.id,
-          input: updates,
-        },
-      })
+    mutate({
+      variables: {
+        id: user.id,
+        input: updates,
+      },
+    })
       .then(() => {
-        this.setState({ message: 'updated' });
+        setMessage('updated');
         document.documentElement.scrollTop = 0;
       })
-      .catch(() => this.setState({ message: 'error' }));
+      .catch(() => setMessage('error'));
   };
 
-  render() {
-    const {
-      data: { loading, user },
-    } = this.props;
-
-    if (loading && !user) {
-      return <Loading />;
-    }
-
-    return (
-      <>
-        <Heading>Edit User</Heading>
-        {this.state.message === 'updated' && <Message text="User updated." />}
-        <FormWrap>
-          <UserForm user={user} buttonLabel="Update User" onSubmit={this.onSubmit} />
-        </FormWrap>
-      </>
-    );
-  }
+  return (
+    <>
+      <Heading>Edit User</Heading>
+      {message === 'updated' && <Message text="User updated." />}
+      <FormWrap>
+        <UserForm user={user} buttonLabel="Update User" onSubmit={onSubmit} />
+      </FormWrap>
+    </>
+  );
 }
 
 export default EditUser;

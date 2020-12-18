@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React from 'react';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 
-/* eslint-disable react/prop-types,react/no-multi-comp */
+/* eslint-disable react/no-multi-comp */
 
 const columns = [
   {
@@ -42,69 +41,57 @@ const columns = [
   },
 ];
 
-@graphql(
-  gql`
-    query UsersQuery {
-      users @connection(key: "users") {
-        count
-        edges {
-          node {
-            id
-            name
+function UsersListTable() {
+  const { variables, refetch, loading, data } = useQuery(
+    gql`
+      query UsersAdminQuery {
+        users @cache(key: "admin") {
+          count
+          edges {
+            node {
+              id
+              name
+            }
+          }
+          pageInfo {
+            hasNextPage
           }
         }
-        pageInfo {
-          hasNextPage
-        }
       }
-    }
-  `,
-  {
-    options: {
+    `,
+    {
       variables: { first: 1000 },
       // This ensures that the table is up to date when users are mutated.
       // The alternative is to specify refetchQueries on all User mutations.
       fetchPolicy: 'cache-and-network',
-    },
-  }
-)
-@graphql(
-  gql`
+    }
+  );
+  const [mutate] = useMutation(gql`
     mutation DeleteUserMutation($ids: [ObjID]!) {
       removeUser(ids: $ids)
     }
-  `
-)
-class Users extends Component {
-  render() {
-    const {
-      location,
-      match,
-      mutate,
-      data: { variables, refetch, loading, users },
-    } = this.props;
+  `);
 
-    if (loading && !users) {
-      return <Loading />;
-    }
-
-    return (
-      <>
-        <Heading>User</Heading>
-        <HeaderAdd to="/user/add">Add User</HeaderAdd>
-        <ListTable
-          location={location}
-          match={match}
-          columns={columns}
-          mutate={mutate}
-          refetch={refetch}
-          variables={variables}
-          data={users}
-          path="/user"
-        />
-      </>
-    );
+  if (loading && !data) {
+    return <Loading />;
   }
+
+  const { users } = data;
+
+  return (
+    <>
+      <Heading>User</Heading>
+      <HeaderAdd to="/user/add">Add User</HeaderAdd>
+      <ListTable
+        columns={columns}
+        mutate={mutate}
+        refetch={refetch}
+        variables={variables}
+        data={users}
+        path="/user"
+      />
+    </>
+  );
 }
 
-export default Users;
+export default UsersListTable;

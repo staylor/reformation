@@ -5,8 +5,6 @@ import Loading from 'components/Loading';
 import ShowsList from 'routes/App/Shows/List';
 import ShowsGrid from 'routes/App/Shows/Grid';
 
-/* eslint-disable react/prop-types */
-
 function Shows() {
   const location = useLocation();
   const params = useParams();
@@ -18,8 +16,7 @@ function Shows() {
   const { loading, data } = useQuery(
     gql`
       query ShowsQuery($first: Int, $after: String, $taxonomy: String, $term: String) {
-        shows(latest: true, first: $first, after: $after, taxonomy: $taxonomy, term: $term)
-          @connection(key: "shows", filter: ["taxonomy", "term"]) {
+        shows(latest: true, first: $first, after: $after, taxonomy: $taxonomy, term: $term) {
           ...ShowsGrid_shows
         }
       }

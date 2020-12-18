@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import { compose, graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React from 'react';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 
-/* eslint-disable react/prop-types,react/no-multi-comp */
+/* eslint-disable react/no-multi-comp */
 
 const columns = [
   {
@@ -52,71 +51,59 @@ const columns = [
   },
 ];
 
-@graphql(
-  gql`
-    query TaxonomyQuery {
-      taxonomies @connection(key: "taxonomies") {
-        count
-        edges {
-          node {
-            id
-            name
-            slug
-            description
+function TaxonomiesListTable() {
+  const { loading, variables, refetch, data } = useQuery(
+    gql`
+      query TaxonomiesAdminQuery {
+        taxonomies @cache(key: "admin") {
+          count
+          edges {
+            node {
+              id
+              name
+              slug
+              description
+            }
+          }
+          pageInfo {
+            hasNextPage
           }
         }
-        pageInfo {
-          hasNextPage
-        }
       }
-    }
-  `,
-  {
-    options: {
+    `,
+    {
       variables: { first: 1000 },
       // This ensures that the table is up to date when taxonomies are mutated.
       // The alternative is to specify refetchQueries on all Taxonomy mutations.
       fetchPolicy: 'cache-and-network',
-    },
-  }
-)
-@graphql(
-  gql`
+    }
+  );
+  const [mutate] = useMutation(gql`
     mutation DeleteTaxonomyMutation($ids: [ObjID]!) {
       removeTaxonomy(ids: $ids)
     }
-  `
-)
-class Taxonomies extends Component {
-  render() {
-    const {
-      location,
-      match,
-      mutate,
-      data: { loading, taxonomies, refetch, variables },
-    } = this.props;
+  `);
 
-    if (loading && !taxonomies) {
-      return <Loading />;
-    }
-
-    return (
-      <>
-        <Heading>Taxonomy</Heading>
-        <HeaderAdd to="/taxonomy/add">Add Taxonomy</HeaderAdd>
-        <ListTable
-          location={location}
-          match={match}
-          columns={columns}
-          mutate={mutate}
-          refetch={refetch}
-          variables={variables}
-          data={taxonomies}
-          path="/taxonomy"
-        />
-      </>
-    );
+  if (loading && !data) {
+    return <Loading />;
   }
+
+  const { taxonomies } = data;
+
+  return (
+    <>
+      <Heading>Taxonomy</Heading>
+      <HeaderAdd to="/taxonomy/add">Add Taxonomy</HeaderAdd>
+      <ListTable
+        columns={columns}
+        mutate={mutate}
+        refetch={refetch}
+        variables={variables}
+        data={taxonomies}
+        path="/taxonomy"
+      />
+    </>
+  );
 }
 
-export default Taxonomies;
+export default TaxonomiesListTable;

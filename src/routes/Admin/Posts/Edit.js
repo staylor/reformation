@@ -1,84 +1,67 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { FormWrap } from 'routes/Admin/styled';
 import PostForm from './Form';
 
-/* eslint-disable react/prop-types */
-
-@graphql(
-  gql`
-    query PostAdminQuery($id: ObjID!) {
-      post(id: $id) {
+function EditPost() {
+  const params = useParams();
+  const [message, setMessage] = useState(null);
+  const { loading, data } = useQuery(
+    gql`
+      query PostEditQuery($id: ObjID!) {
+        post(id: $id) {
+          ...PostForm_post
+        }
+      }
+      ${PostForm.fragments.post}
+    `,
+    {
+      variables: { id: params.id },
+      fetchPolicy: 'cache-and-network',
+    }
+  );
+  const [mutate] = useMutation(gql`
+    mutation UpdatePostMutation($id: ObjID!, $input: UpdatePostInput!) {
+      updatePost(id: $id, input: $input) {
         ...PostForm_post
       }
     }
     ${PostForm.fragments.post}
-  `,
-  {
-    options: ({ match: { params } }) => ({
-      variables: { id: params.id },
-      fetchPolicy: 'cache-and-network',
-    }),
-  }
-)
-@graphql(gql`
-  mutation UpdatePostMutation($id: ObjID!, $input: UpdatePostInput!) {
-    updatePost(id: $id, input: $input) {
-      ...PostForm_post
-    }
-  }
-  ${PostForm.fragments.post}
-`)
-class EditPost extends Component {
-  state = {
-    message: null,
-  };
+  `);
 
-  onSubmit = (e, updates) => {
+  if (loading && !data) {
+    return <Loading />;
+  }
+
+  const { post } = data;
+
+  const onSubmit = (e, updates) => {
     e.preventDefault();
 
-    const input = { ...updates };
-
-    const { post } = this.props.data;
-    this.props
-      .mutate({
-        variables: {
-          id: post.id,
-          input,
-        },
-      })
+    mutate({
+      variables: {
+        id: post.id,
+        input: updates,
+      },
+    })
       .then(() => {
-        this.setState({ message: 'updated' });
+        setMessage('updated');
         document.documentElement.scrollTop = 0;
       })
-      .catch(() => this.setState({ message: 'error' }));
+      .catch(() => setMessage('error'));
   };
 
-  render() {
-    const {
-      data: { loading, error, post },
-    } = this.props;
-
-    if (error) {
-      return <Message text={error.message} />;
-    }
-
-    if (loading && !post) {
-      return <Loading />;
-    }
-
-    return (
-      <>
-        {this.state.message === 'updated' && <Message text="Post updated." />}
-        <FormWrap>
-          <PostForm post={post} buttonLabel="Update Post" onSubmit={this.onSubmit} />
-        </FormWrap>
-      </>
-    );
-  }
+  return (
+    <>
+      {message === 'updated' && <Message text="Post updated." />}
+      <FormWrap>
+        <PostForm post={post} buttonLabel="Update Post" onSubmit={onSubmit} />
+      </FormWrap>
+    </>
+  );
 }
 
 export default EditPost;

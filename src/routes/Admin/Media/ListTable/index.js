@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { gql, useQuery, useMutation } from '@apollo/client';
+import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
 import debounce from 'debounce';
 import { parse, stringify } from 'query-string';
 import Loading from 'components/Loading';
@@ -18,7 +17,7 @@ import { offsetToCursor } from 'utils/connection';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 import { titleColumnClass } from './styled';
 
-/* eslint-disable react/prop-types,react/no-multi-comp */
+/* eslint-disable react/no-multi-comp */
 
 const PER_PAGE = 20;
 
@@ -91,160 +90,156 @@ const columns = [
   },
 ];
 
-@graphql(
-  gql`
-    query UploadsQuery(
-      $first: Int
-      $after: String
-      $type: String
-      $mimeType: String
-      $search: String
-    ) {
-      uploads(first: $first, after: $after, type: $type, mimeType: $mimeType, search: $search)
-        @connection(key: "uploads", filter: ["type", "mimeType", "search"]) {
-        types
-        mimeTypes
-        count
-        edges {
-          node {
-            id
-            type
-            mimeType
-            title
-            originalName
-            destination
-            ... on ImageUpload {
-              crops {
-                fileName
-                width
+function MediaListTable() {
+  const location = useLocation();
+  const params = useParams();
+  const history = useHistory();
+  const queryParams = parse(location.search);
+
+  const vars = { first: PER_PAGE };
+  if (queryParams.search) {
+    // $TODO: sanitize this
+    vars.search = queryParams.search;
+  }
+  if (queryParams.type) {
+    vars.type = queryParams.type;
+  }
+  if (queryParams.mimeType) {
+    vars.mimeType = queryParams.mimeType;
+  }
+  if (params.page) {
+    const pageOffset = parseInt(params.page, 10) - 1;
+    if (pageOffset > 0) {
+      vars.after = offsetToCursor(pageOffset * PER_PAGE - 1);
+    }
+  }
+  const { variables, refetch, loading, data } = useQuery(
+    gql`
+      query UploadsAdminQuery(
+        $first: Int
+        $after: String
+        $type: String
+        $mimeType: String
+        $search: String
+      ) {
+        uploads(first: $first, after: $after, type: $type, mimeType: $mimeType, search: $search)
+          @cache(key: "admin") {
+          types
+          mimeTypes
+          count
+          edges {
+            node {
+              id
+              type
+              mimeType
+              title
+              originalName
+              destination
+              ... on ImageUpload {
+                crops {
+                  fileName
+                  width
+                }
               }
-            }
-            ... on AudioUpload {
-              images {
-                fileName
-                width
+              ... on AudioUpload {
+                images {
+                  fileName
+                  width
+                }
               }
             }
           }
-        }
-        pageInfo {
-          hasNextPage
+          pageInfo {
+            hasNextPage
+          }
         }
       }
-    }
-  `,
-  {
-    options: ({ match, location }) => {
-      const queryParams = parse(location.search);
-      const { params } = match;
+    `,
+    // This ensures that the table is up to date when uploads are mutated.
+    // The alternative is to specify refetchQueries on all Post mutations.
+    { variables: vars, fetchPolicy: 'cache-and-network' }
+  );
 
-      const variables = { first: PER_PAGE };
-      if (queryParams.search) {
-        // $TODO: sanitize this
-        variables.search = queryParams.search;
-      }
-      if (queryParams.type) {
-        variables.type = queryParams.type;
-      }
-      if (queryParams.mimeType) {
-        variables.mimeType = queryParams.mimeType;
-      }
-      if (params.page) {
-        const pageOffset = parseInt(params.page, 10) - 1;
-        if (pageOffset > 0) {
-          variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
-        }
-      }
-      // This ensures that the table is up to date when uploads are mutated.
-      // The alternative is to specify refetchQueries on all Post mutations.
-      return { variables, fetchPolicy: 'cache-and-network' };
-    },
-  }
-)
-@graphql(gql`
-  mutation DeleteMediaMutation($ids: [ObjID]!) {
-    removeMediaUpload(ids: $ids)
-  }
-`)
-class Media extends Component {
-  updateProp = prop => value => {
-    const params = {};
-    if (value) {
-      params[prop] = value;
+  const [mutate] = useMutation(gql`
+    mutation DeleteMediaMutation($ids: [ObjID]!) {
+      removeMediaUpload(ids: $ids)
     }
-    this.props.history.push({
+  `);
+
+  const updateProp = prop => value => {
+    const p = {};
+    if (value) {
+      p[prop] = value;
+    }
+    history.push({
       pathname: '/media',
-      search: stringify(params),
+      search: stringify(p),
     });
   };
 
-  updateType = this.updateProp('type');
+  const updateType = updateProp('type');
 
-  updateMimeType = this.updateProp('mimeType');
+  const updateMimeType = updateProp('mimeType');
 
-  updateSearch = debounce(this.updateProp('search'), 600);
+  const updateSearch = debounce(updateProp('search'), 600);
 
-  render() {
-    const {
-      location,
-      match,
-      mutate,
-      data: { variables, refetch, loading, uploads },
-    } = this.props;
+  const header = (
+    <>
+      <Heading>Media</Heading>
+      <HeaderAdd to="/media/upload">Add Media</HeaderAdd>
+    </>
+  );
 
-    if (loading && !uploads) {
-      return <Loading />;
-    }
-
-    const queryParams = parse(location.search);
-
-    const filters = (
-      <>
-        <Select
-          key="type"
-          placeholder="Select Media Type"
-          value={queryParams.type}
-          choices={uploads.types.map(type => ({
-            value: type,
-            label: type.charAt(0).toUpperCase() + type.substring(1),
-          }))}
-          onChange={this.updateType}
-        />
-        <Select
-          key="mimeType"
-          placeholder="Select MIME Type"
-          value={queryParams.mimeType}
-          choices={uploads.mimeTypes}
-          onChange={this.updateMimeType}
-        />
-      </>
-    );
-
+  if (loading && !data) {
     return (
       <>
-        <Heading>Media</Heading>
-        <HeaderAdd to="/media/upload">Add Media</HeaderAdd>
-        <div className={searchBoxClass}>
-          <Input
-            value={queryParams.search}
-            placeholder="Search Media"
-            onChange={this.updateSearch}
-          />
-        </div>
-        <ListTable
-          location={location}
-          match={match}
-          filters={filters}
-          columns={columns}
-          variables={variables}
-          mutate={mutate}
-          refetch={refetch}
-          data={uploads}
-          path="/media"
-        />
+        {header}
+        <Loading />
       </>
     );
   }
+
+  const { uploads } = data;
+
+  const filters = (
+    <>
+      <Select
+        key="type"
+        placeholder="Select Media Type"
+        value={queryParams.type}
+        choices={uploads.types.map(type => ({
+          value: type,
+          label: type.charAt(0).toUpperCase() + type.substring(1),
+        }))}
+        onChange={updateType}
+      />
+      <Select
+        key="mimeType"
+        placeholder="Select MIME Type"
+        value={queryParams.mimeType}
+        choices={uploads.mimeTypes}
+        onChange={updateMimeType}
+      />
+    </>
+  );
+
+  return (
+    <>
+      {header}
+      <div className={searchBoxClass}>
+        <Input value={queryParams.search} placeholder="Search Media" onChange={updateSearch} />
+      </div>
+      <ListTable
+        filters={filters}
+        columns={columns}
+        variables={variables}
+        mutate={mutate}
+        refetch={refetch}
+        data={uploads}
+        path="/media"
+      />
+    </>
+  );
 }
 
-export default Media;
+export default MediaListTable;

@@ -1,52 +1,46 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { gql, useMutation } from '@apollo/client';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import PodcastForm from './Form';
 
-/* eslint-disable react/prop-types */
-
-@graphql(gql`
-  mutation CreatePodcastMutation($input: CreatePodcastInput!) {
-    createPodcast(input: $input) {
-      id
+function AddPodcast() {
+  const history = useHistory();
+  const [message, setMessage] = useState(null);
+  const [mutate] = useMutation(gql`
+    mutation CreatePodcastMutation($input: CreatePodcastInput!) {
+      createPodcast(input: $input) {
+        id
+      }
     }
-  }
-`)
-class AddPodcast extends Component {
-  state = {
-    message: null,
-  };
+  `);
 
-  onSubmit = (e, updates) => {
+  const onSubmit = (e, updates) => {
     e.preventDefault();
 
-    this.props
-      .mutate({
-        variables: {
-          input: updates,
-        },
-      })
+    mutate({
+      variables: {
+        input: updates,
+      },
+    })
       .then(({ data: { createPodcast } }) => {
-        this.props.history.push({
+        history.push({
           pathname: `/podcast/${createPodcast.id}`,
         });
       })
-      .catch(() => this.setState({ message: 'error' }));
+      .catch(() => setMessage('error'));
   };
 
-  render() {
-    return (
-      <>
-        <Heading>Add Podcast</Heading>
-        {this.state.message === 'error' && <Message text="Error adding podcast." />}
-        <FormWrap>
-          <PodcastForm buttonLabel="Add Podcast" onSubmit={this.onSubmit} />
-        </FormWrap>
-      </>
-    );
-  }
+  return (
+    <>
+      <Heading>Add Podcast</Heading>
+      {message === 'error' && <Message text="Error adding podcast." />}
+      <FormWrap>
+        <PodcastForm buttonLabel="Add Podcast" onSubmit={onSubmit} />
+      </FormWrap>
+    </>
+  );
 }
 
 export default AddPodcast;

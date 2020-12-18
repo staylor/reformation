@@ -7,17 +7,16 @@ import Video from './Video';
 
 /* eslint-disable react/prop-types */
 
-function Videos() {
+function Videos({ cacheKey }) {
   const params = useParams();
-  const vars = { first: 10 };
+  const variables = { first: 10, cacheKey: cacheKey || 'videos' };
   if (params.year) {
-    vars.year = parseInt(params.year, 10);
+    variables.year = parseInt(params.year, 10);
   }
-  const { loading, fetchMore, variables, data } = useQuery(
+  const { loading, fetchMore, data } = useQuery(
     gql`
-      query VideosQuery($first: Int, $after: String, $year: Int) {
-        videos(first: $first, after: $after, year: $year)
-          @connection(key: "videos", filter: ["year"]) {
+      query VideosQuery($first: Int, $after: String, $year: Int, $cacheKey: String) {
+        videos(first: $first, after: $after, year: $year) @cache(key: $cacheKey) {
           edges {
             node {
               id
@@ -32,7 +31,9 @@ function Videos() {
       }
       ${Video.fragments.video}
     `,
-    { variables: vars }
+    {
+      variables,
+    }
   );
   if (loading && !data) {
     return <Loading />;
@@ -45,7 +46,6 @@ function Videos() {
 
     return fetchMore({
       variables: {
-        ...variables,
         after: videos.edges[videos.edges.length - 1].cursor,
       },
     });

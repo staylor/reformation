@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React from 'react';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 
-/* eslint-disable react/prop-types,react/no-multi-comp */
+/* eslint-disable react/no-multi-comp */
 
 const columns = [
   {
@@ -40,87 +39,86 @@ const columns = [
   },
 ];
 
-@graphql(
-  gql`
-    query PodcastsQuery {
-      podcasts @connection(key: "podcasts") {
-        count
-        edges {
-          node {
-            id
-            title
-            image {
+function PodcastListTable() {
+  const { variables, refetch, loading, data } = useQuery(
+    gql`
+      query PodcastsAdminQuery {
+        podcasts @cache(key: "admin") {
+          count
+          edges {
+            node {
               id
-              type
-              destination
-              crops {
-                fileName
-                width
+              title
+              image {
+                id
+                type
+                destination
+                crops {
+                  fileName
+                  width
+                }
               }
-            }
-            audio {
-              id
-              type
-              destination
-              images {
-                fileName
-                width
+              audio {
+                id
+                type
+                destination
+                images {
+                  fileName
+                  width
+                }
               }
             }
           }
-        }
-        pageInfo {
-          hasNextPage
+          pageInfo {
+            hasNextPage
+          }
         }
       }
-    }
-  `,
-  {
-    options: {
+    `,
+    {
       variables: { first: 1000 },
       // This ensures that the table is up to date when podcasts are mutated.
       // The alternative is to specify refetchQueries on all Podcast mutations.
       fetchPolicy: 'cache-and-network',
-    },
-  }
-)
-@graphql(
-  gql`
+    }
+  );
+  const [mutate] = useMutation(gql`
     mutation DeletePodcastMutation($ids: [ObjID]!) {
       removePodcast(ids: $ids)
     }
-  `
-)
-class Podcasts extends Component {
-  render() {
-    const {
-      location,
-      match,
-      mutate,
-      data: { variables, refetch, loading, podcasts },
-    } = this.props;
+  `);
 
-    if (loading && !podcasts) {
-      return <Loading />;
-    }
+  const header = (
+    <>
+      <Heading>Podcast</Heading>
+      <HeaderAdd to="/podcast/add">Add Podcast</HeaderAdd>
+    </>
+  );
 
+  if (loading && !data) {
     return (
       <>
-        <Heading>Podcast</Heading>
-        <HeaderAdd to="/podcast/add">Add Podcast</HeaderAdd>
-        <ListTable
-          location={location}
-          match={match}
-          columns={columns}
-          mutate={mutate}
-          refetch={refetch}
-          variables={variables}
-          data={podcasts}
-          path="/podcast"
-        />
+        {header}
+        <Loading />
       </>
     );
   }
+
+  const { podcasts } = data;
+
+  return (
+    <>
+      {header}
+      <ListTable
+        columns={columns}
+        mutate={mutate}
+        refetch={refetch}
+        variables={variables}
+        data={podcasts}
+        path="/podcast"
+      />
+    </>
+  );
 }
 
-export default Podcasts;
+export default PodcastListTable;

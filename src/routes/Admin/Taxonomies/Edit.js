@@ -1,84 +1,68 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import TaxonomyForm from './Form';
 
-/* eslint-disable react/prop-types */
-
-@graphql(
-  gql`
-    query TaxonomyAdminQuery($id: ObjID) {
-      taxonomy(id: $id) {
-        ...TaxonomyForm_taxonomy
+function EditTaxonomy() {
+  const params = useParams();
+  const [message, setMessage] = useState(null);
+  const { loading, data } = useQuery(
+    gql`
+      query TaxonomyEditQuery($id: ObjID) {
+        taxonomy(id: $id) {
+          ...TaxonomyForm_taxonomy
+        }
       }
-    }
-    ${TaxonomyForm.fragments.taxonomy}
-  `,
-  {
-    options: ({ match: { params } }) => ({
+      ${TaxonomyForm.fragments.taxonomy}
+    `,
+    {
       variables: { id: params.id },
-    }),
-  }
-)
-@graphql(
-  gql`
+      fetchPolicy: 'cache-and-network',
+    }
+  );
+  const [mutate] = useMutation(gql`
     mutation UpdateTaxonomyMutation($id: ObjID!, $input: UpdateTaxonomyInput!) {
       updateTaxonomy(id: $id, input: $input) {
         ...TaxonomyForm_taxonomy
       }
     }
     ${TaxonomyForm.fragments.taxonomy}
-  `
-)
-class EditTaxonomy extends Component {
-  state = {
-    message: null,
-  };
+  `);
 
-  onSubmit = (e, updates) => {
+  if (loading && !data) {
+    return <Loading />;
+  }
+
+  const { taxonomy } = data;
+
+  const onSubmit = (e, updates) => {
     e.preventDefault();
 
-    const { taxonomy } = this.props.data;
-    this.props
-      .mutate({
-        variables: {
-          id: taxonomy.id,
-          input: updates,
-        },
-      })
+    mutate({
+      variables: {
+        id: taxonomy.id,
+        input: updates,
+      },
+    })
       .then(() => {
-        this.setState({ message: 'updated' });
+        setMessage('updated');
         document.documentElement.scrollTop = 0;
       })
-      .catch(() => this.setState({ message: 'error' }));
+      .catch(() => setMessage('error'));
   };
 
-  render() {
-    const {
-      data: { loading, taxonomy },
-    } = this.props;
-
-    if (loading && !taxonomy) {
-      return <Loading />;
-    }
-
-    return (
-      <>
-        <Heading>Edit Taxonomy</Heading>
-        {this.state.message === 'updated' && <Message text="Taxonomy updated." />}
-        <FormWrap>
-          <TaxonomyForm
-            taxonomy={taxonomy}
-            buttonLabel="Update Taxonomy"
-            onSubmit={this.onSubmit}
-          />
-        </FormWrap>
-      </>
-    );
-  }
+  return (
+    <>
+      <Heading>Edit Taxonomy</Heading>
+      {message === 'updated' && <Message text="Taxonomy updated." />}
+      <FormWrap>
+        <TaxonomyForm taxonomy={taxonomy} buttonLabel="Update Taxonomy" onSubmit={onSubmit} />
+      </FormWrap>
+    </>
+  );
 }
 
 export default EditTaxonomy;

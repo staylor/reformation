@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom';
 import { uploadUrl } from 'utils/media';
 import * as styles from './styled';
 
-/* eslint-disable react/prop-types */
-
 function Latest() {
   const { loading, data } = useQuery(gql`
     query LatestPostsQuery {
-      posts(first: 5, status: PUBLISH) @connection(key: "latest", filter: ["status"]) {
+      posts(first: 5, status: PUBLISH) @cache(key: "latest") {
         edges {
           node {
             id

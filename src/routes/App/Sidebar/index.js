@@ -2,13 +2,11 @@ import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { headingClass, showClass, timeClass } from './styled';
 
-/* eslint-disable react/prop-types */
-
 function Sidebar() {
   const { loading, data } = useQuery(
     gql`
       query SidebarQuery($first: Int!) {
-        shows(latest: true, first: $first) @connection(key: "shows", filter: ["latest"]) {
+        shows(latest: true, first: $first) @cache(key: "sidebar") {
           edges {
             node {
               id

@@ -10,8 +10,6 @@ import AppleLogo from './Apple';
 import SpotifyLogo from './Spotify';
 import * as styles from './styled';
 
-/* eslint-disable react/prop-types */
-
 function PodcastRoute() {
   const params = useParams();
   const { loading, error, data } = useQuery(

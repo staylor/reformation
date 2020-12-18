@@ -1,88 +1,72 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import TermForm from './Form';
 
-/* eslint-disable react/prop-types */
-
-@graphql(
-  gql`
-    query TermTaxonomyQuery($id: ObjID) {
-      taxonomy(id: $id) {
-        ...TermForm_taxonomy
+function AddTerm() {
+  const params = useParams();
+  const history = useHistory();
+  const [message, setMessage] = useState(null);
+  const { loading, data } = useQuery(
+    gql`
+      query TermTaxonomyQuery($id: ObjID) {
+        taxonomy(id: $id) {
+          ...TermForm_taxonomy
+        }
       }
-    }
-    ${TermForm.fragments.taxonomy}
-  `,
-  {
-    options: ({ match: { params } }) => ({
+      ${TermForm.fragments.taxonomy}
+    `,
+    {
       variables: { id: params.taxonomyId },
-    }),
-  }
-)
-@graphql(
-  gql`
+      fetchPolicy: 'cache-and-network',
+    }
+  );
+  const [mutate] = useMutation(gql`
     mutation CreateTermMutation($input: CreateTermInput!) {
       createTerm(input: $input) {
         ...TermForm_term
       }
     }
     ${TermForm.fragments.term}
-  `
-)
-class AddTerm extends Component {
-  state = {
-    message: null,
-  };
+  `);
 
-  onSubmit = (e, updates) => {
+  if (loading && !data) {
+    return <Loading />;
+  }
+
+  const { taxonomy } = data;
+
+  const onSubmit = (e, updates) => {
     e.preventDefault();
 
-    const taxonomyId = this.props.data.taxonomy.id;
-
-    this.props
-      .mutate({
-        variables: {
-          input: {
-            ...updates,
-            taxonomy: taxonomyId,
-          },
+    mutate({
+      variables: {
+        input: {
+          ...updates,
+          taxonomy: taxonomy.id,
         },
-      })
+      },
+    })
       .then(({ data: { createTerm } }) => {
-        this.props.history.push({
+        history.push({
           pathname: `/terms/${createTerm.taxonomy.id}/${createTerm.id}`,
         });
       })
-      .catch(() => this.setState({ message: 'error' }));
+      .catch(() => setMessage('error'));
   };
 
-  render() {
-    const {
-      data: { loading, taxonomy },
-    } = this.props;
-
-    if (loading && !taxonomy) {
-      return <Loading />;
-    }
-
-    return (
-      <>
-        <Heading>{`Add ${taxonomy.name}`}</Heading>
-        {this.state.message === 'error' && <Message text={`Error adding ${taxonomy.name}.`} />}
-        <FormWrap>
-          <TermForm
-            term={{ taxonomy }}
-            buttonLabel={`Add ${taxonomy.name}`}
-            onSubmit={this.onSubmit}
-          />
-        </FormWrap>
-      </>
-    );
-  }
+  return (
+    <>
+      <Heading>{`Add ${taxonomy.name}`}</Heading>
+      {message === 'error' && <Message text={`Error adding ${taxonomy.name}.`} />}
+      <FormWrap>
+        <TermForm term={{ taxonomy }} buttonLabel={`Add ${taxonomy.name}`} onSubmit={onSubmit} />
+      </FormWrap>
+    </>
+  );
 }
 
 export default AddTerm;

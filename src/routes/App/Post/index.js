@@ -8,8 +8,6 @@ import { uploadUrl } from 'utils/media';
 import Content from './Content';
 import { wrapperClass, Title } from './styled';
 
-/* eslint-disable react/prop-types */
-
 function PostRoute() {
   const params = useParams();
   const { loading, error, data } = useQuery(

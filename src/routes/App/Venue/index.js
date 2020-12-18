@@ -7,8 +7,6 @@ import FeaturedMedia from 'components/FeaturedMedia';
 import ShowsGrid from 'routes/App/Shows/Grid';
 import { titleClass, textClass } from './styled';
 
-/* eslint-disable react/prop-types */
-
 function VenueRoute() {
   const params = useParams();
   const { error, loading, data } = useQuery(

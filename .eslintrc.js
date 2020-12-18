@@ -53,5 +53,11 @@ module.exports = {
         'react/prop-types': 'off',
       },
     },
+    {
+      files: ['tools/**'],
+      rules: {
+        'no-console': 'off',
+      },
+    },
   ],
 };

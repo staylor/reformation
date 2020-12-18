@@ -4,8 +4,6 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Video from 'components/Videos/Video';
 
-/* eslint-disable react/prop-types */
-
 function VideoRoute() {
   const params = useParams();
   const { loading, data } = useQuery(

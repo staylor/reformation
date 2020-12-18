@@ -1,54 +1,48 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { gql, useMutation } from '@apollo/client';
 import Message from 'components/Form/Message';
 import { FormWrap } from 'routes/Admin/styled';
 import PostForm from './Form';
 
-/* eslint-disable react/prop-types */
-
-@graphql(gql`
-  mutation CreatePostMutation($input: CreatePostInput!) {
-    createPost(input: $input) {
-      ...PostForm_post
+function AddPost() {
+  const history = useHistory();
+  const [message, setMessage] = useState(null);
+  const [mutate] = useMutation(gql`
+    mutation CreatePostMutation($input: CreatePostInput!) {
+      createPost(input: $input) {
+        ...PostForm_post
+      }
     }
-  }
-  ${PostForm.fragments.post}
-`)
-class AddPost extends Component {
-  state = {
-    message: null,
-  };
+    ${PostForm.fragments.post}
+  `);
 
-  onSubmit = (e, updates) => {
+  const onSubmit = (e, updates) => {
     e.preventDefault();
 
     const input = { ...updates };
 
-    this.props
-      .mutate({
-        variables: {
-          input,
-        },
-      })
+    mutate({
+      variables: {
+        input,
+      },
+    })
       .then(({ data: { createPost } }) => {
-        this.props.history.push({
+        history.push({
           pathname: `/post/${createPost.id}`,
         });
       })
-      .catch(err => this.setState({ message: err.message }));
+      .catch(err => setMessage(err.message));
   };
 
-  render() {
-    return (
-      <>
-        {this.state.message && <Message text={this.state.message} />}
-        <FormWrap>
-          <PostForm post={{}} buttonLabel="Add Post" onSubmit={this.onSubmit} />
-        </FormWrap>
-      </>
-    );
-  }
+  return (
+    <>
+      {message && <Message text={message} />}
+      <FormWrap>
+        <PostForm post={{}} buttonLabel="Add Post" onSubmit={onSubmit} />
+      </FormWrap>
+    </>
+  );
 }
 
 export default AddPost;

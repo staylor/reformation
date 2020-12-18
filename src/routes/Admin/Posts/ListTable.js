@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { gql, useQuery, useMutation } from '@apollo/client';
+import { Link, useParams } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
 import { offsetToCursor } from 'utils/connection';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 
-/* eslint-disable react/prop-types,react/no-multi-comp */
+/* eslint-disable react/no-multi-comp */
 
 const PER_PAGE = 20;
 
@@ -55,77 +54,76 @@ const columns = [
   },
 ];
 
-@graphql(
-  gql`
-    query PostsQuery($first: Int, $after: String, $search: String) {
-      posts(first: $first, after: $after, search: $search)
-        @connection(key: "posts", filter: ["search"]) {
-        count
-        edges {
-          node {
-            id
-            title
-            slug
-            status
-            date
+function PostsListTable() {
+  const params = useParams();
+  const vars = { first: PER_PAGE };
+  if (params.page) {
+    const pageOffset = parseInt(params.page, 10) - 1;
+    if (pageOffset > 0) {
+      vars.after = offsetToCursor(pageOffset * PER_PAGE - 1);
+    }
+  }
+  const { variables, refetch, loading, data } = useQuery(
+    gql`
+      query PostsAdminQuery($first: Int, $after: String, $search: String) {
+        posts(first: $first, after: $after, search: $search) @cache(key: "admin") {
+          count
+          edges {
+            node {
+              id
+              title
+              slug
+              status
+              date
+            }
+          }
+          pageInfo {
+            hasNextPage
           }
         }
-        pageInfo {
-          hasNextPage
-        }
       }
+    `,
+    // This ensures that the table is up to date when uploads are mutated.
+    // The alternative is to specify refetchQueries on all Post mutations.
+    { variables: vars, fetchPolicy: 'cache-and-network' }
+  );
+  const [mutate] = useMutation(gql`
+    mutation DeletePostMutation($ids: [ObjID]!) {
+      removePost(ids: $ids)
     }
-  `,
-  {
-    options: ({ match }) => {
-      const { params } = match;
+  `);
 
-      const variables = { first: PER_PAGE };
-      if (params.page) {
-        const pageOffset = parseInt(params.page, 10) - 1;
-        if (pageOffset > 0) {
-          variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
-        }
-      }
-      return { variables };
-    },
-  }
-)
-@graphql(gql`
-  mutation DeletePostMutation($ids: [ObjID]!) {
-    removePost(ids: $ids)
-  }
-`)
-class Posts extends Component {
-  render() {
-    const {
-      location,
-      match,
-      mutate,
-      data: { variables, refetch, loading, posts },
-    } = this.props;
+  const header = (
+    <>
+      <Heading>Posts</Heading>
+      <HeaderAdd to="/post/add">Add Post</HeaderAdd>
+    </>
+  );
 
-    if (loading && !posts) {
-      return <Loading />;
-    }
-
+  if (loading && !data) {
     return (
       <>
-        <Heading>Posts</Heading>
-        <HeaderAdd to="/post/add">Add Post</HeaderAdd>
-        <ListTable
-          location={location}
-          match={match}
-          columns={columns}
-          mutate={mutate}
-          refetch={refetch}
-          variables={variables}
-          data={posts}
-          path="/post"
-        />
+        {header}
+        <Loading />
       </>
     );
   }
+
+  const { posts } = data;
+
+  return (
+    <>
+      {header}
+      <ListTable
+        columns={columns}
+        mutate={mutate}
+        refetch={refetch}
+        variables={variables}
+        data={posts}
+        path="/post"
+      />
+    </>
+  );
 }
 
-export default Posts;
+export default PostsListTable;

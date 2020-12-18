@@ -1,12 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client/core';
 import { relayStylePagination } from '@apollo/client/utilities';
-import possibleTypes from './possibleTypes.json';
-
-// type ClientOps = {
-//   uri: string,
-//   authToken?: string,
-//   ssrMode?: boolean,
-// };
+import possibleTypes from './possibleTypes';
+import { makeCacheAware } from './typePolicies';
 
 export default function client({ uri, authToken = null, ssrMode = false }) {
   const headers = {};
@@ -19,14 +14,20 @@ export default function client({ uri, authToken = null, ssrMode = false }) {
     typePolicies: {
       Query: {
         fields: {
-          podcasts: relayStylePagination(),
-          posts: relayStylePagination(),
-          shows: relayStylePagination(),
-          taxonomies: relayStylePagination(),
-          terms: relayStylePagination(),
-          uploads: relayStylePagination(),
-          users: relayStylePagination(),
-          videos: relayStylePagination(),
+          podcasts: makeCacheAware(relayStylePagination(['search', 'order']), 'admin'),
+          posts: makeCacheAware(relayStylePagination(['year', 'status', 'search']), 'admin'),
+          shows: makeCacheAware(
+            relayStylePagination(['latest', 'taxonomy', 'term', 'date', 'search', 'order']),
+            'admin'
+          ),
+          taxonomies: makeCacheAware(relayStylePagination(), 'admin'),
+          terms: makeCacheAware(
+            relayStylePagination(['taxonomyId', 'taxonomy', 'search']),
+            'admin'
+          ),
+          uploads: makeCacheAware(relayStylePagination(['type', 'mimeType', 'search']), 'admin'),
+          users: makeCacheAware(relayStylePagination(['search']), 'admin'),
+          videos: makeCacheAware(relayStylePagination(['year', 'search']), 'admin'),
         },
       },
     },

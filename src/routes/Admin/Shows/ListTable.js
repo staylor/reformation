@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { gql, useQuery, useMutation } from '@apollo/client';
+import { Link, useParams } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
 import { offsetToCursor } from 'utils/connection';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 
-/* eslint-disable react/prop-types,react/no-multi-comp */
+/* eslint-disable react/no-multi-comp */
 
 const PER_PAGE = 20;
 
@@ -58,106 +57,101 @@ const columns = [
   },
 ];
 
-@graphql(
-  gql`
-    query ShowQuery(
-      $first: Int
-      $after: String
-      $date: Float
-      $taxonomy: String
-      $term: String
-      $search: String
-      $order: ShowOrder
-    ) {
-      shows(
-        first: $first
-        after: $after
-        date: $date
-        taxonomy: $taxonomy
-        term: $term
-        search: $search
-        order: $order
-      ) @connection(key: "shows", filter: ["date", "taxonomy", "term", "search"]) {
-        count
-        edges {
-          node {
-            id
-            title
-            date
-            artist {
+function ShowsListTable() {
+  const params = useParams();
+  const vars = { first: PER_PAGE, order: 'DESC' };
+  if (params.page) {
+    const pageOffset = parseInt(params.page, 10) - 1;
+    if (pageOffset > 0) {
+      vars.after = offsetToCursor(pageOffset * PER_PAGE - 1);
+    }
+  }
+  const { loading, refetch, variables, data } = useQuery(
+    gql`
+      query ShowsAdminQuery(
+        $first: Int
+        $after: String
+        $date: Float
+        $taxonomy: String
+        $term: String
+        $search: String
+        $order: ShowOrder
+      ) {
+        shows(
+          first: $first
+          after: $after
+          date: $date
+          taxonomy: $taxonomy
+          term: $term
+          search: $search
+          order: $order
+        ) @cache(key: "admin") {
+          count
+          edges {
+            node {
               id
-              name
-            }
-            venue {
-              id
-              name
+              title
+              date
+              artist {
+                id
+                name
+              }
+              venue {
+                id
+                name
+              }
             }
           }
-        }
-        pageInfo {
-          hasNextPage
+          pageInfo {
+            hasNextPage
+          }
         }
       }
+    `,
+    {
+      variables: vars,
+      // This ensures that the table is up to date when shows are mutated.
+      // The alternative is to specify refetchQueries on all Show mutations.
+      fetchPolicy: 'cache-and-network',
     }
-  `,
-  {
-    options: ({ match }) => {
-      const { params } = match;
-
-      const variables = { first: PER_PAGE, order: 'DESC' };
-      if (params.page) {
-        const pageOffset = parseInt(params.page, 10) - 1;
-        if (pageOffset > 0) {
-          variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
-        }
-      }
-
-      return {
-        variables,
-        // This ensures that the table is up to date when shows are mutated.
-        // The alternative is to specify refetchQueries on all Show mutations.
-        fetchPolicy: 'cache-and-network',
-      };
-    },
-  }
-)
-@graphql(
-  gql`
+  );
+  const [mutate] = useMutation(gql`
     mutation DeleteShowMutation($ids: [ObjID]!) {
       removeShow(ids: $ids)
     }
-  `
-)
-class Shows extends Component {
-  render() {
-    const {
-      location,
-      match,
-      mutate,
-      data: { loading, shows, refetch, variables },
-    } = this.props;
+  `);
 
-    if (loading && !shows) {
-      return <Loading />;
-    }
+  const header = (
+    <>
+      <Heading>Show</Heading>
+      <HeaderAdd to="/show/add">Add Show</HeaderAdd>
+    </>
+  );
 
+  if (loading && !data) {
     return (
       <>
-        <Heading>Show</Heading>
-        <HeaderAdd to="/show/add">Add Show</HeaderAdd>
-        <ListTable
-          location={location}
-          match={match}
-          columns={columns}
-          mutate={mutate}
-          refetch={refetch}
-          variables={variables}
-          data={shows}
-          path="/show"
-        />
+        {header}
+        <Loading />
       </>
     );
   }
+
+  const { shows } = data;
+
+  return (
+    <>
+      {header}
+      <ListTable
+        columns={columns}
+        mutate={mutate}
+        refetch={refetch}
+        variables={variables}
+        data={shows}
+        path="/show"
+      />
+    </>
+  );
 }
 
-export default Shows;
+export default ShowsListTable;

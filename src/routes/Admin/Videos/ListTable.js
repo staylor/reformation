@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { gql, useQuery } from '@apollo/client';
+import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
 import debounce from 'debounce';
 import { parse, stringify } from 'query-string';
 import Loading from 'components/Loading';
@@ -12,7 +11,7 @@ import { rowActionsClass, rowTitleClass, searchBoxClass } from 'components/ListT
 import { offsetToCursor } from 'utils/connection';
 import { Heading } from '../styled';
 
-/* eslint-disable react/prop-types,react/no-multi-comp */
+/* eslint-disable react/no-multi-comp */
 
 const PER_PAGE = 20;
 
@@ -54,112 +53,104 @@ const columns = [
   },
 ];
 
-@graphql(
-  gql`
-    query VideosQuery($first: Int, $after: String, $year: Int, $search: String) {
-      videos(first: $first, after: $after, year: $year, search: $search)
-        @connection(key: "videos", filter: ["year", "search", "first", "after"]) {
-        count
-        years
-        edges {
-          node {
-            id
-            title
-            slug
-            publishedAt
-            year
+function VideosListTable() {
+  const location = useLocation();
+  const params = useParams();
+  const history = useHistory();
+  const queryParams = parse(location.search);
+  const vars = { first: PER_PAGE };
+  if (queryParams.search) {
+    // $TODO: sanitize this
+    vars.search = queryParams.search;
+  }
+  if (queryParams.year) {
+    vars.year = parseInt(queryParams.year, 10);
+  }
+  if (params.page) {
+    const pageOffset = parseInt(params.page, 10) - 1;
+    if (pageOffset > 0) {
+      vars.after = offsetToCursor(pageOffset * PER_PAGE - 1);
+    }
+  }
+  const { loading, variables, data } = useQuery(
+    gql`
+      query VideosAdminQuery($first: Int, $after: String, $year: Int, $search: String) {
+        videos(first: $first, after: $after, year: $year, search: $search) @cache(key: "admin") {
+          count
+          years
+          edges {
+            node {
+              id
+              title
+              slug
+              publishedAt
+              year
+            }
+          }
+          pageInfo {
+            hasNextPage
           }
         }
-        pageInfo {
-          hasNextPage
-        }
       }
-    }
-  `,
-  {
-    options: ({ match, location }) => {
-      const queryParams = parse(location.search);
-      const { params } = match;
+    `,
+    // This ensures that the table is up to date when uploads are mutated.
+    // The alternative is to specify refetchQueries on all Post mutations.
+    { variables: vars, fetchPolicy: 'cache-and-network' }
+  );
 
-      const variables = { first: PER_PAGE };
-      if (queryParams.search) {
-        // $TODO: sanitize this
-        variables.search = queryParams.search;
-      }
-      if (queryParams.year) {
-        variables.year = parseInt(queryParams.year, 10);
-      }
-      if (params.page) {
-        const pageOffset = parseInt(params.page, 10) - 1;
-        if (pageOffset > 0) {
-          variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
-        }
-      }
-      return { variables };
-    },
-  }
-)
-class Videos extends Component {
-  updateProp = prop => value => {
-    const params = {};
+  const updateProp = prop => value => {
+    const p = {};
     if (value) {
-      params[prop] = value;
+      p[prop] = value;
     }
-    this.props.history.push({
+    history.push({
       pathname: '/video',
-      search: stringify(params),
+      search: stringify(p),
     });
   };
 
-  updateYear = this.updateProp('year');
+  const updateYear = updateProp('year');
 
-  updateSearch = debounce(this.updateProp('search'), 600);
+  const updateSearch = debounce(updateProp('search'), 600);
 
-  render() {
-    const {
-      location,
-      match,
-      data: { loading, videos, variables },
-    } = this.props;
+  const header = <Heading>Videos</Heading>;
 
-    if (loading && !videos) {
-      return <Loading />;
-    }
-
-    const queryParams = parse(location.search);
-
-    const filters = (
-      <Select
-        key="year"
-        placeholder="Select Year"
-        value={queryParams.year}
-        choices={videos.years}
-        onChange={this.updateYear}
-      />
-    );
-
+  if (loading && !data) {
     return (
       <>
-        <Heading>Videos</Heading>
-        <div className={searchBoxClass}>
-          <Input
-            value={queryParams.search}
-            placeholder="Search Videos"
-            onChange={this.updateSearch}
-          />
-        </div>
-        <ListTable
-          location={location}
-          match={match}
-          filters={filters}
-          columns={columns}
-          variables={variables}
-          data={videos}
-          path="/video"
-        />
+        {header}
+        <Loading />
       </>
     );
   }
+
+  const { videos } = data;
+
+  const filters = (
+    <Select
+      key="year"
+      placeholder="Select Year"
+      value={queryParams.year}
+      choices={videos.years}
+      onChange={updateYear}
+    />
+  );
+
+  return (
+    <>
+      {header}
+      <div className={searchBoxClass}>
+        <Input value={queryParams.search} placeholder="Search Videos" onChange={updateSearch} />
+      </div>
+      <ListTable
+        filters={filters}
+        columns={columns}
+        variables={variables}
+        data={videos}
+        path="/video"
+      />
+    </>
+  );
 }
 
-export default Videos;
+export default VideosListTable;

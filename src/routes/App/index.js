@@ -12,8 +12,6 @@ import AppContext from './Context';
 import Mailchimp from './Mailchimp';
 import * as styles from './styled';
 
-/* eslint-disable react/prop-types */
-
 const Home = dynamic(() => import(/* webpackChunkName: "home" */ 'routes/App/Home'));
 const Shows = dynamic(() => import(/* webpackChunkName: "shows" */ 'routes/App/Shows'));
 const Artist = dynamic(() => import(/* webpackChunkName: "venue" */ 'routes/App/Artist'));

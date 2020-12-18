@@ -13,14 +13,12 @@ import {
   CloseButton,
 } from './styled';
 
-/* eslint-disable react/prop-types */
-
 function VideoModal({ selectVideo, onClose }) {
   const frameRef = useRef(null);
   const { loading, fetchMore, data } = useQuery(
     gql`
       query VideoModalQuery($cursor: String, $first: Int) {
-        videos(after: $cursor, first: $first) {
+        videos(after: $cursor, first: $first) @cache(key: "modal") {
           edges {
             node {
               id

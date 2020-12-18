@@ -1,82 +1,72 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import ShowForm from './Form';
 
-/* eslint-disable react/prop-types */
+function AddShow() {
+  const history = useHistory();
+  const [message, setMessage] = useState(null);
+  const { loading, data } = useQuery(
+    gql`
+      query CreateShowQuery {
+        artists: terms(taxonomy: "artist", first: 250)
+          @connection(key: "terms", filter: ["taxonomy"]) {
+          ...ShowForm_terms
+        }
+        venues: terms(taxonomy: "venue", first: 250)
+          @connection(key: "terms", filter: ["taxonomy"]) {
+          ...ShowForm_terms
+        }
+      }
+      ${ShowForm.fragments.terms}
+    `,
+    {
+      fetchPolicy: 'cache-and-network',
+    }
+  );
+  const [mutate] = useMutation(gql`
+    mutation CreateShowMutation($input: CreateShowInput!) {
+      createShow(input: $input) {
+        id
+      }
+    }
+  `);
 
-@graphql(
-  gql`
-    query CreateShowQuery {
-      artists: terms(taxonomy: "artist", first: 250)
-        @connection(key: "terms", filter: ["taxonomy"]) {
-        ...ShowForm_terms
-      }
-      venues: terms(taxonomy: "venue", first: 250) @connection(key: "terms", filter: ["taxonomy"]) {
-        ...ShowForm_terms
-      }
-    }
-    ${ShowForm.fragments.terms}
-  `,
-  { options: { fetchPolicy: 'cache-and-network' } }
-)
-@graphql(gql`
-  mutation CreateShowMutation($input: CreateShowInput!) {
-    createShow(input: $input) {
-      id
-    }
+  if (loading && !data) {
+    return <Loading />;
   }
-`)
-class AddShow extends Component {
-  state = {
-    message: null,
-  };
 
-  onSubmit = (e, updates) => {
+  const { artists, venues } = data;
+
+  const onSubmit = (e, updates) => {
     e.preventDefault();
 
-    this.props
-      .mutate({
-        variables: {
-          input: updates,
-        },
-      })
+    mutate({
+      variables: {
+        input: updates,
+      },
+    })
       .then(({ data: { createShow } }) => {
         document.documentElement.scrollTop = 0;
-        this.props.history.push({
+        history.push({
           pathname: `/show/${createShow.id}`,
         });
       })
-      .catch(() => this.setState({ message: 'error' }));
+      .catch(() => setMessage('error'));
   };
 
-  render() {
-    const {
-      data: { loading, artists, venues },
-    } = this.props;
-
-    if (loading && !artists) {
-      return <Loading />;
-    }
-
-    return (
-      <>
-        <Heading>Add Show</Heading>
-        {this.state.message === 'error' && <Message text="Error adding show." />}
-        <FormWrap>
-          <ShowForm
-            artists={artists}
-            venues={venues}
-            buttonLabel="Add Show"
-            onSubmit={this.onSubmit}
-          />
-        </FormWrap>
-      </>
-    );
-  }
+  return (
+    <>
+      <Heading>Add Show</Heading>
+      {message === 'error' && <Message text="Error adding show." />}
+      <FormWrap>
+        <ShowForm artists={artists} venues={venues} buttonLabel="Add Show" onSubmit={onSubmit} />
+      </FormWrap>
+    </>
+  );
 }
 
 export default AddShow;

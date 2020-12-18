@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery, useMutation } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import Form from 'components/Form';
@@ -12,7 +13,7 @@ import AudioInfo from './AudioInfo';
 import VideoInfo from './VideoInfo';
 import { audioClass, videoClass, croppedClass } from './styled';
 
-/* eslint-disable react/prop-types,react/no-multi-comp,jsx-a11y/media-has-caption */
+/* eslint-disable react/no-multi-comp,jsx-a11y/media-has-caption */
 
 const mediaFields = [
   {
@@ -99,59 +100,46 @@ const mediaFields = [
   },
 ];
 
-class EditMedia extends Component {
-  state = {
-    message: null,
-  };
+function EditMedia() {
+  const params = useParams();
+  const [message, setMessage] = useState(null);
+  const { loading, data } = useQuery(MediaAdminQuery, {
+    variables: { id: params.id },
+    fetchPolicy: 'cache-and-network',
+  });
+  const [mutate] = useMutation(UpdateMediaMutation);
 
-  onSubmit = (e, updates) => {
+  if (loading && !data) {
+    return <Loading />;
+  }
+
+  const { media } = data;
+
+  const onSubmit = (e, updates) => {
     e.preventDefault();
 
-    const input = { ...updates };
-
-    const { media } = this.props.data;
-    this.props
-      .mutate({
-        variables: {
-          id: media.id,
-          input,
-        },
-      })
+    mutate({
+      variables: {
+        id: media.id,
+        input: updates,
+      },
+    })
       .then(() => {
-        this.setState({ message: 'updated' });
+        setMessage('updated');
         document.documentElement.scrollTop = 0;
       })
-      .catch(() => this.setState({ message: 'error' }));
+      .catch(() => setMessage('error'));
   };
 
-  render() {
-    const {
-      data: { loading, media },
-    } = this.props;
-
-    if (loading && !media) {
-      return <Loading />;
-    }
-
-    return (
-      <>
-        <Heading>Edit Media</Heading>
-        {this.state.message === 'updated' && <Message text="Media updated." />}
-        <FormWrap>
-          <Form
-            fields={mediaFields}
-            data={media}
-            buttonLabel="Update Media"
-            onSubmit={this.onSubmit}
-          />
-        </FormWrap>
-      </>
-    );
-  }
+  return (
+    <>
+      <Heading>Edit Media</Heading>
+      {message === 'updated' && <Message text="Media updated." />}
+      <FormWrap>
+        <Form fields={mediaFields} data={media} buttonLabel="Update Media" onSubmit={onSubmit} />
+      </FormWrap>
+    </>
+  );
 }
 
-export default graphql(MediaAdminQuery, {
-  options: ({ match: { params } }) => ({
-    variables: { id: params.id },
-  }),
-})(graphql(UpdateMediaMutation)(EditMedia));
+export default EditMedia;

@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { compose, graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { ThumbWrapper, thumb480Class } from 'components/Videos/styled';
 import Form from 'components/Form';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 
-/* eslint-disable react/prop-types,react/no-multi-comp */
+/* eslint-disable react/no-multi-comp */
 
 const videoFields = [
   { label: 'Title', prop: 'title' },
@@ -40,79 +40,68 @@ const frag = gql`
   }
 `;
 
-@graphql(
-  gql`
-    query VideoAdminQuery($id: ObjID) {
-      video(id: $id) {
+function EditVideo() {
+  const params = useParams();
+  const [message, setMessage] = useState(null);
+  const { loading, data } = useQuery(
+    gql`
+      query VideoEditQuery($id: ObjID) {
+        video(id: $id) {
+          ...AdminVideo_video
+        }
+      }
+      ${frag}
+    `,
+    {
+      variables: { id: params.id },
+      fetchPolicy: 'cache-and-network',
+    }
+  );
+  const [mutate] = useMutation(gql`
+    mutation UpdateVideoMutation($id: ObjID!, $input: UpdateVideoInput!) {
+      updateVideo(id: $id, input: $input) {
         ...AdminVideo_video
       }
     }
     ${frag}
-  `,
-  {
-    options: ({ match: { params } }) => ({
-      variables: { id: params.id },
-    }),
-  }
-)
-@graphql(gql`
-  mutation UpdateVideoMutation($id: ObjID!, $input: UpdateVideoInput!) {
-    updateVideo(id: $id, input: $input) {
-      ...AdminVideo_video
-    }
-  }
-  ${frag}
-`)
-class VideoRoute extends Component {
-  state = {
-    message: null,
-  };
+  `);
 
-  onSubmit = (e, updates) => {
-    const { video } = this.props.data;
-    this.props
-      .mutate({
-        variables: {
-          id: video.id,
-          input: updates,
-        },
-      })
+  if (loading && !data) {
+    return <Loading />;
+  }
+
+  const { video } = data;
+
+  const onSubmit = (e, updates) => {
+    e.preventDefault();
+
+    mutate({
+      variables: {
+        id: video.id,
+        input: updates,
+      },
+    })
       .then(() => {
-        this.setState({ message: 'updated' });
+        setMessage('updated');
         document.documentElement.scrollTop = 0;
       })
-      .catch(() => this.setState({ message: 'error' }));
+      .catch(() => setMessage('error'));
   };
 
-  render() {
-    const {
-      data: { loading, video },
-    } = this.props;
+  const thumb = video.thumbnails.find(t => t.width === 480);
 
-    if (loading && !video) {
-      return <Loading />;
-    }
-
-    const thumb = video.thumbnails.find(t => t.width === 480);
-
-    return (
-      <>
-        <Heading>Edit Video</Heading>
-        {this.state.message === 'updated' && <Message text="Video updated." />}
-        <ThumbWrapper>
-          <img src={thumb.url} alt={video.title} className={thumb480Class} />
-        </ThumbWrapper>
-        <FormWrap>
-          <Form
-            fields={videoFields}
-            data={video}
-            buttonLabel="Update Video"
-            onSubmit={this.onSubmit}
-          />
-        </FormWrap>
-      </>
-    );
-  }
+  return (
+    <>
+      <Heading>Edit Video</Heading>
+      {message === 'updated' && <Message text="Video updated." />}
+      <ThumbWrapper>
+        <img src={thumb.url} alt={video.title} className={thumb480Class} />
+      </ThumbWrapper>
+      <FormWrap>
+        <Form fields={videoFields} data={video} buttonLabel="Update Video" onSubmit={onSubmit} />
+      </FormWrap>
+    </>
+  );
 }
 
-export default VideoRoute;
+export default EditVideo;

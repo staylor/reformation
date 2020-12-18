@@ -1,56 +1,47 @@
-import React, { Component } from 'react';
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { gql, useMutation } from '@apollo/client';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import TaxonomyForm from './Form';
 
-/* eslint-disable react/prop-types */
-
-@graphql(
-  gql`
+function AddTaxonomy() {
+  const history = useHistory();
+  const [message, setMessage] = useState(null);
+  const [mutate] = useMutation(gql`
     mutation CreateTaxonomyMutation($input: CreateTaxonomyInput!) {
       createTaxonomy(input: $input) {
         ...TaxonomyForm_taxonomy
       }
     }
     ${TaxonomyForm.fragments.taxonomy}
-  `
-)
-class AddTaxonomy extends Component {
-  state = {
-    message: null,
-  };
+  `);
 
-  onSubmit = (e, updates) => {
+  const onSubmit = (e, updates) => {
     e.preventDefault();
 
-    this.props
-      .mutate({
-        variables: {
-          input: updates,
-        },
-      })
+    mutate({
+      variables: {
+        input: updates,
+      },
+    })
       .then(({ data: { createTaxonomy } }) => {
-        document.documentElement.scrollTop = 0;
-        this.props.history.push({
+        history.push({
           pathname: `/taxonomy/${createTaxonomy.id}`,
         });
       })
-      .catch(() => this.setState({ message: 'error' }));
+      .catch(() => setMessage('error'));
   };
 
-  render() {
-    return (
-      <>
-        <Heading>Add Taxonomy</Heading>
-        {this.state.message === 'error' && <Message text="Error adding taxonomy." />}
-        <FormWrap>
-          <TaxonomyForm buttonLabel="Add Taxonomy" onSubmit={this.onSubmit} />
-        </FormWrap>
-      </>
-    );
-  }
+  return (
+    <>
+      <Heading>Add Taxonomy</Heading>
+      {message === 'error' && <Message text="Error adding taxonomy." />}
+      <FormWrap>
+        <TaxonomyForm buttonLabel="Add Taxonomy" onSubmit={onSubmit} />
+      </FormWrap>
+    </>
+  );
 }
 
 export default AddTaxonomy;

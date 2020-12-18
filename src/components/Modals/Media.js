@@ -13,14 +13,12 @@ import {
   CloseButton,
 } from './styled';
 
-/* eslint-disable react/prop-types */
-
 function MediaModal({ type, onClose, selectAudio, selectImage }) {
   const frameRef = useRef(null);
   const { loading, fetchMore, data } = useQuery(
     gql`
       query MediaModalQuery($type: String, $first: Int, $cursor: String) {
-        uploads(after: $cursor, first: $first, type: $type) @connection(key: "media") {
+        uploads(after: $cursor, first: $first, type: $type) @cache(key: "modal") {
           edges {
             node {
               id

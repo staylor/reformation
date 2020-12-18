@@ -8,8 +8,6 @@ import Message from 'components/Form/Message';
 import { TOKEN_KEY } from 'utils/constants';
 import * as styles from './styled';
 
-/* eslint-disable react/prop-types */
-
 function Login() {
   const form = useRef(null);
   const params = useParams();
