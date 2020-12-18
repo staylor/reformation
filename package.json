@@ -51,7 +51,7 @@
     "test-watch": "yarn test --watch",
     "test-update": "yarn test -u",
     "dev": "env-cmd -e dev kyt dev -C kyt.dev.js",
-    "prod:build": "NODE_ENV=production env-cmd -e prod kyt -C kyt.prod.js build",
+    "prod:build": "NODE_ENV=production env-cmd -e prod kyt build -C kyt.prod.js",
     "prod:stop": "forever stop highforthis",
     "prod:start": "NODE_ENV=production env-cmd -e prod forever start -a forever.prod.json",
     "prod": "yarn prod:build && yarn prod:stop && yarn prod:start",
