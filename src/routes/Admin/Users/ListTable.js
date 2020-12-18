@@ -1,29 +1,17 @@
 import React from 'react';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
 import Page from 'routes/Admin/Page';
-import { HeaderAdd } from 'routes/Admin/styled';
+import { useAdminQuery, useSubmitDelete } from 'routes/Admin/utils';
 
 /* eslint-disable react/no-multi-comp */
 
 const columns = [
   {
     label: 'Name',
-    render: (user, { mutate, refetch }) => {
-      const onClick = e => {
-        e.preventDefault();
-
-        mutate({
-          variables: {
-            ids: [user.id],
-          },
-        }).then(() => {
-          refetch();
-        });
-      };
-
+    render: (user, { onDelete }) => {
       return (
         <>
           <strong className={rowTitleClass}>
@@ -31,7 +19,7 @@ const columns = [
           </strong>
           <nav className={rowActionsClass}>
             <Link to={`/user/${user.id}`}>Edit</Link> |{' '}
-            <a className="delete" onClick={onClick} href={`/user/${user.id}`}>
+            <a className="delete" onClick={onDelete([user.id])} href={`/user/${user.id}`}>
               Delete
             </a>
           </nav>
@@ -65,28 +53,20 @@ const usersMutation = gql`
 `;
 
 function UsersListTable() {
-  const query = useQuery(usersQuery, {
-    variables: { first: 1000 },
-    // This ensures that the table is up to date when users are mutated.
-    // The alternative is to specify refetchQueries on all User mutations.
-    fetchPolicy: 'cache-and-network',
-  });
-  const [mutate] = useMutation(usersMutation);
+  const variables = { first: 1000 };
+  const query = useAdminQuery(usersQuery, variables);
+  const onDelete = useSubmitDelete({ mutation: usersMutation, query });
 
   return (
-    <Page query={query} title="Users">
+    <Page query={query} title="Users" add={{ to: '/user/add', label: 'Add User' }}>
       {({ users }) => (
-        <>
-          <HeaderAdd to="/user/add">Add User</HeaderAdd>
-          <ListTable
-            columns={columns}
-            mutate={mutate}
-            refetch={query.refetch}
-            variables={query.variables}
-            data={users}
-            path="/user"
-          />
-        </>
+        <ListTable
+          columns={columns}
+          onDelete={onDelete}
+          perPage={variables.first}
+          data={users}
+          path="/user"
+        />
       )}
     </Page>
   );

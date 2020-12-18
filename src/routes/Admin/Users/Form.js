@@ -7,6 +7,7 @@ import Form from 'components/Form';
 const userFields = [
   { label: 'Name', prop: 'name', editable: true },
   { label: 'Email', prop: 'email', type: 'email', editable: true },
+  { label: 'Password', prop: 'password', type: 'password', editable: true },
   {
     label: 'bio',
     prop: 'bio',

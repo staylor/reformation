@@ -1,11 +1,10 @@
 import React from 'react';
-import { gql, useQuery, useMutation } from '@apollo/client';
-import { Link, useParams } from 'react-router-dom';
+import { gql } from '@apollo/client';
+import { Link } from 'react-router-dom';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
-import { offsetToCursor } from 'utils/connection';
 import Page from 'routes/Admin/Page';
-import { HeaderAdd } from 'routes/Admin/styled';
+import { usePageOffset, useAdminQuery, useSubmitDelete } from 'routes/Admin/utils';
 
 /* eslint-disable react/no-multi-comp */
 
@@ -14,19 +13,7 @@ const PER_PAGE = 20;
 const columns = [
   {
     label: 'Title',
-    render: (show, { mutate, refetch }) => {
-      const onClick = e => {
-        e.preventDefault();
-
-        mutate({
-          variables: {
-            ids: [show.id],
-          },
-        }).then(() => {
-          refetch();
-        });
-      };
-
+    render: (show, { onDelete }) => {
       return (
         <>
           <strong className={rowTitleClass}>
@@ -34,7 +21,7 @@ const columns = [
           </strong>
           <nav className={rowActionsClass}>
             <Link to={`/show/${show.id}`}>Edit</Link> |{' '}
-            <a className="delete" onClick={onClick} href={`/show/${show.id}`}>
+            <a className="delete" onClick={onDelete([show.id])} href={`/show/${show.id}`}>
               Delete
             </a>
           </nav>
@@ -106,37 +93,13 @@ const showsMutation = gql`
 `;
 
 function ShowsListTable() {
-  const params = useParams();
-  const variables = { first: PER_PAGE, order: 'DESC' };
-  if (params.page) {
-    const pageOffset = parseInt(params.page, 10) - 1;
-    if (pageOffset > 0) {
-      variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
-    }
-  }
-  const query = useQuery(showsQuery, {
-    variables,
-    // This ensures that the table is up to date when shows are mutated.
-    // The alternative is to specify refetchQueries on all Show mutations.
-    fetchPolicy: 'cache-and-network',
-  });
-  const [mutate] = useMutation(showsMutation);
+  const variables = usePageOffset({ first: PER_PAGE, order: 'DESC' });
+  const query = useAdminQuery(showsQuery, variables);
+  const onDelete = useSubmitDelete({ mutation: showsMutation, query });
 
   return (
-    <Page query={query} title="Show">
-      {({ shows }) => (
-        <>
-          <HeaderAdd to="/show/add">Add Show</HeaderAdd>
-          <ListTable
-            columns={columns}
-            mutate={mutate}
-            refetch={query.refetch}
-            variables={query.variables}
-            data={shows}
-            path="/show"
-          />
-        </>
-      )}
+    <Page query={query} title="Show" add={{ to: '/show/add', label: 'Add Show' }}>
+      {({ shows }) => <ListTable columns={columns} onDelete={onDelete} data={shows} path="/show" />}
     </Page>
   );
 }

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { gql, useMutation } from '@apollo/client';
+import React from 'react';
+import { gql } from '@apollo/client';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
+import { useSubmitNew } from 'routes/Admin/utils';
 import UserForm from './Form';
 
 const userMutation = gql`
@@ -14,25 +14,11 @@ const userMutation = gql`
 `;
 
 function AddUser() {
-  const history = useHistory();
-  const [message, setMessage] = useState(null);
-  const [mutate] = useMutation(userMutation);
-
-  const onSubmit = (e, updates) => {
-    e.preventDefault();
-
-    mutate({
-      variables: {
-        input: updates,
-      },
-    })
-      .then(({ data: { createUser } }) => {
-        history.push({
-          pathname: `/user/${createUser.id}`,
-        });
-      })
-      .catch(() => setMessage('error'));
-  };
+  const { onSubmit, message } = useSubmitNew({
+    mutation: userMutation,
+    path: 'user',
+    key: 'createUser',
+  });
 
   return (
     <>

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { gql, useMutation } from '@apollo/client';
+import React from 'react';
+import { gql } from '@apollo/client';
 import Message from 'components/Form/Message';
 import { FormWrap } from 'routes/Admin/styled';
+import { useSubmitNew } from 'routes/Admin/utils';
 import PostForm from './Form';
 
 const postMutation = gql`
@@ -15,27 +15,11 @@ const postMutation = gql`
 `;
 
 function AddPost() {
-  const history = useHistory();
-  const [message, setMessage] = useState(null);
-  const [mutate] = useMutation(postMutation);
-
-  const onSubmit = (e, updates) => {
-    e.preventDefault();
-
-    const input = { ...updates };
-
-    mutate({
-      variables: {
-        input,
-      },
-    })
-      .then(({ data: { createPost } }) => {
-        history.push({
-          pathname: `/post/${createPost.id}`,
-        });
-      })
-      .catch(err => setMessage(err.message));
-  };
+  const { onSubmit, message } = useSubmitNew({
+    mutation: postMutation,
+    path: 'post',
+    key: 'createPost',
+  });
 
   return (
     <>

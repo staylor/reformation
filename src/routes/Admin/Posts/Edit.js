@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import React from 'react';
+import { gql } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { FormWrap } from 'routes/Admin/styled';
+import { useEditQuery, useSubmitEdit } from 'routes/Admin/utils';
 import PostForm from './Form';
 
 const postQuery = gql`
@@ -25,13 +25,8 @@ const postMutation = gql`
 `;
 
 function EditPost() {
-  const params = useParams();
-  const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(postQuery, {
-    variables: { id: params.id },
-    fetchPolicy: 'cache-and-network',
-  });
-  const [mutate] = useMutation(postMutation);
+  const { loading, data } = useEditQuery(postQuery);
+  const { onSubmit, message } = useSubmitEdit({ mutation: postMutation });
 
   if (loading && !data) {
     return <Loading />;
@@ -39,27 +34,11 @@ function EditPost() {
 
   const { post } = data;
 
-  const onSubmit = (e, updates) => {
-    e.preventDefault();
-
-    mutate({
-      variables: {
-        id: post.id,
-        input: updates,
-      },
-    })
-      .then(() => {
-        setMessage('updated');
-        document.documentElement.scrollTop = 0;
-      })
-      .catch(() => setMessage('error'));
-  };
-
   return (
     <>
       {message === 'updated' && <Message text="Post updated." />}
       <FormWrap>
-        <PostForm post={post} buttonLabel="Update Post" onSubmit={onSubmit} />
+        <PostForm post={post} buttonLabel="Update Post" onSubmit={onSubmit(post)} />
       </FormWrap>
     </>
   );

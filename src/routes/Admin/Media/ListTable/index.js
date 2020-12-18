@@ -1,8 +1,8 @@
 import React from 'react';
-import { gql, useQuery, useMutation } from '@apollo/client';
-import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
+import { gql } from '@apollo/client';
+import { Link } from 'react-router-dom';
 import debounce from 'debounce';
-import { parse, stringify } from 'query-string';
+import { stringify } from 'query-string';
 import Input from 'components/Form/Input';
 import Select from 'components/Form/Select';
 import ListTable, { renderThumbnail } from 'components/ListTable';
@@ -12,9 +12,14 @@ import {
   rowTitleClass,
   searchBoxClass,
 } from 'components/ListTable/styled';
-import { offsetToCursor } from 'utils/connection';
 import Page from 'routes/Admin/Page';
-import { HeaderAdd } from 'routes/Admin/styled';
+import {
+  useQueryParams,
+  usePageOffset,
+  useAdminQuery,
+  usePropUpdate,
+  useSubmitDelete,
+} from 'routes/Admin/utils';
 import { titleColumnClass } from './styled';
 
 /* eslint-disable react/no-multi-comp */
@@ -39,19 +44,7 @@ const columns = [
   {
     className: titleColumnClass,
     label: 'Title',
-    render: (media, { mutate, refetch }) => {
-      const onClick = e => {
-        e.preventDefault();
-
-        mutate({
-          variables: {
-            ids: [media.id],
-          },
-        }).then(() => {
-          refetch();
-        });
-      };
-
+    render: (media, { onDelete }) => {
       return (
         <>
           <strong className={rowTitleClass}>
@@ -61,7 +54,7 @@ const columns = [
           </strong>
           <nav className={rowActionsClass}>
             <Link to={`/media/${media.id}`}>Edit</Link> |{' '}
-            <a className="delete" onClick={onClick} href={`/media/${media.id}`}>
+            <a className="delete" onClick={onDelete([media.id])} href={`/media/${media.id}`}>
               Delete
             </a>
           </nav>
@@ -139,63 +132,25 @@ const uploadsMutation = gql`
 `;
 
 function MediaListTable() {
-  const location = useLocation();
-  const params = useParams();
-  const history = useHistory();
-  const queryParams = parse(location.search);
-
-  const variables = { first: PER_PAGE };
-  if (queryParams.search) {
-    // $TODO: sanitize this
-    variables.search = queryParams.search;
-  }
-  if (queryParams.type) {
-    variables.type = queryParams.type;
-  }
-  if (queryParams.mimeType) {
-    variables.mimeType = queryParams.mimeType;
-  }
-  if (params.page) {
-    const pageOffset = parseInt(params.page, 10) - 1;
-    if (pageOffset > 0) {
-      variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
-    }
-  }
-  const query = useQuery(uploadsQuery, {
-    variables,
-    // This ensures that the table is up to date when uploads are mutated.
-    // The alternative is to specify refetchQueries on all Upload mutations.
-    fetchPolicy: 'cache-and-network',
-  });
-
-  const [mutate] = useMutation(uploadsMutation);
-
-  const updateProp = prop => value => {
-    const p = {};
-    if (value) {
-      p[prop] = value;
-    }
-    history.push({
-      pathname: '/media',
-      search: stringify(p),
-    });
-  };
-
-  const updateType = updateProp('type');
-
-  const updateMimeType = updateProp('mimeType');
-
-  const updateSearch = debounce(updateProp('search'), 600);
+  const params = useQueryParams(['search', 'type', 'mimeType']);
+  params.first = PER_PAGE;
+  const variables = usePageOffset(params);
+  const query = useAdminQuery(uploadsQuery, variables);
+  const onDelete = useSubmitDelete({ mutation: uploadsMutation, query });
+  const updateType = usePropUpdate({ prop: 'type', pathname: '/media' });
+  const updateMimeType = usePropUpdate({ prop: 'mimeType', pathname: '/media' });
+  const updateSearchHook = usePropUpdate({ prop: 'search', pathname: '/media' });
+  const updateSearch = debounce(updateSearchHook, 600);
 
   return (
-    <Page query={query} title="Media">
+    <Page query={query} title="Media" add={{ to: '/media/upload', label: 'Add Media' }}>
       {({ uploads }) => {
         const filters = (
           <>
             <Select
               key="type"
               placeholder="Select Media Type"
-              value={queryParams.type}
+              value={params.type}
               choices={uploads.types.map(type => ({
                 value: type,
                 label: type.charAt(0).toUpperCase() + type.substring(1),
@@ -205,7 +160,7 @@ function MediaListTable() {
             <Select
               key="mimeType"
               placeholder="Select MIME Type"
-              value={queryParams.mimeType}
+              value={params.mimeType}
               choices={uploads.mimeTypes}
               onChange={updateMimeType}
             />
@@ -214,20 +169,13 @@ function MediaListTable() {
 
         return (
           <>
-            <HeaderAdd to="/media/upload">Add Media</HeaderAdd>
             <div className={searchBoxClass}>
-              <Input
-                value={queryParams.search}
-                placeholder="Search Media"
-                onChange={updateSearch}
-              />
+              <Input value={params.search} placeholder="Search Media" onChange={updateSearch} />
             </div>
             <ListTable
               filters={filters}
               columns={columns}
-              variables={query.variables}
-              mutate={mutate}
-              refetch={query.refetch}
+              onDelete={onDelete}
               data={uploads}
               path="/media"
             />

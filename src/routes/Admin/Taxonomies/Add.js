@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { gql, useMutation } from '@apollo/client';
+import React from 'react';
+import { gql } from '@apollo/client';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
+import { useSubmitNew } from 'routes/Admin/utils';
 import TaxonomyForm from './Form';
 
 const taxMutation = gql`
@@ -15,25 +15,11 @@ const taxMutation = gql`
 `;
 
 function AddTaxonomy() {
-  const history = useHistory();
-  const [message, setMessage] = useState(null);
-  const [mutate] = useMutation(taxMutation);
-
-  const onSubmit = (e, updates) => {
-    e.preventDefault();
-
-    mutate({
-      variables: {
-        input: updates,
-      },
-    })
-      .then(({ data: { createTaxonomy } }) => {
-        history.push({
-          pathname: `/taxonomy/${createTaxonomy.id}`,
-        });
-      })
-      .catch(() => setMessage('error'));
-  };
+  const { onSubmit, message } = useSubmitNew({
+    mutation: taxMutation,
+    path: 'taxonomy',
+    key: 'createTaxonomy',
+  });
 
   return (
     <>

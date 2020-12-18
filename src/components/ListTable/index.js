@@ -44,7 +44,7 @@ const formatDate = date => {
 };
 
 function ListTable(props) {
-  const { data, mutate, refetch, path, columns, filters, variables } = props;
+  const { data, onDelete, path, columns, filters, perPage } = props;
   const location = useLocation();
   const params = useParams();
   const [state, setState] = useReducer(reducer, {
@@ -58,17 +58,7 @@ function ListTable(props) {
 
   const bulkAction = value => {
     if (value === 'deleteAll' && state.checked.length) {
-      const options = {
-        variables: {
-          ids: state.checked,
-        },
-      };
-
-      mutate(options).then(() => {
-        if (refetch) {
-          refetch();
-        }
-      });
+      onDelete(state.checked);
     }
   };
 
@@ -121,7 +111,7 @@ function ListTable(props) {
     </tr>
   );
 
-  const pages = data.count > 0 ? Math.ceil(data.count / variables.first) : 0;
+  const pages = data.count > 0 ? Math.ceil(data.count / perPage) : 0;
   const firstPage = pages === 0 ? 0 : 1;
   const currentPage = params.page ? parseInt(params.page, 10) : firstPage;
   const paginated = currentPage && currentPage > 1;
@@ -154,7 +144,7 @@ function ListTable(props) {
   return (
     <>
       <section className={filtersClass}>
-        {mutate && (
+        {onDelete && (
           <Select
             key="bulk"
             placeholder="Bulk Actions"
@@ -202,9 +192,8 @@ function ListTable(props) {
 
 ListTable.propTypes = {
   // provided by Apollo
-  variables: PropTypes.shape(),
-  mutate: PropTypes.func,
-  refetch: PropTypes.func,
+  perPage: PropTypes.number,
+  onDelete: PropTypes.func,
   data: PropTypes.shape({
     count: PropTypes.number,
     edges: PropTypes.arrayOf(
@@ -227,9 +216,8 @@ ListTable.propTypes = {
 };
 
 ListTable.defaultProps = {
-  variables: {},
-  refetch: () => null,
-  mutate: () => null,
+  perPage: 20,
+  onDelete: () => null,
   filters: null,
   data: {},
 };

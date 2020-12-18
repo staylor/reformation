@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import React from 'react';
+import { gql } from '@apollo/client';
 import Message from 'components/Form/Message';
 import Page from 'routes/Admin/Page';
 import { FormWrap } from 'routes/Admin/styled';
+import { useEditQuery, useSubmitEdit } from 'routes/Admin/utils';
 import PodcastForm from './Form';
 
 const podcastQuery = gql`
@@ -25,38 +25,21 @@ const podcastMutation = gql`
 `;
 
 function EditPodcast() {
-  const params = useParams();
-  const [message, setMessage] = useState(null);
-  const query = useQuery(podcastQuery, {
-    variables: { id: params.id },
-    fetchPolicy: 'cache-and-network',
-  });
-  const [mutate] = useMutation(podcastMutation);
+  const query = useEditQuery(podcastQuery);
+  const { onSubmit, message } = useSubmitEdit(podcastMutation);
 
   return (
     <Page query={query} title="Edit Podcast">
       {({ podcast }) => {
-        const onSubmit = (e, updates) => {
-          e.preventDefault();
-
-          mutate({
-            variables: {
-              id: podcast.id,
-              input: updates,
-            },
-          })
-            .then(() => {
-              setMessage('updated');
-              document.documentElement.scrollTop = 0;
-            })
-            .catch(() => setMessage('error'));
-        };
-
         return (
           <>
             {message === 'updated' && <Message text="Podcast updated." />}
             <FormWrap>
-              <PodcastForm podcast={podcast} buttonLabel="Update Podcast" onSubmit={onSubmit} />
+              <PodcastForm
+                podcast={podcast}
+                buttonLabel="Update Podcast"
+                onSubmit={onSubmit(podcast)}
+              />
             </FormWrap>
           </>
         );

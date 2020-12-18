@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import Message from 'components/Form/Message';
 import Form from 'components/Form';
+import { useAdminQuery } from 'routes/Admin/utils';
 import { lineClass } from 'routes/Admin/styled';
 import Page from 'routes/Admin/Page';
 
@@ -16,9 +17,7 @@ function SettingsForm({
   settingsFields,
 }) {
   const [message, setMessage] = useState(null);
-  const q = useQuery(query, {
-    fetchPolicy: 'cache-and-network',
-  });
+  const q = useAdminQuery(query);
   const [mutate] = useMutation(mutation);
 
   const onSubmit = (e, updates) => {

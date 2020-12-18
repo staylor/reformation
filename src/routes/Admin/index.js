@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { Helmet } from 'react-helmet-async';
 import { cx } from 'pretty-lights';
 import NotFound from 'components/NotFound';
+import { useAdminQuery } from 'routes/Admin/utils';
 import * as styles from './styled';
 import NavMenu from './NavMenu';
 import routeConfig from './routeConfig';
@@ -32,9 +33,7 @@ const adminQuery = gql`
 
 function Admin() {
   const [isCollapsed, setCollapsed] = useState(false);
-  const { loading, data } = useQuery(adminQuery, {
-    fetchPolicy: 'cache-and-network',
-  });
+  const { loading, data } = useAdminQuery(adminQuery);
 
   if (loading && !data) {
     return null;

@@ -1,10 +1,10 @@
 import React from 'react';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { Link, useParams } from 'react-router-dom';
 import Loading from 'components/Loading';
 import ListTable, { renderThumbnail } from 'components/ListTable';
 import { rowActionsClass, rowTitleClass, thumbnailColumnClass } from 'components/ListTable/styled';
-import { offsetToCursor } from 'utils/connection';
+import { usePageOffset, useAdminQuery, useSubmitDelete } from 'routes/Admin/utils';
 import { Heading, HeaderAdd } from 'routes/Admin/styled';
 
 /* eslint-disable react/no-multi-comp */
@@ -72,22 +72,11 @@ const termsMutation = gql`
 
 function TermsListTable() {
   const params = useParams();
-  const variables = { first: PER_PAGE, taxonomyId: params.taxonomyId };
-  if (params.page) {
-    const pageOffset = parseInt(params.page, 10) - 1;
-    if (pageOffset > 0) {
-      variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
-    }
-  }
-  const query = useQuery(termsQuery, {
-    variables,
-    // This ensures that the table is up to date when taxonomies are mutated.
-    // The alternative is to specify refetchQueries on all Term mutations.
-    fetchPolicy: 'cache-and-network',
-  });
-  const [mutate] = useMutation(termsMutation);
+  const variables = usePageOffset({ first: PER_PAGE, taxonomyId: params.taxonomyId });
+  const query = useAdminQuery(termsQuery, variables);
+  const onDelete = useSubmitDelete({ mutation: termsMutation, query });
 
-  const { loading, data, refetch } = query;
+  const { loading, data } = query;
 
   if (loading && !data) {
     return <Loading />;
@@ -108,19 +97,7 @@ function TermsListTable() {
     },
     {
       label: 'Name',
-      render: term => {
-        const onClick = e => {
-          e.preventDefault();
-
-          mutate({
-            variables: {
-              ids: [term.id],
-            },
-          }).then(() => {
-            refetch();
-          });
-        };
-
+      render: (term, { onDelete: onClick }) => {
         const urlPath = `/terms/${term.taxonomy.id}/${term.id}`;
 
         return (
@@ -163,9 +140,7 @@ function TermsListTable() {
       <HeaderAdd to={`/terms/${terms.taxonomy.id}/add`}>Add {terms.taxonomy.name}</HeaderAdd>
       <ListTable
         columns={columns}
-        mutate={mutate}
-        refetch={refetch}
-        variables={query.variables}
+        onDelete={onDelete}
         data={terms}
         path={`/terms/${terms.taxonomy.id}`}
       />

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/client';
+import React from 'react';
 import Message from 'components/Form/Message';
 import Form from 'components/Form';
 import Page from 'routes/Admin/Page';
 import { titleInputClass, FormWrap } from 'routes/Admin/styled';
+import { useEditQuery, useSubmitEdit } from 'routes/Admin/utils';
 import { uploadUrl } from 'utils/media';
 import MediaAdminQuery from './MediaAdminQuery.graphql';
 import UpdateMediaMutation from './UpdateMediaMutation.graphql';
@@ -101,33 +100,12 @@ const mediaFields = [
 ];
 
 function EditMedia() {
-  const params = useParams();
-  const [message, setMessage] = useState(null);
-  const query = useQuery(MediaAdminQuery, {
-    variables: { id: params.id },
-    fetchPolicy: 'cache-and-network',
-  });
-  const [mutate] = useMutation(UpdateMediaMutation);
+  const query = useEditQuery(MediaAdminQuery);
+  const { onSubmit, message } = useSubmitEdit({ mutation: UpdateMediaMutation });
 
   return (
     <Page query={query} title="Edit Media">
       {({ media }) => {
-        const onSubmit = (e, updates) => {
-          e.preventDefault();
-
-          mutate({
-            variables: {
-              id: media.id,
-              input: updates,
-            },
-          })
-            .then(() => {
-              setMessage('updated');
-              document.documentElement.scrollTop = 0;
-            })
-            .catch(() => setMessage('error'));
-        };
-
         return (
           <>
             {message === 'updated' && <Message text="Media updated." />}
@@ -136,7 +114,7 @@ function EditMedia() {
                 fields={mediaFields}
                 data={media}
                 buttonLabel="Update Media"
-                onSubmit={onSubmit}
+                onSubmit={onSubmit(media)}
               />
             </FormWrap>
           </>

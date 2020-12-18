@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { gql, useMutation } from '@apollo/client';
+import React from 'react';
+import { gql } from '@apollo/client';
 import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
+import { useSubmitNew } from 'routes/Admin/utils';
 import PodcastForm from './Form';
 
 const podcastMutation = gql`
@@ -14,25 +14,11 @@ const podcastMutation = gql`
 `;
 
 function AddPodcast() {
-  const history = useHistory();
-  const [message, setMessage] = useState(null);
-  const [mutate] = useMutation(podcastMutation);
-
-  const onSubmit = (e, updates) => {
-    e.preventDefault();
-
-    mutate({
-      variables: {
-        input: updates,
-      },
-    })
-      .then(({ data: { createPodcast } }) => {
-        history.push({
-          pathname: `/podcast/${createPodcast.id}`,
-        });
-      })
-      .catch(() => setMessage('error'));
-  };
+  const { onSubmit, message } = useSubmitNew({
+    mutation: podcastMutation,
+    path: 'podcast',
+    key: 'createPodcast',
+  });
 
   return (
     <>

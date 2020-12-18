@@ -1,14 +1,13 @@
 import React from 'react';
-import { gql, useQuery } from '@apollo/client';
-import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
+import { gql } from '@apollo/client';
+import { Link } from 'react-router-dom';
 import debounce from 'debounce';
-import { parse, stringify } from 'query-string';
 import Input from 'components/Form/Input';
 import Select from 'components/Form/Select';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass, searchBoxClass } from 'components/ListTable/styled';
-import { offsetToCursor } from 'utils/connection';
 import Page from 'routes/Admin/Page';
+import { useQueryParams, usePageOffset, useAdminQuery, usePropUpdate } from 'routes/Admin/utils';
 
 /* eslint-disable react/no-multi-comp */
 
@@ -74,45 +73,14 @@ const videosQuery = gql`
 `;
 
 function VideosListTable() {
-  const location = useLocation();
-  const params = useParams();
-  const history = useHistory();
-  const queryParams = parse(location.search);
-  const variables = { first: PER_PAGE };
-  if (queryParams.search) {
-    // $TODO: sanitize this
-    variables.search = queryParams.search;
-  }
-  if (queryParams.year) {
-    variables.year = parseInt(queryParams.year, 10);
-  }
-  if (params.page) {
-    const pageOffset = parseInt(params.page, 10) - 1;
-    if (pageOffset > 0) {
-      variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
-    }
-  }
-  const query = useQuery(videosQuery, {
-    variables,
-    // This ensures that the table is up to date when uploads are mutated.
-    // The alternative is to specify refetchQueries on all Video mutations.
-    fetchPolicy: 'cache-and-network',
-  });
+  const params = useQueryParams(['search', 'year']);
+  params.first = PER_PAGE;
+  const variables = usePageOffset(params);
+  const query = useAdminQuery(videosQuery, variables);
 
-  const updateProp = prop => value => {
-    const p = {};
-    if (value) {
-      p[prop] = value;
-    }
-    history.push({
-      pathname: '/video',
-      search: stringify(p),
-    });
-  };
-
-  const updateYear = updateProp('year');
-
-  const updateSearch = debounce(updateProp('search'), 600);
+  const updateYear = usePropUpdate({ prop: 'year', pathname: '/video' });
+  const updateSeachHook = usePropUpdate({ prop: 'search', pathname: '/video' });
+  const updateSearch = debounce(updateSeachHook, 600);
 
   return (
     <Page query={query} title="Videos">
@@ -121,7 +89,7 @@ function VideosListTable() {
           <Select
             key="year"
             placeholder="Select Year"
-            value={queryParams.year}
+            value={params.year}
             choices={videos.years}
             onChange={updateYear}
           />
@@ -130,19 +98,9 @@ function VideosListTable() {
         return (
           <>
             <div className={searchBoxClass}>
-              <Input
-                value={queryParams.search}
-                placeholder="Search Videos"
-                onChange={updateSearch}
-              />
+              <Input value={params.search} placeholder="Search Videos" onChange={updateSearch} />
             </div>
-            <ListTable
-              filters={filters}
-              columns={columns}
-              variables={query.variables}
-              data={videos}
-              path="/video"
-            />
+            <ListTable filters={filters} columns={columns} data={videos} path="/video" />
           </>
         );
       }}

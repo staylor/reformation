@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import React from 'react';
+import { gql } from '@apollo/client';
 import Message from 'components/Form/Message';
 import Page from 'routes/Admin/Page';
 import { FormWrap } from 'routes/Admin/styled';
+import { useAdminQuery, useSubmitNew } from 'routes/Admin/utils';
 import ShowForm from './Form';
 
 const showQuery = gql`
@@ -27,33 +27,16 @@ const showMutation = gql`
 `;
 
 function AddShow() {
-  const history = useHistory();
-  const [message, setMessage] = useState(null);
-  const query = useQuery(showQuery, {
-    fetchPolicy: 'cache-and-network',
+  const query = useAdminQuery(showQuery);
+  const { onSubmit, message } = useSubmitNew({
+    mutation: showMutation,
+    path: 'show',
+    key: 'createShow',
   });
-  const [mutate] = useMutation(showMutation);
 
   return (
     <Page query={query} title="Add Show">
       {({ artists, venues }) => {
-        const onSubmit = (e, updates) => {
-          e.preventDefault();
-
-          mutate({
-            variables: {
-              input: updates,
-            },
-          })
-            .then(({ data: { createShow } }) => {
-              document.documentElement.scrollTop = 0;
-              history.push({
-                pathname: `/show/${createShow.id}`,
-              });
-            })
-            .catch(() => setMessage('error'));
-        };
-
         return (
           <>
             {message === 'error' && <Message text="Error adding show." />}

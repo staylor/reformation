@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import React from 'react';
+import { gql } from '@apollo/client';
 import Message from 'components/Form/Message';
 import Page from 'routes/Admin/Page';
-import { HeaderAdd, FormWrap } from 'routes/Admin/styled';
+import { FormWrap } from 'routes/Admin/styled';
+import { useEditQuery, useSubmitEdit } from 'routes/Admin/utils';
 import ShowForm from './Form';
 
 const showQuery = gql`
@@ -32,36 +32,14 @@ const showMutation = gql`
 `;
 
 function EditShow() {
-  const params = useParams();
-  const [message, setMessage] = useState(null);
-  const query = useQuery(showQuery, {
-    variables: { id: params.id },
-    fetchPolicy: 'cache-and-network',
-  });
-  const [mutate] = useMutation(showMutation);
+  const query = useEditQuery(showQuery);
+  const { onSubmit, message } = useSubmitEdit({ mutation: showMutation });
 
   return (
-    <Page query={query} title="Edit Show">
+    <Page query={query} title="Edit Show" add={{ to: '/show/add', label: 'Add Show' }}>
       {({ show, artists, venues }) => {
-        const onSubmit = (e, updates) => {
-          e.preventDefault();
-
-          mutate({
-            variables: {
-              id: show.id,
-              input: updates,
-            },
-          })
-            .then(() => {
-              setMessage('updated');
-              document.documentElement.scrollTop = 0;
-            })
-            .catch(() => setMessage('error'));
-        };
-
         return (
           <>
-            <HeaderAdd to="/show/add">Add Show</HeaderAdd>
             {message === 'updated' && <Message text="Show updated." />}
             <FormWrap>
               <ShowForm
@@ -69,7 +47,7 @@ function EditShow() {
                 artists={artists}
                 venues={venues}
                 buttonLabel="Update Show"
-                onSubmit={onSubmit}
+                onSubmit={onSubmit(show)}
               />
             </FormWrap>
           </>

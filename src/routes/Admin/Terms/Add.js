@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
+import { useAdminQuery } from 'routes/Admin/utils';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import TermForm from './Form';
 
@@ -28,10 +29,7 @@ function AddTerm() {
   const params = useParams();
   const history = useHistory();
   const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(termQuery, {
-    variables: { id: params.taxonomyId },
-    fetchPolicy: 'cache-and-network',
-  });
+  const { loading, data } = useAdminQuery(termQuery, { id: params.taxonomyId });
   const [mutate] = useMutation(termMutation);
 
   if (loading && !data) {

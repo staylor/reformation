@@ -1,29 +1,17 @@
 import React from 'react';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
 import Page from 'routes/Admin/Page';
-import { HeaderAdd } from 'routes/Admin/styled';
+import { useAdminQuery, useSubmitDelete } from 'routes/Admin/utils';
 
 /* eslint-disable react/no-multi-comp */
 
 const columns = [
   {
     label: 'Name',
-    render: (taxonomy, { mutate, refetch }) => {
-      const onClick = e => {
-        e.preventDefault();
-
-        mutate({
-          variables: {
-            ids: [taxonomy.id],
-          },
-        }).then(() => {
-          refetch();
-        });
-      };
-
+    render: (taxonomy, { onDelete }) => {
       return (
         <>
           <strong className={rowTitleClass}>
@@ -31,7 +19,11 @@ const columns = [
           </strong>
           <nav className={rowActionsClass}>
             <Link to={`/taxonomy/${taxonomy.id}`}>Edit</Link> |{' '}
-            <a className="delete" onClick={onClick} href={`/taxonomy/${taxonomy.id}`}>
+            <a
+              className="delete"
+              onClick={onDelete([taxonomy.id])}
+              href={`/taxonomy/${taxonomy.id}`}
+            >
               Delete
             </a>
           </nav>
@@ -77,28 +69,20 @@ const taxMutation = gql`
 `;
 
 function TaxonomiesListTable() {
-  const query = useQuery(taxQuery, {
-    variables: { first: 1000 },
-    // This ensures that the table is up to date when taxonomies are mutated.
-    // The alternative is to specify refetchQueries on all Taxonomy mutations.
-    fetchPolicy: 'cache-and-network',
-  });
-  const [mutate] = useMutation(taxMutation);
+  const variables = { first: 1000 };
+  const query = useAdminQuery(taxQuery, variables);
+  const onDelete = useSubmitDelete({ mutation: taxMutation, query });
 
   return (
-    <Page query={query} title="Taxonomies">
+    <Page query={query} title="Taxonomies" add={{ to: '/taxonomy/add', label: 'Add Taxonomy' }}>
       {({ taxonomies }) => (
-        <>
-          <HeaderAdd to="/taxonomy/add">Add Taxonomy</HeaderAdd>
-          <ListTable
-            columns={columns}
-            mutate={mutate}
-            refetch={query.refetch}
-            variables={query.variables}
-            data={taxonomies}
-            path="/taxonomy"
-          />
-        </>
+        <ListTable
+          columns={columns}
+          onDelete={onDelete}
+          perPage={variables.first}
+          data={taxonomies}
+          path="/taxonomy"
+        />
       )}
     </Page>
   );

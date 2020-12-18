@@ -1,27 +1,17 @@
 import React from 'react';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
 import Page from 'routes/Admin/Page';
-import { HeaderAdd } from 'routes/Admin/styled';
+import { useAdminQuery, useSubmitDelete } from 'routes/Admin/utils';
 
 /* eslint-disable react/no-multi-comp */
 
 const columns = [
   {
     label: 'Title',
-    render: (podcast, { mutate, refetch }) => {
-      const onClick = e => {
-        e.preventDefault();
-
-        mutate({
-          variables: {
-            ids: [podcast.id],
-          },
-        }).then(() => refetch());
-      };
-
+    render: (podcast, { onDelete }) => {
       return (
         <>
           <strong className={rowTitleClass}>
@@ -29,7 +19,7 @@ const columns = [
           </strong>
           <nav className={rowActionsClass}>
             <Link to={`/podcast/${podcast.id}`}>Edit</Link> |{' '}
-            <a className="delete" onClick={onClick} href={`/podcast/${podcast.id}`}>
+            <a className="delete" onClick={onDelete([podcast.id])} href={`/podcast/${podcast.id}`}>
               Delete
             </a>
           </nav>
@@ -81,28 +71,20 @@ const podcastMutation = gql`
 `;
 
 function PodcastListTable() {
-  const query = useQuery(podcastsQuery, {
-    variables: { first: 1000 },
-    // This ensures that the table is up to date when podcasts are mutated.
-    // The alternative is to specify refetchQueries on all Podcast mutations.
-    fetchPolicy: 'cache-and-network',
-  });
-  const [mutate] = useMutation(podcastMutation);
+  const variables = { first: 1000 };
+  const query = useAdminQuery(podcastsQuery, variables);
+  const onDelete = useSubmitDelete({ mutation: podcastMutation, query });
 
   return (
-    <Page query={query} title="Podcasts">
+    <Page query={query} title="Podcasts" add={{ to: '/podcast/add', label: 'Add Podcast' }}>
       {({ podcasts }) => (
-        <>
-          <HeaderAdd to="/podcast/add">Add Podcast</HeaderAdd>
-          <ListTable
-            columns={columns}
-            mutate={mutate}
-            refetch={query.refetch}
-            variables={query.variables}
-            data={podcasts}
-            path="/podcast"
-          />
-        </>
+        <ListTable
+          columns={columns}
+          onDelete={onDelete}
+          perPage={variables.first}
+          data={podcasts}
+          path="/podcast"
+        />
       )}
     </Page>
   );
