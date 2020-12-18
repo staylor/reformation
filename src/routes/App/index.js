@@ -70,7 +70,7 @@ function App() {
       {socialSettings.youtubeUsername && (
         <a
           className={cx('icon-font', styles.youtubeIconClass)}
-          href={`https://youtube.com/${socialSettings.twitterUsername}`}
+          href={`https://youtube.com/${socialSettings.youtubeUsername}`}
         >
           <span>YouTube</span>
         </a>
