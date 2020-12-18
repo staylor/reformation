@@ -1,34 +1,22 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import Loading from 'components/Loading';
 import DashboardSettingsQuery from '../Settings/Dashboard/DashboardSettingsQuery.graphql';
 import Analytics from './Analytics';
-import { Heading } from '../styled';
+import Page from '../Page';
 
 function Dashboard() {
-  const { loading, data } = useQuery(DashboardSettingsQuery);
-
-  if (loading && !data) {
-    return (
-      <>
-        <Heading>Dashboard</Heading>
-        <Loading />
-      </>
-    );
-  }
-
-  const { settings } = data;
+  const query = useQuery(DashboardSettingsQuery);
 
   return (
-    <>
-      <Heading>Dashboard</Heading>
-
-      {settings.googleClientId ? (
-        <Analytics googleClientId={settings.googleClientId} />
-      ) : (
-        'You need a Google Client ID to view analytics.'
-      )}
-    </>
+    <Page query={query} title="Dashboard">
+      {({ settings }) =>
+        settings.googleClientId ? (
+          <Analytics googleClientId={settings.googleClientId} />
+        ) : (
+          'You need a Google Client ID to view analytics.'
+        )
+      }
+    </Page>
   );
 }
 

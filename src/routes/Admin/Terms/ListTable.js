@@ -64,26 +64,30 @@ const termsQuery = gql`
   }
 `;
 
+const termsMutation = gql`
+  mutation DeleteTermMutation($ids: [ObjID]!) {
+    removeTerm(ids: $ids)
+  }
+`;
+
 function TermsListTable() {
   const params = useParams();
-  const vars = { first: PER_PAGE, taxonomyId: params.taxonomyId };
+  const variables = { first: PER_PAGE, taxonomyId: params.taxonomyId };
   if (params.page) {
     const pageOffset = parseInt(params.page, 10) - 1;
     if (pageOffset > 0) {
-      vars.after = offsetToCursor(pageOffset * PER_PAGE - 1);
+      variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
     }
   }
-  const { variables, refetch, loading, data } = useQuery(termsQuery, {
-    variables: vars,
+  const query = useQuery(termsQuery, {
+    variables,
     // This ensures that the table is up to date when taxonomies are mutated.
     // The alternative is to specify refetchQueries on all Term mutations.
     fetchPolicy: 'cache-and-network',
   });
-  const [mutate] = useMutation(gql`
-    mutation DeleteTermMutation($ids: [ObjID]!) {
-      removeTerm(ids: $ids)
-    }
-  `);
+  const [mutate] = useMutation(termsMutation);
+
+  const { loading, data, refetch } = query;
 
   if (loading && !data) {
     return <Loading />;
@@ -161,7 +165,7 @@ function TermsListTable() {
         columns={columns}
         mutate={mutate}
         refetch={refetch}
-        variables={variables}
+        variables={query.variables}
         data={terms}
         path={`/terms/${terms.taxonomy.id}`}
       />

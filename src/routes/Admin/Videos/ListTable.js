@@ -3,13 +3,12 @@ import { gql, useQuery } from '@apollo/client';
 import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
 import debounce from 'debounce';
 import { parse, stringify } from 'query-string';
-import Loading from 'components/Loading';
 import Input from 'components/Form/Input';
 import Select from 'components/Form/Select';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass, searchBoxClass } from 'components/ListTable/styled';
 import { offsetToCursor } from 'utils/connection';
-import { Heading } from '../styled';
+import Page from 'routes/Admin/Page';
 
 /* eslint-disable react/no-multi-comp */
 
@@ -79,22 +78,22 @@ function VideosListTable() {
   const params = useParams();
   const history = useHistory();
   const queryParams = parse(location.search);
-  const vars = { first: PER_PAGE };
+  const variables = { first: PER_PAGE };
   if (queryParams.search) {
     // $TODO: sanitize this
-    vars.search = queryParams.search;
+    variables.search = queryParams.search;
   }
   if (queryParams.year) {
-    vars.year = parseInt(queryParams.year, 10);
+    variables.year = parseInt(queryParams.year, 10);
   }
   if (params.page) {
     const pageOffset = parseInt(params.page, 10) - 1;
     if (pageOffset > 0) {
-      vars.after = offsetToCursor(pageOffset * PER_PAGE - 1);
+      variables.after = offsetToCursor(pageOffset * PER_PAGE - 1);
     }
   }
-  const { loading, variables, data } = useQuery(videosQuery, {
-    variables: vars,
+  const query = useQuery(videosQuery, {
+    variables,
     // This ensures that the table is up to date when uploads are mutated.
     // The alternative is to specify refetchQueries on all Video mutations.
     fetchPolicy: 'cache-and-network',
@@ -115,43 +114,39 @@ function VideosListTable() {
 
   const updateSearch = debounce(updateProp('search'), 600);
 
-  const header = <Heading>Videos</Heading>;
-
-  if (loading && !data) {
-    return (
-      <>
-        {header}
-        <Loading />
-      </>
-    );
-  }
-
-  const { videos } = data;
-
-  const filters = (
-    <Select
-      key="year"
-      placeholder="Select Year"
-      value={queryParams.year}
-      choices={videos.years}
-      onChange={updateYear}
-    />
-  );
-
   return (
-    <>
-      {header}
-      <div className={searchBoxClass}>
-        <Input value={queryParams.search} placeholder="Search Videos" onChange={updateSearch} />
-      </div>
-      <ListTable
-        filters={filters}
-        columns={columns}
-        variables={variables}
-        data={videos}
-        path="/video"
-      />
-    </>
+    <Page query={query} title="Videos">
+      {({ videos }) => {
+        const filters = (
+          <Select
+            key="year"
+            placeholder="Select Year"
+            value={queryParams.year}
+            choices={videos.years}
+            onChange={updateYear}
+          />
+        );
+
+        return (
+          <>
+            <div className={searchBoxClass}>
+              <Input
+                value={queryParams.search}
+                placeholder="Search Videos"
+                onChange={updateSearch}
+              />
+            </div>
+            <ListTable
+              filters={filters}
+              columns={columns}
+              variables={query.variables}
+              data={videos}
+              path="/video"
+            />
+          </>
+        );
+      }}
+    </Page>
   );
 }
 

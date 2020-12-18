@@ -1,10 +1,10 @@
 import React from 'react';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
-import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
-import { Heading, HeaderAdd } from 'routes/Admin/styled';
+import Page from 'routes/Admin/Page';
+import { HeaderAdd } from 'routes/Admin/styled';
 
 /* eslint-disable react/no-multi-comp */
 
@@ -74,49 +74,37 @@ const podcastsQuery = gql`
   }
 `;
 
+const podcastMutation = gql`
+  mutation DeletePodcastMutation($ids: [ObjID]!) {
+    removePodcast(ids: $ids)
+  }
+`;
+
 function PodcastListTable() {
-  const { variables, refetch, loading, data } = useQuery(podcastsQuery, {
+  const query = useQuery(podcastsQuery, {
     variables: { first: 1000 },
     // This ensures that the table is up to date when podcasts are mutated.
     // The alternative is to specify refetchQueries on all Podcast mutations.
     fetchPolicy: 'cache-and-network',
   });
-  const [mutate] = useMutation(gql`
-    mutation DeletePodcastMutation($ids: [ObjID]!) {
-      removePodcast(ids: $ids)
-    }
-  `);
-
-  const header = (
-    <>
-      <Heading>Podcast</Heading>
-      <HeaderAdd to="/podcast/add">Add Podcast</HeaderAdd>
-    </>
-  );
-
-  if (loading && !data) {
-    return (
-      <>
-        {header}
-        <Loading />
-      </>
-    );
-  }
-
-  const { podcasts } = data;
+  const [mutate] = useMutation(podcastMutation);
 
   return (
-    <>
-      {header}
-      <ListTable
-        columns={columns}
-        mutate={mutate}
-        refetch={refetch}
-        variables={variables}
-        data={podcasts}
-        path="/podcast"
-      />
-    </>
+    <Page query={query} title="Podcasts">
+      {({ podcasts }) => (
+        <>
+          <HeaderAdd to="/podcast/add">Add Podcast</HeaderAdd>
+          <ListTable
+            columns={columns}
+            mutate={mutate}
+            refetch={query.refetch}
+            variables={query.variables}
+            data={podcasts}
+            path="/podcast"
+          />
+        </>
+      )}
+    </Page>
   );
 }
 

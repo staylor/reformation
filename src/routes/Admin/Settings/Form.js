@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import Form from 'components/Form';
-import { Heading, lineClass } from 'routes/Admin/styled';
+import { lineClass } from 'routes/Admin/styled';
+import Page from 'routes/Admin/Page';
 
 /* eslint-disable react/prop-types */
 
@@ -16,7 +16,7 @@ function SettingsForm({
   settingsFields,
 }) {
   const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(query, {
+  const q = useQuery(query, {
     fetchPolicy: 'cache-and-network',
   });
   const [mutate] = useMutation(mutation);
@@ -38,21 +38,20 @@ function SettingsForm({
   };
 
   return (
-    <>
-      <Heading>{title}</Heading>
-      <br className={lineClass} />
-      {message === 'updated' && <Message text="Settings Updated." />}
-      {loading && !data ? (
-        <Loading />
-      ) : (
-        <Form
-          fields={settingsFields}
-          data={data.settings || {}}
-          buttonLabel={buttonText}
-          onSubmit={onSubmit}
-        />
+    <Page query={q} title={title}>
+      {({ settings }) => (
+        <>
+          <br className={lineClass} />
+          {message === 'updated' && <Message text="Settings Updated." />}
+          <Form
+            fields={settingsFields}
+            data={settings || {}}
+            buttonLabel={buttonText}
+            onSubmit={onSubmit}
+          />
+        </>
       )}
-    </>
+    </Page>
   );
 }
 

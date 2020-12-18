@@ -5,17 +5,19 @@ import Message from 'components/Form/Message';
 import { FormWrap } from 'routes/Admin/styled';
 import PostForm from './Form';
 
+const postMutation = gql`
+  mutation CreatePostMutation($input: CreatePostInput!) {
+    createPost(input: $input) {
+      ...PostForm_post
+    }
+  }
+  ${PostForm.fragments.post}
+`;
+
 function AddPost() {
   const history = useHistory();
   const [message, setMessage] = useState(null);
-  const [mutate] = useMutation(gql`
-    mutation CreatePostMutation($input: CreatePostInput!) {
-      createPost(input: $input) {
-        ...PostForm_post
-      }
-    }
-    ${PostForm.fragments.post}
-  `);
+  const [mutate] = useMutation(postMutation);
 
   const onSubmit = (e, updates) => {
     e.preventDefault();

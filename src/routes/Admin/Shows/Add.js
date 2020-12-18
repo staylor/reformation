@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { gql, useQuery, useMutation } from '@apollo/client';
-import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
-import { Heading, FormWrap } from 'routes/Admin/styled';
+import Page from 'routes/Admin/Page';
+import { FormWrap } from 'routes/Admin/styled';
 import ShowForm from './Form';
 
 const showQuery = gql`
@@ -29,42 +29,46 @@ const showMutation = gql`
 function AddShow() {
   const history = useHistory();
   const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(showQuery, {
+  const query = useQuery(showQuery, {
     fetchPolicy: 'cache-and-network',
   });
   const [mutate] = useMutation(showMutation);
 
-  if (loading && !data) {
-    return <Loading />;
-  }
-
-  const { artists, venues } = data;
-
-  const onSubmit = (e, updates) => {
-    e.preventDefault();
-
-    mutate({
-      variables: {
-        input: updates,
-      },
-    })
-      .then(({ data: { createShow } }) => {
-        document.documentElement.scrollTop = 0;
-        history.push({
-          pathname: `/show/${createShow.id}`,
-        });
-      })
-      .catch(() => setMessage('error'));
-  };
-
   return (
-    <>
-      <Heading>Add Show</Heading>
-      {message === 'error' && <Message text="Error adding show." />}
-      <FormWrap>
-        <ShowForm artists={artists} venues={venues} buttonLabel="Add Show" onSubmit={onSubmit} />
-      </FormWrap>
-    </>
+    <Page query={query} title="Add Show">
+      {({ artists, venues }) => {
+        const onSubmit = (e, updates) => {
+          e.preventDefault();
+
+          mutate({
+            variables: {
+              input: updates,
+            },
+          })
+            .then(({ data: { createShow } }) => {
+              document.documentElement.scrollTop = 0;
+              history.push({
+                pathname: `/show/${createShow.id}`,
+              });
+            })
+            .catch(() => setMessage('error'));
+        };
+
+        return (
+          <>
+            {message === 'error' && <Message text="Error adding show." />}
+            <FormWrap>
+              <ShowForm
+                artists={artists}
+                venues={venues}
+                buttonLabel="Add Show"
+                onSubmit={onSubmit}
+              />
+            </FormWrap>
+          </>
+        );
+      }}
+    </Page>
   );
 }
 

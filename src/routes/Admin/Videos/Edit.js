@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { gql, useQuery, useMutation } from '@apollo/client';
-import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import { ThumbWrapper, thumb480Class } from 'components/Videos/styled';
 import Form from 'components/Form';
-import { Heading, FormWrap } from 'routes/Admin/styled';
+import Page from 'routes/Admin/Page';
+import { FormWrap } from 'routes/Admin/styled';
 
 /* eslint-disable react/no-multi-comp */
 
@@ -61,47 +61,51 @@ const videoMutation = gql`
 function EditVideo() {
   const params = useParams();
   const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(videoQuery, {
+  const query = useQuery(videoQuery, {
     variables: { id: params.id },
     fetchPolicy: 'cache-and-network',
   });
   const [mutate] = useMutation(videoMutation);
 
-  if (loading && !data) {
-    return <Loading />;
-  }
-
-  const { video } = data;
-
-  const onSubmit = (e, updates) => {
-    e.preventDefault();
-
-    mutate({
-      variables: {
-        id: video.id,
-        input: updates,
-      },
-    })
-      .then(() => {
-        setMessage('updated');
-        document.documentElement.scrollTop = 0;
-      })
-      .catch(() => setMessage('error'));
-  };
-
-  const thumb = video.thumbnails.find(t => t.width === 480);
-
   return (
-    <>
-      <Heading>Edit Video</Heading>
-      {message === 'updated' && <Message text="Video updated." />}
-      <ThumbWrapper>
-        <img src={thumb.url} alt={video.title} className={thumb480Class} />
-      </ThumbWrapper>
-      <FormWrap>
-        <Form fields={videoFields} data={video} buttonLabel="Update Video" onSubmit={onSubmit} />
-      </FormWrap>
-    </>
+    <Page query={query} title="Edit Video">
+      {({ video }) => {
+        const onSubmit = (e, updates) => {
+          e.preventDefault();
+
+          mutate({
+            variables: {
+              id: video.id,
+              input: updates,
+            },
+          })
+            .then(() => {
+              setMessage('updated');
+              document.documentElement.scrollTop = 0;
+            })
+            .catch(() => setMessage('error'));
+        };
+
+        const thumb = video.thumbnails.find(t => t.width === 480);
+
+        return (
+          <>
+            {message === 'updated' && <Message text="Video updated." />}
+            <ThumbWrapper>
+              <img src={thumb.url} alt={video.title} className={thumb480Class} />
+            </ThumbWrapper>
+            <FormWrap>
+              <Form
+                fields={videoFields}
+                data={video}
+                buttonLabel="Update Video"
+                onSubmit={onSubmit}
+              />
+            </FormWrap>
+          </>
+        );
+      }}
+    </Page>
   );
 }
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
-import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
-import { Heading, HeaderAdd } from 'routes/Admin/styled';
+import Page from 'routes/Admin/Page';
+import { HeaderAdd } from 'routes/Admin/styled';
 
 /* eslint-disable react/no-multi-comp */
 
@@ -77,7 +77,7 @@ const taxMutation = gql`
 `;
 
 function TaxonomiesListTable() {
-  const { loading, variables, refetch, data } = useQuery(taxQuery, {
+  const query = useQuery(taxQuery, {
     variables: { first: 1000 },
     // This ensures that the table is up to date when taxonomies are mutated.
     // The alternative is to specify refetchQueries on all Taxonomy mutations.
@@ -85,25 +85,22 @@ function TaxonomiesListTable() {
   });
   const [mutate] = useMutation(taxMutation);
 
-  if (loading && !data) {
-    return <Loading />;
-  }
-
-  const { taxonomies } = data;
-
   return (
-    <>
-      <Heading>Taxonomy</Heading>
-      <HeaderAdd to="/taxonomy/add">Add Taxonomy</HeaderAdd>
-      <ListTable
-        columns={columns}
-        mutate={mutate}
-        refetch={refetch}
-        variables={variables}
-        data={taxonomies}
-        path="/taxonomy"
-      />
-    </>
+    <Page query={query} title="Taxonomies">
+      {({ taxonomies }) => (
+        <>
+          <HeaderAdd to="/taxonomy/add">Add Taxonomy</HeaderAdd>
+          <ListTable
+            columns={columns}
+            mutate={mutate}
+            refetch={query.refetch}
+            variables={query.variables}
+            data={taxonomies}
+            path="/taxonomy"
+          />
+        </>
+      )}
+    </Page>
   );
 }
 

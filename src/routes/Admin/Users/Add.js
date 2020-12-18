@@ -5,16 +5,18 @@ import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import UserForm from './Form';
 
+const userMutation = gql`
+  mutation CreateUserMutation($input: CreateUserInput!) {
+    createUser(input: $input) {
+      id
+    }
+  }
+`;
+
 function AddUser() {
   const history = useHistory();
   const [message, setMessage] = useState(null);
-  const [mutate] = useMutation(gql`
-    mutation CreateUserMutation($input: CreateUserInput!) {
-      createUser(input: $input) {
-        id
-      }
-    }
-  `);
+  const [mutate] = useMutation(userMutation);
 
   const onSubmit = (e, updates) => {
     e.preventDefault();

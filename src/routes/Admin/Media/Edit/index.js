@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import Loading from 'components/Loading';
 import Message from 'components/Form/Message';
 import Form from 'components/Form';
-import { Heading, titleInputClass, FormWrap } from 'routes/Admin/styled';
+import Page from 'routes/Admin/Page';
+import { titleInputClass, FormWrap } from 'routes/Admin/styled';
 import { uploadUrl } from 'utils/media';
 import MediaAdminQuery from './MediaAdminQuery.graphql';
 import UpdateMediaMutation from './UpdateMediaMutation.graphql';
@@ -103,42 +103,46 @@ const mediaFields = [
 function EditMedia() {
   const params = useParams();
   const [message, setMessage] = useState(null);
-  const { loading, data } = useQuery(MediaAdminQuery, {
+  const query = useQuery(MediaAdminQuery, {
     variables: { id: params.id },
     fetchPolicy: 'cache-and-network',
   });
   const [mutate] = useMutation(UpdateMediaMutation);
 
-  if (loading && !data) {
-    return <Loading />;
-  }
-
-  const { media } = data;
-
-  const onSubmit = (e, updates) => {
-    e.preventDefault();
-
-    mutate({
-      variables: {
-        id: media.id,
-        input: updates,
-      },
-    })
-      .then(() => {
-        setMessage('updated');
-        document.documentElement.scrollTop = 0;
-      })
-      .catch(() => setMessage('error'));
-  };
-
   return (
-    <>
-      <Heading>Edit Media</Heading>
-      {message === 'updated' && <Message text="Media updated." />}
-      <FormWrap>
-        <Form fields={mediaFields} data={media} buttonLabel="Update Media" onSubmit={onSubmit} />
-      </FormWrap>
-    </>
+    <Page query={query} title="Edit Media">
+      {({ media }) => {
+        const onSubmit = (e, updates) => {
+          e.preventDefault();
+
+          mutate({
+            variables: {
+              id: media.id,
+              input: updates,
+            },
+          })
+            .then(() => {
+              setMessage('updated');
+              document.documentElement.scrollTop = 0;
+            })
+            .catch(() => setMessage('error'));
+        };
+
+        return (
+          <>
+            {message === 'updated' && <Message text="Media updated." />}
+            <FormWrap>
+              <Form
+                fields={mediaFields}
+                data={media}
+                buttonLabel="Update Media"
+                onSubmit={onSubmit}
+              />
+            </FormWrap>
+          </>
+        );
+      }}
+    </Page>
   );
 }
 

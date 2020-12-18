@@ -1,10 +1,10 @@
 import React from 'react';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
-import Loading from 'components/Loading';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass } from 'components/ListTable/styled';
-import { Heading, HeaderAdd } from 'routes/Admin/styled';
+import Page from 'routes/Admin/Page';
+import { HeaderAdd } from 'routes/Admin/styled';
 
 /* eslint-disable react/no-multi-comp */
 
@@ -65,7 +65,7 @@ const usersMutation = gql`
 `;
 
 function UsersListTable() {
-  const { variables, refetch, loading, data } = useQuery(usersQuery, {
+  const query = useQuery(usersQuery, {
     variables: { first: 1000 },
     // This ensures that the table is up to date when users are mutated.
     // The alternative is to specify refetchQueries on all User mutations.
@@ -73,25 +73,22 @@ function UsersListTable() {
   });
   const [mutate] = useMutation(usersMutation);
 
-  if (loading && !data) {
-    return <Loading />;
-  }
-
-  const { users } = data;
-
   return (
-    <>
-      <Heading>User</Heading>
-      <HeaderAdd to="/user/add">Add User</HeaderAdd>
-      <ListTable
-        columns={columns}
-        mutate={mutate}
-        refetch={refetch}
-        variables={variables}
-        data={users}
-        path="/user"
-      />
-    </>
+    <Page query={query} title="Users">
+      {({ users }) => (
+        <>
+          <HeaderAdd to="/user/add">Add User</HeaderAdd>
+          <ListTable
+            columns={columns}
+            mutate={mutate}
+            refetch={query.refetch}
+            variables={query.variables}
+            data={users}
+            path="/user"
+          />
+        </>
+      )}
+    </Page>
   );
 }
 

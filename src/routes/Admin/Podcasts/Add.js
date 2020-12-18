@@ -5,16 +5,18 @@ import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import PodcastForm from './Form';
 
+const podcastMutation = gql`
+  mutation CreatePodcastMutation($input: CreatePodcastInput!) {
+    createPodcast(input: $input) {
+      id
+    }
+  }
+`;
+
 function AddPodcast() {
   const history = useHistory();
   const [message, setMessage] = useState(null);
-  const [mutate] = useMutation(gql`
-    mutation CreatePodcastMutation($input: CreatePodcastInput!) {
-      createPodcast(input: $input) {
-        id
-      }
-    }
-  `);
+  const [mutate] = useMutation(podcastMutation);
 
   const onSubmit = (e, updates) => {
     e.preventDefault();

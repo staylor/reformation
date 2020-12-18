@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 import { gql, useQuery } from '@apollo/client';
 import { Helmet } from 'react-helmet-async';
 import { cx } from 'pretty-lights';
-import Loading from 'components/Loading';
 import NotFound from 'components/NotFound';
 import * as styles from './styled';
 import NavMenu from './NavMenu';
@@ -38,7 +37,7 @@ function Admin() {
   });
 
   if (loading && !data) {
-    return <Loading />;
+    return null;
   }
 
   const { settings, taxonomies } = data;

@@ -5,17 +5,19 @@ import Message from 'components/Form/Message';
 import { Heading, FormWrap } from 'routes/Admin/styled';
 import TaxonomyForm from './Form';
 
+const taxMutation = gql`
+  mutation CreateTaxonomyMutation($input: CreateTaxonomyInput!) {
+    createTaxonomy(input: $input) {
+      ...TaxonomyForm_taxonomy
+    }
+  }
+  ${TaxonomyForm.fragments.taxonomy}
+`;
+
 function AddTaxonomy() {
   const history = useHistory();
   const [message, setMessage] = useState(null);
-  const [mutate] = useMutation(gql`
-    mutation CreateTaxonomyMutation($input: CreateTaxonomyInput!) {
-      createTaxonomy(input: $input) {
-        ...TaxonomyForm_taxonomy
-      }
-    }
-    ${TaxonomyForm.fragments.taxonomy}
-  `);
+  const [mutate] = useMutation(taxMutation);
 
   const onSubmit = (e, updates) => {
     e.preventDefault();
