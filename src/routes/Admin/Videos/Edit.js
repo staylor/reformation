@@ -1,7 +1,7 @@
 import React from 'react';
 import { gql } from '@apollo/client';
 import Message from 'components/Form/Message';
-import { ThumbWrapper, thumb480Class } from 'components/Videos/styled';
+import { ThumbWrapper } from 'components/Videos/styled';
 import Form from 'components/Form';
 import Page from 'routes/Admin/Page';
 import { useEditQuery, useSubmitEdit } from 'routes/Admin/utils';
@@ -71,7 +71,7 @@ function EditVideo() {
           <>
             {message === 'updated' && <Message text="Video updated." />}
             <ThumbWrapper>
-              <img src={thumb.url} alt={video.title} className={thumb480Class} />
+              <img src={thumb.url} alt={video.title} />
             </ThumbWrapper>
             <FormWrap>
               <Form
