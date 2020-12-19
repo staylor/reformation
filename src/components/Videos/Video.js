@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { Heading } from 'styles/utils';
@@ -40,78 +40,79 @@ const findThumb = (thumbs, { single, embed }) => {
   return thumb;
 };
 
-export default class Video extends Component {
-  onClick = e => {
+function Video({ video, single = false, embed = false }) {
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    if (imageRef.current) {
+      const oldHeight = imageRef.current.offsetHeight;
+      const newHeight = Math.ceil((9 / 16) * imageRef.current.offsetWidth);
+      const offset = `${-1 * ((oldHeight - newHeight) / 2)}px`;
+      imageRef.current.style.marginTop = offset;
+      imageRef.current.style.marginBottom = offset;
+      imageRef.current.style.opacity = 1;
+    }
+  }, []);
+
+  const onClick = e => {
     e.preventDefault();
 
     const iframe = document.createElement('iframe');
     // $FlowFixMe
     iframe.height = `${Math.ceil((9 / 16) * e.currentTarget.offsetWidth)}`;
     iframe.width = `${maxWidth}`;
-    iframe.className = this.props.embed ? '' : styles.iframeClass;
+    iframe.className = embed ? '' : styles.iframeClass;
     iframe.frameBorder = '0';
-    iframe.src = `https://www.youtube.com/embed/${this.props.video.dataId}?autoplay=1`;
+    iframe.src = `https://www.youtube.com/embed/${video.dataId}?autoplay=1`;
 
     // $FlowFixMe
     e.currentTarget.innerHTML = iframe.outerHTML;
   };
 
-  onLoad = e => {
-    const oldHeight = e.currentTarget.offsetHeight;
-    const newHeight = Math.ceil((9 / 16) * e.currentTarget.offsetWidth);
-    const offset = `${-1 * ((oldHeight - newHeight) / 2)}px`;
-    e.currentTarget.style.marginTop = offset;
-    e.currentTarget.style.marginBottom = offset;
-    e.currentTarget.style.opacity = 1;
-  };
+  const thumb = findThumb(video.thumbnails, { single, embed });
 
-  render() {
-    const { video, single = false, embed = false } = this.props;
-    const thumb = findThumb(video.thumbnails, { single, embed });
+  const placeholder = (
+    <Placeholder>
+      {thumb && (
+        <img src={thumb.url} alt={video.title} className={thumb.className} ref={imageRef} />
+      )}
+      <figcaption>{video.title}</figcaption>
+    </Placeholder>
+  );
 
-    const placeholder = (
-      <Placeholder>
-        {thumb && (
-          <img src={thumb.url} alt={video.title} className={thumb.className} onLoad={this.onLoad} />
-        )}
-        <figcaption>{video.title}</figcaption>
-      </Placeholder>
-    );
-
-    if (embed) {
-      return (
-        <>
-          <VideoLink
-            to={`/video/${video.slug}`}
-            onClick={this.onClick}
-            width={thumb ? thumb.width : maxWidth}
-            className={styles.embedVideoLinkClass}
-          >
-            {placeholder}
-          </VideoLink>
-          <EmbedTitle>
-            {single ? video.title : <Link to={`/video/${video.slug}`}>{video.title}</Link>}
-          </EmbedTitle>
-        </>
-      );
-    }
-
+  if (embed) {
     return (
-      <article>
-        {single ? (
-          <Heading>{video.title}</Heading>
-        ) : (
-          <Title>
-            <Link to={`/video/${video.slug}`}>{video.title}</Link>
-          </Title>
-        )}
-
-        <VideoLink to={`/video/${video.slug}`} onClick={this.onClick}>
+      <>
+        <VideoLink
+          to={`/video/${video.slug}`}
+          onClick={onClick}
+          width={thumb ? thumb.width : maxWidth}
+          className={styles.embedVideoLinkClass}
+        >
           {placeholder}
         </VideoLink>
-      </article>
+        <EmbedTitle>
+          {single ? video.title : <Link to={`/video/${video.slug}`}>{video.title}</Link>}
+        </EmbedTitle>
+      </>
     );
   }
+
+  return (
+    <article>
+      {single ? (
+        <Heading>{video.title}</Heading>
+      ) : (
+        <Title>
+          <Link to={`/video/${video.slug}`}>{video.title}</Link>
+        </Title>
+      )}
+
+      <VideoLink to={`/video/${video.slug}`} onClick={onClick}>
+        {placeholder}
+      </VideoLink>
+    </article>
+  );
 }
 
 // $FlowFixMe
@@ -129,3 +130,5 @@ Video.fragments = {
     }
   `,
 };
+
+export default Video;
