@@ -7,19 +7,26 @@ export const wrapperClass = css`
   margin: 0 auto;
   max-width: ${themeUtils.contentWidth}px;
   padding: 20px;
+
+  ${responsive.desktop} {
+    margin: 20px auto;
+  }
 `;
 
 export const headerClass = css`
-  margin-bottom: ${themeUtils.padding}px;
   position: relative;
+
+  ${responsive.tablet} {
+    margin-bottom: ${themeUtils.padding}px;
+  }
 `;
 
 export const titleClass = css`
   display: block;
   font-family: ${themeUtils.fonts.futura};
-  font-size: 42px;
+  font-size: 36px;
   font-weight: bold;
-  line-height: 52px;
+  line-height: 36px;
   margin: 0;
   text-align: center;
   text-transform: uppercase;
@@ -53,10 +60,9 @@ export const titleClass = css`
 `;
 
 export const contentClass = css`
-  padding: ${themeUtils.padding}px 0;
-
   ${responsive.desktop} {
     display: flex;
+    padding: ${themeUtils.padding}px;
   }
 `;
 

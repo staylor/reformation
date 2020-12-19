@@ -49,9 +49,12 @@ export const Placeholder = styled.figure`
   }
 
   & img {
+    display: block;
     height: auto;
     max-width: 100%;
+    opacity: 0;
     position: relative;
+    transition: 600ms opacity;
     z-index: 1;
   }
 
@@ -105,13 +108,4 @@ export const ThumbWrapper = styled.figure`
 
 export const iframeClass = css`
   margin: 0 0 20px;
-`;
-
-// adjust aspect ratio from 4:3 to 16:9
-export const thumb640Class = css`
-  margin: -60px 0;
-`;
-
-export const thumb480Class = css`
-  margin: -49px 0;
 `;

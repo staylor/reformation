@@ -8,7 +8,13 @@ import iconsSvg from 'public/fonts/icons/icons.svg';
 // eslint-disable-next-line
 injectGlobal`
   body {
-    background: ${themeUtils.colors.background};
+    background: repeating-linear-gradient(
+      -55deg,
+      ${themeUtils.colors.white},
+      ${themeUtils.colors.white} 20px,
+      ${themeUtils.colors.detail} 20px,
+      ${themeUtils.colors.detail} 23px
+    );
     color: ${themeUtils.colors.text};
     font-family: ${themeUtils.fonts.body};
     font-size: 1em;

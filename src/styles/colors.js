@@ -4,7 +4,7 @@ export default {
   black: '#000',
   dark: '#262626',
   pink: '#e50082',
-  text: '#999',
+  text: '#8f8f8f',
   detail: '#e6e6e6',
   form: {
     checkbox: {

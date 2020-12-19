@@ -31,15 +31,9 @@ const maxWidth = 640;
 const findThumb = (thumbs, { single, embed }) => {
   const sizes = embed || single ? [640, 480, 320] : [480, 640, 320];
   let thumb = thumbs.find(t => t.width === sizes[0]);
-  if (thumb) {
-    thumb = { ...thumb };
-    thumb.className = styles.thumb480Class;
-  } else {
+  if (!thumb) {
     thumb = thumbs.find(t => t.width === sizes[1]);
-    if (thumb) {
-      thumb = { ...thumb };
-      thumb.className = styles.thumb640Class;
-    } else {
+    if (!thumb) {
       thumb = thumbs.find(t => t.width === sizes[2]);
     }
   }
@@ -62,13 +56,24 @@ export default class Video extends Component {
     e.currentTarget.innerHTML = iframe.outerHTML;
   };
 
+  onLoad = e => {
+    const oldHeight = e.currentTarget.offsetHeight;
+    const newHeight = Math.ceil((9 / 16) * e.currentTarget.offsetWidth);
+    const offset = `${-1 * ((oldHeight - newHeight) / 2)}px`;
+    e.currentTarget.style.marginTop = offset;
+    e.currentTarget.style.marginBottom = offset;
+    e.currentTarget.style.opacity = 1;
+  };
+
   render() {
     const { video, single = false, embed = false } = this.props;
     const thumb = findThumb(video.thumbnails, { single, embed });
 
     const placeholder = (
       <Placeholder>
-        {thumb && <img src={thumb.url} alt={video.title} className={thumb && thumb.className} />}
+        {thumb && (
+          <img src={thumb.url} alt={video.title} className={thumb.className} onLoad={this.onLoad} />
+        )}
         <figcaption>{video.title}</figcaption>
       </Placeholder>
     );

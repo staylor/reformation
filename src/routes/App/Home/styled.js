@@ -20,7 +20,7 @@ export const wrapClass = css`
 
 export const videosClass = css`
   border-top: 1px solid ${themeUtils.colors.detail};
-  margin: ${themeUtils.padding * 2}px auto 0;
+  margin: 0 auto;
   padding-top: ${themeUtils.padding}px;
 
   ${responsive.tablet} {

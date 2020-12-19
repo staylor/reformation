@@ -55,12 +55,7 @@ export const usePropUpdate = ({ prop, pathname }) => {
 
 export const useEditQuery = (query, variables = {}) => {
   const params = useParams();
-  return useQuery(query, {
-    variables: { ...variables, id: params.id },
-    // This ensures that the tables are up to date when items are mutated.
-    // The alternative is to specify refetchQueries on all mutations.
-    fetchPolicy: 'cache-and-network',
-  });
+  return useAdminQuery(query, { ...variables, id: params.id });
 };
 
 export const useSubmitEdit = ({ mutation }) => {

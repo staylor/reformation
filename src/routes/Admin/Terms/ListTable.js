@@ -107,7 +107,7 @@ function TermsListTable() {
             </strong>
             <nav className={rowActionsClass}>
               <Link to={urlPath}>Edit</Link> |{' '}
-              <a className="delete" onClick={onClick} href={urlPath}>
+              <a className="delete" onClick={onClick([term.id])} href={urlPath}>
                 Delete
               </a>
             </nav>

@@ -9,7 +9,10 @@ export const wrapperClass = css`
 
 export const Title = styled.h1`
   ${h1BaseClass};
+  border-left: 6px solid ${themeUtils.colors.pink};
   color: ${themeUtils.colors.dark};
+  letter-spacing: 0;
+  padding-left: 10px;
 `;
 
 export const Paragraph = styled.p`
@@ -28,6 +31,11 @@ export const Heading = styled.h2`
 export const SubHeading = styled.h3`
   ${h3BaseClass};
   color: ${themeUtils.colors.dark};
+  display: inline-block;
+  margin-top: 24px;
+  padding: 4px 24px 4px 2px;
+  border: 2px dashed ${themeUtils.colors.pink};
+  border-width: 0 0 2px;
 `;
 
 export const BoldHeading = styled.h4`

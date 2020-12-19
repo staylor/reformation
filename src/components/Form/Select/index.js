@@ -47,7 +47,7 @@ export default class Select extends Component {
       value = [...e.target.selectedOptions].map(o => o.value);
     }
     if (this.props.onChange) {
-      this.props.onChange(value);
+      this.props.onChange(value, e);
     }
   };
 

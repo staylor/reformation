@@ -1,5 +1,4 @@
 import { styled, css } from 'pretty-lights';
-
 import facepaint from 'facepaint';
 import themeUtils from 'styles/theme';
 import responsive from 'styles/responsive';
@@ -20,10 +19,11 @@ export const headingBaseClass = css`
 
 export const h1BaseClass = css`
   ${headingBaseClass};
-  font-size: 30px;
+  font-family: ${themeUtils.fonts.futura};
+  font-size: 36px;
 
   ${responsive.desktop} {
-    font-size: 36px;
+    font-size: 48px;
   }
 `;
 
@@ -36,7 +36,7 @@ export const h2BaseClass = css`
 export const h3BaseClass = css`
   ${headingBaseClass};
   font-family: ${themeUtils.fonts.futura};
-  font-size: 20px;
+  font-size: 24px;
 `;
 
 export const h4BaseClass = css`

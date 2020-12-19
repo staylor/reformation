@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, useLocation, useHistory } from 'react-router-dom';
 import Select from 'components/Form/Select';
-import { navClass, navItemClass } from './styled';
+import { navClass, navItemClass, selectClass } from './styled';
 
 /* eslint-disable react/prop-types */
 
@@ -46,6 +46,7 @@ const Navigation = () => {
       <Link to="/shows">Shows</Link>
       <Link to="/videos">Videos</Link>
       <Select
+        className={selectClass}
         placeholder="-- BY YEAR --"
         choices={yearChoices(2001, year).reverse()}
         onChange={onChange}

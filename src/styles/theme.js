@@ -19,8 +19,8 @@ export default {
     },
   },
 
-  contentWidth: 1080,
-  padding: 15,
+  contentWidth: 1280,
+  padding: 25,
 
   breakpoint: {
     medium: 782,
