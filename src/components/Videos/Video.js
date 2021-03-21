@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { gql } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Heading } from 'styles/utils';
 import * as styles from './styled';
 
@@ -42,6 +42,7 @@ const findThumb = (thumbs, { single, embed }) => {
 
 function Video({ video, single = false, embed = false }) {
   const imageRef = useRef(null);
+  const location = useLocation();
 
   useEffect(() => {
     if (imageRef.current) {
@@ -52,7 +53,7 @@ function Video({ video, single = false, embed = false }) {
       imageRef.current.style.marginBottom = offset;
       imageRef.current.style.opacity = 1;
     }
-  }, []);
+  }, [location.pathname]);
 
   const onClick = e => {
     e.preventDefault();
@@ -115,7 +116,6 @@ function Video({ video, single = false, embed = false }) {
   );
 }
 
-// $FlowFixMe
 Video.fragments = {
   video: gql`
     fragment Video_video on Video {
