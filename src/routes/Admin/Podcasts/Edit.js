@@ -26,7 +26,7 @@ const podcastMutation = gql`
 
 function EditPodcast() {
   const query = useEditQuery(podcastQuery);
-  const { onSubmit, message } = useSubmitEdit(podcastMutation);
+  const { onSubmit, message } = useSubmitEdit({ mutation: podcastMutation });
 
   return (
     <Page query={query} title="Edit Podcast">
