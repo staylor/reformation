@@ -1924,15 +1924,19 @@
             "description": null,
             "args": [
               {
-                "name": "id",
+                "name": "ids",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ObjID",
-                    "ofType": null
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ObjID",
+                      "ofType": null
+                    }
                   }
                 },
                 "defaultValue": null

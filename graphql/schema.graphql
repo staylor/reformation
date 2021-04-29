@@ -87,7 +87,7 @@ type Mutation {
   removeUser(ids: [ObjID]!): Boolean
   createVideo(input: CreateVideoInput!): Video
   updateVideo(id: ObjID!, input: UpdateVideoInput!): Video
-  removeVideo(id: ObjID!): Boolean
+  removeVideo(ids: [ObjID]!): Boolean
 }
 
 type PageInfo {
