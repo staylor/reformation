@@ -7,7 +7,13 @@ import Select from 'components/Form/Select';
 import ListTable from 'components/ListTable';
 import { rowActionsClass, rowTitleClass, searchBoxClass } from 'components/ListTable/styled';
 import Page from 'routes/Admin/Page';
-import { useQueryParams, usePageOffset, useAdminQuery, usePropUpdate } from 'routes/Admin/utils';
+import {
+  useQueryParams,
+  usePageOffset,
+  useAdminQuery,
+  usePropUpdate,
+  useSubmitDelete,
+} from 'routes/Admin/utils';
 
 /* eslint-disable react/no-multi-comp */
 
@@ -72,11 +78,18 @@ const videosQuery = gql`
   }
 `;
 
+const videoMutation = gql`
+  mutation DeleteVideoMutation($ids: [ObjID]!) {
+    removeVideo(ids: $ids)
+  }
+`;
+
 function VideosListTable() {
   const params = useQueryParams(['search', 'year']);
   params.first = PER_PAGE;
   const variables = usePageOffset(params);
   const query = useAdminQuery(videosQuery, variables);
+  const onDelete = useSubmitDelete({ mutation: videoMutation, query });
 
   const updateYear = usePropUpdate({ prop: 'year', pathname: '/video' });
   const updateSeachHook = usePropUpdate({ prop: 'search', pathname: '/video' });
@@ -100,7 +113,13 @@ function VideosListTable() {
             <div className={searchBoxClass}>
               <Input value={params.search} placeholder="Search Videos" onChange={updateSearch} />
             </div>
-            <ListTable filters={filters} columns={columns} data={videos} path="/video" />
+            <ListTable
+              filters={filters}
+              columns={columns}
+              onDelete={onDelete}
+              data={videos}
+              path="/video"
+            />
           </>
         );
       }}
