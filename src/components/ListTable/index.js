@@ -56,10 +56,9 @@ function ListTable(props) {
     window.scrollTo(0, 0);
   }, [location]);
 
-  const bulkAction = (value, e) => {
+  const bulkAction = value => {
     if (value === 'deleteAll' && state.checked.length) {
-      const action = onDelete(state.checked);
-      action(e);
+      onDelete(state.checked);
     }
   };
 
