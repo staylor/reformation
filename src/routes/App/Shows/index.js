@@ -17,7 +17,7 @@ const showsQuery = gql`
 function Shows() {
   const location = useLocation();
   const params = useParams();
-  const variables = { first: 100 };
+  const variables = { first: 200 };
   if (params.taxonomy && params.term) {
     variables.taxonomy = params.taxonomy;
     variables.term = params.term;

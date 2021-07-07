@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  extends: ['eslint-config-kyt'],
+  extends: ['kyt'],
 
   plugins: ['kyt', 'pretty-lights'],
 
